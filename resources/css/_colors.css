@@ -1,0 +1,13 @@
+:root{
+    --primary-text-color: #292929;
+    --secondary-text-color: #fff;
+    --terciary-text-color: #757575;
+    --accent-text-color: #95CA3D;
+
+    --primary-background-color: #fff;
+    --secondary-backgorund-color: #292929;
+    --terciary-background-color: #757575;
+    --accent-background-color: #0EB4BD;
+
+    --primary-font-family: Roboto, sans-serif;
+}
