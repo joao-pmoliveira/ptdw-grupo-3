@@ -1,5 +1,5 @@
-@import url("partials/_text.css");
-@import url("partials/_colors.css");
+@import url("styles/_text.css");
+@import url("styles/_colors.css");
 
 .bg-primary{
     background-color: var(--primary-background-color);
