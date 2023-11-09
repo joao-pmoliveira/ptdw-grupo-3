@@ -1,0 +1,47 @@
+:root{
+    font-size: 16px;
+
+    --primary-font-family: Roboto, sans-serif;
+    font-family: var(--primary-font-family);
+
+    --txt-xl-size: 28px;
+    --txt-l-size: 18px;
+    --txt-m-size: 16px;
+    --txt-s-size: 14px;
+    --txt-xs-size: 12px;
+}
+
+h1{
+    font-size: var(--txt-h1-size);
+    font-weight: 500;
+}
+h2{
+    font-size: var(--txt-l-size);
+    font-weight: 500;
+}
+h3{
+    font-size: var(--txt-m-size);
+    font-weight: 500;
+}
+h4{
+    font-size: var(--txt-s-size);
+    font-weight: 500;
+}
+p{
+    font-size: var(--txt-m-size);
+    font-weight: 300;
+}
+
+.btn-txt{
+    font-size: var(--txt-s-size);
+    font-weight: 400;
+}
+
+.breadcrumb-txt{
+    font-size: var(--txt-xs-size);
+    font-weight: 500;
+}
+.login-txt{
+    font-size: var(--txt-xs-size);
+    font-weight: 400;
+}
