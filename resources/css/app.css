@@ -8,6 +8,32 @@
     --secondary-backgorund-color: #292929;
     --terciary-background-color: #757575;
     --accent-background-color: #0EB4BD;
-    
+
     --primary-font-family: Roboto, sans-serif;
+}
+
+.bg-primary{
+    background-color: var(--primary-background-color);
+}
+.bg-secondary{
+    background-color: var(--secondary-backgorund-color);
+}
+.bg-terciary{
+    background-color: var(--terciary-background-color);
+}
+.bg-accent{
+    background-color: var(--accent-background-color);
+}
+
+.text-primary{
+    color: var(--primary-text-color);
+}
+.text-secondary{
+    color: var(--secondary-text-color);
+}
+.text-terciary{
+    color: var(--terciary-text-color);
+}
+.text-accent {
+    color: var(--accent-text-color);
 }
