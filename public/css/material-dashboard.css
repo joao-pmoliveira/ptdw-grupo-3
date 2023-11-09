@@ -98,6 +98,8 @@ select:-webkit-autofill:focus {
 *,
 *::before,
 *::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box; }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -165,7 +167,7 @@ h6, .h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem; }
+}
 
 abbr[title],
 abbr[data-bs-original-title] {
