@@ -1,5 +1,6 @@
 @import url("styles/_text.css");
 @import url("styles/_colors.css");
+@import url("styles/_buttons.css");
 
 .bg-primary{
     background-color: var(--primary-background-color);
