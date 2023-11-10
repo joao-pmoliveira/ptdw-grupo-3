@@ -13,6 +13,47 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Página de Entrada
 Route::get('/', function () {
     return view('welcome', ['page_title' => 'Bem vindo!']);
+});
+
+//Página Principal
+Route::get('/homepage', function () {
+    return view('homepage', ['page_title' => 'Página Inicial']);
+});
+
+//Página de Restrições (Docente)
+Route::get('/restrictions', function () {
+    return view('restrictions', ['page_title' => 'Restrições']);
+});
+
+//Página Formulário: Restrições (Docente)
+Route::get('/restriction', function () {
+    return view('restriction', ['page_title' => 'Restrições de Sala de Aula']);
+});
+
+//Página Formulário: Impedimentos (Docente)
+Route::get('/schedule', function () {
+    return view('schedule', ['page_title' => 'Impedimentos de Horário']);
+});
+
+//Página de Gerir Processos (Admin)
+Route::get('/processes', function () {
+    return view('processes', ['page_title' => 'Gerir Processos']);
+});
+
+//Página de Consultar Unidades Curriculares (Utilizador)
+Route::get('/ucs', function () {
+    return view('unidades_curriculares', ['page_title' => 'Consultar Unidades Curriculares']);
+});
+
+//Página de Unidade Curricular (Utilizador)
+Route::get('/uc/{id}', function () {
+    return view('unidade_curricular', ['page_title' => 'Unidade Curricular']);
+});
+
+//Página de Gerir Dados (Admin)
+Route::get('/manage', function () {
+    return view('gerir_dados', ['page_title' => 'Gerir Dados']);
 });
