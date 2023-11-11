@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('main')
+@section('body')
 <main>
     <nav class="navbar navbar-main navbar-expand-lg px-3 shadow-none ">
         <div class="container-fluid d-flex justify-content-end">

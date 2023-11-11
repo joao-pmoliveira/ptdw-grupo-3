@@ -1,8 +1,8 @@
 @extends('layouts.base')
 
-@section('main')
+@section('body')
 
-<main class="vh-100 d-flex flex-column">
+<div class="vh-100 d-flex flex-column">
 
     @include('partials._topBar')
 
@@ -10,10 +10,10 @@
     <div class="d-flex h-100">
         @include('partials._sidebar')
 
-        @yield('content')
+        @yield('main')
 
     </div>
 
-</main>
+</div>
 
 @endsection

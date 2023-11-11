@@ -1,8 +1,8 @@
 @extends('layouts.baseContent')
 
-@section('content')
+@section('main')
 
-<div class="w-100 px-5">
+<main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
                 ['página Inicial', '/'],
@@ -11,6 +11,6 @@
     ])
 
     @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
-</div>
+</main>
 
 @endsection
