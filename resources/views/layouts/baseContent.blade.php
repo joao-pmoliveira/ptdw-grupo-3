@@ -2,7 +2,7 @@
 
 @section('body')
 
-<div class="vh-100 d-flex flex-column">
+<div class="d-flex flex-column ">
 
     @include('partials._topBar')
 

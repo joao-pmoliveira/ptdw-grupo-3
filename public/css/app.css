@@ -98,3 +98,30 @@ aside a.active {
     font-weight: 500;
     font-family: var(--primary-font-family);
 }
+
+/*Cards*/
+#card-grid {
+    margin-top:3rem;
+}
+.card{
+    width: max(300px, 30%);
+    max-width: 500px;
+}
+
+/*Button Material override*/
+.btn-primary{
+    background-color: var(--primary-background-color);
+}
+
+/*Border Material override*/
+.border-primary {
+    border-color: var(--primary-text-color);
+}
+.border-primary:hover,
+.border-primary:focus,
+.border-primary:active,
+.btn-primary:not(:disabled):not(.disabled):active{
+    background-color: var(--accent-background-color);
+    border-color: var(--accent-background-color);
+    color: var(--secondary-text-color)
+}

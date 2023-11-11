@@ -37,6 +37,7 @@ p{
 .button-txt{
     font-size: var(--txt-s-size);
     font-weight: 400;
+    font-family: var(--primary-font-family);
 }
 
 .breadcrumb-txt{

@@ -5827,7 +5827,7 @@ textarea.form-control-lg {
   transform: translateY(-50%) !important; }
 
 .border {
-  border: 1px solid #dee2e6 !important; }
+  border: 1px solid #dee2e6 ; }
 
 .border-0 {
   border: 0 !important; }
@@ -5857,31 +5857,31 @@ textarea.form-control-lg {
   border-left: 0 !important; }
 
 .border-primary {
-  border-color: #e91e63 !important; }
+  border-color: #e91e63 ; }
 
 .border-secondary {
-  border-color: #7b809a !important; }
+  border-color: #7b809a ; }
 
 .border-success {
-  border-color: #4CAF50 !important; }
+  border-color: #4CAF50 ; }
 
 .border-info {
-  border-color: #1A73E8 !important; }
+  border-color: #1A73E8 ; }
 
 .border-warning {
-  border-color: #fb8c00 !important; }
+  border-color: #fb8c00 ; }
 
 .border-danger {
-  border-color: #F44335 !important; }
+  border-color: #F44335 ; }
 
 .border-light {
-  border-color: #f0f2f5 !important; }
+  border-color: #f0f2f5 ; }
 
 .border-dark {
-  border-color: #344767 !important; }
+  border-color: #344767 ; }
 
 .border-white {
-  border-color: #fff !important; }
+  border-color: #fff ; }
 
 .border-0 {
   border-width: 0 !important; }
