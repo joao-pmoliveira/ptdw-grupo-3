@@ -7,7 +7,7 @@
     @include('partials._topBar')
 
     @include('partials._logoBar', ['sidebar' => true])
-    <div class="d-flex h-100">
+    <div class="d-flex min-vh-100">
         @include('partials._sidebar')
 
         @yield('main')
