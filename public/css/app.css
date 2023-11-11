@@ -28,6 +28,14 @@
     color: var(--accent-text-color);
 }
 
+
+/*Geral*/
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 /*Hero Section (Imagem na página de entrada)*/
 #hero{
     background-image: url('/img/bg-hero.jpg');
@@ -48,9 +56,6 @@ aside {
 }
 aside ul {
     width: fit-content;
-}
-aside li {
-    list-style: none;
 }
 aside li {
     font-size: var(--txt-s-size);
