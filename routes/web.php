@@ -40,7 +40,7 @@ Route::get('/schedule', function () {
 
 //Página de Gerir Processos (Admin)
 Route::get('/processes', function () {
-    return view('processes', ['page_title' => 'Gerir Processos']);
+    return view('admin/processes', ['page_title' => 'Gerir Processos']);
 });
 
 //Página de Consultar Unidades Curriculares (Utilizador)
