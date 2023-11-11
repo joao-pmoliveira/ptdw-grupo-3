@@ -11,12 +11,7 @@
             </button>
         </div>
     </nav>
-    <div class="container-fluid d-flex align-items-center p-3 gap-3 bg-accent">
-        <i class="fa-solid fa-bars text-light invisible"></i>
-        <div class="img-wrapper">
-            <img src="{{ asset('img/Logo.png') }}" alt="">
-        </div>
-    </div>
+    @include('partials._logoBar')
 
     <div id="hero" class="m-3 p-4">
         <h1 class="text-light">suporte à criação de horários da estga</h1>
