@@ -1,15 +1,9 @@
-@extends('layouts.base')
+@extends('layouts.baseContent')
 
-@section('main')
+@section('content')
 
-<main class="vh-100">
-
-    @include('partials._logoBar', ['sidebar' => true])
-    <div class="d-flex h-100">
-        @include('partials._sidebar')
-
-    </div>
-
-</main>
+<div class="w-100 px-5">
+    <h1>Test</h1>
+</div>
 
 @endsection
