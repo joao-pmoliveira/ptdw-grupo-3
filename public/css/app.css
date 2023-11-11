@@ -125,3 +125,21 @@ aside a.active {
     border-color: var(--accent-background-color);
     color: var(--secondary-text-color)
 }
+
+/*Tabelas*/
+thead tr {
+    border-top: 2px solid var(--accent-background-color);
+}
+thead tr th{
+    font-size: var(--txt-m-size);
+    font-weight: 500;
+    padding: 5px;
+}
+tbody tr td, tbody tr th{
+    padding: 5px;
+}
+tbody tr:hover{
+    background-color: var(--accent-background-color);
+    color: var(--secondary-text-color);
+    cursor: pointer;
+}
