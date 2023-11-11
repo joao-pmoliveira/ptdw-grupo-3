@@ -12,7 +12,7 @@
 
     @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
 
-    <section class="d-flex flex-wrap gap-4" id="card-grid">
+    <section class="mt-5 d-flex flex-wrap gap-4">
         @include('partials._card', [
                 'title' => 'Unidades Curriculares',
                 'body' => ['Consulte a lista de Unidades Curriculares'],
