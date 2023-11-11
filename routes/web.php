@@ -34,8 +34,14 @@ Route::get('/restriction', function () {
 });
 
 //Página Formulário: Impedimentos (Docente)
-Route::get('/schedule', function () {
-    return view('schedule', ['page_title' => 'Impedimentos de Horário']);
+Route::get('/schedule/{start_year}_{end_year}/{semester}/{id}', function ($start_year, $end_year, $semester, $id) {
+    return view('schedule', [
+        'page_title' => 'Impedimentos de Horário',
+        'start_year' => $start_year,
+        'end_year' => $end_year,
+        'semester' => $semester,
+        'id' => $id
+    ]);
 });
 
 //Página de Gerir Processos (Admin)

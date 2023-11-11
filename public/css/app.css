@@ -143,3 +143,71 @@ tbody tr:hover{
     color: var(--secondary-text-color);
     cursor: pointer;
 }
+
+/*Horário Semanal*/
+#schedule-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 4em);
+    grid-template-rows: 2em;
+    align-content: center;
+    gap:0.3em;
+}
+#schedule-grid p {
+    font-weight: 500;
+    font-size: var(--txt-m-size);
+}
+/*Seleciona primeira linha de elementos (dias da semana)*/
+#schedule-grid p:not( :nth-child(7) ~ p){
+    text-align: center;
+}
+/*Seleciona primeira coluna (blocos do dia)*/
+#schedule-grid p:nth-child(8),
+#schedule-grid p:nth-child(15),
+#schedule-grid p:nth-child(22) {
+    align-self: center;
+}
+#schedule-grid label {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 1em;
+    line-height: 1em;
+    color: var(--secondary-text-color)
+}
+#schedule-grid label > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+#schedule-grid input[type='checkbox'] {
+    align-self: center;
+    justify-self: center;
+
+    appearance: none;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    outline: none;
+    border-radius: 0;
+
+    background-color: var(--primary-background-color);
+    border: 1px solid var(--primary-text-color)
+}
+#schedule-grid input[type='checkbox']:hover {
+    cursor: pointer;
+    background-color: var(--primary-backgorund-color);
+    border-width: 3px;
+    border-color: var(--accent-background-color);
+}
+#schedule-grid input[type='checkbox']:checked {
+    background-color: var(--accent-background-color);
+    border-color: var(--accent-background-color);
+}
+#schedule-grid input[type='checkbox']:focus {
+    outline: 2px solid var(--secondary-backgorund-color);
+}
