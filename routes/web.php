@@ -19,8 +19,8 @@ Route::get('/', function () {
 });
 
 //Página Principal
-Route::get('/homepage', function () {
-    return view('homepage', ['page_title' => 'Página Inicial']);
+Route::get('/home', function () {
+    return view('home', ['page_title' => 'Página Inicial']);
 });
 
 //Página de Restrições (Docente)

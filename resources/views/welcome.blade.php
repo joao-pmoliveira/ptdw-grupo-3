@@ -11,7 +11,7 @@
             </button>
         </div>
     </nav>
-    @include('partials._logoBar')
+    @include('partials._logoBar', ['sidebar' => false])
 
     <div id="hero" class="m-3 p-4">
         <h1 class="text-light">suporte à criação de horários da estga</h1>

@@ -28,6 +28,7 @@
     color: var(--accent-text-color);
 }
 
+/*Hero Section (Imagem na página de entrada)*/
 #hero{
     background-image: url('/img/bg-hero.jpg');
     background-repeat: no-repeat;
@@ -39,4 +40,19 @@
     font-size: 50px;
     font-weight: 600; /*semi-bold*/
     max-width: 15ch;
+}
+
+/*Sidebar*/
+aside {
+    min-width: 250px;
+}
+aside ul {
+    width: fit-content;
+}
+aside li {
+    list-style: none;
+}
+aside li {
+    font-size: var(--txt-s-size);
+    text-transform: uppercase;
 }
