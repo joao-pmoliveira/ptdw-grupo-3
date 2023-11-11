@@ -91,3 +91,10 @@ aside a.active {
 .breadcrumb-item + .active {
     font-weight: 500;
 }
+
+/*Título da Página*/
+.page-title{
+    font-size: var(--txt-xl-size);
+    font-weight: 500;
+    font-family: var(--primary-font-family);
+}

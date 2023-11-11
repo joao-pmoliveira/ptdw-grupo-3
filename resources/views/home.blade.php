@@ -9,7 +9,8 @@
                 ['teste', '/home']
             ]
     ])
-    <h1>Test</h1>
+
+    @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
 </div>
 
 @endsection
