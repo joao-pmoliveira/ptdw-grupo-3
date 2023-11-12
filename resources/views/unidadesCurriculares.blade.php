@@ -13,8 +13,8 @@
     @include('partials._pageTitle', ['title' => 'Consultar Unidades Curriculares'])
 
     <section class="container-xl mt-5 p-0 d-flex flex-column gap-4">
-    <div class= "d-flex gap-4 align-items-center" >
-        <div class="d-flex gap-2 align-items-center px-1">
+        <div class= "d-flex gap-4 align-items-center" >
+            <div class="d-flex gap-2 align-items-center px-1">
                 <label class="ano_semestre" for="ano_semestre"></label>
                 <select class="" name="ano_semestre" id="ano_semestre">
                 <option value="" selected>Ano Letivo - Semestre</option> 
@@ -25,32 +25,35 @@
                     <option value="2021/22_2º semestre">2021/22 - 2º semestre</option>
                     <option value="2021/22_1º semestre">2021/22 - 1º semestre</option>
                 </select>
-        </div>
+            </div>
 
-        <div class="d-flex gap-2 align-items-center px-1">
+            <div class="d-flex gap-2 align-items-center px-1">
                 <label class="" for="ciclo"></label>
                 <select class="" name="ciclo" id="ciclo" >
-                <option value="" selected>Ciclo</option> 
+                    <option value="" selected>Ciclo</option> 
                     <option value="Licenciatura">Licenciatura</option>
                     <option value="Mestrado">Mestrado</option>
                     <option value="Doutoramento">Doutoramento</option>
                     <option value="Ctesp">Ctesp</option>
                 </select>
-        </div>
-
-        <div class="d-flex gap-2 align-items-center px-1">
-            <label class="" for="uc"></label>
-            <input type="text" name="uc" id="uc">
-            <i class="fa-solid fa-search"></i>
-        </div>
-
-        <div>
-            <label for="">As minhas UC´s</label>
-            <input type="checkbox" name="" id="">
             </div>
 
-    </div>
-    </section><br><br>
+            <div class="d-flex gap-2 align-items-center px-1">
+                <label class="" for="uc"></label>
+                <input type="text" name="uc" id="uc">
+                <i class="fa-solid fa-search"></i>
+            </div>
+
+            <div>
+                <label for="">As minhas UC´s</label>
+                <input type="checkbox" name="" id="">
+            </div>
+
+        </div>
+    </section>
+    
+    <br>
+    <br>
 
     <table class="w-100">
             <thead>
