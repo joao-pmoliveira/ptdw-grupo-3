@@ -10,7 +10,7 @@
     background-color: var(--primary-background-color);
 }
 .bg-secondary{
-    background-color: var(--secondary-backgorund-color);
+    background-color: var(--secondary-background-color);
 }
 .bg-terciary{
     background-color: var(--terciary-background-color);
@@ -44,6 +44,21 @@ a {
 }
 a:hover{
     color: var(--accent-text-color);
+}
+
+select{
+    margin:0;
+    padding:0;
+}
+label {
+    margin: 0;
+    padding: 0;
+    color: var(--primary-text-color);
+}
+legend {
+    font-size: var(--txt-s-size);
+    font-weight: 500;
+    margin:0;
 }
 
 /*Hero Section (Imagem na página de entrada)*/
@@ -209,5 +224,38 @@ tbody tr:hover{
     border-color: var(--accent-background-color);
 }
 #schedule-grid input[type='checkbox']:focus {
-    outline: 2px solid var(--secondary-backgorund-color);
+    outline: 2px solid var(--secondary-background-color);
+}
+
+/*Grelha de Inputs para laboratórios em Restrições*/
+.lab-select-grid {
+    width: fit-content;
+    display: grid;
+    row-gap: 0.2em;
+    column-gap: 0.4em;
+    grid-template-columns: 1fr 3fr;
+}
+.class-sub-form-container p {
+    font-size: var(--txt-s-size);
+    font-weight: 300;
+}
+.class-sub-form-container > fieldset {
+    border-top: 3px solid var(--accent-background-color);
+}
+.class-fieldset-heading{
+    font-size: var(--txt-m-size);
+    font-weight: 500;
+}
+.lab-requirement-type-container > div {
+    background-color: var(--primary-background-color);
+    border: 1px solid var(--primary-text-color);
+    color: var(--primary-text-color);
+    padding: 8px 16px;
+    font-size: var(--txt-m-size);
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4em;
+    margin-bottom: 0.4em;
 }

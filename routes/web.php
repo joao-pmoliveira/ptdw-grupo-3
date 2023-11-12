@@ -29,8 +29,18 @@ Route::get('/restrictions', function () {
 });
 
 //Página Formulário: Restrições (Docente)
-Route::get('/restriction', function () {
-    return view('restriction', ['page_title' => 'Restrições de Sala de Aula']);
+Route::get('/restriction/{start_year}_{end_year}/{semester}/{id}', function ($start_year, $end_year, $semester, $id) {
+    return view('restriction', [
+        'page_title' => 'Restrições de Sala de Aula',
+        'start_year' => $start_year,
+        'end_year' => $end_year,
+        'semester' => $semester,
+        'id' => $id,
+        'classes' => [
+            ['id' => 2, 'name' => 'AP'],
+            ['id' => 7, 'name' => 'MATI']
+        ]
+    ]);
 });
 
 //Página Formulário: Impedimentos (Docente)
