@@ -71,5 +71,5 @@ Route::get('/uc/{id}', function () {
 
 //Página de Gerir Dados (Admin)
 Route::get('/manage', function () {
-    return view('gerir_dados', ['page_title' => 'Gerir Dados']);
+    return view('gerirDados', ['page_title' => 'Gerir Dados']);
 });
