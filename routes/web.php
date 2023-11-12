@@ -61,7 +61,7 @@ Route::get('/processes', function () {
 
 //Página de Consultar Unidades Curriculares (Utilizador)
 Route::get('/ucs', function () {
-    return view('unidades_curriculares', ['page_title' => 'Consultar Unidades Curriculares']);
+    return view('unidadesCurriculares', ['page_title' => 'Consultar Unidades Curriculares']);
 });
 
 //Página de Unidade Curricular (Utilizador)
