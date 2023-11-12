@@ -71,6 +71,13 @@ Route::get('/uc/{id}', function ($id) {
         'id' => $id
     ]);
 });
+//Página de Editar Unidade Curricular (Admin)
+Route::get('/uc/{id}/editar', function ($id) {
+    return view('editarUnidadeCurricular', [
+        'page_title' => 'Unidade Curricular', 
+        'id' => $id
+    ]);
+});
 
 //Página de Gerir Dados (Admin)
 Route::get('/manage', function () {

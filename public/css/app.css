@@ -259,3 +259,20 @@ tbody tr:hover{
     gap: 0.4em;
     margin-bottom: 0.4em;
 }
+
+/*Form editar UC*/
+#edit-uc-form > fieldset > div{
+    display: flex;
+    gap: 2em;
+    align-items: center;
+    padding: 1em;
+    border: 1px solid var(--terciary-text-color);
+    margin-bottom: 1px;
+}
+#edit-uc-form > fieldset > div > *:first-child{
+    min-width: 10em;
+}
+#edit-uc-form > div:first-of-type {
+    padding: 0.5em 0;
+    border-top: 3px solid var(--accent-background-color);
+}
