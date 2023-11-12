@@ -32,8 +32,83 @@
     </section>
     <div class="tab-content pt-3">
         <section id="manage-ucs" class="tab-pane active">
-            <!--Gerir Unidades Curriculares-->
+            <div class="d-flex flex-column gap-3">
+                <div>
+                    <button class="m-0 py-2 px-3
+                        btn btn-primary rounded-0
+                        border border-primary
+                        btn-outline-0
+                        shadow-none
+                        text-primary button-txt
+                        text-capitalize">Adicionar UC</button>
+                </div>
+
+                <div class="d-flex gap-3 align-items-center">
+                    <label for="school-year-semester">Ano Letivo e Semestre:</label>
+                    <select name="school_year_semester" id="school-year-semester">
+                        <option value="2023_2024_2">2023/24 2ºSemestre</option>
+                        <option value="2023_2024_1">2023/24 1ºSemestre</option>
+                        <option value="2022_2023_2">2022/23 2ºSemestre</option>
+                        <option value="2022_2023_1">2022/23 1ºSemestre</option>
+                        <option value="2021_2022_2">2021/22 2ºSemestre</option>
+                        <option value="2021_2022_1">2021/22 1ºSemestre</option>
+                    </select>
+                    <label for="cycle">Ciclo</label>
+                    <select name="cycle" id="cycle" >
+                        <option value="" selected>Ciclo</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                        <option value="Mestrado">Mestrado</option>
+                        <option value="Doutoramento">Doutoramento</option>
+                        <option value="Ctesp">Ctesp</option>
+                    </select>
+                    <label for="">Código ou Nome de UC</label>
+                    <input type="text" name="" id="">
+                    <i class="fa-solid fa-search"></i>
+                </div>
+
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col-1">Cód.</th>
+                                <th scope="col-1">Dep.</th>
+                                <th scope="col-5">Nome</th>
+                                <th scope="col-3">Docente Responsável</th>
+                                <th scope="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>91998</td>
+                                <td>dmat</td>
+                                <td>Matemática Aplicada às Tecnologias de Informação</td>
+                                <td>Luísa Mendes</td>
+                                <td><i class="fa-solid fa-pen"></i></td>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>88765</td>
+                                <td>deca</td>
+                                <td>Web Design</td>
+                                <td>Rita Gonçalves</td>
+                                <td><i class="fa-solid fa-pen"></i></td>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>85095</td>
+                                <td>deti</td>
+                                <td>Inteligência Artificial</td>
+                                <td>José Silva</td>
+                                <td><i class="fa-solid fa-pen"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
+
         <section id="manage-teachers" class="tab-pane">
             <div class="d-flex flex-column gap-3">    
                 <div>
