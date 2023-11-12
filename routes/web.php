@@ -56,7 +56,7 @@ Route::get('/schedule/{start_year}_{end_year}/{semester}/{id}', function ($start
 
 //Página de Gerir Processos (Admin)
 Route::get('/processes', function () {
-    return view('admin/processes', ['page_title' => 'Gerir Processos']);
+    return view('processes', ['page_title' => 'Gerir Processos']);
 });
 
 //Página de Consultar Unidades Curriculares (Utilizador)
