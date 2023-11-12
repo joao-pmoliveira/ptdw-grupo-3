@@ -76,3 +76,6 @@ Route::get('/uc/{id}', function ($id) {
 Route::get('/manage', function () {
     return view('manageData', ['page_title' => 'Gerir Dados']);
 });
+Route::get('/docente', function () {
+    return view('docente', ['page_title' => 'Docente']);
+});
