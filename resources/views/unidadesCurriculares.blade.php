@@ -10,7 +10,7 @@
             ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Unidades Curriculares'])
+    @include('partials._pageTitle', ['title' => 'Consultar Unidades Curriculares'])
 
     <section class="container-xl mt-5 p-0 d-flex flex-column gap-4">
     <div class= "d-flex gap-4 align-items-center" >

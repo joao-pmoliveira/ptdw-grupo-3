@@ -65,8 +65,11 @@ Route::get('/ucs', function () {
 });
 
 //Página de Unidade Curricular (Utilizador)
-Route::get('/uc/{id}', function () {
-    return view('unidade_curricular', ['page_title' => 'Unidade Curricular']);
+Route::get('/uc/{id}', function ($id) {
+    return view('unidadeCurricular', [
+        'page_title' => 'Unidade Curricular',
+        'id' => $id
+    ]);
 });
 
 //Página de Gerir Dados (Admin)
