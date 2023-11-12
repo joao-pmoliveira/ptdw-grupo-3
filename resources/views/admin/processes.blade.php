@@ -25,7 +25,7 @@
         <table class="w-100">
             <tbody>
                 <tr> <!-- Quando estivesse aberto ter algo assim? style="background-color: rgba(14, 180, 189, 0.5); color:#292929"  -->
-                    <th class="col-1" scope="row" ><i class="fa-solid fa-chevron-down"></i></th>
+                    <th class="col-1" scope="row"><i class="fa-solid fa-chevron-down"></i></th>
                     <th class="col-1" scope="row" >Nº Mec. </th>
                     <th class="col-4">Formulário 2023/24 1º Semestre</th>
                     <th class="col-3">Data Limite: 01/07/2023</th>
