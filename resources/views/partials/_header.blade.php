@@ -2,7 +2,7 @@
     <div id="menu-btn" class="{{$sidebar ? '' : 'invisible'}}">
         <i class="fa-solid fa-bars"></i>
     </div>
-    <div class="img-wrapper">
+    <div class="img-wrapper" id="ua-logo-header-container">
         <img src="{{ asset('img/Logo.png') }}" alt="">
     </div>
 </div>

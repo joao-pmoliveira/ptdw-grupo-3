@@ -272,3 +272,7 @@ tbody tr:hover{
     padding: 0.5em 0;
     border-top: 3px solid var(--accent-background-color);
 }
+
+#ua-logo-header-container{
+    cursor: pointer;
+}
