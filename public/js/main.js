@@ -57,3 +57,12 @@ linhasEditarUCs?.forEach(row => {
         window.location.href = `/uc/${row.getAttribute('data-id')}/editar`
     })
 })
+
+//Tabela de Editar Docentes
+const tabelaEditarDocentes = document.querySelector('#table-edit-teachers')
+const linhasEditarDocentes = tabelaEditarDocentes?.querySelectorAll('tr[data-id]')
+linhasEditarDocentes?.forEach(row => {
+    row.addEventListener('click', () => {
+        window.location.href = `/docente/git`
+    })
+})

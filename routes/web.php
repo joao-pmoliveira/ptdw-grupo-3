@@ -84,6 +84,6 @@ Route::get('/gerir', function () {
     return view('gerirDados', ['page_title' => 'Gerir Dados']);
 });
 
-Route::get('/docente', function () {
+Route::get('/docente/{id}', function ($id) {
     return view('docente', ['page_title' => 'Docente']);
 });
