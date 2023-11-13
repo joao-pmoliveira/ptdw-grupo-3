@@ -6,6 +6,7 @@
 
 @import url("layouts/_main.css");
 
+@import url("components/_searchbox.css");
 @import url("components/_checkbox.css");
 @import url("components/_sidebar.css");
 @import url("components/_header.css");

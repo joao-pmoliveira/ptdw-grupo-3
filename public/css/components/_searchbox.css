@@ -1,0 +1,25 @@
+.paco-searchbox {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--primary-text-color);
+    min-width: fit-content;
+    max-width: 10rem;
+}
+
+.paco-searchbox > input {
+    padding: 0.15rem 0.5rem;
+    border: 0;
+}
+.paco-searchbox > input:focus {
+    outline: 0;
+}
+.paco-searchbox div {
+    padding: 0.15rem 0.5rem;
+    color: var(--primary-text-color);
+    cursor: pointer;
+}
+.paco-searchbox div:hover {
+    color:var(--secondary-text-color);
+    background-color: var(--accent-background-color);
+}

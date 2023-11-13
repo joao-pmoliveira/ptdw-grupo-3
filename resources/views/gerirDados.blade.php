@@ -33,16 +33,10 @@
         <section id="manage-ucs" class="tab-pane active">
             <div class="d-flex flex-column gap-3">
                 <div>
-                    <button class="m-0 py-2 px-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize">Adicionar UC</button>
+                    <button class="btn">Adicionar UC</button>
                 </div>
 
-                <div class="d-flex gap-3 align-items-center flex-wrap">
+                <div class="d-flex gap-3 align-items-stretch flex-wrap">
                     <select name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
                         <option value="2023_2024_2">2023/24 2ºSemestre</option>
                         <option value="2023_2024_1">2023/24 1ºSemestre</option>
@@ -58,68 +52,63 @@
                         <option value="Doutoramento">Doutoramento</option>
                         <option value="Ctesp">Ctesp</option>
                     </select>
-                    <div>
+                    <div class="paco-searchbox">
                         <input type="text" name="nome_cod_uc" id="" aria-label="Filtre por código ou nome de uc">
-                        <i class="fa-solid fa-search"></i>
+                        <div><i class="fa-solid fa-search"></i></div>
                     </div>
                 </div>
-
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col-1">Cód.</th>
-                                <th scope="col-1">Dep.</th>
-                                <th scope="col-5">Nome</th>
-                                <th scope="col-3">Docente Responsável</th>
-                                <th scope="col-1"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row"></th>
-                                <td>91998</td>
-                                <td>dmat</td>
-                                <td>Matemática Aplicada às Tecnologias de Informação</td>
-                                <td>Luísa Mendes</td>
-                                <td><i class="fa-solid fa-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row"></th>
-                                <td>88765</td>
-                                <td>deca</td>
-                                <td>Web Design</td>
-                                <td>Rita Gonçalves</td>
-                                <td><i class="fa-solid fa-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row"></th>
-                                <td>85095</td>
-                                <td>deti</td>
-                                <td>Inteligência Artificial</td>
-                                <td>José Silva</td>
-                                <td><i class="fa-solid fa-pen"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                
+                <table class="title-separator">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col-1">Cód.</th>
+                            <th scope="col-1">Dep.</th>
+                            <th scope="col-5">Nome</th>
+                            <th scope="col-3">Docente Responsável</th>
+                            <th scope="col-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>91998</td>
+                            <td>dmat</td>
+                            <td>Matemática Aplicada às Tecnologias de Informação</td>
+                            <td>Luísa Mendes</td>
+                            <td><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>88765</td>
+                            <td>deca</td>
+                            <td>Web Design</td>
+                            <td>Rita Gonçalves</td>
+                            <td><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>85095</td>
+                            <td>deti</td>
+                            <td>Inteligência Artificial</td>
+                            <td>José Silva</td>
+                            <td><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
         <section id="manage-teachers" class="tab-pane">
             <div class="d-flex flex-column gap-3">    
-                <div>
-                    <button class="btn">Adicionar Docente</button>
+                <button class="btn">Adicionar Docente</button>
+
+                <div class="paco-searchbox">
+                    <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="NºMecanográfico ou Nome" aria-label="Filtre por número mecanográfico ou nome do docente">
+                    <div><i class="fa-solid fa-search"></i></div>
                 </div>
 
-                <div class="d-flex gap-3 align-items-center">
-                    <label for="teacher-identifier">NºMecanográfico ou Nome</label>
-                    <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="11011">
-                    <i class="fa-solid fa-search"></i>
-                </div>
-
-                <table class="">
+                <table class="title-separator">
                     <thead>
                         <tr>
                             <th scope="col"></th>
@@ -151,6 +140,7 @@
                 </table>
             </div>
         </section>
+
         <section id="import-data" class="tab-pane">
             <div class="d-flex flex-column gap-3">
                 <h2 >Importar dados das Unidades Curriculares</h2>
@@ -160,7 +150,6 @@
                 </div>
                 <div class="d-flex gap-3">
                     <input class="btn" type="button" value="Submeter">
-                    <input class="btn" type="button" value="Cancelar">
                 </div>
             </div>
         </section>
