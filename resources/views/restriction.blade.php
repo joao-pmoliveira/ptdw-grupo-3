@@ -10,7 +10,7 @@
                 ]
         ])
     
-    @include('partials._pageTitle', ['title' => 'Restrições de sala '.$start_year.'/'.$end_year.' '.$semester.'º Semestre - '.$id])
+    @include('partials._pageTitle', ['title' => 'Restrições de sala '.$ano_inicial.'/'.$ano_final.' '.$semestre.'º Semestre - '.$id])
 
     <section class="mt-5">
         <form action="" method="post">

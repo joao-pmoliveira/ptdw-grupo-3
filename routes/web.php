@@ -19,22 +19,22 @@ Route::get('/', function () {
 });
 
 //Página Principal
-Route::get('/home', function () {
+Route::get('/inicio', function () {
     return view('home', ['page_title' => 'Página Inicial']);
 });
 
 //Página de Restrições (Docente)
-Route::get('/restrictions', function () {
+Route::get('/restrições', function () {
     return view('restrictions', ['page_title' => 'Restrições']);
 });
 
 //Página Formulário: Restrições (Docente)
-Route::get('/restriction/{start_year}_{end_year}/{semester}/{id}', function ($start_year, $end_year, $semester, $id) {
+Route::get('/restrição/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
     return view('restriction', [
         'page_title' => 'Restrições de Sala de Aula',
-        'start_year' => $start_year,
-        'end_year' => $end_year,
-        'semester' => $semester,
+        'ano_inicial' => $ano_inicial,
+        'ano_final' => $ano_final,
+        'semestre' => $semestre,
         'id' => $id,
         'classes' => [
             ['id' => 2, 'name' => 'AP'],
@@ -44,18 +44,18 @@ Route::get('/restriction/{start_year}_{end_year}/{semester}/{id}', function ($st
 });
 
 //Página Formulário: Impedimentos (Docente)
-Route::get('/schedule/{start_year}_{end_year}/{semester}/{id}', function ($start_year, $end_year, $semester, $id) {
+Route::get('/impedimento/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
     return view('schedule', [
         'page_title' => 'Impedimentos de Horário',
-        'start_year' => $start_year,
-        'end_year' => $end_year,
-        'semester' => $semester,
+        'ano_inicial' => $ano_inicial,
+        'ano_final' => $ano_final,
+        'semestre' => $semestre,
         'id' => $id
     ]);
 });
 
 //Página de Gerir Processos (Admin)
-Route::get('/processes', function () {
+Route::get('/processos', function () {
     return view('processes', ['page_title' => 'Gerir Processos']);
 });
 
@@ -80,9 +80,10 @@ Route::get('/uc/{id}/editar', function ($id) {
 });
 
 //Página de Gerir Dados (Admin)
-Route::get('/manage', function () {
+Route::get('/gerir', function () {
     return view('manageData', ['page_title' => 'Gerir Dados']);
 });
+
 Route::get('/docente', function () {
     return view('docente', ['page_title' => 'Docente']);
 });

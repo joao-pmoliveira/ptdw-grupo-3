@@ -10,7 +10,7 @@
                 ]
         ])
     
-    @include('partials._pageTitle', ['title' => 'Impedimentos de Horário '.$start_year.'/'.$end_year.' '.$semester.'º Semestre - '.$id])
+    @include('partials._pageTitle', ['title' => 'Impedimentos de Horário '.$ano_inicial.'/'.$ano_final.' '.$semestre.'º Semestre - '.$id])
 
     <section class="mt-5">
         <form action="" method="post">
