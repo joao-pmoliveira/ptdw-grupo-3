@@ -48,3 +48,12 @@ linhaHistoricos?.forEach(row => {
         window.location.href = `/${formType}/${startYear}_${endYear}/${semester}/110111`
     })
 })
+
+//Tabela de Editar UCs (Gerir Dados)
+const tabelaEditarUCs = document.querySelector('#table-edit-ucs')
+const linhasEditarUCs = tabelaEditarUCs?.querySelectorAll('tr[data-id]')
+linhasEditarUCs?.forEach(row => {
+    row.addEventListener('click', () => {
+        window.location.href = `/uc/${row.getAttribute('data-id')}/editar`
+    })
+})

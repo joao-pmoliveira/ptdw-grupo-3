@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 
-                <table class="title-separator">
+                <table class="title-separator" id="table-edit-ucs">
                     <thead>
                         <tr>
                             <th scope="col"></th>
@@ -70,7 +70,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr data-id='91998'>
                             <th scope="row"></th>
                             <td>91998</td>
                             <td>dmat</td>
@@ -78,7 +78,7 @@
                             <td>Luísa Mendes</td>
                             <td><i class="fa-solid fa-pen"></i></td>
                         </tr>
-                        <tr>
+                        <tr data-id="88765">
                             <th scope="row"></th>
                             <td>88765</td>
                             <td>deca</td>
@@ -86,7 +86,7 @@
                             <td>Rita Gonçalves</td>
                             <td><i class="fa-solid fa-pen"></i></td>
                         </tr>
-                        <tr>
+                        <tr data-id='85095'>
                             <th scope="row"></th>
                             <td>85095</td>
                             <td>deti</td>
