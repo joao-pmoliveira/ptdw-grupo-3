@@ -5,8 +5,7 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-                ['página Inicial', '/home'],
-                ['gerir processos', '/processes']
+                ['página inicial', '/inicio']
             ]
     ])
 

@@ -5,8 +5,8 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-                ['página Inicial', '/home'],
-                ['unidadeCurricular', '/ucs/{id}']
+                ['página inicial', '/inicio'],
+                ['unidades curriculares', '/ucs']
             ]
     ])
 
