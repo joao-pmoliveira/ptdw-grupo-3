@@ -11,8 +11,8 @@
 
     @include('partials._pageTitle', ['title' => 'Consultar Unidades Curriculares'])
 
-    <section class="container-xl mt-5 p-0 d-flex flex-column gap-4">
-        <div class= "d-flex gap-4 align-items-center" >
+    <section class="mt-5 p-0 d-flex flex-column gap-4">
+        <div class= "d-flex gap-4 align-items-center flex-wrap" >
             <div class="d-flex gap-2 align-items-center px-1">
                 <label class="ano_semestre" for="ano_semestre"></label>
                 <select class="" name="ano_semestre" id="ano_semestre">

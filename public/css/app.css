@@ -146,15 +146,19 @@ tbody tr:hover{
 
 /*Horário Semanal*/
 #schedule-grid{
+    max-width: max-content;
     display: grid;
-    grid-template-columns: repeat(7, 4em);
-    grid-template-rows: 2em;
+    grid-template-columns: minmax(1.5em, 1fr) repeat(6,  minmax(1.5em, 1fr));
+    grid-template-rows: repeat(3, auto);
     align-content: center;
     gap:0.3em;
 }
 #schedule-grid p {
     font-weight: 500;
     font-size: var(--txt-m-size);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 /*Seleciona primeira linha de elementos (dias da semana)*/
 #schedule-grid p:not( :nth-child(7) ~ p){
@@ -210,6 +214,13 @@ tbody tr:hover{
 }
 #schedule-grid input[type='checkbox']:focus {
     outline: 2px solid var(--secondary-background-color);
+}
+
+@media (max-width: 767px) {
+    #schedule-grid p {
+        font-weight: 500;
+        font-size: var(--txt-s-size);
+    }   
 }
 
 /*Grelha de Inputs para laboratórios em Restrições*/

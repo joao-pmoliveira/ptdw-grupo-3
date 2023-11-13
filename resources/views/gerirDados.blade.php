@@ -42,27 +42,33 @@
                         text-capitalize">Adicionar UC</button>
                 </div>
 
-                <div class="d-flex gap-3 align-items-center">
-                    <label for="school-year-semester">Ano Letivo e Semestre:</label>
-                    <select name="school_year_semester" id="school-year-semester">
-                        <option value="2023_2024_2">2023/24 2ºSemestre</option>
-                        <option value="2023_2024_1">2023/24 1ºSemestre</option>
-                        <option value="2022_2023_2">2022/23 2ºSemestre</option>
-                        <option value="2022_2023_1">2022/23 1ºSemestre</option>
-                        <option value="2021_2022_2">2021/22 2ºSemestre</option>
-                        <option value="2021_2022_1">2021/22 1ºSemestre</option>
-                    </select>
-                    <label for="cycle">Ciclo</label>
-                    <select name="cycle" id="cycle" >
-                        <option value="" selected>Ciclo</option>
-                        <option value="Licenciatura">Licenciatura</option>
-                        <option value="Mestrado">Mestrado</option>
-                        <option value="Doutoramento">Doutoramento</option>
-                        <option value="Ctesp">Ctesp</option>
-                    </select>
-                    <label for="">Código ou Nome de UC</label>
-                    <input type="text" name="" id="">
-                    <i class="fa-solid fa-search"></i>
+                <div class="d-flex gap-3 align-items-center flex-wrap">
+                    <div>
+                        <label for="school-year-semester">Ano Letivo e Semestre:</label>
+                        <select name="school_year_semester" id="school-year-semester">
+                            <option value="2023_2024_2">2023/24 2ºSemestre</option>
+                            <option value="2023_2024_1">2023/24 1ºSemestre</option>
+                            <option value="2022_2023_2">2022/23 2ºSemestre</option>
+                            <option value="2022_2023_1">2022/23 1ºSemestre</option>
+                            <option value="2021_2022_2">2021/22 2ºSemestre</option>
+                            <option value="2021_2022_1">2021/22 1ºSemestre</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="cycle">Ciclo</label>
+                        <select name="cycle" id="cycle" >
+                            <option value="" selected>Ciclo</option>
+                            <option value="Licenciatura">Licenciatura</option>
+                            <option value="Mestrado">Mestrado</option>
+                            <option value="Doutoramento">Doutoramento</option>
+                            <option value="Ctesp">Ctesp</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="">Código ou Nome de UC</label>
+                        <input type="text" name="" id="">
+                        <i class="fa-solid fa-search"></i>
+                    </div>
                 </div>
 
                 <div>
@@ -126,38 +132,36 @@
                     <i class="fa-solid fa-search"></i>
                 </div>
 
-                <div>
-                    <table class="w-50">
-                        <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Nº</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            <tr>
-                                <th scope="row"></th>
-                                <td>110555</td>
-                                <td>José Silva</td>
-                                <td><i class="fa-solid fa-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row"></th>
-                                <td>123456</td>
-                                <td>Luísa Mendes</td>
-                                <td><i class="fa-solid fa-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row"></th>
-                                <td>333555</td>
-                                <td>Rita Gonçalves</td>
-                                <td><i class="fa-solid fa-pen"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Nº</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr>
+                            <th scope="row"></th>
+                            <td>110555</td>
+                            <td>José Silva</td>
+                            <td><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>123456</td>
+                            <td>Luísa Mendes</td>
+                            <td><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>333555</td>
+                            <td>Rita Gonçalves</td>
+                            <td><i class="fa-solid fa-pen"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
         <section id="import-data" class="tab-pane">

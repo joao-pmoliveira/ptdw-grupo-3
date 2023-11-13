@@ -2,7 +2,7 @@
     <legend class="class-fieldset-heading py-1" >{{$class['id']}} {{$class['name']}}</legend>
     <fieldset class="">
         <legend>Utilização de Laboratórios</legend>
-        <div class="d-flex gap-3 px-3 lab-requirement-type-container">
+        <div class="d-flex gap-3 px-3 lab-requirement-type-container flex-wrap">
             <div>
                 <label for="">Obrigatório</label>
                 <input type="checkbox" name="" id="">
@@ -59,7 +59,7 @@
         <legend>Software necessário</legend>
         <p>Identifique nome, fabricante, versão, e sistema operativo</p>
         <label for="needed-sof"></label>
-        <textarea class="mx-3" name="needed_software" id="needed-soft" cols="50" rows="5"></textarea>
+        <textarea class="mx-3" name="needed_software" id="needed-soft" cols="10"></textarea>
     </fieldset>
     <fieldset class=" px3">
         <legend>Tipo de sala para avaliações</legend>

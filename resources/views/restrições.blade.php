@@ -11,7 +11,7 @@
 
     @include('partials._pageTitle', ['title' => 'Preencher restrições'])
 
-    <section class="container-xl mt-5 p-0 d-flex flex-column gap-4">
+    <section class="mt-5 p-0 d-flex flex-column gap-4">
         <h3>Formulário Pendente</h3>
         <table class="w-100">
             <thead>

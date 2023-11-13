@@ -18,7 +18,7 @@
             <p>Selecione todos os blocos para os quais <strong>não tem disponibilidade</strong>.
                 Mínimo de 2 blocos disponíveis
             </p>
-            <div class="w-75 mb-5" id="schedule-grid">
+            <div class="mb-5" id="schedule-grid">
                 <p></p>
                 <p>Segunda</p>
                 <p>Terça</p>
@@ -105,11 +105,13 @@
                     <i class="fa-solid fa-x"></i>     
                 </label>
             </div>
-
-            <h3>Justificação</h3>
-            <p>Para impedimentos, caso existam.</p>
-            <label class="d-block" for="justificacao"></label>
-            <textarea name="justification" id="justificacao" cols="80" rows="7"></textarea>
+            
+            <fieldset id="justification-fieldset">
+                <h3>Justificação</h3>
+                <p>Para impedimentos, caso existam.</p>
+                <label class="d-block" for="justificacao"></label>
+                <textarea cols="30" name="justification" id="justificacao"></textarea>
+            </fieldset>
             <div class="d-flex gap-3" id="form-btns">
                 <input class="d-block
                     m-0 py-2 px-3
