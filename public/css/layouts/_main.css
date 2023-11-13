@@ -1,17 +1,17 @@
 /*Layout*/
 #primary-layout {
     display: grid;
-    grid-template-areas: 
-    'login-bar login-bar'
-    'header header'
-    'sidebar main-content';
+    grid-template-areas:
+        "login-bar login-bar"
+        "header header"
+        "sidebar main-content";
 
     grid-template-columns: minmax(auto, max-content) 1fr;
     grid-template-rows: auto auto 1fr;
     min-height: 100dvh;
-    gap:0;
-    padding:0;
-    margin:0;
+    gap: 0;
+    padding: 0;
+    margin: 0;
 }
 
 #login-bar {
@@ -24,23 +24,22 @@
 
 aside {
     grid-area: sidebar;
-
 }
 
 main {
     grid-area: main-content;
     background-color: var(--primary-background-color);
     max-width: 100rem;
+    padding-bottom: 5rem;
 }
 
 /*Layout for */
 @media (max-width: 767px) {
     #primary-layout {
-
-        grid-template-areas: 
-        'login-bar'
-        'header'
-        'main-content';
+        grid-template-areas:
+            "login-bar"
+            "header"
+            "main-content";
         grid-template-columns: 100%;
         grid-template-rows: auto auto 1fr;
     }
@@ -49,7 +48,7 @@ main {
         grid-area: main-content;
         z-index: -1;
     }
-    aside.show{
+    aside.show {
         z-index: 1;
     }
 }
