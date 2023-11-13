@@ -15,7 +15,8 @@
         @include('partials._card', [
                 'title' => 'Unidades Curriculares',
                 'body' => ['Consulte a lista de Unidades Curriculares'],
-                'button' => 'Consultar'
+                'button' => 'Consultar',
+                'url' => '/ucs'
             ])
         @include('partials._card', [
                 'title' => 'Preencher Restrições',
@@ -25,7 +26,8 @@
                         'Preencha as restrições de salas para cada UC em que é docente responsável;',
                         'Consultar histórico de formulários.'
                     ],
-                'button' => 'Preencher'
+                'button' => 'Preencher',
+                'url' => '/restrições'
             ])
         @include('partials._card', [
                 'title' => 'Gerir Processos',
@@ -36,7 +38,8 @@
                         'Descarregar dados de restrições submetidos;',
                         'Consultar histórico dos processos;'
                     ], 
-                'button' => 'Gerir'
+                'button' => 'Gerir',
+                'url' => '/processos'
             ])
         @include('partials._card', [
                 'title' => 'Gerir Dados',
@@ -45,7 +48,8 @@
                         'Adicione, edite ou remova docentes;',
                         'Importe dados do ficheiro do Serviço de Docentes;'
                     ],
-                'button' => 'Gerir'
+                'button' => 'Gerir',
+                'url' => '/gerir'
             ])
         @include('partials._card', [
                 'title' => 'Ajuda',
@@ -53,7 +57,8 @@
                         'Consulte os guias',
                         'Consulte os FAQs'
                     ],
-                'button' => 'Consultar'
+                'button' => 'Consultar',
+                'url' => '/inicio'
             ])
 
     </section>
