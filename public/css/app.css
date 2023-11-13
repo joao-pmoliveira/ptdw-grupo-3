@@ -272,3 +272,32 @@ tbody tr:hover{
 #ua-logo-header-container{
     cursor: pointer;
 }
+
+/*Abas em Gerir Dados - override do Material Dashboard*/
+
+.nav-tabs {
+    border: 0;
+    gap: 1rem;
+}
+.nav-link {
+    color: var(--primary-text-color);
+    transition: none;
+    font-family: var(--primary-font-family);
+    margin: 0;
+}
+.nav-tabs .nav-link{
+    border-radius: 0;
+    border-bottom: 2px solid var(--terciary-background-color);
+}
+.nav-tabs .nav-link.active {
+    color: var(--primary-text-color);
+    background-color: var(--primary-background-color);
+    border: 0;
+    border-bottom: 2px solid var(--accent-background-color);
+}
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+    color: var(--primary-text-color);
+    border: 0;
+    border-bottom: 2px solid var(--accent-background-color);
+}
