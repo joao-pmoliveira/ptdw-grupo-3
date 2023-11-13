@@ -13,8 +13,7 @@
             </div>
         </div>
         <div class="lab-select-grid px-3">
-            <label class="" for="lab-one">Laboratório</label>
-            <select name="lab_one" id="lab-one" >
+            <select name="lab_one" id="lab-one" aria-label="Selecione laboratório um">
                 <option value="" selected>--selecione--</option>
                 <option value="5.1.10">5.1.10</option>
                 <option value="5.1.11">5.1.11</option>
@@ -23,8 +22,7 @@
                 <option value="5.1.14">5.1.14</option>
                 <option value="5.1.15">5.1.15</option>
             </select>
-            <label for="lab-two">Laboratório</label>
-            <select name="lab_two" id="lab-two" >
+            <select name="lab_two" id="lab-two" aria-label="Selecione laboratório dois">
                 <option value="" selected>--selecione--</option>
                 <option value="5.1.10">5.1.10</option>
                 <option value="5.1.11">5.1.11</option>
@@ -33,8 +31,7 @@
                 <option value="5.1.14">5.1.14</option>
                 <option value="5.1.15">5.1.15</option>
             </select>
-            <label for="lab-three">Laboratório</label>
-            <select name="lab_three" id="lab-three" >
+            <select name="lab_three" id="lab-three" aria-label="Selecione laboratório três">
                 <option value="" selected>--selecione--</option>
                 <option value="5.1.10">5.1.10</option>
                 <option value="5.1.11">5.1.11</option>
@@ -43,8 +40,7 @@
                 <option value="5.1.14">5.1.14</option>
                 <option value="5.1.15">5.1.15</option>
             </select>
-            <label for="lab-four">Laboratório</label>
-            <select name="lab_four" id="lab-four" >
+            <select name="lab_four" id="lab-four" aria-label="Selecione laboratório quatro">
                 <option value="" disabled selected>--selecione--</option>
                 <option value="5.1.10">5.1.10</option>
                 <option value="5.1.11">5.1.11</option>

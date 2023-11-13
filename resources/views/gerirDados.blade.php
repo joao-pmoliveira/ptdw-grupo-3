@@ -43,30 +43,23 @@
                 </div>
 
                 <div class="d-flex gap-3 align-items-center flex-wrap">
+                    <select name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
+                        <option value="2023_2024_2">2023/24 2ºSemestre</option>
+                        <option value="2023_2024_1">2023/24 1ºSemestre</option>
+                        <option value="2022_2023_2">2022/23 2ºSemestre</option>
+                        <option value="2022_2023_1">2022/23 1ºSemestre</option>
+                        <option value="2021_2022_2">2021/22 2ºSemestre</option>
+                        <option value="2021_2022_1">2021/22 1ºSemestre</option>
+                    </select>
+                    <select name="cycle" id="cycle" aria-label="Filtro por ciclo">
+                        <option value="" selected>Ciclo</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                        <option value="Mestrado">Mestrado</option>
+                        <option value="Doutoramento">Doutoramento</option>
+                        <option value="Ctesp">Ctesp</option>
+                    </select>
                     <div>
-                        <label for="school-year-semester">Ano Letivo e Semestre:</label>
-                        <select name="school_year_semester" id="school-year-semester">
-                            <option value="2023_2024_2">2023/24 2ºSemestre</option>
-                            <option value="2023_2024_1">2023/24 1ºSemestre</option>
-                            <option value="2022_2023_2">2022/23 2ºSemestre</option>
-                            <option value="2022_2023_1">2022/23 1ºSemestre</option>
-                            <option value="2021_2022_2">2021/22 2ºSemestre</option>
-                            <option value="2021_2022_1">2021/22 1ºSemestre</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="cycle">Ciclo</label>
-                        <select name="cycle" id="cycle" >
-                            <option value="" selected>Ciclo</option>
-                            <option value="Licenciatura">Licenciatura</option>
-                            <option value="Mestrado">Mestrado</option>
-                            <option value="Doutoramento">Doutoramento</option>
-                            <option value="Ctesp">Ctesp</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="">Código ou Nome de UC</label>
-                        <input type="text" name="" id="">
+                        <input type="text" name="nome_cod_uc" id="" aria-label="Filtre por código ou nome de uc">
                         <i class="fa-solid fa-search"></i>
                     </div>
                 </div>

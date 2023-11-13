@@ -1,0 +1,10 @@
+select {
+    min-width: fit-content;
+    max-width: 10rem;
+    border-radius: 0;
+    padding: 0.5em 0.25rem;
+}
+
+select::-ms-expand {
+    display: none;
+}

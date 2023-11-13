@@ -2,6 +2,7 @@
 @import url("styles/_colors.css");
 @import url("styles/_buttons.css");
 @import url("styles/_borders.css");
+@import url("styles/_selects.css");
 
 @import url("layouts/_main.css");
 
@@ -224,10 +225,9 @@ tbody tr:hover{
 /*Grelha de Inputs para laboratórios em Restrições*/
 .lab-select-grid {
     width: fit-content;
-    display: grid;
-    row-gap: 0.2em;
-    column-gap: 0.4em;
-    grid-template-columns: 1fr 3fr;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
 }
 .class-sub-form-container p {
     font-size: var(--txt-s-size);
