@@ -40,9 +40,9 @@
                 <i class="fa-solid fa-search"></i>
             </div>
 
-            <div>
-                <label for="">As minhas UC´s</label>
-                <input type="checkbox" name="" id="">
+            <div class="paco-checkbox">
+                <label for="my-classes-check">As minhas UC's</label>
+                <input type="checkbox" name="my_classes" id="my-classes-check">
             </div>
 
         </div>

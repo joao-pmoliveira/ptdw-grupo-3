@@ -3,13 +3,13 @@
     <fieldset class="">
         <legend>Utilização de Laboratórios</legend>
         <div class="d-flex gap-3 px-3 lab-requirement-type-container flex-wrap">
-            <div>
-                <label for="">Obrigatório</label>
-                <input type="checkbox" name="" id="">
+            <div class="paco-checkbox">
+                <label for="obligatory-labs">Obrigatório</label>
+                <input type="checkbox" name="obligatory_labs" id="obligatory-labs">
             </div>
-            <div >
-                <label for="">Preferencial</label>
-                <input type="checkbox" name="" id="">
+            <div class="paco-checkbox">
+                <label for="preferencial-labs">Preferencial</label>
+                <input type="checkbox" name="preferencial_labs" id="preferencial-labs">
             </div>
         </div>
         <div class="lab-select-grid px-3">
