@@ -47,7 +47,7 @@
     </section>
     
 
-    <table class="w-100 title-separator">
+    <table class="w-100 title-separator" id="table-ucs">
             <thead>
                 <tr> 
                     <th scope="col"></th>
@@ -58,7 +58,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr data-id='91998'>
                     <th scope="row"></th>
                     <td>91998</td>
                     <td>DMAT</td>
@@ -66,7 +66,7 @@
                     <td>Luísa Mendes</td>
                     <td></td>
                 </tr>
-                <tr>
+                <tr data-id="8765">
                     <th scope="row"></th>
                     <td>8765</td>
                     <td>DECA</td>
@@ -74,7 +74,7 @@
                     <td>Rita Santos</td>
                     <td></td>
                 </tr>
-                <tr>
+                <tr data-id="85095">
                     <th scope="row"></th>
                     <td>85095</td>
                     <td>DETI</td>

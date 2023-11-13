@@ -13,3 +13,12 @@ const uaLogo = document.querySelector('#ua-logo-header-container');
 uaLogo?.addEventListener('click', () => {
     window.location.href = '/inicio'
 })
+
+/*Tabela de UCs*/
+const tabelaUCs = document.querySelector('#table-ucs');
+const linhasUCs = tabelaUCs?.querySelectorAll('tr[data-id]');
+linhasUCs?.forEach((row) => {
+    row.addEventListener('click', () => {
+        window.location.href = `/uc/${row.getAttribute('data-id')}`
+    })
+})
