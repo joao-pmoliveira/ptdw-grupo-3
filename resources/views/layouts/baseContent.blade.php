@@ -2,17 +2,15 @@
 
 @section('body')
 
-<div class="d-flex flex-column ">
+<div id="primary-layout">
 
-    @include('partials._topBar')
+    @include('partials._loginBar')
 
-    @include('partials._logoBar', ['sidebar' => true])
-    <div class="d-flex min-vh-100">
-        @include('partials._sidebar')
+    @include('partials._header', ['sidebar' => true])
 
-        @yield('main')
+    @include('partials._sidebar')
 
-    </div>
+    @yield('main')
 
 </div>
 

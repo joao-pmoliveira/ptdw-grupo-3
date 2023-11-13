@@ -1,0 +1,32 @@
+aside.show {
+    display: block;
+    min-width: fit-content;
+    background-color: var(--secondary-background-color);
+}
+aside {
+    display: none;
+    background-color: rebeccapurple;
+}
+
+aside  ul {
+    width: fit-content;
+}
+
+aside li {
+    font-size: var(--txt-s-size);
+    text-transform: uppercase;
+}
+
+aside a {
+    color: var(--terciary-text-color);
+}
+aside a:hover {
+    color: var(--secondary-text-color);
+}
+aside a.active {
+    color: var(--secondary-text-color);
+}
+aside a:focus {
+    outline: 0;
+    border-bottom: 1px var(--secondary-text-color) solid;
+}

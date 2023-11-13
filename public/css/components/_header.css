@@ -1,0 +1,10 @@
+/*header*/
+
+#menu-btn {
+    color: var(--secondary-text-color);
+}
+
+#menu-btn:hover{
+    color: var(--primary-text-color);
+    cursor: pointer;
+}

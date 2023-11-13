@@ -1,0 +1,53 @@
+/*Layout*/
+#primary-layout {
+    display: grid;
+    grid-template-areas: 
+    'login-bar login-bar'
+    'header header'
+    'sidebar main-content';
+
+    grid-template-rows: auto auto 1fr;
+    min-height: 100dvh;
+    gap:0;
+    padding:0;
+    margin:0;
+}
+
+#login-bar {
+    grid-area: login-bar;
+}
+
+#header {
+    grid-area: header;
+}
+
+aside {
+    grid-area: sidebar;
+
+}
+
+main {
+    grid-area: main-content;
+    background-color: var(--primary-background-color);
+}
+
+/*Layout for */
+@media (max-width: 767px) {
+    #primary-layout {
+
+        grid-template-areas: 
+        'login-bar'
+        'header'
+        'main-content';
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+    }
+
+    aside {
+        grid-area: main-content;
+        z-index: -1;
+    }
+    aside.show{
+        z-index: 1;
+    }
+}

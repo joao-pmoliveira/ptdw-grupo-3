@@ -2,6 +2,11 @@
 @import url("styles/_colors.css");
 @import url("styles/_buttons.css");
 
+@import url("layouts/_main.css");
+
+@import url("components/_sidebar.css");
+@import url("components/_header.css");
+
 :root{
     --bs-breadcrumb-divider: '>'
 }
@@ -75,27 +80,7 @@ legend {
     max-width: 15ch;
 }
 
-/*Sidebar*/
-aside {
-    min-width: 250px;
-}
-aside ul {
-    width: fit-content;
-}
-aside li {
-    font-size: var(--txt-s-size);
-    text-transform: uppercase;
-    color: var(--terciary-text-color);
-}
-aside a {
-    color: var(--terciary-text-color);
-}
-aside a:hover {
-    color: var(--secondary-text-color);
-}
-aside a.active {
-    color: var(--secondary-text-color);
-}
+
 
 /*Material Breadcrumbs override*/
 .breadcrumb{
