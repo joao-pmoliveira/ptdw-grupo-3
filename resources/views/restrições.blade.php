@@ -13,7 +13,7 @@
 
     <section class="mt-5 p-0 d-flex flex-column gap-4">
         <h3>Formulário Pendente</h3>
-        <table class="w-100 title-separator">
+        <table class="w-100 title-separator" id="table-forms-pendentes">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr data-type='impedimento' data-start-year='2023' data-end-year='2024' data-semester='2'>
                     <th scope="row"></th>
                     <td>2023/24</td>
                     <td>2</td>
@@ -33,7 +33,7 @@
                     <td>Pendente</td>
                     <td>31/12/2023</td>
                 </tr>
-                 <tr>
+                 <tr data-type='restrição' data-start-year='2023' data-end-year='2024' data-semester='1'>
                     <th scope="row"></th>
                     <td>2023/24</td>
                     <td>2</td>
@@ -49,7 +49,7 @@
             <h3>Histórico</h3>
         </div>
 
-        <table class="w-100 title-separator">
+        <table class="w-100 title-separator" id="table-historico-formularios">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -61,7 +61,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr data-type="impedimento" data-start-year="2023" data-end-year="2024" data-semester="1">
                     <th scope="row"></th>
                     <td>2023/24</td>
                     <td>1</td>
