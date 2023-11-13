@@ -15,22 +15,22 @@ use Illuminate\Support\Facades\Route;
 
 //Página de Entrada
 Route::get('/', function () {
-    return view('welcome', ['page_title' => 'Bem vindo!']);
+    return view('entrada', ['page_title' => 'Bem vindo!']);
 });
 
 //Página Principal
 Route::get('/inicio', function () {
-    return view('home', ['page_title' => 'Página Inicial']);
+    return view('inicio', ['page_title' => 'Página Inicial']);
 });
 
 //Página de Restrições (Docente)
 Route::get('/restrições', function () {
-    return view('restrictions', ['page_title' => 'Restrições']);
+    return view('restrições', ['page_title' => 'Restrições']);
 });
 
 //Página Formulário: Restrições (Docente)
 Route::get('/restrição/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
-    return view('restriction', [
+    return view('restrição', [
         'page_title' => 'Restrições de Sala de Aula',
         'ano_inicial' => $ano_inicial,
         'ano_final' => $ano_final,
@@ -45,7 +45,7 @@ Route::get('/restrição/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($
 
 //Página Formulário: Impedimentos (Docente)
 Route::get('/impedimento/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
-    return view('schedule', [
+    return view('impedimento', [
         'page_title' => 'Impedimentos de Horário',
         'ano_inicial' => $ano_inicial,
         'ano_final' => $ano_final,
@@ -56,7 +56,7 @@ Route::get('/impedimento/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($
 
 //Página de Gerir Processos (Admin)
 Route::get('/processos', function () {
-    return view('processes', ['page_title' => 'Gerir Processos']);
+    return view('processos', ['page_title' => 'Gerir Processos']);
 });
 
 //Página de Consultar Unidades Curriculares (Utilizador)
@@ -81,7 +81,7 @@ Route::get('/uc/{id}/editar', function ($id) {
 
 //Página de Gerir Dados (Admin)
 Route::get('/gerir', function () {
-    return view('manageData', ['page_title' => 'Gerir Dados']);
+    return view('gerirDados', ['page_title' => 'Gerir Dados']);
 });
 
 Route::get('/docente', function () {
