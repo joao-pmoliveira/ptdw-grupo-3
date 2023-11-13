@@ -15,13 +15,7 @@
         <h3 class="mb-2">Formulário em Processo:</h3>
         <div>
             <p class="mb-1">Nenhum formulário ativo de momento.</p>
-            <button class="m-0 py-2 px-3
-                    btn btn-primary rounded-0
-                    border border-primary
-                    btn-outline-0
-                    shadow-none
-                    text-primary button-txt
-                    text-capitalize"
+            <button class="btn"
                     data-bs-toggle="modal" data-bs-target="#modal-new-process"
                     >Gerar formulário</button>
         </div>
@@ -122,24 +116,8 @@
                     <input class="w-50" type="date" name="due_date" id="due-date">
                 </div>
                 <div class="d-flex gap-3 justify-content-center" id="form-btns">
-                    <input class="d-block
-                        m-0 py-2 px-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize" type="button" value="Submeter">
-                    <input class="d-block
-                        m-0 py-2 px-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize"
-                        data-bs-dismiss="modal"
-                        type="button" value="Cancelar">
+                    <input class="btn" type="button" value="Submeter">
+                    <input class="btn" data-bs-dismiss="modal" type="button" value="Cancelar">
                 </div>
             </div>
         </div>

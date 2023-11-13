@@ -117,13 +117,7 @@
         <section id="manage-teachers" class="tab-pane">
             <div class="d-flex flex-column gap-3">    
                 <div>
-                    <button class="m-0 py-2 px-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize">Adicionar Docente</button>
+                    <button class="btn">Adicionar Docente</button>
                 </div>
 
                 <div class="d-flex gap-3 align-items-center">
@@ -172,22 +166,8 @@
                     <input type="file" name="uc-data-file" id="import-file-input">
                 </div>
                 <div class="d-flex gap-3">
-                    <input class="d-block
-                        m-0 py-2 px-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize" type="button" value="Submeter">
-                    <input class="d-block
-                        m-0 py-2 px-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize" type="button" value="Cancelar">
+                    <input class="btn" type="button" value="Submeter">
+                    <input class="btn" type="button" value="Cancelar">
                 </div>
             </div>
         </section>

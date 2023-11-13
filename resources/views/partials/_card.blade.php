@@ -8,12 +8,6 @@
         @endforeach
     </div>
     <div class="card-footer m-0 p-0">
-        <a class="m-0 py-2 px-3
-            btn btn-primary rounded-0 
-            border border-primary
-            btn-outline-0
-            shadow-none
-            text-primary button-txt 
-            text-capitalize" href="{{ url($url) }}">{{$button}}</a>
+        <a class="btn" href="{{ url($url) }}">{{$button}}</a>
     </div>
 </div>

@@ -326,7 +326,7 @@ button,
 [type="submit"] {
   -webkit-appearance: button; }
   button:not(:disabled),
-  [type="button"]:not(:disabled),
+  /*[type="button"]:not(:disabled),*/
   [type="reset"]:not(:disabled),
   [type="submit"]:not(:disabled) {
     cursor: pointer; }
@@ -12571,8 +12571,8 @@ textarea.form-control-lg {
   background-position-x: 25%;
   position: relative;
   overflow: hidden; }
-  .btn:not([class*="btn-outline-"]) {
-    border: 0; }
+  /*.btn:not([class*="btn-outline-"]) {
+    border: 0; }*/
   .btn:active, .btn:active:focus, .btn:active:hover {
     box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.09), 0 2px 3px -1px rgba(0, 0, 0, 0.07);
     transform: none;

@@ -3,3 +3,46 @@
     width: 500px;
     margin-bottom: 15px;
 }
+
+.btn {
+    display: block;
+    width: fit-content;
+    min-width: 5rem;
+    max-width: 10rem;
+    margin: 0;
+    padding: 0.5rem 1em;
+    border: 1px solid var(--primary-text-color);
+    border-radius: 0;
+    color: var(--primary-text-color);
+    background-color: var(--primary-background-color);
+    outline: none;
+    box-shadow: none;
+    text-shadow: none;
+    
+    font-family: var(--primary-font-family);
+    font-weight: 400;
+    font-size: var(--txt-s-size);
+    text-transform: capitalize;
+
+    transition: none;
+}
+
+.btn:focus {
+    outline: 1px solid var(--primary-text-color);
+}
+.btn:active,
+.btn:hover {
+    border-color: var(--accent-background-color);
+    background-color: var(--accent-background-color);
+    color: var(--secondary-text-color);
+}
+
+
+/*Reset Material Dashboard Button*/
+.btn:active {
+    box-shadow: none;
+    opacity: 1;
+}
+.btn:focus {
+    box-shadow: none;
+}

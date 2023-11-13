@@ -113,22 +113,8 @@
                 <textarea cols="30" name="justification" id="justificacao"></textarea>
             </fieldset>
             <div class="d-flex gap-3" id="form-btns">
-                <input class="d-block
-                    m-0 py-2 px-3
-                    btn btn-primary rounded-0
-                    border border-primary
-                    btn-outline-0
-                    shadow-none
-                    text-primary button-txt
-                    text-capitalize" type="button" value="Submeter">
-                <input class="d-block
-                    m-0 py-2 px-3
-                    btn btn-primary rounded-0
-                    border border-primary
-                    btn-outline-0
-                    shadow-none
-                    text-primary button-txt
-                    text-capitalize" type="button" value="Cancelar">
+                <input class="btn" type="button" value="Submeter">
+                <input class="btn" type="button" value="Cancelar">
             </div>
         </form>
     </section>

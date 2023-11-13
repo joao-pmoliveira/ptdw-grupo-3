@@ -6,11 +6,11 @@
     --primary-font-family: Roboto, sans-serif;
     font-family: var(--primary-font-family);
 
-    --txt-xl-size: 28px;
-    --txt-l-size: 18px;
-    --txt-m-size: 16px;
-    --txt-s-size: 14px;
-    --txt-xs-size: 12px;
+    --txt-xl-size: 1.75rem; /* 28px / 16px */
+    --txt-l-size: 1.125rem; /* 18px / 16px */
+    --txt-m-size: 1rem;     /* 16px / 16px */
+    --txt-s-size: 0.875rem; /* 14px / 16px */
+    --txt-xs-size: 0.75rem; /* 12px / 16px */
 }
 
 h1{

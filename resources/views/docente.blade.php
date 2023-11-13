@@ -28,30 +28,9 @@
                     <input type="text" id="email" value="josesilva@ua.pt" class="px-1 py-1">
                 </div>
                 <div class="d-flex gap-3">
-                    <input class="d-block
-                        m-0 py-2 px-3 mt-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize" type="button" value="Confirmar">
-                    <input class="d-block
-                        m-0 py-2 px-3 mt-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize" type="button" value="Remover">
-                    <input class="d-block
-                        m-0 py-2 px-3 mt-3
-                        btn btn-primary rounded-0
-                        border border-primary
-                        btn-outline-0
-                        shadow-none
-                        text-primary button-txt
-                        text-capitalize" type="button" value="Cancelar">
+                    <input class="btn" type="button" value="Confirmar">
+                    <input class="btn" type="button" value="Remover">
+                    <input class="btn" type="button" value="Cancelar">
                 </div>
             </div>
         </form>
