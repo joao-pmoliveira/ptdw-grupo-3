@@ -1,0 +1,9 @@
+.blue-line {
+    border-bottom: 2px solid var(--accent-background-color); 
+    width: 500px;
+    margin-bottom: 15px;
+}
+
+.title-separator {
+    border-top: 3px solid var(--accent-background-color);
+}

@@ -1,4 +1,4 @@
-<fieldset class="px-3 d-flex flex-column gap-2 mb-4">
+<fieldset class="title-separator px-3 d-flex flex-column gap-2 mb-4">
     <legend class="class-fieldset-heading py-1" >{{$class['id']}} {{$class['name']}}</legend>
     <fieldset class="">
         <legend>Utilização de Laboratórios</legend>

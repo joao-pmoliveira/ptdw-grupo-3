@@ -13,7 +13,7 @@
 
     <section class="mt-5 p-0 d-flex flex-column gap-4">
         <h3>Formulário Pendente</h3>
-        <table class="w-100">
+        <table class="w-100 title-separator">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -49,7 +49,7 @@
             <h3>Histórico</h3>
         </div>
 
-        <table>
+        <table class="w-100 title-separator">
             <thead>
                 <tr>
                     <th scope="col"></th>

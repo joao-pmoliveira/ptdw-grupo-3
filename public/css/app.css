@@ -1,6 +1,7 @@
 @import url("styles/_text.css");
 @import url("styles/_colors.css");
 @import url("styles/_buttons.css");
+@import url("styles/_borders.css");
 
 @import url("layouts/_main.css");
 
@@ -127,9 +128,6 @@ legend {
 }
 
 /*Tabelas*/
-thead tr {
-    border-top: 2px solid var(--accent-background-color);
-}
 thead tr th{
     font-size: var(--txt-m-size);
     font-weight: 500;
@@ -235,9 +233,6 @@ tbody tr:hover{
     font-size: var(--txt-s-size);
     font-weight: 300;
 }
-.class-sub-form-container > fieldset {
-    border-top: 3px solid var(--accent-background-color);
-}
 .class-fieldset-heading{
     font-size: var(--txt-m-size);
     font-weight: 500;
@@ -270,7 +265,6 @@ tbody tr:hover{
 }
 #edit-uc-form > div:first-of-type {
     padding: 0.5em 0;
-    border-top: 3px solid var(--accent-background-color);
 }
 
 #ua-logo-header-container{

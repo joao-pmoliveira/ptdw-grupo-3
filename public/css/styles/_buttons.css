@@ -1,9 +1,3 @@
-.blue-line {
-    border-bottom: 2px solid var(--accent-background-color); 
-    width: 500px;
-    margin-bottom: 15px;
-}
-
 .btn {
     display: block;
     width: fit-content;

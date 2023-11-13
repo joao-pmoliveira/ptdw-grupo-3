@@ -13,12 +13,9 @@
     @include('partials._pageTitle', ['title' => 'Unidade Curricular '.$id])
 
    
-    <section class = "mt-5" >
-        <div class="blue-line"></div>
-
-        <div class="d-flex gap-5 align-items-center px-1">
-            <h1>91998</h1>
-            <h1>Cálculo I</h1>
+    <section class="mt-5" >
+        <div class="mb-3 title-separator p-2">
+            <h1>91998 Cálculo I</h1>
         </div>
 
         <div class="mt-3">

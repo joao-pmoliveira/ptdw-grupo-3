@@ -29,7 +29,7 @@
             <i class="fa-solid fa-chevron-down"></i>
             <h3>Histórico</h3>
         </div>
-        <table class="accordion table-ua collapse accordion-collapse" id="history-table">
+        <table class="accordion table-ua collapse accordion-collapse title-separator" id="history-table">
             <thead>
                 <tr>
                     <th scope="col"></th>

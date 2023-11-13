@@ -13,7 +13,7 @@
     @include('partials._pageTitle', ['title' => 'Unidade Curricular '.$id])
 
     <section class="mt-5">
-        <form id="edit-uc-form" action="" method="post">
+        <form id="edit-uc-form" action="" method="post" class="title-separator">
             <div class="mb-3">
                 <input type="text" name="" id="" value="" placeholder="Cód" required>
                 <input type="text" name="" id="" value="" placeholder="Nome" required>

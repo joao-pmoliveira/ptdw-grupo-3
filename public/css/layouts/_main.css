@@ -30,6 +30,7 @@ aside {
 main {
     grid-area: main-content;
     background-color: var(--primary-background-color);
+    max-width: 100rem;
 }
 
 /*Layout for */
