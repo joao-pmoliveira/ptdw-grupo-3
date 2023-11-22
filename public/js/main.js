@@ -25,7 +25,7 @@ linhasUCs?.forEach((row) => {
 
 //Tabela de Formulários Atuais
 const tabelaFormsAtuais = document.querySelector('#table-forms-pendentes');
-const linhasFormularios = tabelaFormsAtuais?.querySelectorAll('tr[data-type="impedimento"],tr[data-type="restrição"]')
+const linhasFormularios = tabelaFormsAtuais?.querySelectorAll('tr[data-type="impedimento"],tr[data-type="restricao"]')
 linhasFormularios?.forEach(row => {
     row.addEventListener('click', () => {
         const formType = row.getAttribute('data-type')
@@ -38,7 +38,7 @@ linhasFormularios?.forEach(row => {
 
 //Tabela de Histórico de Formulários
 const tabelaHistoricoForms = document.querySelector('#table-historico-formularios')
-const linhaHistoricos = tabelaHistoricoForms?.querySelectorAll('tr[data-type="impedimento"],tr[data-type="restrição"]')
+const linhaHistoricos = tabelaHistoricoForms?.querySelectorAll('tr[data-type="impedimento"],tr[data-type="restricao"]')
 linhaHistoricos?.forEach(row => {
     row.addEventListener('click', () => {
         const formType = row.getAttribute('data-type')

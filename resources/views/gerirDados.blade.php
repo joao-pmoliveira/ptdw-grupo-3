@@ -4,7 +4,8 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-            ['página inicial', '/inicio']
+            ['página inicial', '/inicio'],
+            ['gerir dados', '/gerirdados']
         ]
     ])
     
@@ -45,13 +46,6 @@
                         <option value="2021_2022_2">2021/22 2ºSemestre</option>
                         <option value="2021_2022_1">2021/22 1ºSemestre</option>
                     </select>
-                    <select name="cycle" id="cycle" aria-label="Filtro por ciclo">
-                        <option value="" selected>Ciclo</option>
-                        <option value="Licenciatura">Licenciatura</option>
-                        <option value="Mestrado">Mestrado</option>
-                        <option value="Doutoramento">Doutoramento</option>
-                        <option value="Ctesp">Ctesp</option>
-                    </select>
                     <div class="paco-searchbox">
                         <input type="text" name="nome_cod_uc" id="" aria-label="Filtre por código ou nome de uc">
                         <div><i class="fa-solid fa-search"></i></div>
@@ -63,7 +57,6 @@
                         <tr>
                             <th scope="col"></th>
                             <th scope="col-1">Cód.</th>
-                            <th scope="col-1">Dep.</th>
                             <th scope="col-5">Nome</th>
                             <th scope="col-3">Docente Responsável</th>
                             <th scope="col-1"></th>
@@ -73,7 +66,6 @@
                         <tr data-id='91998'>
                             <th scope="row"></th>
                             <td>91998</td>
-                            <td>dmat</td>
                             <td>Matemática Aplicada às Tecnologias de Informação</td>
                             <td>Luísa Mendes</td>
                             <td><i class="fa-solid fa-pen"></i></td>
@@ -81,7 +73,6 @@
                         <tr data-id="88765">
                             <th scope="row"></th>
                             <td>88765</td>
-                            <td>deca</td>
                             <td>Web Design</td>
                             <td>Rita Gonçalves</td>
                             <td><i class="fa-solid fa-pen"></i></td>
@@ -89,7 +80,6 @@
                         <tr data-id='85095'>
                             <th scope="row"></th>
                             <td>85095</td>
-                            <td>deti</td>
                             <td>Inteligência Artificial</td>
                             <td>José Silva</td>
                             <td><i class="fa-solid fa-pen"></i></td>

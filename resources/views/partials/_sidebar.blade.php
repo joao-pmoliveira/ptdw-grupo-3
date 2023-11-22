@@ -7,7 +7,7 @@
             <a class="{{Request::is('ucs') ? 'active' : ''}}" href="{{url('/ucs')}}">Unidades Curriculares</a>
         </li>
         <li>
-            <a class="{{Request::is('restrições') ? 'active' : ''}}" href="{{url('/restrições')}}">Preencher Restrições</a>
+            <a class="{{Request::is('restrições') ? 'active' : ''}}" href="{{url('/restricoes')}}">Preencher Restrições</a>
         </li>
         <li>
             <a class="{{Request::is('processos') ? 'active' : ''}}" href="{{url('/processos')}}">Gerir Processos</a>

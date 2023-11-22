@@ -21,16 +21,21 @@
             
             <fieldset>
                 <div>
-                    <label for="uc-department">Departamento</label>
-                    <input type="text" name="uc_department" id="uc-department" value="dmat" placeholder="Insira o departamento" required>
-                </div>
-                <div>
                     <label for="uc-area">Área Científica</label>
-                    <input type="text" name="uc_area" id="uc-area" value="Matemática" placeholder="Insira a área de ensino" required>
+                    <select name="uc_area" id="uc_area" required>
+                        <option value="" selected>Selecione</option>
+                        <option value="Eng_mecanica">Engenharia Mecânica</option>
+                        <option value="ciencias_informaticas">Ciências Informáticas</option>
+                        <option value="ciencias_sociais">Ciências Sociais</option>
+                    </select>
                 </div>
                 <div>
-                    <label for="uc-ects">ECTs</label>
+                    <label for="uc-ects">ECTSs</label>
                     <input type="number" name="uc_ects" id="uc-ects" value="5" placeholder="Número de créditos" required>
+                </div>
+                <div>
+                    <label for="uc-horas">Horas semanais</label>
+                    <input type="number" name="uc_horas" id="uc-horas" value="4" placeholder="Número de horas semais" required>
                 </div>
                 <div>
                     <label for="uc-main-teacher">Docente Responsável</label>

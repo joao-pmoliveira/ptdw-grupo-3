@@ -6,6 +6,7 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
                 ['página inicial', '/inicio'],
+                ['restrições', '/restricoes'],
             ]
     ])
 
@@ -33,7 +34,7 @@
                     <td>Pendente</td>
                     <td>31/12/2023</td>
                 </tr>
-                 <tr data-type='restrição' data-start-year='2023' data-end-year='2024' data-semester='1'>
+                 <tr data-type='restricao' data-start-year='2023' data-end-year='2024' data-semester='1'>
                     <th scope="row"></th>
                     <td>2023/24</td>
                     <td>2</td>

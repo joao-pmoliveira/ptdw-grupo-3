@@ -5,14 +5,63 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-                ['página inicial', '/inicio']
+                ['página inicial', '/inicio'],
+                ['gerir restrições', '/processos']
             ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Gerir Processos'])
+    @include('partials._pageTitle', ['title' => 'Gerir Restrições'])
 
-    <section class="mt-5 mb-4 p-0">
-        <h3 class="mb-2">Formulário em Processo:</h3>
+    <section class="mt-5 p-0 d-flex flex-column gap-4">
+    <div class="d-flex gap-2 align-items-center" data-bs-toggle="collapse" data-bs-target="#table">
+            <i class="fa-solid fa-chevron-down"></i>
+            <h3>Formulário em progresso</h3>
+        </div>
+        <table class="accordion table-ua collapse accordion-collapse title-separator" id="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col-1"></th>
+                    <th scope="col-4">Nome</th>
+                    <th scope="col-1">Data Limite</th>
+                    <th scope="col-1">Restrições UC</th>
+                    <th scope="col-1">Impedimentos horários</th>
+                    <th scope="col-1"></th>
+                    <th scope="col-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--Linha Principal-->
+                <tr data-bs-toggle="collapse" data-bs-target="#r2">
+                    <th scope="row"></th>
+                    <td><i class="fa-solid fa-chevron-right"></i></td>
+                    <td>Formulário 2023/24 1ºSemestre</td>
+                    <td>01/12/2023</td>
+                    <td>1/2</td>
+                    <td></td>
+                    <td><i class="fa-solid fa-download"></i></td>
+                    <td><i class="fa-solid fa fa-envelope-o"></i></td>
+                </tr>
+                <!--Linha Colapsável-->
+                <tr class="collapse accordion-collapse bg-terciary" id="r2">
+                    <th scope='row'></th>
+                    <td colspan='1'>108746</td>
+                    <td colspan='2'>Rui Fernandes</td>
+                    <td colspan='1'>1/2</td>
+                    <td colspan='2'>Pendente</td>
+                    <td></td>
+                </tr>
+                <!--Linha Colapsável-->
+                <tr class="collapse accordion-collapse bg-terciary" id="r2">
+                    <th scope='row'></th>
+                    <td colspan='1'>110111</td>
+                    <td colspan='2'>José Silva</td>
+                    <td colspan='1'>2/2</td>
+                    <td colspan='2'>Submetido</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
         <div>
             <p class="mb-1">Nenhum formulário ativo de momento.</p>
             <button class="btn"
@@ -108,7 +157,7 @@
                     <input class="w-50" type="text" name="school_year" id="school-year">
                 </div>
                 <div class="d-flex gap-3 justify-content-between align-items-center">
-                    <label class="w-50" for="semester">Semester:</label>
+                    <label class="w-50" for="semester">Semestre:</label>
                     <input class="w-50" type="number" name="semester" id="semester">
                 </div>
                 <div class="d-flex gap-3 justify-content-between align-items-center">

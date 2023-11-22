@@ -30,7 +30,7 @@
                 'url' => '/restrições'
             ])
         @include('partials._card', [
-                'title' => 'Gerir Processos',
+                'title' => 'Gerir Restrições',
                 'body' => [
                         'Criar novo processo(inclui a disponibilização ao docentes,
                             dos formulários de impedimentos de horário, e restrições de sala);',

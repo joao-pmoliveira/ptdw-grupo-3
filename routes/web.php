@@ -24,12 +24,12 @@ Route::get('/inicio', function () {
 });
 
 //Página de Restrições (Docente)
-Route::get('/restrições', function () {
+Route::get('/restricoes', function () {
     return view('restrições', ['page_title' => 'Restrições']);
 });
 
 //Página Formulário: Restrições (Docente)
-Route::get('/restrição/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
+Route::get('/restricao/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
     return view('restrição', [
         'page_title' => 'Restrições de Sala de Aula',
         'ano_inicial' => $ano_inicial,

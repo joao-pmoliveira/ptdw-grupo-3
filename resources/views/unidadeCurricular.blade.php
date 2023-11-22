@@ -6,59 +6,56 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
                 ['página inicial', '/inicio'],
-                ['unidades curriculares', '/ucs']
+                ['unidades curriculares', '/ucs'],
+                ['unidade curricular - '.$id, '/ucs/'.$id]
             ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Unidade Curricular '.$id])
+    @include('partials._pageTitle', ['title' => 'Cálculo I - '.$id])  <!--  trocar Calculo I pelo nome da cadeira em, questao  - "$nomeUC"-->
 
    
     <section class="mt-5" >
         <div class="mb-3 title-separator p-2">
-            <h1>91998 Cálculo I</h1>
         </div>
 
         <div class="mt-3">
-            <div class="d-flex gap-5 aling-items-center border border-dark px-2">   
-                <p>Departamento<p>
-                <p>DMAT</p>
-            </div>
-
             <div class="d-flex gap-5 aling-items-center border border-dark px-2">   
                 <p>Área Científica<p>
                 <p>Matemática</p>
             </div>
 
-            <div class="d-flex gap-7 aling-items-center border border-dark px-2">   
-                <p>ECT´s<p>
-                <p>5</p>
+            <div class="d-flex gap-6 aling-items-center border border-dark px-2">   
+                <p>ECTS´s<p>
+                <p>&nbsp&nbsp&nbsp&nbsp&nbsp5</p>
+            </div>
+            <div class="d-flex gap-4 aling-items-center border border-dark px-2">   
+                <p>Horas Semanais<p>
+                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4 horas</p>
             </div>
 
             <div class="d-flex gap-4 aling-items-center border border-dark px-2">   
                 <p>Docente responsável<p>
-                <p>12345 - Luísa Mendes</p>
+                <p>&nbsp12345 - Luísa Mendes</p>
             </div>
 
             <div class="d-flex gap-4 border border-dark px-2">   
                 <p>Restantes Docentes<p>
                     <div class="d-flex flex-column gap-2">
-                        <p>33555 - Rita Gonçalves</p>
-                        <p>66221 - José Silva</p>
+                        <p>&nbsp&nbsp&nbsp33555 - Rita Gonçalves</p>
+                        <p>&nbsp&nbsp&nbsp66221 - José Silva</p>
                     </div>
             </div>
 
             <div class="d-flex gap-4 border border-dark px-2">   
-                <p>Restrições de sala<p>
+                <p>Restrições de Unidade <br> Curricular<p>
                     <div class="d-flex flex-column">
-                        <p>Escolha de sala - Obrigatória</p>
-                        <p>5.1.10</p>
-                        <p>5.1.10</p>
-                        <p>5.1.29</p>
+                        <p>Tipo de sala de aula: </p>
+                        <p>Sim</p>  <!-- ou não -->
                         <p class="mt-4">Software necessário:</p>
                         <p>------------- ------------------ -----------</p>
                         <p>----------- --------- -------------- ------</p>
-                        <p class="mt-4">Salas para avaliação:</p>
-                        <p>5.1.10</p>
+                        <p class="mt-4">Tipo de sala para avaliação:</p>
+                        <p>Laboratório</p> <!-- ou Sala Comum -->
                     </div>
             </div>
         </div>

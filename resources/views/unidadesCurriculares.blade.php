@@ -5,7 +5,8 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-                ['página inicial', '/inicio']
+                ['página inicial', '/inicio'],
+                ['unidades curriculares', '/ucs']
             ]
     ])
 
@@ -24,14 +25,6 @@
                 <option value="2021/22_1º semestre">2021/22 - 1º semestre</option>
             </select>
             
-            <select class="" name="ciclo" id="ciclo" aria-label="Filtre por ciclo" >
-                <option value="" selected>Ciclo</option> 
-                <option value="Licenciatura">Licenciatura</option>
-                <option value="Mestrado">Mestrado</option>
-                <option value="Doutoramento">Doutoramento</option>
-                <option value="Ctesp">Ctesp</option>
-            </select>
-
 
             <div class="paco-searchbox">
                 <input type="text" name="uc" id="uc" aria-label="Filtre por código ou nome de uc">
@@ -52,7 +45,6 @@
                 <tr> 
                     <th scope="col"></th>
                     <th scope="col" >Cód</th>
-                    <th scope="col">Dep</th>
                     <th scope="col">Nome</th>
                     <th scope="col" >Docente Responsável</th>
                 </tr>
@@ -61,7 +53,6 @@
                 <tr data-id='91998'>
                     <th scope="row"></th>
                     <td>91998</td>
-                    <td>DMAT</td>
                     <td>Cálculo I</td>
                     <td>Luísa Mendes</td>
                     <td></td>
@@ -69,7 +60,6 @@
                 <tr data-id="8765">
                     <th scope="row"></th>
                     <td>8765</td>
-                    <td>DECA</td>
                     <td>Web design</td>
                     <td>Rita Santos</td>
                     <td></td>
@@ -77,7 +67,6 @@
                 <tr data-id="85095">
                     <th scope="row"></th>
                     <td>85095</td>
-                    <td>DETI</td>
                     <td>Inteligência Artigicial</td>
                     <td>José Silva</td>
                     <td></td>

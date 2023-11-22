@@ -6,7 +6,8 @@
     @include('partials._breadcrumbs', [
             'crumbs' => [
                     ['página inicial', '/inicio'],
-                    ['restrições', '/restrições']
+                    ['restrições', '/restricoes'],
+                    ['restrição', '/restricao/'.$ano_inicial.'_'.$ano_final.'/'.$semestre.'/'.$id],
                 ]
         ])
     
