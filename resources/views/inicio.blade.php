@@ -27,7 +27,7 @@
                         'Consultar histórico de formulários.'
                     ],
                 'button' => 'Preencher',
-                'url' => '/restrições'
+                'url' => '/restricoes'
             ])
         @include('partials._card', [
                 'title' => 'Gerir Restrições',

@@ -50,7 +50,7 @@
                 <p>Restrições de Unidade <br> Curricular<p>
                     <div class="d-flex flex-column">
                         <p>Tipo de sala de aula: </p>
-                        <p>Sim</p>  <!-- ou não -->
+                        <p>Laboratório</p>  <!-- ou não -->
                         <p class="mt-4">Software necessário:</p>
                         <p>------------- ------------------ -----------</p>
                         <p>----------- --------- -------------- ------</p>
