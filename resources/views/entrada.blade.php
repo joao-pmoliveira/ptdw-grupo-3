@@ -13,7 +13,7 @@
     </nav>
     @include('partials._header', ['sidebar' => false])
 
-    <div id="hero" class="m-3 p-4">
+    <div id="hero" class="m-3 p-4" style="background-image: url({{asset('/img/bg-hero.jpg')}});">
         <h1 class="text-light">suporte à criação de horários da estga</h1>
     </div>
 
