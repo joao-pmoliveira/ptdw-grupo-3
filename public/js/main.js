@@ -16,7 +16,7 @@ uaLogo?.addEventListener('click', () => {
         window.location.href=currentURL.split("/")[0]+'/inicio';
     }
     else {
-        window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+'/inicio';
+        window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+"/"+currentURL.split("/")[2]+"/"+currentURL.split("/")[3]+'/inicio';
     }
 })
 
