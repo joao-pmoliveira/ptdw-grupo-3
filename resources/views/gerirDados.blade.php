@@ -25,7 +25,7 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" data-bs-toggle='tab' data-bs-target='#import-data'>
-                    Importar Dados
+                    Importar Serviço-Docente
                 </button>
             </li>
         </ul>
@@ -33,22 +33,30 @@
     <div class="tab-content pt-3">
         <section id="manage-ucs" class="tab-pane active">
             <div class="d-flex flex-column gap-3">
-                <div>
-                    <button class="btn">Adicionar UC</button>
-                </div>
+              
 
-                <div class="d-flex gap-3 align-items-stretch flex-wrap">
-                    <select name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
-                        <option value="2023_2024_2">2023/24 2ºSemestre</option>
-                        <option value="2023_2024_1">2023/24 1ºSemestre</option>
-                        <option value="2022_2023_2">2022/23 2ºSemestre</option>
-                        <option value="2022_2023_1">2022/23 1ºSemestre</option>
-                        <option value="2021_2022_2">2021/22 2ºSemestre</option>
-                        <option value="2021_2022_1">2021/22 1ºSemestre</option>
-                    </select>
-                    <div class="paco-searchbox">
-                        <input type="text" name="nome_cod_uc" id="" aria-label="Filtre por código ou nome de uc">
-                        <div><i class="fa-solid fa-search"></i></div>
+                <div class="d-flex justify-content-between mb-3 flex-wrap">
+                    <div class="d-flex gap-3 justify-content-stretch">
+                        <select name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
+                            <option value="2023_2024_2">2023/24 2ºSemestre</option>
+                            <option value="2023_2024_1">2023/24 1ºSemestre</option>
+                            <option value="2022_2023_2">2022/23 2ºSemestre</option>
+                            <option value="2022_2023_1">2022/23 1ºSemestre</option>
+                            <option value="2021_2022_2">2021/22 2ºSemestre</option>
+                            <option value="2021_2022_1">2021/22 1ºSemestre</option>
+                        </select>
+                        <select name="school_course" id="school-year-school_course" aria-label="Filtre por curso">
+                            <option value="" selected>Filtre Por Curso</option>
+                            <option value="ti">TI</option>
+                            <option value="gc">GC</option>
+                        </select>
+                        <div class="paco-searchbox">
+                            <input type="text" name="nome_cod_uc" id="" aria-label="Filtre por código ou nome de uc">
+                            <div><i class="fa-solid fa-search"></i></div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn">Adicionar UC</button>
                     </div>
                 </div>
                 
@@ -91,13 +99,18 @@
 
         <section id="manage-teachers" class="tab-pane">
             <div class="d-flex flex-column gap-3">    
-                <button class="btn">Adicionar Docente</button>
-
-                <div class="paco-searchbox">
-                    <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="NºMecanográfico ou Nome" aria-label="Filtre por número mecanográfico ou nome do docente">
-                    <div><i class="fa-solid fa-search"></i></div>
+               
+                <div class="d-flex justify-content-between mb-3 flex-wrap">
+                    <div class="paco-searchbox">
+                        <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="NºMecanográfico ou Nome" aria-label="Filtre por número mecanográfico ou nome do docente">
+                        <div><i class="fa-solid fa-search"></i></div>
+                        
+                    </div>
+                    <div >
+                        <button class="btn">Adicionar Docente</button>
+                    </div>
+                    
                 </div>
-
                 <table class="title-separator" id="table-edit-teachers">
                     <thead>
                         <tr>
@@ -133,7 +146,6 @@
 
         <section id="import-data" class="tab-pane">
             <div class="d-flex flex-column gap-3">
-                <h2 >Importar dados das Unidades Curriculares</h2>
                 <div class="d-flex gap-2 align-items-center">
                     <label for="import-file-input">Selecione um ficheiro</label><br>
                     <input type="file" name="uc-data-file" id="import-file-input">

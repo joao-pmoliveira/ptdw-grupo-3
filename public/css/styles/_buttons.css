@@ -5,14 +5,13 @@
     max-width: 10rem;
     margin: 0;
     padding: 0.5rem 1em;
-    border: 1px solid var(--primary-text-color);
+    border: 1px solid var(--accent-background-color);
     border-radius: 0;
-    color: var(--primary-text-color);
+    color: var(--accent-background-color);
     background-color: var(--primary-background-color);
     outline: none;
     box-shadow: none;
     text-shadow: none;
-    
     font-family: var(--primary-font-family);
     font-weight: 400;
     font-size: var(--txt-s-size);

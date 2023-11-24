@@ -46,7 +46,7 @@
                 'body' => [
                         'Adicione, edite ou remova Unidades Curriculares;',
                         'Adicione, edite ou remova docentes;',
-                        'Importe dados do ficheiro do Serviço de Docentes;'
+                        'Importar dados serviço-docente;'
                     ],
                 'button' => 'Gerir',
                 'url' => '/gerir'
