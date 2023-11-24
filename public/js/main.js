@@ -11,6 +11,13 @@ menuBtn?.addEventListener('click', () => {
 //UA Logo Header
 const uaLogo = document.querySelector('#ua-logo-header-container');
 uaLogo?.addEventListener('click', () => {
+    let currentURL=window.location.href;
+    if(currentURL.split("")[0]=="l"){
+        window.location.href=currentURL.split("/")[0]+'/inicio';
+    }
+    else if(currentURL.split("")[0]=="e"){
+        window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+'/inicio';
+    }
     window.location.href = '/inicio'
 })
 
@@ -19,7 +26,8 @@ const tabelaUCs = document.querySelector('#table-ucs');
 const linhasUCs = tabelaUCs?.querySelectorAll('tr[data-id]');
 linhasUCs?.forEach((row) => {
     row.addEventListener('click', () => {
-        window.location.href = `/uc/${row.getAttribute('data-id')}`
+        let currentURL = window.location.href;
+        window.location.href = currentURL.replace("/ucs",`/uc/${row.getAttribute('data-id')}`)
     })
 })
 
