@@ -12,6 +12,7 @@ menuBtn?.addEventListener('click', () => {
 const uaLogo = document.querySelector('#ua-logo-header-container');
 uaLogo?.addEventListener('click', () => {
     let currentURL=window.location.href;
+    console.log(window.location.href);
     if(currentURL.split("")[0]=="l"){
         window.location.href=currentURL.split("/")[0]+'/inicio';
     }
