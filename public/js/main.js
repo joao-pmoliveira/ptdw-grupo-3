@@ -16,9 +16,9 @@ uaLogo?.addEventListener('click', () => {
         window.location.href=currentURL.split("/")[0]+'/inicio';
     }
     else if(currentURL.split("")[0]=="e"){
+        console.log("teste")
         window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+'/inicio';
     }
-    window.location.href = '/inicio'
 })
 
 //Tabela de UCs
