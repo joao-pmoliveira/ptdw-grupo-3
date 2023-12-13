@@ -17,9 +17,8 @@
         <form action="" method="post">
             <h2 class="mb-3">Docente Responsável em:</h2>
             <div class="class-sub-form-container">
-                @foreach($classes as $class)
-                    @include('partials._restrictionFormItem', ['class' => $class])
-                @endforeach
+                
+                @include('partials._restrictionFormItem', ['class' => $classes[1]])
             </div>
             <div class="d-flex gap-3 mb-5" id="form-btns">
                 <input class="btn" type="button" value="Submeter">

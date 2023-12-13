@@ -1,75 +1,36 @@
 <fieldset class="title-separator px-3 d-flex flex-column gap-2 mb-4">
-    <legend class="class-fieldset-heading py-1" >{{$class['id']}} {{$class['name']}}</legend>
+    <legend class="class-fieldset-heading py-1">{{$class['id']}} {{$class['name']}}</legend>
     <fieldset class="">
-        <legend>Utilização de Laboratórios</legend>
+        <legend>Tipo de Sala</legend>
+        <br>
         <div class="d-flex gap-3 px-3 lab-requirement-type-container flex-wrap">
             <div class="paco-checkbox">
-                <label for="obligatory-labs">Obrigatório</label>
-                <input type="checkbox" name="obligatory_labs" id="obligatory-labs">
+                <label class="form-check-label" for="obligatory-labs">Sala Comum &nbsp;&nbsp;</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input --primary-backgroud-color" name="obligatory_labs"
+                        id="obligatory-labs" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="obligatory-labs">&nbsp;&nbsp;Laboratório de Informática</label>
+                </div>
             </div>
-            <div class="paco-checkbox">
-                <label for="preferencial-labs">Preferencial</label>
-                <input type="checkbox" name="preferencial_labs" id="preferencial-labs">
-            </div>
-        </div>
-        <div class="lab-select-grid px-3">
-            <select name="lab_one" id="lab-one" aria-label="Selecione laboratório um">
-                <option value="" selected>--selecione--</option>
-                <option value="5.1.10">5.1.10</option>
-                <option value="5.1.11">5.1.11</option>
-                <option value="5.1.12">5.1.12</option>
-                <option value="5.1.13">5.1.13</option>
-                <option value="5.1.14">5.1.14</option>
-                <option value="5.1.15">5.1.15</option>
-            </select>
-            <select name="lab_two" id="lab-two" aria-label="Selecione laboratório dois">
-                <option value="" selected>--selecione--</option>
-                <option value="5.1.10">5.1.10</option>
-                <option value="5.1.11">5.1.11</option>
-                <option value="5.1.12">5.1.12</option>
-                <option value="5.1.13">5.1.13</option>
-                <option value="5.1.14">5.1.14</option>
-                <option value="5.1.15">5.1.15</option>
-            </select>
-            <select name="lab_three" id="lab-three" aria-label="Selecione laboratório três">
-                <option value="" selected>--selecione--</option>
-                <option value="5.1.10">5.1.10</option>
-                <option value="5.1.11">5.1.11</option>
-                <option value="5.1.12">5.1.12</option>
-                <option value="5.1.13">5.1.13</option>
-                <option value="5.1.14">5.1.14</option>
-                <option value="5.1.15">5.1.15</option>
-            </select>
-            <select name="lab_four" id="lab-four" aria-label="Selecione laboratório quatro">
-                <option value="" disabled selected>--selecione--</option>
-                <option value="5.1.10">5.1.10</option>
-                <option value="5.1.11">5.1.11</option>
-                <option value="5.1.12">5.1.12</option>
-                <option value="5.1.13">5.1.13</option>
-                <option value="5.1.14">5.1.14</option>
-                <option value="5.1.15">5.1.15</option>
-            </select>
         </div>
     </fieldset>
     <fieldset class="">
         <legend>Software necessário</legend>
         <p>Identifique nome, fabricante, versão, e sistema operativo</p>
         <label for="needed-sof"></label>
-        <textarea class="mx-3" name="needed_software" id="needed-soft" cols="10"></textarea>
+        <textarea class="mx-3" name="needed_software" id="needed-soft" cols="100" rows="7"></textarea>
     </fieldset>
     <fieldset class=" px3">
         <legend>Tipo de sala para avaliações</legend>
-        <div class="px-3">
-            <label class="" for="lab-eval">Laboratório</label>
-            <select name="lab_eval" id="lab-eval" >
-                <option value="" selected>--selecione--</option>
-                <option value="5.1.10">5.1.10</option>
-                <option value="5.1.11">5.1.11</option>
-                <option value="5.1.12">5.1.12</option>
-                <option value="5.1.13">5.1.13</option>
-                <option value="5.1.14">5.1.14</option>
-                <option value="5.1.15">5.1.15</option>
-            </select>
+        <div class="d-flex gap-3 px-3 lab-requirement-type-container flex-wrap">
+            <div class="paco-checkbox">
+                <label class="form-check-label" for="lav-eval">Sala Comum &nbsp;&nbsp;</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input --primary-backgroud-color" name="lav-eval" id="lav-eval"
+                        type="checkbox" role="switch" id="lav-eval">
+                    <label class="form-check-label" for="lav-eval">&nbsp;&nbsp;Laboratório de Informática</label>
+                </div>
+            </div>
         </div>
     </fieldset>
 </fieldset>
