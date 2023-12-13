@@ -39,7 +39,7 @@ linhasFormularios?.forEach(row => {
         const startYear = row.getAttribute('data-start-year')
         const endYear = row.getAttribute('data-end-year')
         const semester = row.getAttribute('data-semester')
-        window.location.href = `/${formType}/${startYear}_${endYear}/${semester}/110111`
+        window.location.href = window.location.href.replace("/restricoes",`/${formType}/${startYear}_${endYear}/${semester}/110111`)
     })
 })
 
@@ -52,13 +52,7 @@ linhaHistoricos?.forEach(row => {
         const startYear = row.getAttribute('data-start-year')
         const endYear = row.getAttribute('data-end-year')
         const semester = row.getAttribute('data-semester')
-        let currentURL=window.location.href;
-        if(currentURL.split("")[0]=="l"){
-            window.location.href=currentURL.split("/")[0]+`/${formType}/${startYear}_${endYear}/${semester}/110111`;
-        }
-        else {
-            window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+"/"+currentURL.split("/")[2]+"/"+currentURL.split("/")[3]+`/${formType}/${startYear}_${endYear}/${semester}/110111`;
-        }
+        window.location.href = window.location.href.replace("/restricoes",`/${formType}/${startYear}_${endYear}/${semester}/110111`)
     })
 })
 
@@ -67,13 +61,7 @@ const tabelaEditarUCs = document.querySelector('#table-edit-ucs')
 const linhasEditarUCs = tabelaEditarUCs?.querySelectorAll('tr[data-id]')
 linhasEditarUCs?.forEach(row => {
     row.addEventListener('click', () => {
-        let currentURL=window.location.href;
-        if(currentURL.split("")[0]=="l"){
-            window.location.href=currentURL.split("/")[0]+`/uc/${row.getAttribute('data-id')}/editar`;
-        }
-        else {
-            window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+"/"+currentURL.split("/")[2]+"/"+currentURL.split("/")[3]+`/uc/${row.getAttribute('data-id')}/editar`;
-        }
+        window.location.href = window.location.href.replace("/gerir",`/uc/${row.getAttribute('data-id')}/editar`)
     })
 })
 
@@ -82,13 +70,7 @@ const tabelaEditarDocentes = document.querySelector('#table-edit-teachers')
 const linhasEditarDocentes = tabelaEditarDocentes?.querySelectorAll('tr[data-id]')
 linhasEditarDocentes?.forEach(row => {
     row.addEventListener('click', () => {
-        let currentURL=window.location.href;
-        if(currentURL.split("")[0]=="l"){
-            window.location.href=currentURL.split("/")[0]+`/docente/${row.getAttribute('data-id')}`;
-        }
-        else {
-            window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+"/"+currentURL.split("/")[2]+"/"+currentURL.split("/")[3]+`/docente/${row.getAttribute('data-id')}`;
-        }
+        window.location.href = window.location.href.replace("/gerir",`/docente/${row.getAttribute('data-id')}`)
     })
    
 })
