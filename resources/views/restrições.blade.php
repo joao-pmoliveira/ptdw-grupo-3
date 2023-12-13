@@ -34,13 +34,18 @@
                     <td>Pendente</td>
                     <td>31/12/2023</td>
                 </tr>
-                 <tr data-type='restricao' data-start-year='2023' data-end-year='2024' data-semester='1'>
+                 <tr data-bs-toggle="collapse" data-bs-target="#r2">
                     <th scope="row"></th>
                     <td>2023/24</td>
                     <td>2</td>
-                    <td>Restrições de Horário</td>
+                    <td>Restrições de Unidade Curricular</td>
                     <td>Pendente</td>
                     <td>31/12/2023</td>
+                </tr>
+                <tr class="collapse accordion-collapse bg-terciary" data-type='restricao' data-start-year='2023' data-end-year='2024' data-semester='1' id="r2">
+                    <th scope='row'></th>
+                    <td colspan='2'>2</td>
+                    <td colspan='4'>MATI</td>
                 </tr>
            </tbody>
         </table>
@@ -64,7 +69,7 @@
             <tbody>
                 <tr data-type="impedimento" data-start-year="2023" data-end-year="2024" data-semester="1">
                     <th scope="row"></th>
-                    <td>2023/24</td>
+                    <td>2022/23</td>
                     <td>1</td>
                     <td>Impedimentos de Horário</td>
                     <td>Submetido</td>
