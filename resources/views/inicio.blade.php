@@ -14,17 +14,14 @@
     <section class="mt-5 d-flex flex-wrap gap-4">
         @include('partials._card', [
                 'title' => 'Unidades Curriculares',
-                'body' => ['Consulte a lista de Unidades Curriculares'],
+                'body' => ['Consulta da lista de Unidades Curriculares'],
                 'button' => 'Consultar',
                 'url' => '/ucs'
             ])
         @include('partials._card', [
                 'title' => 'Preencher Restrições',
                 'body' => [
-                        'Verifique formulários pendentes;',
-                        'Preencha os seus impedimentos de horário para o próximo semestre;',
-                        'Preencha as restrições de salas para cada UC em que é docente responsável;',
-                        'Consultar histórico de formulários.'
+                        'Prenchimento de impedimentos de horários e restrições de sala',
                     ],
                 'button' => 'Preencher',
                 'url' => '/restricoes'
@@ -32,11 +29,8 @@
         @include('partials._card', [
                 'title' => 'Gerir Restrições',
                 'body' => [
-                        'Criar novo processo(inclui a disponibilização ao docentes,
-                            dos formulários de impedimentos de horário, e restrições de sala);',
-                        'Verificar estado do processo;',
-                        'Descarregar dados de restrições submetidos;',
-                        'Consultar histórico dos processos;'
+                        'Criação de um novo processo e verificação do mesmo',
+                        'Descarregar dados de restrições submetidos'
                     ], 
                 'button' => 'Gerir',
                 'url' => '/processos'
@@ -44,8 +38,7 @@
         @include('partials._card', [
                 'title' => 'Gerir Dados',
                 'body' => [
-                        'Adicione, edite ou remova Unidades Curriculares;',
-                        'Adicione, edite ou remova docentes;',
+                        'Adicionar, editar ou remover Unidades Curriculares e docentes;',
                         'Importar dados serviço-docente;'
                     ],
                 'button' => 'Gerir',
@@ -54,8 +47,7 @@
         @include('partials._card', [
                 'title' => 'Ajuda',
                 'body' => [
-                        'Consulte os guias',
-                        'Consulte os FAQs'
+                        'Consulta de guias e FAQs',
                     ],
                 'button' => 'Consultar',
                 'url' => '/inicio'
