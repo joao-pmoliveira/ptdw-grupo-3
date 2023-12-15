@@ -55,7 +55,6 @@
                         <th></th>
                     </thead>
                     <tbody class="collapse accordion-collapse bg-terciary" id="r2">
-                    <!-- @foreach($classes as $class) -->
                         <tr data-type='restricao' data-start-year='2023' data-end-year='2024' data-semester='1'>
                             <th scope='row'></th>   
                             <td></td>  
@@ -64,7 +63,6 @@
                             <td>MATI</td>
                             <td>Preenchido</td>
                         </tr>
-                       <!-- @endforeach -->
                     </tbody>
                 </tr>
             </tbody>
