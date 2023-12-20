@@ -17,7 +17,7 @@ return new class extends Migration
             $table->year('ano')->unique()->nullable(false);
             $table->integer('semestre')->nullable(false);
             $table->date('data_inicial');
-            $table->dat('data_final');
+            $table->date('data_final');
         });
     }
 
