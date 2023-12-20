@@ -6,11 +6,11 @@
     @include('partials._breadcrumbs', [
     'crumbs' => [
     ['página inicial', '/inicio'],
-    ['restrições', '/restricoes'],
+    ['recolha', '/restricoes/submissao'],
     ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Preencher restrições'])
+    @include('partials._pageTitle', ['title' => 'Recolha de restrições'])
 
     <section class="mt-5">
         <ul class="nav nav-tabs" role="tablist">

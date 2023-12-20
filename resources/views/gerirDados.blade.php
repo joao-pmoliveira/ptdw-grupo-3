@@ -5,7 +5,7 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
             ['página inicial', '/inicio'],
-            ['gerir dados', '/gerirdados']
+            ['gerir dados', '/dados/gerir']
         ]
     ])
     

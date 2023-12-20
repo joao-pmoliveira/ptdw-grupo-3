@@ -24,7 +24,7 @@ Route::get('/inicio', function () {
 });
 
 //Página de Restrições (Docente)
-Route::get('/restricoes', function () {
+Route::get('/restricoes/submissao', function () {
     return view('restrições', ['page_title' => 'Restrições']);
 });
 
@@ -55,7 +55,7 @@ Route::get('/impedimento/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($
 });
 
 //Página de Gerir Processos (Admin)
-Route::get('/processos', function () {
+Route::get('/restricoes/escolha', function () {
     return view('processos', ['page_title' => 'Gerir Processos']);
 });
 
@@ -80,10 +80,10 @@ Route::get('/uc/{id}/editar', function ($id) {
 });
 
 //Página de Gerir Dados (Admin)
-Route::get('/gerir', function () {
+Route::get('/dados/gerir', function () {
     return view('gerirDados', ['page_title' => 'Gerir Dados']);
 });
 
-Route::get('/docente/{id}', function ($id) {
+Route::get('/docente/{id}/editar', function ($id) {
     return view('docente', ['page_title' => 'Docente']);
 });

@@ -24,16 +24,16 @@
                         'Prenchimento de impedimentos de horários e restrições de sala',
                     ],
                 'button' => 'Preencher',
-                'url' => '/restricoes'
+                'url' => '/restricoes/submissao'
             ])
         @include('partials._card', [
-                'title' => 'Gerir Restrições',
+                'title' => 'Recolha de Restrições',
                 'body' => [
                         'Criação de um novo processo e verificação do mesmo',
-                        'Descarregar dados de restrições submetidos'
+                        'Descarregar dados de restrições'
                     ], 
                 'button' => 'Gerir',
-                'url' => '/processos'
+                'url' => '/restricoes/escolha'
             ])
         @include('partials._card', [
                 'title' => 'Gerir Dados',
@@ -42,7 +42,7 @@
                         'Importar dados serviço-docente;'
                     ],
                 'button' => 'Gerir',
-                'url' => '/gerir'
+                'url' => '/dados/gerir'
             ])
         @include('partials._card', [
                 'title' => 'Ajuda',

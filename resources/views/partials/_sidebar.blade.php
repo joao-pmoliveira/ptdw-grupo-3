@@ -8,10 +8,12 @@
     background-color: #f8f9fa;
     transition: transform 0.3s ease;
     transform: translateX(-250px); 
+    transition: margin-left 0.3s ease;
     }
 
     .shifted {
     margin-left: 250px;
+    transition: margin-left 0.3s ease;
     }
 
 </style>
