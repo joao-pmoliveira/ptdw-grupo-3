@@ -240,7 +240,7 @@ tbody tr:hover{
 }
 .lab-requirement-type-container > div {
     background-color: var(--primary-background-color);
-    border: 1px solid var(--primary-text-color);
+    border: 1px solid var(--accent-background-color);
     color: var(--primary-text-color);
     padding: 8px 16px;
     font-size: var(--txt-m-size);

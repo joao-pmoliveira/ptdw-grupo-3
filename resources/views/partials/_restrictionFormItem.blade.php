@@ -8,7 +8,7 @@
             <div class="paco-checkbox">
                 <label class="form-check-label" for="obligatory-labs">Sala Comum &nbsp;&nbsp;</label>
                 <div class="form-check form-switch">
-                    <input class="form-check-input --primary-backgroud-color" name="obligatory_labs"
+                    <input class="form-check-input" name="obligatory_labs"
                         id="obligatory-labs" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                     <label class="form-check-label" for="obligatory-labs">&nbsp;&nbsp;Laboratório de Informática</label>
                 </div>
