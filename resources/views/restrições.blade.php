@@ -6,11 +6,11 @@
     @include('partials._breadcrumbs', [
     'crumbs' => [
     ['página inicial', '/inicio'],
-    ['restrições', '/restricoes'],
+    ['recolha', '/restricoes/submissao'],
     ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Preencher restrições'])
+    @include('partials._pageTitle', ['title' => 'Recolha de restrições'])
 
     <section class="mt-5 p-0 d-flex flex-column gap-4">
         <h3>Formulário Pendente</h3>

@@ -6,14 +6,14 @@
     @include('partials._breadcrumbs', [
     'crumbs' => [
     ['página inicial', '/inicio'],
-    ['gerir dados', '/gerir']
+    ['gerir dados', '/dados/gerir']
     ]
     ])
 
     @include('partials._pageTitle', ['title' => 'Docente'])
 
 
-    <section class="mt-5">
+    <section class="mt-3">
         <form action="" method="post" class="title-separator"></form>
         <br>
         <div class="row">

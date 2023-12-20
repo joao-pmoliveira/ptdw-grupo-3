@@ -5,4 +5,7 @@
     <div class="img-wrapper" id="ua-logo-header-container">
         <img src="{{ asset('img/Logo.png') }}" alt="">
     </div>
+    <div id="titulo-pagina-inicial">
+        <p>Suporte à Criação de Horários</p>
+    </div>
 </div>

@@ -6,13 +6,13 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
             ['página inicial', '/inicio'],
-            ['unidades curriculares', '/ucs']
+            ['gerir dados', '/dados/gerir']
         ]
     ])
 
     @include('partials._pageTitle', ['title' => 'Unidade Curricular '.$id])
 
-    <section class="mt-5">
+    <section class="mt-3">
         <form id="edit-uc-form" action="" method="post" class="title-separator">
             <div class="mb-3">
                 <input type="text" name="" id="" value="" placeholder="Cód" required>

@@ -6,11 +6,11 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
                 ['página inicial', '/inicio'],
-                ['gerir restrições', '/processos']
+                ['recolha de restrições', '/restricoes/escolha']
             ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Gerir Restrições'])
+    @include('partials._pageTitle', ['title' => 'Recolha de Restrições'])
 
     <section class="mt-5 p-0 d-flex flex-column gap-4">
     <div class="d-flex gap-2 align-items-center" data-bs-toggle="collapse" data-bs-target="#table">

@@ -39,7 +39,7 @@ linhasFormularios?.forEach(row => {
         const startYear = row.getAttribute('data-start-year')
         const endYear = row.getAttribute('data-end-year')
         const semester = row.getAttribute('data-semester')
-        window.location.href = window.location.href.replace("/restricoes",`/${formType}/${startYear}_${endYear}/${semester}/110111`)
+        window.location.href = window.location.href.replace("/restricoes/submissao",`/${formType}/${startYear}_${endYear}/${semester}/110111`)
     })
 })
 
@@ -61,7 +61,7 @@ const tabelaEditarUCs = document.querySelector('#table-edit-ucs')
 const linhasEditarUCs = tabelaEditarUCs?.querySelectorAll('tr[data-id]')
 linhasEditarUCs?.forEach(row => {
     row.addEventListener('click', () => {
-        window.location.href = window.location.href.replace("/gerir",`/uc/${row.getAttribute('data-id')}/editar`)
+        window.location.href = window.location.href.replace("/dados/gerir",`/uc/${row.getAttribute('data-id')}/editar`)
     })
 })
 
@@ -70,7 +70,7 @@ const tabelaEditarDocentes = document.querySelector('#table-edit-teachers')
 const linhasEditarDocentes = tabelaEditarDocentes?.querySelectorAll('tr[data-id]')
 linhasEditarDocentes?.forEach(row => {
     row.addEventListener('click', () => {
-        window.location.href = window.location.href.replace("/gerir",`/docente/${row.getAttribute('data-id')}`)
+        window.location.href = window.location.href.replace("/dados/gerir",`/docente/${row.getAttribute('data-id')}`)
     })
    
 })

@@ -6,24 +6,25 @@
     @include('partials._breadcrumbs', [
             'crumbs' => [
                     ['página inicial', '/inicio'],
-                    ['restrições', '/restricoes'],
+                    ['recolha', '/restricoes/submissao'],
                     ['restrição', '/restricao/'.$ano_inicial.'_'.$ano_final.'/'.$semestre.'/'.$id],
                 ]
         ])
     
-    @include('partials._pageTitle', ['title' => 'Restrições de sala '.$ano_inicial.'/'.$ano_final.' '.$semestre.'º Semestre - '.$id])
+    <!-- @include('partials._pageTitle', ['title' => 'Restrições de UC '.$ano_inicial.'/'.$ano_final.' '.$semestre.'º Semestre - '.$id])
+    <h1>Restrições de UC</h1> -->
 
-    <section class="mt-5">
+    @include('partials._pageTitle', ['title' => 'Restrições de UC '.$ano_inicial.'/'.$ano_final.' '])
+    <section class="mt-3">
         <form action="" method="post">
-            <h2 class="mb-3">Docente Responsável em:</h2>
             <div class="class-sub-form-container">
-                
-                @include('partials._restrictionFormItem', ['class' => $classes[1]])
+                @include('partials._restrictionFormItem', ['class' => $classes[1]])<br>
             </div>
             <div class="d-flex gap-3 mb-5" id="form-btns">
                 <input class="btn" type="button" value="Submeter">
                 <input class="btn" type="button" value="Cancelar">
             </div>
+            <br><br>
         </form>
     </section>
 </main>
