@@ -22,6 +22,7 @@ class Docente extends Model
 
     public function unidadesCurriculares(): BelongsToMany {
         return $this->belongsToMany(UnidadeCurricular::class, 'docentes_unidades_curriculares')
+                    ->withPivot('percentagem_semanal')
                     ->withTimestamps();
     }
 

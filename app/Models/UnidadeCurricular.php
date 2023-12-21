@@ -30,6 +30,7 @@ class UnidadeCurricular extends Model
 
     public function cursos(): BelongsToMany {
         return $this->belongsToMany(Curso::class, 'cursos_unidades_curriculares')
+                ->withPivot('percentagem_semanal')
                 ->withTimestamps();
     }
 
