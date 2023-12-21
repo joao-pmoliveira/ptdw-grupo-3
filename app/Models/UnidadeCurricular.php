@@ -48,6 +48,5 @@ class UnidadeCurricular extends Model
         'ects',
         'sala_avaliacao',
         'docente_responsavel_id',
-        'percentagem_semanal'
     ];
 }

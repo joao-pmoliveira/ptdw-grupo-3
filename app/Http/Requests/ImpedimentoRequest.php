@@ -22,7 +22,10 @@ class ImpedimentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'periodo_id' => 'required|exists:periodos,id',
+            'docente_id' => 'required|exists:docentes,id',
+            'impedimentos' => 'required|string',
+            'justificacao' => 'nullable|string',
         ];
     }
 }

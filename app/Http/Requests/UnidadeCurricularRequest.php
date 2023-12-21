@@ -22,7 +22,17 @@ class UnidadeCurricularRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'codigo' => 'required|integer',
+            'sigla' => 'required|string',
+            'periodo_id' => 'required|exists:periodos,id',
+            'nome' => 'required|string',
+            'acn_id' => 'required|exists:acns,id',
+            'horas_semanais' => 'required|integer',
+            'laboratorio' => 'required|boolean',
+            'software' => 'nullable|string',
+            'ects' => 'required|integer',
+            'sala_avaliacao' => 'required|boolean',
+            'docente_responsavel_id' => 'required|exists:docentes,id',
         ];
     }
 }
