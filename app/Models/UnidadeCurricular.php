@@ -40,6 +40,7 @@ class UnidadeCurricular extends Model
         'codigo',
         'periodo_id',
         'nome',
+        'sigla',
         'acn_id',
         'horas_semanais',
         'laboratorio',

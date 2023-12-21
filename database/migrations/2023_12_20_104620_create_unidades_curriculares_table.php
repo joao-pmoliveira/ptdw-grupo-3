@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('codigo')->nullable(false);
+            $table->string('sigla')->nullable(false);
             $table->unsignedBigInteger('periodo_id')->nullable(false);
             $table->string('nome')->nullable(false);
             $table->unsignedBigInteger('acn_id')->nullable(false);

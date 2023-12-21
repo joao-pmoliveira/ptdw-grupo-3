@@ -2,25 +2,28 @@
 
 namespace Database\Factories;
 
+use App\Models\ACN;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Faker\Factory as FakerFactory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Docente>
  */
 class DocenteFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $acns_ids = ACN::pluck('id')->toArray();
+
+        $faker = FakerFactory::create('pt_PT');
+
+        $name = $faker->name();
+
         return [
-            'nome' => fake()->name(),
-            'acn_id' => fake()->numberBetween(0, 10),
-            'email' => fake()->email(),
-            'numero_telefone' => fake()->phoneNumber(),
+            'nome' => $name,
+            'acn_id' => fake()->randomElement($acns_ids),
+            'email' => strtolower(str_replace(' ', '.', $name)) . $faker->unique()->randomNumber(5, true) . "@estga.pt" ,
+            'numero_telefone' => $faker->phoneNumber(),
         ];
     }
 }

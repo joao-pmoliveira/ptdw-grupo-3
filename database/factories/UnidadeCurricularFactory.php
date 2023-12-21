@@ -20,6 +20,7 @@ class UnidadeCurricularFactory extends Factory
             'codigo' => fake()->numberBetween(0,10),
             'periodo_id' => fake()->numberBetween(0,10),
             'nome' => fake()->name(),
+            'sigla' => fake()->lexify('???'),
             'acn_id' => fake()->numberBetween(0,10),
             'horas_semanais' => fake()->numberBetween(0,8),
             'laboratorio' => fake()->boolean(),
