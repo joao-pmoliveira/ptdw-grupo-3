@@ -15,18 +15,19 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('codigo')->nullable(false);
-            $table->foreignId('periodo_id')->nullable(false);
+            $table->unsignedBigInteger('periodo_id')->nullable(false);
             $table->string('nome')->nullable(false);
-            $table->foreignId('acn_id')->nullable(false);
+            $table->unsignedBigInteger('acn_id')->nullable(false);
             $table->integer('horas_semanais')->nullable(false);
             $table->boolean('laboratorio')->nullable(false);
             $table->text('software');
             $table->integer('ects')->nullable(false);
             $table->boolean('sala_avaliacao')->nullable(false);
-            $table->foreignId('docente_responsavel_id')->nullable(false)->constrained(
-                table: 'docentes', indexName: 'id'
-            );
-            $table->decimal('percentagem_semanal', 5, 4);
+            $table->unsignedBigInteger('docente_responsavel_id')->nullable(false);
+
+            $table->foreign('periodo_id')->references('id')->on('periodos');
+            $table->foreign('acn_id')->references('id')->on('acns');
+            $table->foreign('docente_responsavel_id')->references('id')->on('docentes');
         });
     }
 

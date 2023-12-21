@@ -26,8 +26,7 @@ class UnidadeCurricularFactory extends Factory
             'software' => fake()->text(),
             'ects' => fake()->numberBetween(0, 16),
             'sala_avaliacao' => fake()->boolean(),
-            'docente_responsavel_id' => fake()->numberBetween(0,10),
-            'percentagem_semanal' => fake()->randomFloat(4, 0, 1)
+            'docente_responsavel_id' => fake()->numberBetween(0,10)
         ];
     }
 }

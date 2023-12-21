@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('impedimentos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('periodo_id')->nullable(false);
-            $table->foreignId('docente_id')->nullable(false);
+            $table->unsignedBigInteger('periodo_id')->nullable(false);
+            $table->unsignedBigInteger('docente_id')->nullable(false);
             $table->string('impedimentos')->nullable(false);
             $table->text('justificacao');
+
+            $table->foreign('periodo_id')->references('id')->on('periodos');
+            $table->foreign('docente_id')->references('id')->on('docentes');
+
 
             $table->unique(['periodo_id', 'docente_id']);
         });

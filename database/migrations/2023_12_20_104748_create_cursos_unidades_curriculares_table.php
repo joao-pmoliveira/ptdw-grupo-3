@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('cursos_unidades_curriculares', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('curso_id')->nullable(false);
-            $table->foreignId('unidade_curricular_id')->nullable(false)->constrained(
-                table:'unidades_curriculares', indexName:'id'
-            );
+            $table->unsignedBigInteger('curso_id')->nullable(false);
+            $table->unsignedBigInteger('unidade_curricular_id')->nullable(false);
 
-            $table->unique(['curso_id', 'unidade_curricular_id']);
+            $table->foreign('curso_id')->references('id')->on('cursos');
+            $table->foreign('unidade_curricular_id')->references('id')->on('unidades_curriculares');
+
+            $table->unique(['curso_id', 'unidade_curricular_id'], 'unique_curso_uc');
         });
     }
 

@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('docentes_unidades_curriculares', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('docente_id')->nullable(false);
-            $table->foreignId('unidade_curricular_id')->nullable(false)->constrained(
-                table: 'unidades_curriculares', indexName:'id'
-            );
+            $table->unsignedBigInteger('docente_id')->nullable(false);
+            $table->unsignedBigInteger('unidade_curricular_id')->nullable(false);
+            $table->decimal('percentagem_semanal', 5, 4);
 
-            $table->unique(['docente_id', 'unidade_curricular_id']);
+            $table->foreign('docente_id')->references('id')->on('docentes');
+            $table->foreign('unidade_curricular_id')->references('id')->on('unidades_curriculares');
+
+            $table->unique(['docente_id', 'unidade_curricular_id'], 'unique_docente_uc');
         });
     }
 
