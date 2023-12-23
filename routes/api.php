@@ -27,7 +27,7 @@ Route::group(['prefix' => 'docentes'], function () {
     
     Route::get('/', [DocenteController::class, 'index'])->name('docentes.index');
 
-    Route::get('/{id}', [DocenteController::class, 'show'])->name('docentes.show');
+    Route::get('/{docente}', [DocenteController::class, 'show'])->name('docentes.show');
 
     Route::post('/', [DocenteController::class, 'store'])->name('docentes.store');
 
@@ -39,7 +39,7 @@ Route::group(['prefix' => 'docentes'], function () {
 Route::group(['prefix' => 'unidades-curriculares'], function () {
     Route::get('/', [UnidadeCurricularController::class, 'index'])->name('ucs.index');
 
-    Route::get('/{id}', [UnidadeCurricularController::class, 'show'])->name('ucs.show');
+    Route::get('/{uc}', [UnidadeCurricularController::class, 'show'])->name('ucs.show');
 
     Route::post('/', [UnidadeCurricularController::class, 'store'])->name('ucs.store');
 
@@ -51,7 +51,7 @@ Route::group(['prefix' => 'unidades-curriculares'], function () {
 Route::group(['prefix' => 'impedimentos'], function () {
     Route::get('/', [ImpedimentoController::class, 'index'])->name('impedimentos.index');
     
-    Route::get('/{id}', [ImpedimentoController::class, 'show'])->name('impedimentos.show');
+    Route::get('/{impedimento}', [ImpedimentoController::class, 'show'])->name('impedimentos.show');
     
     Route::post('/', [ImpedimentoController::class, 'store'])->name('impedimentos.store');
     
