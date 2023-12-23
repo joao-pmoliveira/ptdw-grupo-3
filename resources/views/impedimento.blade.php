@@ -7,11 +7,15 @@
             'crumbs' => [
                     ['página inicial', '/inicio'],
                     ['restrições', '/restricoes'],
-                    ['impedimento de horário', '/impedimento/'.$ano_inicial.'_'.$ano_final.'/'.$semestre.'/'.$id]
+                    ['impedimentos de horário',
+                        route('impedimentos.view', [
+                            'ano_inicial'=>$ano_inicial,
+                            'ano_final'=> $ano_final,
+                            'semestre' => $semestre])]
                 ]
         ])
     
-    @include('partials._pageTitle', ['title' => 'Impedimentos de Horário '.$ano_inicial.'/'.$ano_final.' '.$semestre.'º Semestre - '.$id])
+    @include('partials._pageTitle', ['title' => 'Impedimentos de Horário '.$ano_inicial.'/'.$ano_final.' '.$semestre.'º Semestre'])
 
     <section class="mt-5">
         <form action="" method="post">

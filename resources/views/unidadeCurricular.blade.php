@@ -5,13 +5,13 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-                ['página inicial', '/inicio'],
-                ['unidades curriculares', '/ucs'],
-                ['unidade curricular - '.$id, '/ucs/'.$id]
+                ['página inicial', route('inicio.view')],
+                ['unidades curriculares', route('ucs.view')],
+                [strtolower($uc->nome), route('ucs.uc.view', ['uc' => $uc->id])]
             ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Cálculo I - '.$id])  <!--  trocar Calculo I pelo nome da cadeira em, questao  - "$nomeUC"-->
+    @include('partials._pageTitle', ['title' => $uc->id . ' - ' . $uc->nome])  <!--  trocar Calculo I pelo nome da cadeira em, questao  - "$nomeUC"-->
 
    
     <section class="mt-3" >

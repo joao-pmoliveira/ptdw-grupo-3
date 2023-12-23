@@ -4,11 +4,11 @@
 <main>
     <nav class="navbar navbar-main navbar-expand-lg px-3 shadow-none ">
         <div class="container-fluid d-flex justify-content-end">
-            <button class="sm m-0 px-2 py-1 text-terciary bg-primary border-0
-                text-accent login-text" type="button">
+            <a href="{{route('inicio')}}" class="sm m-0 px-2 py-1 text-terciary bg-primary border-0
+                text-accent login-txt">
                     entrar
                     <i class="fa-solid fa-user"></i>
-            </button>
+            </a>
         </div>
     </nav>
     @include('partials._header', ['sidebar' => false])

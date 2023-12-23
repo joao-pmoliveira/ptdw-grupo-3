@@ -1,6 +1,6 @@
 <fieldset class="title-separator d-flex flex-column gap-2 mb-5"><br>
     <h2 class="">Docente Responsável em:</h2>
-    <legend class="class-fieldset-heading py-1">{{$class['id']}} {{$class['name']}}</legend>
+    <legend class="class-fieldset-heading py-1">{{$uc->id}} {{$uc->sigla}}</legend>
     <fieldset class="">
         <legend>Tipo de Sala</legend>
         <div class="d-flex gap-3 px-3 lab-requirement-type-container flex-wrap">

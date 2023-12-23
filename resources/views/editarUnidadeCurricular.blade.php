@@ -5,12 +5,12 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-            ['página inicial', '/inicio'],
-            ['gerir dados', '/dados/gerir']
+            ['página inicial', route('inicio.view')],
+            ['gerir dados', route('admin.gerir.view')]
         ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Unidade Curricular '.$id])
+    @include('partials._pageTitle', ['title' => $uc->nome . ' - ' . $uc->id])
 
     <section class="mt-3">
         <form id="edit-uc-form" action="" method="post" class="title-separator">

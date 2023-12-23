@@ -5,12 +5,12 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-                ['página inicial', '/inicio'],
-                ['recolha de restrições', '/restricoes/escolha']
+                ['página inicial', route('inicio.view')],
+                ['recolha de restrições', route('restricoes.recolha.view')]
             ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Recolha de Restrições'])
+    @include('partials._pageTitle', ['title' => $page_title])
 
     <section class="mt-5 p-0 d-flex flex-column gap-4">
     <div class="d-flex gap-2 align-items-center" data-bs-toggle="collapse" data-bs-target="#table">

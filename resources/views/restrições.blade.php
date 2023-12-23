@@ -4,10 +4,10 @@
 
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
-    'crumbs' => [
-    ['página inicial', '/inicio'],
-    ['recolha', '/restricoes/submissao'],
-    ]
+        'crumbs' => [
+            ['página inicial', route('inicio.view')],
+            ['preencher restrições', route('restricoes.view')],
+        ]
     ])
 
     @include('partials._pageTitle', ['title' => 'Recolha de restrições'])

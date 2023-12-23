@@ -4,9 +4,7 @@
 
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
-        'crumbs' => [
-                //['página inicial', '/inicio']
-            ]
+        'crumbs' => []
     ])
 
     @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
@@ -16,7 +14,7 @@
                 'title' => 'Unidades Curriculares',
                 'body' => ['Consulta da lista de Unidades Curriculares'],
                 'button' => 'Consultar',
-                'url' => '/ucs'
+                'url' => route('ucs.view')
             ])
         @include('partials._card', [
                 'title' => 'Preencher Restrições',
@@ -24,7 +22,7 @@
                         'Prenchimento de impedimentos de horários e restrições de sala',
                     ],
                 'button' => 'Preencher',
-                'url' => '/restricoes/submissao'
+                'url' => route('restricoes.view')
             ])
         @include('partials._card', [
                 'title' => 'Recolha de Restrições',
@@ -33,7 +31,7 @@
                         'Descarregar dados de restrições'
                     ], 
                 'button' => 'Gerir',
-                'url' => '/restricoes/escolha'
+                'url' => route('restricoes.recolha.view')
             ])
         @include('partials._card', [
                 'title' => 'Gerir Dados',
@@ -42,7 +40,7 @@
                         'Importar dados serviço-docente;'
                     ],
                 'button' => 'Gerir',
-                'url' => '/dados/gerir'
+                'url' => route('admin.gerir.view')
             ])
         @include('partials._card', [
                 'title' => 'Ajuda',
@@ -50,7 +48,7 @@
                         'Consulta de guias e FAQs',
                     ],
                 'button' => 'Consultar',
-                'url' => '/inicio'
+                'url' => route('inicio.view')
             ])
 
     </section>

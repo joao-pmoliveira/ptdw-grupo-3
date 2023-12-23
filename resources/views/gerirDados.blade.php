@@ -4,8 +4,8 @@
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
         'crumbs' => [
-            ['página inicial', '/inicio'],
-            ['gerir dados', '/dados/gerir']
+            ['página inicial', route('inicio.view')],
+            ['gerir dados', route('admin.gerir.view')]
         ]
     ])
     

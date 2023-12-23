@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminViewController;
+use App\Http\Controllers\DocenteViewController;
+use App\Http\Controllers\ImpedimentosViewController;
+use App\Http\Controllers\RestricoesViewController;
+use App\Http\Controllers\UnidadeCurricularViewController;
+use App\Http\Controllers\WelcomeViewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,77 +19,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Página de Entrada
-Route::get('/', function () {
-    return view('entrada', ['page_title' => 'Bem vindo!']);
+Route::get('/', [WelcomeViewController::class, 'welcome'])->name('welcome.view');
+
+Route::get('/inicio', [WelcomeViewController::class, 'inicio'])->name('inicio.view');
+
+Route::group(['prefix' => 'restricoes'], function () {
+
+    Route::get('/', [RestricoesViewController::class, 'restricoes'])->name('restricoes.view');
+
+    Route::get('/{uc}/{ano_inicial}-{ano_final}/{semestre}', [RestricoesViewController::class, 'restricoesUC'])->name('restricoes.uc.view');
+    
+    Route::get('/recolha', [RestricoesViewController::class, 'recolha'])->name('restricoes.recolha.view');
+
 });
 
-//Página Principal
-Route::get('/inicio', function () {
-    return view('inicio', ['page_title' => 'Página Inicial']);
+Route::group(['prefix' => 'impedimentos'], function () {
+    
+    Route::get('/{ano_inicial}-{ano_final}/{semestre}', [ImpedimentosViewController::class, 'impedimentos'])->name('impedimentos.view');
+
 });
 
-//Página de Restrições (Docente)
-Route::get('/restricoes/submissao', function () {
-    return view('restrições', ['page_title' => 'Restrições']);
+Route::group(['prefix' => 'ucs'], function () {
+
+    Route::get('/', [UnidadeCurricularViewController::class, 'unidadesCurriculares'])->name('ucs.view');
+
+    Route::get('/{uc}', [UnidadeCurricularViewController::class, 'unidadeCurricular'])->name('ucs.uc.view');
+
+    Route::get('/{uc}/editar', [UnidadeCurricularViewController::class, 'editarUnidadeCurricular'])->name('ucs.editar.view');
+
 });
 
-//Página Formulário: Restrições (Docente)
-Route::get('/restricao/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
-    return view('restrição', [
-        'page_title' => 'Restrições de Sala de Aula',
-        'ano_inicial' => $ano_inicial,
-        'ano_final' => $ano_final,
-        'semestre' => $semestre,
-        'id' => $id,
-        'classes' => [
-            ['id' => 2, 'name' => 'AP'],
-            ['id' => 7, 'name' => 'MATI']
-        ]
-    ]);
+Route::group(['prefix' => 'docentes'], function () {
+    
+    // todo - página para visualizar informações do docente
+    // Route::get('/{docente}', []);
+
+    Route::get('/{docente}/editar', [DocenteViewController::class, 'editarDocente'])->name('docentes.editar.view');
+
 });
 
-//Página Formulário: Impedimentos (Docente)
-Route::get('/impedimento/{ano_inicial}_{ano_final}/{semestre}/{id}', function ($ano_inicial, $ano_final, $semestre, $id) {
-    return view('impedimento', [
-        'page_title' => 'Impedimentos de Horário',
-        'ano_inicial' => $ano_inicial,
-        'ano_final' => $ano_final,
-        'semestre' => $semestre,
-        'id' => $id
-    ]);
-});
-
-//Página de Gerir Processos (Admin)
-Route::get('/restricoes/escolha', function () {
-    return view('processos', ['page_title' => 'Gerir Processos']);
-});
-
-//Página de Consultar Unidades Curriculares (Utilizador)
-Route::get('/ucs', function () {
-    return view('unidadesCurriculares', ['page_title' => 'Consultar Unidades Curriculares']);
-});
-
-//Página de Unidade Curricular (Utilizador)
-Route::get('/uc/{id}', function ($id) {
-    return view('unidadeCurricular', [
-        'page_title' => 'Unidade Curricular',
-        'id' => $id
-    ]);
-});
-//Página de Editar Unidade Curricular (Admin)
-Route::get('/uc/{id}/editar', function ($id) {
-    return view('editarUnidadeCurricular', [
-        'page_title' => 'Unidade Curricular', 
-        'id' => $id
-    ]);
-});
-
-//Página de Gerir Dados (Admin)
-Route::get('/dados/gerir', function () {
-    return view('gerirDados', ['page_title' => 'Gerir Dados']);
-});
-
-Route::get('/docente/{id}/editar', function ($id) {
-    return view('docente', ['page_title' => 'Docente']);
-});
+Route::get('/gerir-dados', [AdminViewController::class, 'gerirDados'])->name('admin.gerir.view');
