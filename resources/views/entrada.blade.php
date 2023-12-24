@@ -4,7 +4,7 @@
 <main>
     <nav class="navbar navbar-main navbar-expand-lg px-3 shadow-none ">
         <div class="container-fluid d-flex justify-content-end">
-            <a href="{{route('inicio')}}" class="sm m-0 px-2 py-1 text-terciary bg-primary border-0
+            <a href="{{route('inicio.view')}}" class="sm m-0 px-2 py-1 text-terciary bg-primary border-0
                 text-accent login-txt">
                     entrar
                     <i class="fa-solid fa-user"></i>
