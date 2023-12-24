@@ -21,8 +21,9 @@ class DocenteFactory extends Factory
 
         return [
             'nome' => $name,
+            'numero_funcionario' => fake()->unique()->randomNumber(4, true),
             'acn_id' => fake()->randomElement($acns_ids),
-            'email' => strtolower(str_replace(' ', '.', $name)) . $faker->unique()->randomNumber(5, true) . "@estga.pt" ,
+            'email' => strtolower(str_replace(' ', '.', $name)) . $faker->unique()->randomNumber(5, true) . "@estga.pt",
             'numero_telefone' => $faker->phoneNumber(),
         ];
     }

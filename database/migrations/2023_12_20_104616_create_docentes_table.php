@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nome')->nullable(false);
+            $table->unsignedInteger('numero_funcionario')->nullable(false);
             $table->unsignedBigInteger('acn_id')->nullable(false);
             $table->string('email')->nullable(false);
             $table->string('numero_telefone');

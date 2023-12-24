@@ -12,21 +12,24 @@ class Docente extends Model
 {
     use HasFactory;
 
-    public function impedimentos(): HasMany {
+    public function impedimentos(): HasMany
+    {
         return $this->hasMany(Impedimento::class);
     }
 
-    public function acn(): BelongsTo {
+    public function acn(): BelongsTo
+    {
         return $this->belongsTo(ACN::class);
     }
 
-    public function unidadesCurriculares(): BelongsToMany {
+    public function unidadesCurriculares(): BelongsToMany
+    {
         return $this->belongsToMany(UnidadeCurricular::class, 'docentes_unidades_curriculares')
-                    ->withPivot('percentagem_semanal')
-                    ->withTimestamps();
+            ->withPivot('percentagem_semanal')
+            ->withTimestamps();
     }
 
     protected $table = 'docentes';
 
-    protected $fillable = ['nome', 'acn_id', 'email', 'numero_telefone'];
+    protected $fillable = ['nome', 'numero_funcionario', 'acn_id', 'email', 'numero_telefone'];
 }
