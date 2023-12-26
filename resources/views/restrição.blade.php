@@ -15,7 +15,7 @@
                 ]
         ])
 
-    @include('partials._pageTitle', ['title' => 'Restrições de UC '.$ano_inicial.'/'.$ano_final.' '])
+    @include('partials._pageTitle', ['title' => 'Restrições de '. $uc->nome. ' - '.$ano_inicial.'/'.$ano_final.' '])
     <section class="mt-3">
         <form action="" method="post">
             <div class="class-sub-form-container">
@@ -25,7 +25,6 @@
                 <input class="btn" type="button" value="Submeter">
                 <input class="btn" type="button" value="Cancelar">
             </div>
-            <br><br>
         </form>
     </section>
 </main>
