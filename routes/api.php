@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CursoController;
 use App\Http\Controllers\Api\DocenteController;
 use App\Http\Controllers\Api\ImpedimentoController;
 use App\Http\Controllers\Api\UnidadeCurricularController;
+use App\Http\Controllers\Api\UploadController;
 use App\Models\Docente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,3 +60,5 @@ Route::group(['prefix' => 'impedimentos'], function () {
     
     Route::delete('/{id}', [ImpedimentoController::class, 'delete'])->name('impedimentos.delete');
 });
+
+Route::post('/upload-excel', [UploadController::class, 'upload'])->name('upload');

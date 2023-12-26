@@ -145,15 +145,16 @@
         </section>
 
         <section id="import-data" class="tab-pane">
-            <div class="d-flex flex-column gap-3">
-                <div class="d-flex gap-2 align-items-center">
-                    <label for="import-file-input">Selecione um ficheiro</label><br>
-                    <input type="file" name="uc-data-file" id="import-file-input">
+            <form action="{{route('upload')}}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3">
+                @csrf
+                <div class="d-flex flex-column gap-2 ">
+                    <label for="import-file-input">Selecione um ficheiro</label>
+                    <input type="file" accept=".xlsx" name="uc-data-file" id="import-file-input" required>
                 </div>
                 <div class="d-flex gap-3">
-                    <input class="btn" type="button" value="Submeter">
+                    <input class="btn" type="submit" value="Submeter">
                 </div>
-            </div>
+            </form>
         </section>
     </div>
     
