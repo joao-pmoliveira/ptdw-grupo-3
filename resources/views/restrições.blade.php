@@ -158,16 +158,18 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
+                @foreach($ucs as $uc)
                     <tr class="border border-light" data-type='restricao' data-start-year='2023' data-end-year='2024'
                         data-semester='1'>
                         <th scope='row'></th>
                         <td></td>
-                        <td>7</td>
-                        <td>1</td>
-                        <td>MATI</td>
-                        <td>Preenchido</td>
-                        <td>31/12/2023</td>
+                        <td>{{$uc->periodo->ano}}</td>
+                        <td>{{$uc->periodo->semestre}}</td>
+                        <td>{{$uc->sigla}}</td>
+                        <td>Preenchido</td> <!--Ver depois-->
+                        <td>{{$uc->periodo->data_final}}</td>
                     </tr>
+                @endforeach
                 </tbody>
             </table>
         </section>

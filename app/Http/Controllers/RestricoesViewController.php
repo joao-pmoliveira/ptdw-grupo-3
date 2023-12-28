@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\UnidadeCurricular;
+use App\Models\Periodo;
 use Illuminate\Http\Request;
 
 class RestricoesViewController extends Controller
 {
     public function restricoes() {
+        //$periodo=Periodo::where('ano', 2023)->get();
 
-        return view('restrições', ['page_title' => 'Restrições']);
+        $ucs=UnidadeCurricular::all();
+
+        return view('restrições', [
+            'page_title' => 'Restrições',
+            'ucs' => $ucs
+        ]);
     }
 
     public function restricoesUC(UnidadeCurricular $uc, $ano_inicial, $ano_final, $semester) {
