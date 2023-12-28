@@ -166,7 +166,7 @@
                         <td>{{$uc->periodo->ano}}</td>
                         <td>{{$uc->periodo->semestre}}</td>
                         <td>{{$uc->sigla}}</td>
-                        <td>Preenchido</td> <!--Ver depois-->
+                        <td>Pendente</td> <!--Ver depois-->
                         <td>{{$uc->periodo->data_final}}</td>
                     </tr>
                 @endforeach
@@ -177,7 +177,7 @@
         <section id="history" class="tab-pane">
             <div class="d-flex p-3 gap-2 align-items-center">
 
-                <h3>Histórico</h3>
+                <h3>Histórico de Impedimentos</h3>
             </div>
             <table class="w-100 shadow p-3 mb-5" id="table-historico-formularios">
                 <thead class="bg-light">
@@ -185,18 +185,20 @@
                         <th scope="col"></th>
                         <th scope="col-1">Ano</th>
                         <th scope="col-1">Semestre</th>
-                        <th scope="col-1">Nome</th>
+                        <th scope="col-1">Nome do docente</th>
                         <th scope="col-1">Data Submissão</th>
                     </tr>
                 </thead>
                 <tbody class="title-separator">
+                    @foreach($impedimentos as $impedimento)
                     <tr data-type="impedimento" data-start-year="2023" data-end-year="2024" data-semester="1">
                         <th scope="row"></th>
-                        <td>2022/23</td>
-                        <td>1</td>
-                        <td>Impedimentos de Horário</td>
-                        <td>01/07/2023</td>
+                        <td>{{$impedimento->periodo->ano}}</td>
+                        <td>{{$impedimento->periodo->semestre}}</td>
+                        <td>{{$impedimento->docente->nome}}</td>
+                        <td>01/07/2023</td> <!--Ver depois-->
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </section>

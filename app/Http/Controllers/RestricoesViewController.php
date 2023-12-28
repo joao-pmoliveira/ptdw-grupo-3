@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Impedimento;
 use App\Models\UnidadeCurricular;
 use App\Models\Periodo;
 use Illuminate\Http\Request;
@@ -9,13 +10,18 @@ use Illuminate\Http\Request;
 class RestricoesViewController extends Controller
 {
     public function restricoes() {
-        //$periodo=Periodo::where('ano', 2023)->get();
 
-        $ucs=UnidadeCurricular::all();
+        $currentYear = date('Y');
+        
+        $ucs = Periodo::where('ano', $currentYear)->firstOrFail()->unidadesCurriculares;
+        $impedimentos = Impedimento::whereHas('periodo', function ($query) use ($currentYear) {
+            $query->where('ano', '!=', $currentYear);
+        })->get();
 
         return view('restrições', [
             'page_title' => 'Restrições',
-            'ucs' => $ucs
+            'ucs' => $ucs,
+            'impedimentos' => $impedimentos
         ]);
     }
 
