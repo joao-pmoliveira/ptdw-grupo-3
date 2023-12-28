@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< Updated upstream
 use App\Models\ACN;
 use App\Models\Docente;
-=======
 use App\Models\Periodo;
->>>>>>> Stashed changes
 use App\Models\UnidadeCurricular;
 use Illuminate\Http\Request;
 
