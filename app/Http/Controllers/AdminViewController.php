@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ACN;
 use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
@@ -15,12 +16,14 @@ class AdminViewController extends Controller
             ->first(); 
         
         $docentes=Docente::all();
+        $acns=ACN::all();
 
         $ucs=UnidadeCurricular::where('periodo_id', $periodo->id)->get();
         return view('gerirDados', [
             'page_title' => 'Gerir Dados', 
             'ucs' => $ucs,
-            'docentes' => $docentes
+            'docentes' => $docentes,
+            'acns' => $acns
         ]);
         
     }

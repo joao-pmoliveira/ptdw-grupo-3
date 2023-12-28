@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ACN;
+use App\Models\Docente;
 use App\Models\UnidadeCurricular;
 use Illuminate\Http\Request;
 
@@ -21,9 +23,13 @@ class UnidadeCurricularViewController extends Controller
     }
 
     public function editarUnidadeCurricular(UnidadeCurricular $uc) {
+        $acns=ACN::all();
+        $docentes=Docente::all();
         return view('editarUnidadeCurricular', [
             'page_title' => 'Unidade Curricular',
-            'uc' => $uc
+            'uc' => $uc,
+            'docentes' => $docentes,
+            'acns' => $acns
         ]);
     }
 }
