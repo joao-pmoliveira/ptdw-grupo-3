@@ -26,7 +26,7 @@ const linhasUCs = tabelaUCs?.querySelectorAll('tr[data-id]');
 linhasUCs?.forEach((row) => {
     row.addEventListener('click', () => {
         let currentURL = window.location.href;
-        window.location.href = currentURL.replace("/ucs",`/uc/${row.getAttribute('data-id')}`)
+        window.location.href = currentURL.replace("/ucs",`/ucs/${row.getAttribute('data-id')}`)
     })
 })
 
