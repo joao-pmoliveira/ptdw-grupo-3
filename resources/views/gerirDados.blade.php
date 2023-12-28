@@ -71,27 +71,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-id='91998'>
-                            <th scope="row"></th>
-                            <td>91998</td>
-                            <td>Matemática Aplicada às Tecnologias de Informação</td>
-                            <td>Luísa Mendes</td>
-                            <td><i class="fa-solid fa-pen"></i></td>
-                        </tr>
-                        <tr data-id="88765">
-                            <th scope="row"></th>
-                            <td>88765</td>
-                            <td>Web Design</td>
-                            <td>Rita Gonçalves</td>
-                            <td><i class="fa-solid fa-pen"></i></td>
-                        </tr>
-                        <tr data-id='85095'>
-                            <th scope="row"></th>
-                            <td>85095</td>
-                            <td>Inteligência Artificial</td>
-                            <td>José Silva</td>
-                            <td><i class="fa-solid fa-pen"></i></td>
-                        </tr>
+                        @foreach($ucs as $uc)
+                            <tr data-id='{{$uc->codigo}}'>
+                                <th scope="row"></th>
+                                <td>{{$uc->codigo}}</td>
+                                <td>{{$uc->nome}}</td>
+                                <td>{{$uc->docenteResponsavel->nome}}</td>
+                                <td><i class="fa-solid fa-pen"></i></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -120,8 +108,16 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody >
-                        <tr data-id='110555'>
+                    <tbody>
+                        @foreach($docentes as $docente)
+                            <tr data-id='{{$uc->numero_funcionario}}'>
+                                <th scope="row"></th>
+                                <td>{{$docente->numero_funcionario}}</td>
+                                <td>{{$docente->nome}}</td>
+                                <td><i class="fa-solid fa-pen"></i></td>
+                            </tr>
+                        @endforeach
+                        <!-- <tr data-id='110555'>
                             <th scope="row"></th>
                             <td>110555</td>
                             <td>José Silva</td>
@@ -138,7 +134,7 @@
                             <td>333555</td>
                             <td>Rita Gonçalves</td>
                             <td><i class="fa-solid fa-pen"></i></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
