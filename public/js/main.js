@@ -61,7 +61,7 @@ const tabelaEditarUCs = document.querySelector('#table-edit-ucs')
 const linhasEditarUCs = tabelaEditarUCs?.querySelectorAll('tr[data-id]')
 linhasEditarUCs?.forEach(row => {
     row.addEventListener('click', () => {
-        window.location.href = window.location.href.replace("/dados/gerir",`/uc/${row.getAttribute('data-id')}/editar`)
+        window.location.href = window.location.href.replace("/gerir-dados",`/ucs/${row.getAttribute('data-id')}/editar`)
     })
 })
 
@@ -70,7 +70,7 @@ const tabelaEditarDocentes = document.querySelector('#table-edit-teachers')
 const linhasEditarDocentes = tabelaEditarDocentes?.querySelectorAll('tr[data-id]')
 linhasEditarDocentes?.forEach(row => {
     row.addEventListener('click', () => {
-        window.location.href = window.location.href.replace("/dados/gerir",`/docente/${row.getAttribute('data-id')}`)
+        window.location.href = window.location.href.replace("/gerir-dados",`/docentes/${row.getAttribute('data-id')}/editar`)
     })
    
 })

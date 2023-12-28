@@ -72,7 +72,7 @@
                     </thead>
                     <tbody>
                         @foreach($ucs as $uc)
-                            <tr data-id='{{$uc->codigo}}'>
+                            <tr data-id='{{$uc->id}}'>
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
                                 <td>{{$uc->nome}}</td>
@@ -110,7 +110,7 @@
                     </thead>
                     <tbody>
                         @foreach($docentes as $docente)
-                            <tr data-id='{{$uc->numero_funcionario}}'>
+                            <tr data-id='{{$docente->id}}'>
                                 <th scope="row"></th>
                                 <td>{{$docente->numero_funcionario}}</td>
                                 <td>{{$docente->nome}}</td>

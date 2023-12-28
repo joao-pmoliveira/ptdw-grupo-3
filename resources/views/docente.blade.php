@@ -10,7 +10,7 @@
         ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Docente'])
+    @include('partials._pageTitle', ['title' => $docente->nome])
 
 
     <section class="mt-3">
@@ -21,7 +21,7 @@
                 <label for="nMec" class="my-auto">Nº Mec. :</label>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
-                <input type="text" id="nMec" value="110420" class="px-1 py-1">
+                <input type="text" id="nMec" value="{{$docente->numero_funcionario}}" class="px-1 py-1">
             </div>
 
             
@@ -30,7 +30,7 @@
                 <label for="nome" class="my-auto">Nome :</label>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-2">
-                <input type="text" id="nMec" value="José Silva" class="px-1 py-1">
+                <input type="text" id="nMec" value="{{$docente->nome}}" class="px-1 py-1">
             </div>
 
             
@@ -42,8 +42,9 @@
                 <div class="col-sm-12 col-md-2 col-lg-2 d-flex gap-5 aling-items-center">
                     <label for="email" class="my-auto">Email :</label>
                 </div>
-                <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center">
-                    <input type="text" id="email" value="josesilva@ua.pt" class="px-1 py-1">
+                <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center"> 
+                    <!-- todo aumentar largura input email -->
+                    <input type="text" id="email" value="{{$docente->email}}" class="px-1 py-1">
                 </div>
             </div>
             <br>
@@ -52,7 +53,7 @@
                     <label for="phonenumber" class="my-auto">Nº Telemóvel :</label>
                 </div>
                 <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center">
-                    <input type="number" id="phonenumber" value="913543325" maxlength="9" minlength="9"
+                    <input type="number" id="phonenumber" value="{{$docente->numero_telefone}}" maxlength="9" minlength="9"
                         class="px-1 py-1">
                 </div>
             </div>
@@ -62,7 +63,7 @@
                     <label for="acn" class="my-auto">Área Cientifica Nuclear :</label>
                 </div>
                 <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center">
-                    <input type="text" id="acn" value="Matematica" class="px-1 py-1">
+                    <input type="text" id="acn" value="{{$docente->acn->sigla}}" class="px-1 py-1">
                 </div>
             </div>
             <br>
