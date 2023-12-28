@@ -201,6 +201,32 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="d-flex p-3 gap-2 align-items-center">
+
+                <h3>Histórico de Restrições</h3>
+            </div>
+            <table class="w-100 shadow p-3 mb-5" id="table-historico-formularios">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col-1">Ano</th>
+                        <th scope="col-1">Semestre</th>
+                        <th scope="col-1">Nome da UC</th>
+                        <th scope="col-1">Data Submissão</th>
+                    </tr>
+                </thead>
+                <tbody class="title-separator">
+                    @foreach($ucsH as $uc)
+                    <tr data-type="impedimento" data-start-year="2023" data-end-year="2024" data-semester="1">
+                        <th scope="row"></th>
+                        <td>{{$uc->periodo->ano}}</td>
+                        <td>{{$uc->periodo->semestre}}</td>
+                        <td>{{$uc->nome}}</td>
+                        <td>01/07/2023</td> <!--Ver depois-->
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </section>
     </div>
 </main>

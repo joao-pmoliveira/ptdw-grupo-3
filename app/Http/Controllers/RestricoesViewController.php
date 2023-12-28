@@ -12,7 +12,8 @@ class RestricoesViewController extends Controller
     public function restricoes() {
 
         $currentYear = date('Y');
-        
+
+        $ucsH = Periodo::where('ano', '!=', $currentYear)->firstOrFail()->unidadesCurriculares;
         $ucs = Periodo::where('ano', $currentYear)->firstOrFail()->unidadesCurriculares;
         $impedimentos = Impedimento::whereHas('periodo', function ($query) use ($currentYear) {
             $query->where('ano', '!=', $currentYear);
@@ -21,7 +22,8 @@ class RestricoesViewController extends Controller
         return view('restrições', [
             'page_title' => 'Restrições',
             'ucs' => $ucs,
-            'impedimentos' => $impedimentos
+            'impedimentos' => $impedimentos,
+            'ucsH' => $ucsH
         ]);
     }
 
