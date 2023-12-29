@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Faker\Factory as FakerFactory;
 
 use function PHPSTORM_META\map;
 
@@ -90,10 +91,25 @@ class UploadController extends Controller
 
         DB::beginTransaction();
         try {
-            $periodo = Periodo::where('ano_inicial', 2023)->first();
+            // todo - como melhor detetar a que ano/semestre o ficheiro se refere
+            // para efetiso de teste, adicionar ao primeiro semestre de 2024/2025
+
+            $periodo = Periodo::where('ano', 2024)
+                ->where('semestre', 1)
+                ->first();
+
             if ($periodo == NULL) {
-                throw new Exception('Ano/Semestre mal definido');
+                $periodo = Periodo::create([
+                    'ano' => 2024,
+                    'semestre' => 1,
+                    'data_inicial' => '2024-08-01',
+                    'data_final' => '2024-09-01'
+                ]);
+
+                $periodo->save();
             }
+
+            $faker = FakerFactory::create('pt_PT');
 
             foreach ($data as $d) {
                 $acn_docente = ACN::where('sigla', $d['acn_docente'])->first();
@@ -101,24 +117,26 @@ class UploadController extends Controller
                     // todo - como lidar?
                     // se todas as ACNs possíveis forem introduzidas manualmente no sistema? não aceitar erros
                     // se não ? "erro" pode ser 'nova' ACN que ainda não está no sistema
+                    // para efeitos de teste: assume que todos os ACNs possíveis já estão no sistema
 
                     throw new Exception('ACN do Docente: não reconhecida!');
                 }
 
                 $docente = Docente::where('numero_funcionario', $d['numero_docente'])->first();
                 if ($docente == NULL) {
-                    // todo - como lidar?
-                    // procurar só código, se não encontrar, é porque é novo docente a inserir:
-                    //  - nome
-                    //  - acn
-                    //  - numero
-                    //  - email ?
-                    //      - placeholder ? 
-                    //      - introduzido depois pelos admins?
-                    //      - associado quando o docente tentar fazer login com email + numero
-                    //          e associar nessa altura?
+                    $docente = Docente::create([
+                        'nome' => $d['nome_docente'],
+                        'numero_funcionario' => $d['numero_docente'],
+                        'email' => strtolower(str_replace(' ', '.', $d['nome_docente'])) . $faker->unique()->randomNumber(5, true) . "@estga.pt",
+                        'numero_telefone' => $faker->phoneNumber()
+                    ]);
+                    $docente->acn()->associate($acn_docente);
+                    $docente->save();
 
-                    throw new Exception('Código docente: nenhum registo desse docente!');
+                    // todo - email de docente:
+                    // para efeitos de test: email placeholder, gerado automaticamente
+                    // - email real introduzido pelos admins?
+                    // - associado quando o docente faz o primeiro login com email + numero de funcionario?
                 }
 
                 if ($docente->nome != $d['nome_docente']) {
@@ -148,21 +166,37 @@ class UploadController extends Controller
                     throw new Exception('ACN da UC: não reconhecida!');
                 }
 
-                $uc = UnidadeCurricular::where('codigo', $d['codigo_uc'])->first();
+                $uc = UnidadeCurricular::where('codigo', $d['codigo_uc'])
+                    ->where('periodo_id', $periodo->id)
+                    ->first();
                 if ($uc == NULL) {
-                    // Não foi encontrada uma unidade curricular com este código
-                    // criar novo registo da UC
-                    //  - nome
-                    //  - codigo
-                    //  - acn
-                    //  - sigla (gerar com base no nome)
-                    //  - horas_semanais
-                    //  - periodo
-                    //  - laboratorio (por defeito é falso)
-                    //  - sala_avaliacao (por defeito é falso)
-                    //  - docenteResponsavel (verificar se é esta linha)
 
-                    throw new Exception('Código UC: não reconhecido!');
+
+                    $uc = UnidadeCurricular::create([
+                        'codigo' => $d['codigo_uc'],
+                        'nome' => $d['nome_uc'],
+                        'periodo_id' => $periodo->id,
+                        'acn_id' => $acn_docente->id,
+                        // todo - mudar campo para nullable, para ao criar colocar valores temporarios
+                        // caso o primeiro docente associado a esta UC não seja o responsavel
+                        'docente_responsavel_id' => (!empty(trim($d['responsavel_uc']))) ? $docente->id : 1,
+                        'sigla' => '',
+                        'horas_semanais' => $d['horas'],
+                        'laboratorio' => false,
+                        'software' => '',
+                        'ects' => '0',
+                        'sala_avaliacao' => false,
+                    ]);
+
+                    $words = explode(" ",  $d['nome_uc']);
+                    foreach ($words as $word) {
+                        $initial = $word[0];
+                        if (ctype_upper($initial)) {
+                            $uc->sigla .= $initial;
+                        }
+                    }
+
+                    $uc->save();
                 }
 
                 $curso = Curso::where('sigla', $d['curso'])->first();
@@ -176,14 +210,28 @@ class UploadController extends Controller
 
                     throw new Exception('Curso da UC: sigla não reconhecida');
                 }
+
+                if (!$uc->cursos->contains($curso)) {
+                    $uc->cursos()->attach($curso);
+                }
+
+                if ($uc->docentes->contains($docente)) {
+                    // todo - como lidar
+                    // se a unidade curricular já tem este docente associado é porque:
+                    // - houve um erro no ficheiro input, em que o docente tem duas linhas para a mesma UC
+                    // - o admin tentou enviar o ficheiro mais do que uma vez
+                    // - os dados do ficheiros são de um periodo que já existe no sistema
+                    throw new Exception('Docente e UC: este docente já estava associado à UC');
+                }
+
+                $uc->docentes()->attach($docente, ['percentagem_semanal' => $d['percentagem']]);
             }
 
-            // enquanto não estiver o processo completo, não guardar alterações feitas
-            DB::rollBack();
-            return response()->json(['message' => 'sucesso'], 200);
+            DB::commit();
+            return redirect(route('inicio.view'), 200);
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Error: ' . $e->getMessage()], 500);
+            return redirect(route('admin.gerir.view'));
         }
     }
 }

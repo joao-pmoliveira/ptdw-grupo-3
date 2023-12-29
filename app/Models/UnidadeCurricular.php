@@ -11,27 +11,32 @@ class UnidadeCurricular extends Model
 {
     use HasFactory;
 
-    public function periodo(): BelongsTo {
+    public function periodo(): BelongsTo
+    {
         return $this->belongsTo(Periodo::class);
     }
 
-    public function acn(): BelongsTo {
+    public function acn(): BelongsTo
+    {
         return $this->belongsTo(ACN::class);
     }
 
-    public function docentes(): BelongsToMany {
+    public function docentes(): BelongsToMany
+    {
         return $this->belongsToMany(Docente::class, 'docentes_unidades_curriculares')
-                ->withTimestamps();
+            ->withPivot('percentagem_semanal')
+            ->withTimestamps();
     }
 
-    public function docenteResponsavel(): BelongsTo {
+    public function docenteResponsavel(): BelongsTo
+    {
         return $this->belongsTo(Docente::class, 'docente_responsavel_id');
     }
 
-    public function cursos(): BelongsToMany {
+    public function cursos(): BelongsToMany
+    {
         return $this->belongsToMany(Curso::class, 'cursos_unidades_curriculares')
-                ->withPivot('percentagem_semanal')
-                ->withTimestamps();
+            ->withTimestamps();
     }
 
     protected $table = 'unidades_curriculares';
