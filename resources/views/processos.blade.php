@@ -13,11 +13,11 @@
     @include('partials._pageTitle', ['title' => $page_title])
 
     <section class="mt-5 p-0 d-flex flex-column gap-4">
-    <div class="d-flex gap-2 align-items-center" data-bs-toggle="collapse" data-bs-target="#table">
+        <div class="d-flex gap-2 align-items-center" data-bs-toggle="collapse" data-bs-target="#table">
             <i class="fa-solid fa-chevron-down"></i>
             <h3>Formulário em progresso</h3>
         </div>
-        <table class="accordion table-ua collapse accordion-collapse title-separator" id="table">
+        <table class="accordion table-ua collapse accordion-collapse title-separator show" id="table">
             <thead>
                 <tr>
                     <th scope="col"></th>
