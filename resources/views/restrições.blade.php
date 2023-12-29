@@ -6,7 +6,7 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
             ['página inicial', route('inicio.view')],
-            ['preencher restrições', route('restricoes.view')],
+            ['recolha de  restrições', route('restricoes.view')],
         ]
     ])
 
@@ -142,16 +142,12 @@
 
         <section id="manage-uc-restrictions" class="tab-pane">
             <div class="d-flex p-3 gap-2 align-items-center">
-                <!-- <i class="fa-solid fa-chevron-down"></i> -->
-                <h3>Restrições de UC</h3>
+                <h3>Restrições de UCs {{$periodo->ano . '/' . ($periodo->ano+1 . ' ' . $periodo->semestre . 'º semestre')}}</h3>
             </div>
             <table class="w-100 shadow p-3 mb-5" id="table-forms-pendentes">
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
-                        <th></th>
-                        <th scope="col-1">Ano</th>
-                        <th scope="col-1">Semestre</th>
                         <th scope="col-1">Nome</th>
                         <th scope="col-1">Estado</th>
                         <th scope="col-1">Data Limite</th>
@@ -161,10 +157,7 @@
                 @foreach($ucs as $uc)
                     <tr class="border border-light" data-start-year='2023' data-semester='1' data-uc-id='{{$uc->id}}'>
                         <th scope='row'></th>
-                        <td></td>
-                        <td>{{$uc->periodo->ano}}</td>
-                        <td>{{$uc->periodo->semestre}}</td>
-                        <td>{{$uc->sigla}}</td>
+                        <td>{{$uc->nome}}</td>
                         <td>Pendente</td> <!--Ver depois-->
                         <td>{{$uc->periodo->data_final}}</td>
                     </tr>
@@ -175,7 +168,6 @@
 
         <section id="history" class="tab-pane">
             <div class="d-flex p-3 gap-2 align-items-center">
-
                 <h3>Histórico de Impedimentos</h3>
             </div>
             <table class="w-100 shadow p-3 mb-5" id="table-historico-formularios">
@@ -215,7 +207,7 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
-                    @foreach($ucsH as $uc)
+                    {{-- @foreach($ucsH as $uc)
                     <tr data-type="impedimento" data-start-year="2023" data-end-year="2024" data-semester="1">
                         <th scope="row"></th>
                         <td>{{$uc->periodo->ano}}</td>
@@ -223,7 +215,7 @@
                         <td>{{$uc->nome}}</td>
                         <td>01/07/2023</td> <!--Ver depois-->
                     </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </section>

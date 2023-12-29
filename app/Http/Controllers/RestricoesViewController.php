@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Docente;
 use App\Models\Impedimento;
 use App\Models\UnidadeCurricular;
 use App\Models\Periodo;
@@ -11,20 +12,32 @@ class RestricoesViewController extends Controller
 {
     public function restricoes()
     {
+        //para efeitos de teste, associar que docente é Margarida Neves de Macedo
+        //todo: substituir depois com base na conta do docente (com base no id/num_funcionario)
+        $docente = Docente::where('nome', 'Margarida Neves de Macedo')->first();
 
-        $currentYear = date('Y');
+        $periodo = Periodo::orderBy('ano', 'desc')
+            ->orderBy('semestre', 'desc')
+            ->first();
 
-        $ucsH = Periodo::where('ano', '!=', $currentYear)->firstOrFail()->unidadesCurriculares;
-        $ucs = Periodo::where('ano', $currentYear)->firstOrFail()->unidadesCurriculares;
-        $impedimentos = Impedimento::whereHas('periodo', function ($query) use ($currentYear) {
-            $query->where('ano', '!=', $currentYear);
-        })->get();
+        $ucs = $docente->unidadesCurriculares()
+            ->where('periodo_id', $periodo->id)
+            ->get();
+
+        $historico_ucs = $docente->unidadesCurriculares()
+            ->where('periodo_id', '!=', $periodo->id)
+            ->get();
+
+        $historico_impedimentos = $docente->impedimentos()
+            ->where('periodo_id', '!=', $periodo->id)
+            ->get();
 
         return view('restrições', [
             'page_title' => 'Restrições',
+            'periodo' => $periodo,
             'ucs' => $ucs,
-            'impedimentos' => $impedimentos,
-            'ucsH' => $ucsH
+            'impedimentos' => $historico_impedimentos,
+            'ucs_historico' => $historico_ucs,
         ]);
     }
 
