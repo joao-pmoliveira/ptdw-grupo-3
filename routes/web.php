@@ -28,15 +28,13 @@ Route::group(['prefix' => 'restricoes'], function () {
     Route::get('/', [RestricoesViewController::class, 'restricoes'])->name('restricoes.view');
 
     Route::get('/{uc}/{ano_inicial}-{ano_final}/{semestre}', [RestricoesViewController::class, 'restricoesUC'])->name('restricoes.uc.view');
-    
-    Route::get('/recolha', [RestricoesViewController::class, 'recolha'])->name('restricoes.recolha.view');
 
+    Route::get('/recolha', [RestricoesViewController::class, 'recolha'])->name('restricoes.recolha.view');
 });
 
 Route::group(['prefix' => 'impedimentos'], function () {
-    
-    Route::get('/{ano_inicial}-{ano_final}/{semestre}', [ImpedimentosViewController::class, 'impedimentos'])->name('impedimentos.view');
 
+    Route::get('/{ano_inicial}-{ano_final}/{semestre}', [ImpedimentosViewController::class, 'impedimentos'])->name('impedimentos.view');
 });
 
 Route::group(['prefix' => 'ucs'], function () {
@@ -46,16 +44,14 @@ Route::group(['prefix' => 'ucs'], function () {
     Route::get('/{uc}', [UnidadeCurricularViewController::class, 'unidadeCurricular'])->name('ucs.uc.view');
 
     Route::get('/{uc}/editar', [UnidadeCurricularViewController::class, 'editarUnidadeCurricular'])->name('ucs.editar.view');
-
 });
 
 Route::group(['prefix' => 'docentes'], function () {
-    
+
     // todo - página para visualizar informações do docente
     // Route::get('/{docente}', []);
 
     Route::get('/{docente}/editar', [DocenteViewController::class, 'editarDocente'])->name('docentes.editar.view');
-
 });
 
 Route::get('/gerir-dados', [AdminViewController::class, 'gerirDados'])->name('admin.gerir.view');

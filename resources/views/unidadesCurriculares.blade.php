@@ -16,13 +16,11 @@
         <div class="d-flex gap-4 align-items-stretch flex-wrap">
 
             <select class="" name="ano_semestre" id="ano_semestre" aria-label="Filtre por ano e semestre">
-                <option value="" selected>Ano Letivo - Semestre</option>
-                <option value="2023/24_2º semestre">2023/24 - 2º semestre</option>
-                <option value="2023/24_1º semestre">2023/24 - 1º semestre</option>
-                <option value="2022/23_2º semestre">2022/23 - 2º semestre</option>
-                <option value="2022/23_1º semestre">2022/23 - 1º semestre</option>
-                <option value="2021/22_2º semestre">2021/22 - 2º semestre</option>
-                <option value="2021/22_1º semestre">2021/22 - 1º semestre</option>
+                @foreach ($periodos as $p)
+                <option value="{{$p->ano . '_' . ($p->ano+1) . '_' . $p->semestre}}">
+                    {{$p->ano . '/' . (substr($p->ano+1, 2,2)) . ' - ' . $p->semestre . 'º semestre'}}
+                </option>
+                @endforeach
             </select>
 
 
