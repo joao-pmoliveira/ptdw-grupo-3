@@ -6,7 +6,7 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
             ['página inicial', route('inicio.view')],
-            ['recolha de  restrições', route('restricoes.view')],
+            ['preencher restrições', route('restricoes.view')],
         ]
     ])
 
