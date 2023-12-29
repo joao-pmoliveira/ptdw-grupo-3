@@ -42,8 +42,6 @@ periodoSelect?.addEventListener('change', async () => {
 
     const response = await fetch(`${baseURL}/${startYear}/${semestre}`);
     const data = await response.json();
-    console.log(data);
-    //Update table with new info
     const tableBody = document.querySelector('#table-ucs > tbody');
     tableBody.innerHTML = "";
 
@@ -79,6 +77,25 @@ periodoSelect?.addEventListener('change', async () => {
     })
 
 })
+
+const filterNomeUC = document.querySelector('input#uc');
+filterNomeUC?.addEventListener('input', () => filterTableRowsByName(filterNomeUC.value))
+const filterNomeBtn = document.querySelector('#filter-ucs-by-name-btn');
+filterNomeBtn?.addEventListener('click', () => filterTableRowsByName(filterNomeUC.value))
+
+function filterTableRowsByName(search) {
+    const searchText = search.toLowerCase();
+    const rows = Array.from(document.querySelectorAll("#table-ucs tbody >  tr"));
+    rows.forEach(row => {
+        const rowText = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
+        if (rowText.includes(searchText)) {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    })
+}
+
 
 //Tabela de Formulários Atuais
 const tabelaFormsAtuais = document.querySelector('#table-forms-pendentes');
