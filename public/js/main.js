@@ -11,12 +11,8 @@ menuBtn?.addEventListener('click', () => {
 //UA Logo Header
 const uaLogo = document.querySelector('#ua-logo-header-container');
 uaLogo?.addEventListener('click', () => {
-    let currentURL = window.location.href;
-    if (currentURL.split("")[7] == "l" || currentURL.split("")[7] == "1") {
-        window.location.href = currentURL.split("/")[0] + '/inicio';
-    }
-    else {
-        window.location.href = currentURL.split("/")[0] + "/" + currentURL.split("/")[1] + "/" + currentURL.split("/")[2] + "/" + currentURL.split("/")[3] + '/inicio';
+    if (window.location.pathname != "/") {
+        window.location.href = "/inicio";
     }
 })
 
