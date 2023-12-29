@@ -109,16 +109,27 @@ linhasFormularios?.forEach(row => {
     })
 })
 
-//Tabela de Histórico de Formulários
-const tabelaHistoricoForms = document.querySelector('#table-historico-formularios')
-const linhaHistoricos = tabelaHistoricoForms?.querySelectorAll('tr[data-type="impedimento"],tr[data-type="restricao"]')
-linhaHistoricos?.forEach(row => {
+//Tabela de Histórico de Impedimentos
+const tabelaHistoricoImped = document.querySelector('#table-impedimentos-historico');
+const linhasHistImped = tabelaHistoricoImped?.querySelectorAll('tr');
+linhasHistImped?.forEach(row => {
     row.addEventListener('click', () => {
-        const formType = row.getAttribute('data-type')
         const startYear = row.getAttribute('data-start-year')
-        const endYear = row.getAttribute('data-end-year')
         const semester = row.getAttribute('data-semester')
-        window.location.href = window.location.href.replace("/restricoes", `/${formType}/${startYear}_${endYear}/${semester}/110111`)
+        const docenteID = 20;
+        window.location.href = `/impedimentos/${docenteID}/${startYear}/${semester}`;
+    })
+})
+
+//Tabela de Histórico de Impedimentos
+const tabelaHistoricoRestric = document.querySelector('#table-restricoes-historico');
+const linhasHistRestrict = tabelaHistoricoRestric?.querySelectorAll('tr');
+linhasHistRestrict?.forEach(row => {
+    row.addEventListener('click', () => {
+        const startYear = row.getAttribute('data-start-year')
+        const semester = row.getAttribute('data-semester')
+        const ucID = row.getAttribute('data-uc-id');
+        window.location.href = `/restricoes/${ucID}/${startYear}/${semester}`;
     })
 })
 

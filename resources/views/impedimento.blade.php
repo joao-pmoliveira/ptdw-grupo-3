@@ -6,16 +6,16 @@
     @include('partials._breadcrumbs', [
             'crumbs' => [
                     ['página inicial', '/inicio'],
-                    ['restrições', '/restricoes'],
+                    ['recolha de restrições', '/restricoes'],
                     ['impedimentos de horário',
                         route('impedimentos.view', [
+                            'docente' => $docente,
                             'ano_inicial'=>$ano_inicial,
-                            'ano_final'=> $ano_final,
                             'semestre' => $semestre])]
                 ]
         ])
     
-    @include('partials._pageTitle', ['title' => 'Impedimentos de Horário '.$ano_inicial.'/'.$ano_final.' '.$semestre.'º Semestre'])
+    @include('partials._pageTitle', ['title' => 'Impedimentos de Horário '.$ano_inicial.'/'.($ano_inicial+1).' '.$semestre.'º Semestre'])
 
     <section class="mt-5">
         <form action="" method="post">

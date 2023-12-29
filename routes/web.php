@@ -34,7 +34,7 @@ Route::group(['prefix' => 'restricoes'], function () {
 
 Route::group(['prefix' => 'impedimentos'], function () {
 
-    Route::get('/{ano_inicial}-{ano_final}/{semestre}', [ImpedimentosViewController::class, 'impedimentos'])->name('impedimentos.view');
+    Route::get('/{docente}/{ano_inicial}/{semestre}/', [ImpedimentosViewController::class, 'impedimentos'])->name('impedimentos.view');
 });
 
 Route::group(['prefix' => 'ucs'], function () {

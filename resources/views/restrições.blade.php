@@ -127,12 +127,13 @@
                     </label>
                 </div>
 
-                <fieldset id="justification-fieldset">
+                <fieldset id="justification-fieldset" class="mb-5">
                     <h3>Justificação</h3>
                     <p>Para impedimentos, caso existam.</p>
                     <label class="d-block" for="justificacao"></label>
-                    <textarea cols="30" name="justification" id="justificacao"></textarea>
+                    <textarea cols="60" name="justification" id="justificacao" class="px-2 py-1"></textarea>
                 </fieldset>
+
                 <div class="d-flex gap-3" id="form-btns">
                     <input class="btn" type="button" value="Submeter">
                     <input class="btn" type="button" value="Cancelar">
@@ -170,7 +171,7 @@
             <div class="d-flex p-3 gap-2 align-items-center">
                 <h3>Histórico de Impedimentos</h3>
             </div>
-            <table class="w-100 shadow p-3 mb-5" id="table-historico-formularios">
+            <table class="w-100 shadow p-3 mb-5" id="table-impedimentos-historico">
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
@@ -181,13 +182,13 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
-                    @foreach($impedimentos as $impedimento)
-                    <tr data-type="impedimento" data-start-year="2023" data-end-year="2024" data-semester="1">
+                    @foreach($historico_impedimentos as $impedimento)
+                    <tr data-start-year="{{$impedimento->periodo->ano}}" data-semester="{{$impedimento->periodo->semestre}}">
                         <th scope="row"></th>
                         <td>{{$impedimento->periodo->ano}}</td>
                         <td>{{$impedimento->periodo->semestre}}</td>
                         <td>{{$impedimento->docente->nome}}</td>
-                        <td>01/07/2023</td> <!--Ver depois-->
+                        <td>{{$impedimento->periodo->data_final}}</td> <!--Ver depois-->
                     </tr>
                     @endforeach
                 </tbody>
@@ -196,7 +197,7 @@
 
                 <h3>Histórico de Restrições</h3>
             </div>
-            <table class="w-100 shadow p-3 mb-5" id="table-historico-formularios">
+            <table class="w-100 shadow p-3 mb-5" id="table-restricoes-historico">
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
@@ -207,15 +208,15 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
-                    {{-- @foreach($ucsH as $uc)
-                    <tr data-type="impedimento" data-start-year="2023" data-end-year="2024" data-semester="1">
+                    @foreach($historico_ucs as $uc)
+                    <tr data-start-year="{{$uc->periodo->ano}}" data-semester="{{$uc->periodo->semestre}}" data-uc-id="{{$uc->id}}">
                         <th scope="row"></th>
                         <td>{{$uc->periodo->ano}}</td>
                         <td>{{$uc->periodo->semestre}}</td>
                         <td>{{$uc->nome}}</td>
-                        <td>01/07/2023</td> <!--Ver depois-->
+                        <td>{{$uc->periodo->data_final}}</td>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </section>

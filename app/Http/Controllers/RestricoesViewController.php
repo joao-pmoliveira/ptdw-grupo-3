@@ -26,18 +26,24 @@ class RestricoesViewController extends Controller
 
         $historico_ucs = $docente->unidadesCurriculares()
             ->where('periodo_id', '!=', $periodo->id)
-            ->get();
+            ->get()
+            ->sortByDesc(function ($item) {
+                return $item->periodo->ano * 10 + $item->periodo->semestre;
+            });
 
         $historico_impedimentos = $docente->impedimentos()
             ->where('periodo_id', '!=', $periodo->id)
-            ->get();
+            ->get()
+            ->sortByDesc(function ($item) {
+                return $item->periodo->ano * 10 + $item->periodo->semestre;
+            });
 
         return view('restrições', [
             'page_title' => 'Restrições',
             'periodo' => $periodo,
             'ucs' => $ucs,
-            'impedimentos' => $historico_impedimentos,
-            'ucs_historico' => $historico_ucs,
+            'historico_impedimentos' => $historico_impedimentos,
+            'historico_ucs' => $historico_ucs,
         ]);
     }
 
