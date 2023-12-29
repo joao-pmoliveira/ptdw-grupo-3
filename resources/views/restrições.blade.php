@@ -156,7 +156,7 @@
                 </thead>
                 <tbody class="title-separator">
                 @foreach($ucs as $uc)
-                    <tr class="border border-light" data-start-year='2023' data-semester='1' data-uc-id='{{$uc->id}}'>
+                    <tr class="border border-light" data-start-year='{{$uc->periodo->ano}}' data-semester='{{$uc->periodo->semestre}}' data-uc-id='{{$uc->id}}'>
                         <th scope='row'></th>
                         <td>{{$uc->nome}}</td>
                         <td>Pendente</td> <!--Ver depois-->
