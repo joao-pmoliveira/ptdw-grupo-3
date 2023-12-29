@@ -11,23 +11,73 @@ menuBtn?.addEventListener('click', () => {
 //UA Logo Header
 const uaLogo = document.querySelector('#ua-logo-header-container');
 uaLogo?.addEventListener('click', () => {
-    let currentURL=window.location.href;
-    if(currentURL.split("")[7]=="l" || currentURL.split("")[7]=="1"){
-        window.location.href=currentURL.split("/")[0]+'/inicio';
+    let currentURL = window.location.href;
+    if (currentURL.split("")[7] == "l" || currentURL.split("")[7] == "1") {
+        window.location.href = currentURL.split("/")[0] + '/inicio';
     }
     else {
-        window.location.href=currentURL.split("/")[0]+"/"+currentURL.split("/")[1]+"/"+currentURL.split("/")[2]+"/"+currentURL.split("/")[3]+'/inicio';
+        window.location.href = currentURL.split("/")[0] + "/" + currentURL.split("/")[1] + "/" + currentURL.split("/")[2] + "/" + currentURL.split("/")[3] + '/inicio';
     }
 })
 
 //Tabela de UCs
+function redirectToUCPage(row) {
+    window.location.href = `/ucs/${row.getAttribute("data-id")}`;
+}
+
 const tabelaUCs = document.querySelector('#table-ucs');
 const linhasUCs = tabelaUCs?.querySelectorAll('tr[data-id]');
 linhasUCs?.forEach((row) => {
-    row.addEventListener('click', () => {
-        let currentURL = window.location.href;
-        window.location.href = currentURL.replace("/ucs",`/ucs/${row.getAttribute('data-id')}`)
+    row.addEventListener('click', () => redirectToUCPage(row))
+})
+
+//Filtros da tabela de UCs
+const periodoSelect = document.querySelector('select#ano_semestre');
+periodoSelect?.addEventListener('change', async () => {
+    const selected = periodoSelect.value;
+
+    const [startYear, endYear, semestre] = selected.split("_");
+
+    const baseURL = "/api/unidades-curriculares/por-ano-semestre";
+
+    const response = await fetch(`${baseURL}/${startYear}/${semestre}`);
+    const data = await response.json();
+    console.log(data);
+    //Update table with new info
+    const tableBody = document.querySelector('#table-ucs > tbody');
+    tableBody.innerHTML = "";
+
+    data.forEach(row => {
+        const idUC = row["id"]
+        const nomeUC = row["nome"];
+        const codigoUC = row["codigo"];
+        const nomeDocenteResponsavel = row["docente_responsavel"]["nome"];
+
+        const tRow = document.createElement("tr");
+        tRow.setAttribute("data-id", idUC);
+
+        const tHead = document.createElement("th");
+        tHead.setAttribute("scope", "row");
+
+        const tdCodigo = document.createElement("td");
+        tdCodigo.textContent = codigoUC;
+
+        const tdNome = document.createElement("td");
+        tdNome.textContent = nomeUC;
+
+        const tdDocenteResp = document.createElement("td");
+        tdDocenteResp.textContent = nomeDocenteResponsavel;
+
+        tRow.appendChild(tHead);
+        tRow.appendChild(tdCodigo);
+        tRow.appendChild(tdNome);
+        tRow.appendChild(tdDocenteResp);
+
+        tableBody.appendChild(tRow);
+
+        addEventListener('click', () => redirectToUCPage(tRow));
     })
+
 })
 
 //Tabela de Formulários Atuais
@@ -39,7 +89,7 @@ linhasFormularios?.forEach(row => {
         const startYear = row.getAttribute('data-start-year')
         const endYear = row.getAttribute('data-end-year')
         const semester = row.getAttribute('data-semester')
-        window.location.href = window.location.href.replace("/restricoes/submissao",`/${formType}/${startYear}_${endYear}/${semester}/110111`)
+        window.location.href = window.location.href.replace("/restricoes/submissao", `/${formType}/${startYear}_${endYear}/${semester}/110111`)
     })
 })
 
@@ -52,7 +102,7 @@ linhaHistoricos?.forEach(row => {
         const startYear = row.getAttribute('data-start-year')
         const endYear = row.getAttribute('data-end-year')
         const semester = row.getAttribute('data-semester')
-        window.location.href = window.location.href.replace("/restricoes",`/${formType}/${startYear}_${endYear}/${semester}/110111`)
+        window.location.href = window.location.href.replace("/restricoes", `/${formType}/${startYear}_${endYear}/${semester}/110111`)
     })
 })
 
@@ -61,7 +111,7 @@ const tabelaEditarUCs = document.querySelector('#table-edit-ucs')
 const linhasEditarUCs = tabelaEditarUCs?.querySelectorAll('tr[data-id]')
 linhasEditarUCs?.forEach(row => {
     row.addEventListener('click', () => {
-        window.location.href = window.location.href.replace("/gerir-dados",`/ucs/${row.getAttribute('data-id')}/editar`)
+        window.location.href = window.location.href.replace("/gerir-dados", `/ucs/${row.getAttribute('data-id')}/editar`)
     })
 })
 
@@ -70,7 +120,7 @@ const tabelaEditarDocentes = document.querySelector('#table-edit-teachers')
 const linhasEditarDocentes = tabelaEditarDocentes?.querySelectorAll('tr[data-id]')
 linhasEditarDocentes?.forEach(row => {
     row.addEventListener('click', () => {
-        window.location.href = window.location.href.replace("/gerir-dados",`/docentes/${row.getAttribute('data-id')}/editar`)
+        window.location.href = window.location.href.replace("/gerir-dados", `/docentes/${row.getAttribute('data-id')}/editar`)
     })
-   
+
 })

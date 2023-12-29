@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'docentes'], function () {
-    
+
     Route::get('/', [DocenteController::class, 'index'])->name('docentes.index');
 
     Route::get('/{docente}', [DocenteController::class, 'show'])->name('docentes.show');
@@ -42,6 +42,8 @@ Route::group(['prefix' => 'unidades-curriculares'], function () {
 
     Route::get('/{uc}', [UnidadeCurricularController::class, 'show'])->name('ucs.show');
 
+    Route::get('/por-ano-semestre/{ano}/{semestre}', [UnidadeCurricularController::class, 'getByAnoSemestre'])->name('ucs.ano-semestre');
+
     Route::post('/', [UnidadeCurricularController::class, 'store'])->name('ucs.store');
 
     Route::put('/{id}', [UnidadeCurricularController::class, 'update'])->name('ucs.update');
@@ -51,13 +53,13 @@ Route::group(['prefix' => 'unidades-curriculares'], function () {
 
 Route::group(['prefix' => 'impedimentos'], function () {
     Route::get('/', [ImpedimentoController::class, 'index'])->name('impedimentos.index');
-    
+
     Route::get('/{impedimento}', [ImpedimentoController::class, 'show'])->name('impedimentos.show');
-    
+
     Route::post('/', [ImpedimentoController::class, 'store'])->name('impedimentos.store');
-    
+
     Route::put('/{id}', [ImpedimentoController::class, 'update'])->name('impedimentos.update');
-    
+
     Route::delete('/{id}', [ImpedimentoController::class, 'delete'])->name('impedimentos.delete');
 });
 

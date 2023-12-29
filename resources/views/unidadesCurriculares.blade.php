@@ -54,7 +54,6 @@
                     <td>{{$uc->codigo}}</td>
                     <td>{{$uc->nome}}</td>
                     <td>{{$uc->docenteResponsavel->nome}}</td>
-                    <td></td>
                 </tr>
             @endforeach
         </tbody>
