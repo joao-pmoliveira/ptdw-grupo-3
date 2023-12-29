@@ -99,14 +99,13 @@ function filterTableRowsByName(search) {
 
 //Tabela de Formulários Atuais
 const tabelaFormsAtuais = document.querySelector('#table-forms-pendentes');
-const linhasFormularios = tabelaFormsAtuais?.querySelectorAll('tr[data-type="impedimento"],tr[data-type="restricao"]')
+const linhasFormularios = tabelaFormsAtuais?.querySelectorAll('tbody tr')
 linhasFormularios?.forEach(row => {
     row.addEventListener('click', () => {
-        const formType = row.getAttribute('data-type')
         const startYear = row.getAttribute('data-start-year')
-        const endYear = row.getAttribute('data-end-year')
         const semester = row.getAttribute('data-semester')
-        window.location.href = window.location.href.replace("/restricoes/submissao", `/${formType}/${startYear}_${endYear}/${semester}/110111`)
+        const ucID = row.getAttribute('data-uc-id');
+        window.location.href = `/restricoes/${ucID}/${startYear}/${semester}`;
     })
 })
 

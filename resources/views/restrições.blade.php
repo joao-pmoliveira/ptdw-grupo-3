@@ -159,8 +159,7 @@
                 </thead>
                 <tbody class="title-separator">
                 @foreach($ucs as $uc)
-                    <tr class="border border-light" data-type='restricao' data-start-year='2023' data-end-year='2024'
-                        data-semester='1'>
+                    <tr class="border border-light" data-start-year='2023' data-semester='1' data-uc-id='{{$uc->id}}'>
                         <th scope='row'></th>
                         <td></td>
                         <td>{{$uc->periodo->ano}}</td>

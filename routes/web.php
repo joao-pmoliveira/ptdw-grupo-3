@@ -27,7 +27,7 @@ Route::group(['prefix' => 'restricoes'], function () {
 
     Route::get('/', [RestricoesViewController::class, 'restricoes'])->name('restricoes.view');
 
-    Route::get('/{uc}/{ano_inicial}-{ano_final}/{semestre}', [RestricoesViewController::class, 'restricoesUC'])->name('restricoes.uc.view');
+    Route::get('/{uc}/{ano_inicial}/{semestre}', [RestricoesViewController::class, 'restricoesUC'])->name('restricoes.uc.view');
 
     Route::get('/recolha', [RestricoesViewController::class, 'recolha'])->name('restricoes.recolha.view');
 });
