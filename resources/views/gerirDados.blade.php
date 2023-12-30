@@ -92,7 +92,7 @@
                         <div><i class="fa-solid fa-search"></i></div>
                     </div>
                     <div class="d-flex align-items-center">
-                        <button class="btn h-100">Adicionar Docente</button>
+                        <button class="btn py-0 align-self-stretch">Adicionar Docente</button>
                     </div>
                     
                 </div>
@@ -114,24 +114,6 @@
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
                         @endforeach
-                        <!-- <tr data-id='110555'>
-                            <th scope="row"></th>
-                            <td>110555</td>
-                            <td>José Silva</td>
-                            <td><i class="fa-solid fa-pen"></i></td>
-                        </tr>
-                        <tr data-id='123456'>
-                            <th scope="row"></th>
-                            <td>123456</td>
-                            <td>Luísa Mendes</td>
-                            <td><i class="fa-solid fa-pen"></i></td>
-                        </tr>
-                        <tr data-id="333555">
-                            <th scope="row"></th>
-                            <td>333555</td>
-                            <td>Rita Gonçalves</td>
-                            <td><i class="fa-solid fa-pen"></i></td>
-                        </tr> -->
                     </tbody>
                 </table>
             </div>

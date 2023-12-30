@@ -4,7 +4,7 @@
     min-width: 5rem;
     max-width: 10rem;
     margin: 0;
-    padding: 0rem 1em;
+    padding: 0.5rem 1em;
     border: 1px solid var(--accent-background-color);
     border-radius: 0;
     color: var(--accent-background-color);
