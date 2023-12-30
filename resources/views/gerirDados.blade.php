@@ -85,16 +85,14 @@
         </section>
 
         <section id="manage-teachers" class="tab-pane">
-            <div class="d-flex flex-column gap-3">    
-               
-                <div class="d-flex justify-content-between mb-3 flex-wrap">
+            <div class="d-flex flex-column gap-3">
+                <div class="d-flex mb-3 flex-wrap justify-content-between">
                     <div class="paco-searchbox">
-                        <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="NºMecanográfico ou Nome" aria-label="Filtre por número mecanográfico ou nome do docente">
+                        <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="Número ou Nome" aria-label="Filtre por número mecanográfico ou nome do docente">
                         <div><i class="fa-solid fa-search"></i></div>
-                        
                     </div>
-                    <div >
-                        <button class="btn">Adicionar Docente</button>
+                    <div class="d-flex align-items-center">
+                        <button class="btn h-100">Adicionar Docente</button>
                     </div>
                     
                 </div>
