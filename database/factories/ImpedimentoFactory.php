@@ -17,19 +17,21 @@ class ImpedimentoFactory extends Factory
     public function definition(): array
     {
         return [
-            'periodo_id' => fake()->numberBetween(0,3),
-            'docente_id' => fake()->numberBetween(0,10),
+            'periodo_id' => fake()->numberBetween(0, 3),
+            'docente_id' => fake()->numberBetween(0, 10),
             'impedimentos' => $this->generateImpedimentos(),
             'justificacao' => fake()->text(),
+            'submetido' => fake()->boolean(),
         ];
     }
 
-    public static function generateImpedimentos() {
+    public static function generateImpedimentos()
+    {
         $result = "";
 
-        for( $i = 0; $i < 6; $i++) {
-            for($j = 0; $j < 3; $j++) {
-                $randomNumber = rand(0,1);
+        for ($i = 0; $i < 6; $i++) {
+            for ($j = 0; $j < 3; $j++) {
+                $randomNumber = rand(0, 1);
                 $result .= $randomNumber;
                 if ($i < 2) {
                     $result .= ',';

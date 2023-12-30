@@ -17,17 +17,18 @@ class UnidadeCurricularFactory extends Factory
     public function definition(): array
     {
         return [
-            'codigo' => fake()->numberBetween(0,10),
-            'periodo_id' => fake()->numberBetween(0,10),
-            'nome' => fake()->name(),
+            'codigo' => fake()->numberBetween(0, 10),
             'sigla' => fake()->lexify('???'),
-            'acn_id' => fake()->numberBetween(0,10),
-            'horas_semanais' => fake()->numberBetween(0,8),
+            'periodo_id' => fake()->numberBetween(0, 10),
+            'nome' => fake()->name(),
+            'acn_id' => fake()->numberBetween(0, 10),
+            'horas_semanais' => fake()->numberBetween(0, 8),
             'laboratorio' => fake()->boolean(),
             'software' => fake()->text(),
             'ects' => fake()->numberBetween(0, 16),
             'sala_avaliacao' => fake()->boolean(),
-            'docente_responsavel_id' => fake()->numberBetween(0,10)
+            'docente_responsavel_id' => fake()->numberBetween(0, 10),
+            'restricoes_submetidas' => fake()->boolean()
         ];
     }
 }

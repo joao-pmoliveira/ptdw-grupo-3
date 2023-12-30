@@ -24,9 +24,9 @@ class ImpedimentosTableSeeder extends Seeder
                     'docente_id' => $docente_id,
                     'impedimentos' => ImpedimentoFactory::generateImpedimentos(),
                     'justificacao' => $faker->text(),
+                    'submetido' => $faker->boolean(),
                 ]);
             }
         }
-
     }
 }

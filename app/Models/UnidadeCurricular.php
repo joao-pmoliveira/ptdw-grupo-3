@@ -43,9 +43,9 @@ class UnidadeCurricular extends Model
 
     protected $fillable = [
         'codigo',
+        'sigla',
         'periodo_id',
         'nome',
-        'sigla',
         'acn_id',
         'horas_semanais',
         'laboratorio',
@@ -53,5 +53,6 @@ class UnidadeCurricular extends Model
         'ects',
         'sala_avaliacao',
         'docente_responsavel_id',
+        'restricoes_submetidas',
     ];
 }

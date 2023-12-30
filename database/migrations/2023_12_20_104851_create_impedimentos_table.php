@@ -16,8 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('periodo_id')->nullable(false);
             $table->unsignedBigInteger('docente_id')->nullable(false);
-            $table->string('impedimentos')->nullable(false);
+            $table->string('impedimentos');
             $table->text('justificacao');
+            $table->boolean('submetido');
 
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->foreign('docente_id')->references('id')->on('docentes');

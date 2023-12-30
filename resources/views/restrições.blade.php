@@ -159,7 +159,7 @@
                     <tr class="border border-light" data-start-year='{{$uc->periodo->ano}}' data-semester='{{$uc->periodo->semestre}}' data-uc-id='{{$uc->id}}'>
                         <th scope='row'></th>
                         <td>{{$uc->nome}}</td>
-                        <td>Pendente</td> <!--Ver depois-->
+                        <td>{{$uc->restricoes_submetidas ? 'Submetido' : 'Pendente'}}</td>
                         <td>{{$uc->periodo->data_final}}</td>
                     </tr>
                 @endforeach

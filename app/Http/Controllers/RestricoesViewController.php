@@ -14,7 +14,7 @@ class RestricoesViewController extends Controller
     {
         //para efeitos de teste, associar que docente é Margarida Neves de Macedo
         //todo: substituir depois com base na conta do docente (com base no id/num_funcionario)
-        $docente = Docente::where('nome', 'Margarida Neves de Macedo')->first();
+        $docente = Docente::where('nome', 'Lara Helena Pereira de Vieira')->first();
 
         $periodo = Periodo::orderBy('ano', 'desc')
             ->orderBy('semestre', 'desc')

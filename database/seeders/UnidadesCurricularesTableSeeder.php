@@ -27,7 +27,7 @@ class UnidadesCurricularesTableSeeder extends Seeder
             ['Desenho Técnico', 'DT'],
             ['Eletromagnetismo Aplicado', 'F'],
             ['Métodos Numéricos e Estatísticos', 'MNE']
-            
+
         ];
 
         foreach ($ucs as $uc) {
@@ -41,19 +41,20 @@ class UnidadesCurricularesTableSeeder extends Seeder
             $ects = $faker->randomElement([4, 6]);
             $sala_avaliacao = $faker->boolean();
             $docente_responsavel_id = Docente::pluck('id')->random();
+            $restricoes_submetidas = $faker->boolean();
 
             $periodos_ids = Periodo::pluck('id')->all();
 
             $docentes = Docente::pluck('id')->random(1, 2);
             $cursos = Curso::pluck('id')->random(1, 2);
-        
+
 
             foreach ($periodos_ids as $periodo_id) {
                 $ucPeriodo = UnidadeCurricular::factory()->create([
                     'codigo' => $codigo,
+                    'sigla' => $sigla,
                     'periodo_id' => $periodo_id,
                     'nome' => $nome,
-                    'sigla' => $sigla,
                     'acn_id' => $acn_id,
                     'horas_semanais' => $horas_semanais,
                     'laboratorio' => $laboratorio,
@@ -61,15 +62,17 @@ class UnidadesCurricularesTableSeeder extends Seeder
                     'ects' => $ects,
                     'sala_avaliacao' => $sala_avaliacao,
                     'docente_responsavel_id' => $docente_responsavel_id,
-                ]); 
-                
+                    'restricoes_submetidas' => $restricoes_submetidas,
+                ]);
+
                 $ucPeriodo->docentes()->attach(
-                    $docentes, ['percentagem_semanal' => $ucPeriodo->horas_semanais / count($docentes)]
+                    $docentes,
+                    ['percentagem_semanal' => $ucPeriodo->horas_semanais / count($docentes)]
                 );
-                
+
                 $ucPeriodo->cursos()->attach(
                     $cursos
-                );                
+                );
             }
         }
     }
