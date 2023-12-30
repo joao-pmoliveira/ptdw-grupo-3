@@ -30,33 +30,32 @@
             </li>
         </ul>
     </section>
+
     <div class="tab-content pt-3">
         <section id="manage-ucs" class="tab-pane active">
             <div class="d-flex flex-column gap-3">
-              
-
-                <div class="d-flex justify-content-between mb-3 flex-wrap">
-                    <div class="d-flex gap-3 justify-content-stretch">
-                        <select name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
-                            <option value="2023_2024_2">2023/24 2ºSemestre</option>
-                            <option value="2023_2024_1">2023/24 1ºSemestre</option>
-                            <option value="2022_2023_2">2022/23 2ºSemestre</option>
-                            <option value="2022_2023_1">2022/23 1ºSemestre</option>
-                            <option value="2021_2022_2">2021/22 2ºSemestre</option>
-                            <option value="2021_2022_1">2021/22 1ºSemestre</option>
+                <div class="d-flex mb-3 flex-wrap">
+                    <div class="d-flex gap-4 align-items-stretch my-2 flex-grow-1 flex-wrap">
+                        <select class="px-2" name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
+                            @foreach ($periodos as $periodo)
+                                <option value="{{$periodo->ano . "_" . ($periodo->ano+1) . "_" . $periodo->semestre}}">
+                                    {{$periodo->ano . "/" . substr($periodo->ano+1, 2,2) . " " . $periodo->semestre . "º Semestre"}}
+                                </option>
+                            @endforeach
                         </select>
-                        <select name="school_course" id="school-year-school_course" aria-label="Filtre por curso">
+                        <select class="px-2" name="school_course" id="school-year-school_course" aria-label="Filtre por curso">
                             <option value="" selected>Filtre Por Curso</option>
-                            <option value="ti">TI</option>
-                            <option value="gc">GC</option>
+                            @foreach ($cursos as $curso)
+                            <option value="{{$curso->id}}">{{$curso->sigla}}</option>
+                            @endforeach
                         </select>
                         <div class="paco-searchbox">
-                            <input type="text" name="nome_cod_uc" id="" aria-label="Filtre por código ou nome de uc">
+                            <input type="text" name="nome_cod_uc" id="input-filter-ucs-nome" aria-label="Filtre por código ou nome de uc">
                             <div><i class="fa-solid fa-search"></i></div>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn">Adicionar UC</button>
+                    <div class="d-flex align-items-center">
+                        <button class="btn py-1">Adicionar UC</button>
                     </div>
                 </div>
                 
@@ -72,7 +71,7 @@
                     </thead>
                     <tbody>
                         @foreach($ucs as $uc)
-                            <tr data-id='{{$uc->id}}'>
+                            <tr data-id='{{$uc->id}}' data-curso-id='{{implode(",",$uc->cursos->pluck('id')->toArray())}}'>
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
                                 <td>{{$uc->nome}}</td>
