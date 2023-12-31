@@ -18,6 +18,7 @@ class UserTableSeeder extends Seeder
                 'nome' => $docente->nome,
                 'email' => $docente->email,
                 'password' => bcrypt('password'),
+                'admin' => rand(0, 1),
             ]);
         }
     }
