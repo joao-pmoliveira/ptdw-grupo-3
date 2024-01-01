@@ -12,6 +12,11 @@ class Docente extends Model
 {
     use HasFactory;
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function impedimentos(): HasMany
     {
         return $this->hasMany(Impedimento::class);
@@ -31,5 +36,5 @@ class Docente extends Model
 
     protected $table = 'docentes';
 
-    protected $fillable = ['nome', 'numero_funcionario', 'acn_id', 'email', 'numero_telefone'];
+    protected $fillable = ['numero_funcionario', 'acn_id', 'numero_telefone'];
 }
