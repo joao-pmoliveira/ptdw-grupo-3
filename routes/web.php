@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminViewController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DocenteViewController;
 use App\Http\Controllers\ImpedimentosViewController;
 use App\Http\Controllers\RestricoesViewController;
 use App\Http\Controllers\UnidadeCurricularViewController;
 use App\Http\Controllers\WelcomeViewController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,3 +57,10 @@ Route::group(['prefix' => 'docentes'], function () {
 });
 
 Route::get('/gerir-dados', [AdminViewController::class, 'gerirDados'])->name('admin.gerir.view');
+
+// Rotas de Autenticação
+Route::group(['prefix' => 'login'], function () {
+    Route::get('/', [LoginController::class, 'show'])->name('login.view');
+
+    Route::post('/', [LoginController::class, 'authenticate'])->name('login.action');
+});
