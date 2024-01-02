@@ -42,7 +42,8 @@ class UnidadeCurricularController extends Controller
         }
 
         $ucs = UnidadeCurricular::where('periodo_id', $periodo->id)
-            ->with('docenteResponsavel')
+            ->with('docenteResponsavel.user')
+            ->with('docentes.user')
             ->with('cursos')
             ->orderBy('codigo')
             ->get();

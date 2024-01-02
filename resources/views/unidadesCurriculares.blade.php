@@ -49,15 +49,26 @@
         </thead>
         <tbody>
             @foreach ($ucs as $uc)
-                <tr data-id='{{$uc->id}}'>
+                <tr data-id='{{$uc->id}}' data-my-uc='{{
+                    $user ?
+                        $uc->docentes->contains($user->docente) ? 'Y' : 'N'
+                        : ''
+                }}'>
                     <th scope="row"></th>
                     <td>{{$uc->codigo}}</td>
                     <td>{{$uc->nome}}</td>
-                    <td>{{$uc->docenteResponsavel->nome}}</td>
+                    <td>{{$uc->docenteResponsavel->user->nome}}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
 </main>
+
+@auth
+    <script>
+        const authUser = @json(auth()->user());
+    </script>
+@endauth
+<script src="{{asset('js/unidadesCurriculares.js')}}" defer></script>
 @endsection
