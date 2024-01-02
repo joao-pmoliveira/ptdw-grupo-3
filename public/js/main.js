@@ -250,3 +250,20 @@ filterDocenteNome.addEventListener('input', () => {
         }
     })
 });
+
+//Logout
+const logoutBtn = document.getElementById('logout-btn');
+logoutBtn?.addEventListener('click', () => {
+    alert('logout sent')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    fetch('/logout', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            _token: csrfToken
+        })
+    })
+})

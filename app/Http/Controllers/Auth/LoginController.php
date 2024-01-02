@@ -29,4 +29,13 @@ class LoginController extends Controller
 
         return redirect(route('welcome.view'));
     }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        return redirect()->route('welcome.view');
+    }
 }

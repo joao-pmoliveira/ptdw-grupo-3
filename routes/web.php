@@ -64,3 +64,5 @@ Route::group(['prefix' => 'login'], function () {
 
     Route::post('/', [LoginController::class, 'authenticate'])->name('login.action');
 });
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
