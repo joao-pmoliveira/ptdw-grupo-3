@@ -72,26 +72,37 @@ periodoSelect?.addEventListener('change', async () => {
         addEventListener('click', () => redirectToUCPage(tRow));
     })
 
+    filterTableUcs();
+
 })
 
 const filterNomeUC = document.querySelector('input#uc');
-filterNomeUC?.addEventListener('input', () => filterTableRowsByName(filterNomeUC.value))
+filterNomeUC?.addEventListener('input', filterTableUcs);
 const filterNomeBtn = document.querySelector('#filter-ucs-by-name-btn');
-filterNomeBtn?.addEventListener('click', () => filterTableRowsByName(filterNomeUC.value))
+filterNomeBtn?.addEventListener('click', filterTableUcs);
+const filterMyUCsCheck = document.querySelector('#my-classes-check');
+filterMyUCsCheck?.addEventListener('click', filterTableUcs);
 
-function filterTableRowsByName(search) {
-    const searchText = search.toLowerCase();
-    const rows = Array.from(document.querySelectorAll("#table-ucs tbody >  tr"));
+function filterTableUcs() {
+    const rows = Array.from(document.querySelectorAll('#table-ucs tbody tr'));
     rows.forEach(row => {
-        const rowText = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
-        if (rowText.includes(searchText)) {
+        const ucName = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+        const ucCode = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+        const searchInput = filterNomeUC.value.toLowerCase();
+
+        const checked = filterMyUCsCheck.checked;
+        const userUC = row.getAttribute('data-my-uc') === 'Y';
+
+        const filterByNameCode = ucName.includes(searchInput) || ucCode.includes(searchInput)
+        const filterByUserUCs = !checked || row.getAttribute('data-my-uc') === 'Y';
+
+        if (filterByNameCode && filterByUserUCs) {
             row.style.display = 'table-row';
         } else {
             row.style.display = 'none';
         }
-    })
+    });
 }
-
 
 //Tabela de Formulários Atuais
 const tabelaFormsAtuais = document.querySelector('#table-forms-pendentes');
