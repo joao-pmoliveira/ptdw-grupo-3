@@ -145,7 +145,7 @@
             <div class="d-flex p-3 gap-2 align-items-center">
                 <h3>Restrições de UCs {{$periodo->ano . '/' . ($periodo->ano+1 . ' ' . $periodo->semestre . 'º semestre')}}</h3>
             </div>
-            <table class="w-100 shadow p-3 mb-5" id="table-forms-pendentes">
+            <table class="w-100 shadow p-3 mb-5" id="table-restricoes-pendentes">
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
@@ -156,7 +156,7 @@
                 </thead>
                 <tbody class="title-separator">
                 @foreach($ucs as $uc)
-                    <tr class="border border-light" data-start-year='{{$uc->periodo->ano}}' data-semester='{{$uc->periodo->semestre}}' data-uc-id='{{$uc->id}}'>
+                    <tr class="border border-light" data-ano='{{$uc->periodo->ano}}' data-semestre='{{$uc->periodo->semestre}}' data-uc-id='{{$uc->id}}'>
                         <th scope='row'></th>
                         <td>{{$uc->nome}}</td>
                         <td>{{$uc->restricoes_submetidas ? 'Submetido' : 'Pendente'}}</td>
@@ -183,7 +183,7 @@
                 </thead>
                 <tbody class="title-separator">
                     @foreach($historico_impedimentos as $impedimento)
-                    <tr data-start-year="{{$impedimento->periodo->ano}}" data-semester="{{$impedimento->periodo->semestre}}">
+                    <tr data-ano="{{$impedimento->periodo->ano}}" data-semestre="{{$impedimento->periodo->semestre}}">
                         <th scope="row"></th>
                         <td>{{$impedimento->periodo->ano}}</td>
                         <td>{{$impedimento->periodo->semestre}}</td>
@@ -223,4 +223,10 @@
     </div>
 </main>
 
+@auth
+    <script>
+        const authUser = @json(auth()->user());
+    </script>
+@endauth
+<script src="{{asset('js/restricoes.js')}}" defer></script>
 @endsection

@@ -16,42 +16,6 @@ uaLogo?.addEventListener('click', () => {
     }
 })
 
-//Tabela de Formulários Atuais
-const tabelaFormsAtuais = document.querySelector('#table-forms-pendentes');
-const linhasFormularios = tabelaFormsAtuais?.querySelectorAll('tbody tr')
-linhasFormularios?.forEach(row => {
-    row.addEventListener('click', () => {
-        const startYear = row.getAttribute('data-start-year')
-        const semester = row.getAttribute('data-semester')
-        const ucID = row.getAttribute('data-uc-id');
-        window.location.href = `/restricoes/${ucID}/${startYear}/${semester}`;
-    })
-})
-
-//Tabela de Histórico de Impedimentos
-const tabelaHistoricoImped = document.querySelector('#table-impedimentos-historico');
-const linhasHistImped = tabelaHistoricoImped?.querySelectorAll('tr');
-linhasHistImped?.forEach(row => {
-    row.addEventListener('click', () => {
-        const startYear = row.getAttribute('data-start-year')
-        const semester = row.getAttribute('data-semester')
-        const docenteID = 20;
-        window.location.href = `/impedimentos/${docenteID}/${startYear}/${semester}`;
-    })
-})
-
-//Tabela de Histórico de Impedimentos
-const tabelaHistoricoRestric = document.querySelector('#table-restricoes-historico');
-const linhasHistRestrict = tabelaHistoricoRestric?.querySelectorAll('tr');
-linhasHistRestrict?.forEach(row => {
-    row.addEventListener('click', () => {
-        const startYear = row.getAttribute('data-start-year')
-        const semester = row.getAttribute('data-semester')
-        const ucID = row.getAttribute('data-uc-id');
-        window.location.href = `/restricoes/${ucID}/${startYear}/${semester}`;
-    })
-})
-
 //Tabela de Gerir Unidades Curriculares (Gerir Dados)
 const tabelaEditarUCs = document.querySelector('#table-edit-ucs')
 const linhasEditarUCs = tabelaEditarUCs?.querySelectorAll('tr[data-id]')
