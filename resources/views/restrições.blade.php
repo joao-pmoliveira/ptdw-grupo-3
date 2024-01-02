@@ -131,7 +131,7 @@
                     <h3>Justificação</h3>
                     <p>Para impedimentos, caso existam.</p>
                     <label class="d-block" for="justificacao"></label>
-                    <textarea cols="60" name="justification" id="justificacao" class="px-2 py-1"></textarea>
+                    <textarea cols="60" rows="8" name="justification" id="justificacao" class="px-2 py-1"></textarea>
                 </fieldset>
 
                 <div class="d-flex gap-3" id="form-btns">
