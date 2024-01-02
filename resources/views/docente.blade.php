@@ -10,7 +10,7 @@
         ]
     ])
 
-    @include('partials._pageTitle', ['title' => $docente->nome])
+    @include('partials._pageTitle', ['title' => $docente->user->nome])
 
 
     <section class="mt-3">
@@ -30,7 +30,7 @@
                 <label for="nome" class="my-auto">Nome :</label>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-2">
-                <input type="text" id="nMec" value="{{$docente->nome}}" class="px-1 py-1">
+                <input type="text" id="nMec" value="{{$docente->user->nome}}" class="px-1 py-1">
             </div>
 
             
@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center"> 
                     <!-- todo aumentar largura input email -->
-                    <input type="text" id="email" value="{{$docente->email}}" class="px-1 py-1">
+                    <input type="text" id="email" value="{{$docente->user->email}}" class="px-1 py-1">
                 </div>
             </div>
             <br>

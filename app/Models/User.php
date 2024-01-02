@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Model implements Authenticatable
@@ -13,9 +14,9 @@ class User extends Model implements Authenticatable
     use HasFactory;
     use AuthenticatableTrait;
 
-    public function docente(): HasOne
+    public function docente(): BelongsTo
     {
-        return $this->hasOne(Docente::class);
+        return $this->belongsTo(Docente::class);
     }
 
     protected $fillable = [

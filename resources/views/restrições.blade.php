@@ -187,7 +187,7 @@
                         <th scope="row"></th>
                         <td>{{$impedimento->periodo->ano}}</td>
                         <td>{{$impedimento->periodo->semestre}}</td>
-                        <td>{{$impedimento->docente->nome}}</td>
+                        <td>{{$impedimento->docente->user->nome}}</td>
                         <td>{{$impedimento->periodo->data_final}}</td> <!--Ver depois-->
                     </tr>
                     @endforeach

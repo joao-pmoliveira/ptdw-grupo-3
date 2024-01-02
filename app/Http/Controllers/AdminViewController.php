@@ -8,9 +8,15 @@ use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminViewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function gerirDados()
     {
         $periodos = Periodo::orderBy('ano', 'desc')
@@ -31,7 +37,8 @@ class AdminViewController extends Controller
             'periodos' => $periodos,
             'cursos' => $cursos,
             'docentes' => $docentes,
-            'acns' => $acns
+            'acns' => $acns,
+            'user' => Auth::user(),
         ]);
     }
 }
