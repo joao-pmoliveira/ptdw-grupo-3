@@ -110,7 +110,7 @@
                             <tr data-id='{{$docente->id}}'>
                                 <th scope="row"></th>
                                 <td>{{$docente->numero_funcionario}}</td>
-                                <td>{{$docente->nome}}</td>
+                                <td>{{$docente->user->nome}}</td>
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
                         @endforeach
