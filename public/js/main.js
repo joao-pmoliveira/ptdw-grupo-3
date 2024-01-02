@@ -242,8 +242,10 @@ filterDocenteNome.addEventListener('input', () => {
     const value = filterDocenteNome.value.toLowerCase();
     const rows = Array.from(linhasEditarDocentes);
     rows.forEach(row => {
-        const rowText = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
-        if (rowText.includes(value)) {
+        const rowNameText = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+        const rowNumberText = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+
+        if (rowNameText.includes(value) || rowNumberText.includes(value)) {
             row.style.display = 'table-row'
         } else {
             row.style.display = 'none'
