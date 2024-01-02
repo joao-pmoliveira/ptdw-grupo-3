@@ -17,7 +17,7 @@
         <legend>Software necessário</legend>
         <p>Identifique nome, fabricante, versão, e sistema operativo</p>
         <label for="needed-sof"></label>
-        <textarea class="mx-3" name="needed_software" id="needed-soft" cols="100" rows="7"></textarea>
+        <textarea class="mx-3 px-2 py-1" name="needed_software" id="needed-soft" cols="100" rows="7"></textarea>
     </fieldset>
     
     <fieldset class=" px3">

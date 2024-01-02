@@ -28,4 +28,10 @@
     </section>
 </main>
 
+@auth
+    <script>
+        const authUser = @json(auth()->user());
+    </script>
+@endauth
+<script src="{{asset('js/restricao.js')}}" defer></script>
 @endsection
