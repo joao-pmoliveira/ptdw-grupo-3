@@ -35,31 +35,28 @@
                 <tr data-bs-toggle="collapse" data-bs-target="#r2">
                     <th scope="row"></th>
                     <td><i class="fa-solid fa-chevron-right"></i></td>
-                    <td>Formulário 2023/24 1ºSemestre</td>
-                    <td>01/12/2023</td>
+                    <td>{{'Formulário ' . $periodo->ano . '/' . ($periodo->ano + 1) . ' ' . $periodo->semestre . 'ºSemestre'}}</td>
+                    <td>{{$periodo->data_final}}</td>
                     <td style="text-align:center;">3/4</td>
                     <td style="text-align:center;">1/2</td>
                     <td><i class="fa-solid fa-download"></i></td>
                     <td><i class="fa-solid fa fa-envelope-o"></i></td>
                 </tr>
                 <!--Linha Colapsável-->
+                @foreach($docentes as $docente)
                 <tr class="collapse accordion-collapse bg-terciary" id="r2">
                     <th scope='row'></th>
-                    <td colspan='1'>108746</td>
-                    <td colspan='2'>Rui Fernandes</td>
-                    <td colspan='1' style="text-align:center;">1/2</td>
-                    <td colspan='2' style="text-align:center;">Pendente</td>
+                    <td colspan='1'>{{$docente->numero_funcionario}}</td>
+                    <td colspan='2'>{{$docente->user->nome}}</td>
+                    <td colspan='1' style="text-align:center;">{{
+                        $docente->ucResponsavel 
+                            ? $docente->ucResponsavel->restricoes_submetidas . '/' . (bool)$docente->ucResponsavel 
+                            : 'Não é docente responsável'
+                    }}</td>
+                    <td colspan='2' style="text-align:center;">{{$docente->impedimentos()->where('periodo_id' , $periodo->id)->first()->submetido?'Submetido' : 'Pendente'}}</td>
                     <td></td>
                 </tr>
-                <!--Linha Colapsável-->
-                <tr class="collapse accordion-collapse bg-terciary" id="r2">
-                    <th scope='row'></th>
-                    <td colspan='1'>110111</td>
-                    <td colspan='2'>José Silva</td>
-                    <td colspan='1' style="text-align:center;">2/2</td>
-                    <td colspan='2' style="text-align:center;">Submetido</td>
-                    <td></td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
         <div>
@@ -93,58 +90,31 @@
             </thead>
             <tbody>
                 <!--Linha Principal--> 
+                @foreach($periodosH as $periodoH)
                 <tr data-bs-toggle="collapse" data-bs-target="#r1">
                     <th scope='row'></th>
                     <td ><i class="fa-solid fa-chevron-right"></i></td>
-                    <td>Formulário 2022/23 2ºSemestre</td>
-                    <td>31/12/2023</td>
+                    <td>{{'Formulário ' . $periodoH->ano . '/' . ($periodoH->ano + 1) . ' ' . $periodoH->semestre . 'ºSemestre'}}</td>
+                    <td>{{$periodoH->data_final}}</td>
                     <td style="text-align:center;">4/4</td>
                     <td style="text-align:center;">2/2</td>
                     <td><i class="fa-solid fa-download"></i></td>
                 </tr>
-                <!--Linha Colapsável-->
-                <tr class="collapse accordion-collapse bg-terciary" id="r1" >
-                    <th scope='row'></th>
-                    <td colspan='1'>108746</td>
-                    <td colspan='2'>Rui Fernandes</td>
-                    <td colspan='1' style="text-align:center;">2/2</td>
-                    <td colspan='2' style="text-align:center;">Submetido</td>
-                </tr>
-                <!--Linha Colapsável-->
-                <tr class="collapse accordion-collapse bg-terciary" id="r1">
-                    <th scope='row'></th>
-                    <td colspan='1'>110111</td>
-                    <td colspan='2'>José Silva</td>
-                    <td colspan='1' style="text-align:center;">2/2</td>
-                    <td colspan='2' style="text-align:center;">Pendente</td>
-                </tr>
-
-                <!--Linha Principal-->
-                <tr data-bs-toggle="collapse" data-bs-target="#r3">
-                    <th scope="row"></th>
-                    <td><i class="fa-solid fa-chevron-right"></i></td>
-                    <td>Formulário 2022/23 1ºSemestre</td>
-                    <td>01/08/2023</td>
-                    <td style="text-align:center;">4/4</td>
-                    <td style="text-align:center;">2/2</td>
-                    <td><i class="fa-solid fa-download"></i></td>
-                </tr>
-                <!--Linha Colapsável-->
-                <tr class="collapse accordion-collapse bg-terciary" id="r3">
-                    <th scope='row'></th>
-                    <td colspan='1'>108746</td>
-                    <td colspan='2'>Rui Fernandes</td>
-                    <td colspan='1' style="text-align:center;">2/2</td>
-                    <td colspan='2' style="text-align:center;">Submetido</td>
-                </tr>
-                <!--Linha Colapsável-->
-                <tr class="collapse accordion-collapse bg-terciary" id="r3">
-                    <th scope='row'></th>
-                    <td colspan='1'>110111</td>
-                    <td colspan='2'>José Silva</td>
-                    <td colspan='1' style="text-align:center;">2/2</td>
-                    <td colspan='2' style="text-align:center;">Submetido</td>
-                </tr>
+                    @foreach($docentes as $docente)
+                    <tr class="collapse accordion-collapse bg-terciary" id="r2">
+                        <th scope='row'></th>
+                        <td colspan='1'>{{$docente->numero_funcionario}}</td>
+                        <td colspan='2'>{{$docente->user->nome}}</td>
+                        <td colspan='1' style="text-align:center;">{{
+                            $docente->ucResponsavel 
+                                ? $docente->ucResponsavel->restricoes_submetidas . '/' . (bool)$docente->ucResponsavel 
+                                : 'Não é docente responsável'
+                        }}</td>
+                        <td colspan='2' style="text-align:center;">{{$docente->impedimentos()->where('periodo_id' , $periodo->id)->first()->submetido?'Submetido' : 'Pendente'}}</td>
+                        <td></td>
+                    </tr>
+                    @endforeach
+                @endforeach
             </tbody>
         </table>
     </section>
