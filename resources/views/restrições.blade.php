@@ -188,7 +188,7 @@
                         <td>{{$impedimento->periodo->ano}}</td>
                         <td>{{$impedimento->periodo->semestre}}</td>
                         <td>{{$impedimento->docente->user->nome}}</td>
-                        <td>{{$impedimento->periodo->data_final}}</td> <!--Ver depois-->
+                        <td>{{$impedimento->periodo->data_final}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -209,7 +209,7 @@
                 </thead>
                 <tbody class="title-separator">
                     @foreach($historico_ucs as $uc)
-                    <tr data-start-year="{{$uc->periodo->ano}}" data-semester="{{$uc->periodo->semestre}}" data-uc-id="{{$uc->id}}">
+                    <tr data-ano="{{$uc->periodo->ano}}" data-semestre="{{$uc->periodo->semestre}}" data-uc-id="{{$uc->id}}">
                         <th scope="row"></th>
                         <td>{{$uc->periodo->ano}}</td>
                         <td>{{$uc->periodo->semestre}}</td>
