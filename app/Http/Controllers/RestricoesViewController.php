@@ -8,6 +8,7 @@ use App\Models\UnidadeCurricular;
 use App\Models\Periodo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RestricoesViewController extends Controller
 {
@@ -73,10 +74,15 @@ class RestricoesViewController extends Controller
 
     public function recolha()
     {
-        //todo: ir para view apenas se for admin
+        $user = Auth::user();
+
+        if (Gate::denies('admin-access')) {
+            abort(403, 'Sem autorização');
+        }
+
         return view('processos', [
             'page_title' => 'Recolha de Restrições',
-            'user' => Auth::user(),
+            'user' => $user,
         ]);
     }
 }
