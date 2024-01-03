@@ -87,3 +87,32 @@ function filterTableEditUCs() {
 }
 
 //#endregion
+
+
+//#region Tabela de Docentes
+
+const tableEditDocentes = document.querySelector('#table-edit-teachers');
+tableEditDocentes.querySelectorAll('tbody tr').forEach(row => {
+    const docenteID = row.getAttribute('data-id');
+    row.addEventListener('click', () => window.location.href = `/docentes/${docenteID}/editar`);
+})
+
+const searchDocenteTextInput = document.querySelector('#teacher-identifier');
+searchDocenteTextInput.addEventListener('input', filterTableEditDocentes);
+const searchDocenteBtn = document.querySelector('#manage-teachers .paco-searchbox div');
+searchDocenteBtn.addEventListener('input', filterTableEditDocentes);
+
+function filterTableEditDocentes() {
+    Array.from(tableEditDocentes.querySelectorAll('tbody tr')).forEach(row => {
+        const nome = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+        const codigo = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+        const searchInput = searchDocenteTextInput.value.toLowerCase();
+
+        if (nome.includes(searchInput) || codigo.includes(searchInput)) {
+            row.style.display = 'table-row'
+        } else {
+            row.style.display = 'none'
+        }
+    })
+}
+//#endregion
