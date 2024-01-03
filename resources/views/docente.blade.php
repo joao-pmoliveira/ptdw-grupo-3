@@ -6,74 +6,45 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
             ['página inicial', route('inicio.view')],
-            ['gerir dados', route('admin.gerir.view')]
+            ['gerir dados', route('admin.gerir.view')],
+            [$docente->user->nome, route('docentes.editar.view', ['docente' => $docente->id])]
         ]
     ])
 
-    @include('partials._pageTitle', ['title' => $docente->user->nome])
-
+    @include('partials._pageTitle', ['title' => $docente->numero_funcionario . ' - ' . $docente->user->nome])
 
     <section class="mt-3">
-        <form action="" method="post" class="title-separator"></form>
-        <br>
-        <div class="row">
-            <div class="col-sm-12 col-md-2 col-lg-2">
-                <label for="nMec" class="my-auto">Nº Mec. :</label>
+        <form action="" method="POST" class="title-separator pt-3">
+            <div class="d-flex align-items-center border border-dark p-2 mb-2">
+                <label for="docente-numero" class="col-md-2 p-3">Número</label>
+                <input type="number" name="docente-numero" id="docente-numero-input" class="col-md-2 p-1" 
+                    value="{{$docente->numero_funcionario}}" required>
             </div>
-            <div class="col-sm-12 col-md-4 col-lg-4">
-                <input type="text" id="nMec" value="{{$docente->numero_funcionario}}" class="px-1 py-1">
+            <div class="d-flex align-items-center border border-dark p-2 mb-2">
+                <label for="docente-nome" class="col-md-2 p-3">Nome</label>
+                <input type="text" name="docente-nome" id="docente-nome-input" class="col-md-4 p-1"
+                    value="{{$docente->user->nome}}" required>
             </div>
-
-            
-
-            <div class="col-sm-12 col-md-2 col-lg-1">
-                <label for="nome" class="my-auto">Nome :</label>
+            <div class="d-flex align-items-center border border-dark p-2 mb-2">
+                <label for="docente-email" class="col-md-2 p-3">Email</label>
+                <input type="email" name="docente-email" id="docente-email-input" class="col-md-4 p-1"
+                    value="{{$docente->user->email}}" required>
             </div>
-            <div class="col-sm-12 col-md-4 col-lg-2">
-                <input type="text" id="nMec" value="{{$docente->user->nome}}" class="px-1 py-1">
+            <div class="d-flex align-items-center border border-dark p-2 mb-2">
+                <label for="docente-telemovel" class="col-md-2 p-3">Telemóvel</label>
+                <input type="tel" name="docente-telemovel" id="docente-telemovel" class="col-md-4 p-1"
+                    value="{{$docente->numero_telefone}}" required>
             </div>
-
-            
-        </div>
-        <br>
-        <div class="border border-dark">
-            <br>
-            <div class="row">
-                <div class="col-sm-12 col-md-2 col-lg-2 d-flex gap-5 aling-items-center">
-                    <label for="email" class="my-auto">Email :</label>
-                </div>
-                <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center"> 
-                    <!-- todo aumentar largura input email -->
-                    <input type="text" id="email" value="{{$docente->user->email}}" class="px-1 py-1">
-                </div>
+            <div class="d-flex align-items-center border border-dark p-2 mb-2">
+                <label for="docente-acn" class="col-md-2 p-3">Área Científica</label>
+                <input type="text" name="docente-acn" id="docente-acn-input" class="col-md-4 p-1"
+                    value="{{$docente->acn->sigla}}" required>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-12 col-md-2 col-lg-2 d-flex gap-5 aling-items-center">
-                    <label for="phonenumber" class="my-auto">Nº Telemóvel :</label>
-                </div>
-                <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center">
-                    <input type="number" id="phonenumber" value="{{$docente->numero_telefone}}" maxlength="9" minlength="9"
-                        class="px-1 py-1">
-                </div>
+            <div class="d-flex align-items-center gap-2">
+                <input class="btn" type="button" value="Confirmar">
+                <input class="btn" type="button" value="Remover">
+                <input class="btn" type="button" value="Cancelar">
             </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-12 col-md-2 col-lg-2 d-flex gap-5 aling-items-center">
-                    <label for="acn" class="my-auto">Área Cientifica Nuclear :</label>
-                </div>
-                <div class="col-sm-12 col-md-10 col-lg-10 d-flex gap-5 aling-items-center">
-                    <input type="text" id="acn" value="{{$docente->acn->sigla}}" class="px-1 py-1">
-                </div>
-            </div>
-            <br>
-        </div>
-        <br>
-        <div class="d-flex gap-3">
-            <input class="btn" type="button" value="Confirmar">
-            <input class="btn" type="button" value="Remover">
-            <input class="btn" type="button" value="Cancelar">
-        </div>
         </form>
     </section>
 </main>

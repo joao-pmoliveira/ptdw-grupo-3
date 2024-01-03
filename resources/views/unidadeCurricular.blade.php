@@ -4,11 +4,11 @@
 
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
-    'crumbs' => [
-    ['página inicial', route('inicio.view')],
-    ['unidades curriculares', route('ucs.view')],
-    [strtolower($uc->nome), route('ucs.uc.view', ['uc' => $uc->id])]
-    ]
+        'crumbs' => [
+            ['página inicial', route('inicio.view')],
+            ['unidades curriculares', route('ucs.view')],
+            [strtolower($uc->nome), route('ucs.uc.view', ['uc' => $uc->id])]
+        ]
     ])
 
     @include('partials._pageTitle', ['title' => $uc->codigo . ' - ' . $uc->nome])
