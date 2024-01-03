@@ -44,7 +44,7 @@ Route::group(['prefix' => 'unidades-curriculares'], function () {
 
     Route::get('/por-ano-semestre/{ano}/{semestre}', [UnidadeCurricularController::class, 'getByAnoSemestre'])->name('ucs.ano-semestre');
 
-    Route::post('/', [UnidadeCurricularController::class, 'store'])->name('ucs.store');
+    Route::post('/', [UnidadeCurricularController::class, 'store'])->middleware(['web', 'auth'])->name('ucs.store');
 
     Route::put('/{id}', [UnidadeCurricularController::class, 'update'])->name('ucs.update');
 

@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UnidadeCurricularRequest;
+use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class UnidadeCurricularController extends Controller
 {
@@ -53,6 +57,72 @@ class UnidadeCurricularController extends Controller
 
     public function store(UnidadeCurricularRequest $ucRequest)
     {
+        if (!$ucRequest->authorize()) {
+            return response()->json(['message' => 'nao autorizado'], 403);
+        }
+
+        $codigo = $ucRequest->input('codigo');
+        $nome = $ucRequest->input('nome');
+        $horas = $ucRequest->input('horas');
+        $ects = $ucRequest->input('ects');
+        $acn = $ucRequest->input('acn');
+        $docenteRespId = $ucRequest->input('docente_responsavel_id');
+        $docentesId = $ucRequest->input('docentes_id', []);
+
+        try {
+            DB::beginTransaction();
+
+            //Assume que se está a adicionar a UC ao periodo mais recente
+            $periodo = Periodo::orderBy('ano', 'desc')
+                ->orderBy('semestre', 'desc')
+                ->first();
+
+            $uc = UnidadeCurricular::create([
+                'codigo' => $codigo,
+                'nome' => $nome,
+                'periodo_id' => $periodo->id,
+                'acn_id' => $acn,
+                'docente_responsavel_id' => $docenteRespId,
+                'sigla' => '',
+                'horas_semanais' => $horas,
+                'laboratorio' => false,
+                'software' => '',
+                'ects' => $ects,
+                'sala_avaliacao' => false,
+                'restricoes_submetidas' => false,
+            ]);
+            $words = explode(' ', $nome);
+            foreach ($words as $word) {
+                $initial = $word[0];
+                if (ctype_upper($initial)) {
+                    $uc->sigla .= $initial;
+                }
+            }
+            $uc->save();
+
+            $docenteResp = Docente::where('id', $docenteRespId)->first();
+            $uc->docentes()->attach($docenteResp, ['percentagem_semanal' => 1]);
+            $uc->refresh();
+
+            foreach ($docentesId as $docenteID) {
+                if (is_null($docenteID)) {
+                    continue;
+                }
+
+                $docente = Docente::where('id', $docenteID)->first();
+                $uc->docentes()->attach($docente, ['percentagem_semanal' => 1]);
+            }
+            $uc->refresh();
+
+            DB::commit();
+            return response()->json([
+                'message' => 'sucesso!',
+                'redirect' => route('admin.gerir.view'),
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     public function update(UnidadeCurricularRequest $ucRequest, UnidadeCurricular $uc)

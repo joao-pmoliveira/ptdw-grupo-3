@@ -60,4 +60,17 @@ class UnidadeCurricularViewController extends Controller
             'user' => $user,
         ]);
     }
+
+    public function addUnidadeCurricular()
+    {
+        $user = Auth::check() ? Auth::user() : NULL;
+        $acns = ACN::all();
+        $docentes = Docente::all();
+        return view('addUnidadeCurricular', [
+            'page_title' => 'Adicionar Unidade Curricular',
+            'docentes' => $docentes,
+            'acns' => $acns,
+            'user' => $user,
+        ]);
+    }
 }

@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
-                        <button class="btn py-1">Adicionar UC</button>
+                        <a href="{{route('ucs.adicionar.view')}}" class="btn py-1">Adicionar UC</a>
                     </div>
                 </div>
                 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminViewController;
+use App\Http\Controllers\Api\UnidadeCurricularController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DocenteViewController;
 use App\Http\Controllers\ImpedimentosViewController;
@@ -41,11 +42,13 @@ Route::group(['prefix' => 'impedimentos'], function () {
 
 Route::group(['prefix' => 'ucs'], function () {
 
-    Route::get('/', [UnidadeCurricularViewController::class, 'unidadesCurriculares'])->name('ucs.view');
+    Route::get('/adicionar', [UnidadeCurricularViewController::class, 'addUnidadeCurricular'])->name('ucs.adicionar.view');
 
     Route::get('/{uc}', [UnidadeCurricularViewController::class, 'unidadeCurricular'])->name('ucs.uc.view');
 
     Route::get('/{uc}/editar', [UnidadeCurricularViewController::class, 'editarUnidadeCurricular'])->name('ucs.editar.view');
+
+    Route::get('/', [UnidadeCurricularViewController::class, 'unidadesCurriculares'])->name('ucs.view');
 });
 
 Route::group(['prefix' => 'docentes'], function () {
