@@ -80,9 +80,25 @@ class RestricoesViewController extends Controller
             abort(403, 'Sem autorização');
         }
 
+        //buscar periodo mais recente
+        //por cada docente ver uc responsaveis e ver se já estar preenchido/submitido
+        //por cada docente ver impedimentos e ver se está preenchido submetido 
+
+        $periodos = Periodo::orderBy('ano', 'desc')
+        ->orderBy('semestre', 'desc')
+        ->get();
+
+        $docentes = Docente::orderBy('numero_funcionario', 'desc')
+        ->get();
+
         return view('processos', [
             'page_title' => 'Recolha de Restrições',
             'user' => $user,
+            'docentes' => $docentes,
+            'periodo' => $periodos[0],
+            'periodosH' => $periodos->slice(2),
         ]);
+
+
     }
 }
