@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-:root{
+:root {
     font-size: 16px;
 
     --primary-font-family: Roboto, sans-serif;
@@ -8,43 +8,43 @@
 
     --txt-xl-size: 1.75rem; /* 28px / 16px */
     --txt-l-size: 1.125rem; /* 18px / 16px */
-    --txt-m-size: 1rem;     /* 16px / 16px */
+    --txt-m-size: 1rem; /* 16px / 16px */
     --txt-s-size: 0.875rem; /* 14px / 16px */
     --txt-xs-size: 0.75rem; /* 12px / 16px */
 }
 
-h1{
+h1 {
     font-size: var(--txt-h1-size);
     font-weight: 500;
 }
-h2{
+h2 {
     font-size: var(--txt-l-size);
     font-weight: 500;
 }
-h3{
+h3 {
     font-size: var(--txt-m-size);
     font-weight: 500;
 }
-h4{
+h4 {
     font-size: var(--txt-s-size);
     font-weight: 500;
 }
-p{
+p {
     font-size: var(--txt-m-size);
     font-weight: 300;
 }
 
-.button-txt{
+.button-txt {
     font-size: var(--txt-s-size);
     font-weight: 400;
     font-family: var(--primary-font-family);
 }
 
-.breadcrumb-txt{
+.breadcrumb-txt {
     font-size: var(--txt-xs-size);
     font-weight: 400;
 }
-.login-txt{
+.login-txt {
     font-size: var(--txt-xs-size);
     font-weight: 400;
 }
