@@ -25,6 +25,7 @@ class UnidadeCurricularViewController extends Controller
             ->get();
 
         $unidadesCurriculares = UnidadeCurricular::where("periodo_id", $periodos[0]->id)
+            ->orderByRaw('CAST(codigo as UNSIGNED) asc')
             ->get();
 
         return view('unidadesCurriculares', [

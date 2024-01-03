@@ -30,7 +30,10 @@ class AdminViewController extends Controller
 
         $acns = ACN::all();
 
-        $ucs = UnidadeCurricular::where('periodo_id', $periodos[0]->id)->get();
+        $ucs = UnidadeCurricular::where('periodo_id', $periodos[0]->id)
+            ->orderByRaw('CAST(codigo as UNSIGNED) asc')
+            ->get();
+
         return view('gerirDados', [
             'page_title' => 'Gerir Dados',
             'ucs' => $ucs,
