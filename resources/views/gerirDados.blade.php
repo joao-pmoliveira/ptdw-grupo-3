@@ -75,7 +75,7 @@
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
                                 <td>{{$uc->nome}}</td>
-                                <td>{{$uc->docenteResponsavel->nome}}</td>
+                                <td>{{$uc->docenteResponsavel->user->nome}}</td>
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
                         @endforeach
@@ -134,5 +134,10 @@
     </div>
     
 </main>
-
+@auth
+    <script>
+        const authUser = @json(auth()->user());
+    </script>
+@endauth
+<script src="{{asset('js/gerirDados.js')}}" defer></script>
 @endsection
