@@ -60,7 +60,7 @@ periodoSelect.addEventListener('change', async () => {
 
 const searchUCTextInput = document.querySelector('#input-filter-ucs-nome');
 searchUCTextInput.addEventListener('input', filterTableEditUCs);
-const searchUCBtn = document.querySelector('.paco-searchbox > div');
+const searchUCBtn = document.querySelector('#manage-ucs .paco-searchbox > div');
 searchUCBtn.addEventListener('click', filterTableEditUCs);
 const cursoSelect = document.querySelector('#school-year-school_course');
 cursoSelect.addEventListener('change', filterTableEditUCs);
