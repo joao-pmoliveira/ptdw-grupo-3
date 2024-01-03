@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('semestre')->nullable(false);
             $table->date('data_inicial');
             $table->date('data_final');
+
+            $table->unique(['ano', 'semestre']);
         });
     }
 

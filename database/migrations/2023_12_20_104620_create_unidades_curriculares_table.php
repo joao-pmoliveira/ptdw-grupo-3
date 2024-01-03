@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('software');
             $table->string('ects')->nullable(false);
             $table->boolean('sala_avaliacao')->nullable(false);
-            $table->unsignedBigInteger('docente_responsavel_id');
+            $table->unsignedBigInteger('docente_responsavel_id')->nullable();
             $table->boolean('restricoes_submetidas');
 
             $table->foreign('periodo_id')->references('id')->on('periodos');

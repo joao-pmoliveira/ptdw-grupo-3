@@ -122,9 +122,17 @@
         <section id="import-data" class="tab-pane">
             <form action="{{route('upload')}}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3">
                 @csrf
-                <div class="d-flex flex-column gap-2 ">
-                    <label for="import-file-input">Selecione um ficheiro</label>
-                    <input type="file" accept=".xlsx" name="uc-data-file" id="import-file-input" required>
+                <div>
+                    <label class="col-md-2" for="file-start-year">Começo de Ano Letivo</label>
+                    <input class="col-md-1" type="number" name="file-start-year" id="file-start-year-input" placeholder="2023" required>
+                </div>
+                <div>
+                    <label class="col-md-2" for="file-semestre">Semestre</label>
+                    <input class="col-md-1" type="number" name="file-semestre" id="file-semestre-input" placeholder="2" required>
+                </div>
+                <div>
+                    <label class="col-md-2" for="import-file-input">Selecione um ficheiro</label>
+                    <input class="col-md-4" type="file" accept=".xlsx" name="uc-data-file" id="import-file-input" required>
                 </div>
                 <div class="d-flex gap-3">
                     <input class="btn" type="submit" value="Submeter">

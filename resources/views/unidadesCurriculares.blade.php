@@ -57,7 +57,7 @@
                     <th scope="row"></th>
                     <td>{{$uc->codigo}}</td>
                     <td>{{$uc->nome}}</td>
-                    <td>{{$uc->docenteResponsavel->user->nome}}</td>
+                    <td>{{$uc->docenteResponsavel ? $uc->docenteResponsavel->user->nome : '-'}}</td>
                 </tr>
             @endforeach
         </tbody>

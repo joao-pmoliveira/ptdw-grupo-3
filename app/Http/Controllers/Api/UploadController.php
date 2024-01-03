@@ -23,10 +23,19 @@ class UploadController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'uc-data-file' => 'required|mimes:xlsx|max:10240'
+            'uc-data-file' => 'required|mimes:xlsx|max:10240',
+            'file-start-year' => 'required|numeric|gte:2023',
+            'file-semestre' => 'required|numeric|in:1,2'
         ]);
 
+        $ano = $request->input('file-start-year');
+        $semestre = $request->input('file-semestre');
         $file = $request->file('uc-data-file');
+
+        // return response()->json([
+        //     'ano' => $ano_inicial,
+        //     'semestre' => $semestre
+        // ]);
 
         $reader = IOFactory::createReaderForFile($file);
         $reader->setReadDataOnly(true);
@@ -82,14 +91,14 @@ class UploadController extends Controller
 
         DB::beginTransaction();
         try {
-            $periodo = Periodo::where('ano', 2024)
-                ->where('semestre', 1)
+            $periodo = Periodo::where('ano', $ano)
+                ->where('semestre', $semestre)
                 ->first();
 
             if (is_null($periodo)) {
                 $periodo = Periodo::create([
-                    'ano' => 2024,
-                    'semestre' => 1,
+                    'ano' => $ano,
+                    'semestre' => $semestre,
                     'data_inicial' => '2024-08-01',
                     'data_final' => '2024-09-01'
                 ]);
@@ -151,9 +160,7 @@ class UploadController extends Controller
                         'nome' => $d['nome_uc'],
                         'periodo_id' => $periodo->id,
                         'acn_id' => $acn_docente->id,
-                        // todo - mudar campo para nullable, para ao criar colocar valores temporarios
-                        // caso o primeiro docente associado a esta UC não seja o responsavel
-                        'docente_responsavel_id' => (!empty(trim($d['responsavel_uc']))) ? $docente->id : 1,
+                        'docente_responsavel_id' => NULL,
                         'sigla' => '',
                         'horas_semanais' => $d['horas'],
                         'laboratorio' => false,
@@ -163,6 +170,10 @@ class UploadController extends Controller
                         'restricoes_submetidas' => false
                     ]);
 
+                    if (!empty(trim($d['responsavel_uc']))) {
+                        $uc->docente_responsavel_id = $docente->id;
+                    }
+
                     $words = explode(" ",  $d['nome_uc']);
                     foreach ($words as $word) {
                         $initial = $word[0];
@@ -171,6 +182,12 @@ class UploadController extends Controller
                         }
                     }
 
+                    $uc->save();
+                }
+
+                $uc->refresh();
+                if (is_null($uc->docente_responsavel_id) && !empty(trim($d['responsavel_uc']))) {
+                    $uc->docente_responsavel_id = $docente->id;
                     $uc->save();
                 }
 
