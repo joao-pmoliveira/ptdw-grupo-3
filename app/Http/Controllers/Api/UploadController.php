@@ -8,6 +8,7 @@ use App\Models\Curso;
 use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Faker\Factory as FakerFactory;
 
 use function PHPSTORM_META\map;
+use function PHPUnit\Framework\isNull;
 
 class UploadController extends Controller
 {
@@ -45,34 +47,23 @@ class UploadController extends Controller
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(FALSE);
 
-            $lineData = [
-                'numero_docente' => '',
-                'nome_docente' => '',
-                'acn_docente' => '',
-                'codigo_uc' => '',
-                'acn_uc' => '',
-                'responsavel_uc' => '',
-                'nome_uc' => '',
-                'curso' => '',
-                'horas' => '',
-                'percentagem' => '',
+            $columnsMap = [
+                'A' => 'numero_docente',
+                'B' => 'nome_docente',
+                'C' => 'acn_docente',
+                'D' => 'codigo_uc',
+                'E' => 'acn_uc',
+                'F' => 'responsavel_uc',
+                'G' => 'nome_uc',
+                'H' => 'curso',
+                'I' => 'horas',
+                'J' => 'percentagem',
             ];
 
             foreach ($cellIterator as $index => $cell) {
                 $val = $cell->getValue();
 
-                match ($index) {
-                    'A' => $lineData['numero_docente'] = $val,
-                    'B' => $lineData['nome_docente'] = $val,
-                    'C' => $lineData['acn_docente'] = $val,
-                    'D' => $lineData['codigo_uc'] = $val,
-                    'E' => $lineData['acn_uc'] = $val,
-                    'F' => $lineData['responsavel_uc'] = $val,
-                    'G' => $lineData['nome_uc'] = $val,
-                    'H' => $lineData['curso'] = $val,
-                    'I' => $lineData['horas'] = $val,
-                    'J' => $lineData['percentagem'] = $val,
-                };
+                $lineData[$columnsMap[$index]] = $val;
             }
 
             array_push($data, $lineData);
@@ -91,14 +82,11 @@ class UploadController extends Controller
 
         DB::beginTransaction();
         try {
-            // todo - como melhor detetar a que ano/semestre o ficheiro se refere
-            // para efetiso de teste, adicionar ao primeiro semestre de 2024/2025
-
             $periodo = Periodo::where('ano', 2024)
                 ->where('semestre', 1)
                 ->first();
 
-            if ($periodo == NULL) {
+            if (is_null($periodo)) {
                 $periodo = Periodo::create([
                     'ano' => 2024,
                     'semestre' => 1,
@@ -113,65 +101,51 @@ class UploadController extends Controller
 
             foreach ($data as $d) {
                 $acn_docente = ACN::where('sigla', $d['acn_docente'])->first();
-                if ($acn_docente == NULL) {
-                    // todo - como lidar?
-                    // se todas as ACNs possíveis forem introduzidas manualmente no sistema? não aceitar erros
-                    // se não ? "erro" pode ser 'nova' ACN que ainda não está no sistema
-                    // para efeitos de teste: assume que todos os ACNs possíveis já estão no sistema
-
+                if (is_null($acn_docente)) {
                     throw new Exception('ACN do Docente: não reconhecida!');
                 }
 
-                $docente = Docente::where('numero_funcionario', $d['numero_docente'])->first();
-                if ($docente == NULL) {
+                $docente = Docente::where('numero_funcionario', $d['numero_docente'])->with('user')->first();
+                if (is_null($docente)) {
                     $docente = Docente::create([
-                        'nome' => $d['nome_docente'],
                         'numero_funcionario' => $d['numero_docente'],
-                        'email' => strtolower(str_replace(' ', '.', $d['nome_docente'])) . $faker->unique()->randomNumber(5, true) . "@estga.pt",
-                        'numero_telefone' => $faker->phoneNumber()
+                        'numero_telefone' => $faker->phoneNumber(),
+                        'acn_id' => $acn_docente->id
                     ]);
-                    $docente->acn()->associate($acn_docente);
                     $docente->save();
-
-                    // todo - email de docente:
-                    // para efeitos de test: email placeholder, gerado automaticamente
-                    // - email real introduzido pelos admins?
-                    // - associado quando o docente faz o primeiro login com email + numero de funcionario?
                 }
 
-                if ($docente->nome != $d['nome_docente']) {
-                    // todo - como lidar?
-                    // nome do docente que vem no ficheiro não é igual ao nome do docente
-                    // na base de dados
-                    // provavelmente erro ao colocar numero no ficheiro excel
-                    // OU
-                    // em vez de colocar nome completo, colocar primeiro e último?
-
-                    throw new Exception('Nome docente: diferente entre ficheiro e base de dados!');
+                $user = $docente->user;
+                if (is_null($user)) {
+                    $user = User::create([
+                        'nome' => $d['nome_docente'],
+                        'email' => strtolower(str_replace(' ', '.', $d['nome_docente'])) . $faker->unique()->randomNumber(5, true) . '@estga.pt',
+                        'password' => bcrypt('password'),
+                        'admin' => false,
+                    ]);
+                    $user->docente()->associate($docente);
+                    $user->save();
                 }
 
-                if ($docente->acn->sigla != $d['acn_docente']) {
-                    // todo - como lidar?
-                    // no ficheiro a ACN atribuída ao docente é diferente à ACN que está atribuída
-                    // ao docente na base de dados.
-                    // Docentes apenas estão associados a uma ACN;
+                $docente->refresh();
+                if ($docente->user->nome !== $d['nome_docente']) {
+                    throw new Exception('Nome docente: diferenças entre nome no ficheiro e nome na base de dados!');
+                }
 
+                if ($docente->acn->sigla !== $d['acn_docente']) {
                     throw new Exception('ACN do Docente: mais do que uma ACN para o mesmo docente!');
                 }
 
                 $acn_uc = ACN::where('sigla', $d['acn_uc'])->first();
-                if ($acn_uc == NULL) {
-                    // igual ao caso da acn do docente
-
+                if (is_null($acn_uc)) {
                     throw new Exception('ACN da UC: não reconhecida!');
                 }
 
                 $uc = UnidadeCurricular::where('codigo', $d['codigo_uc'])
                     ->where('periodo_id', $periodo->id)
                     ->first();
-                if ($uc == NULL) {
 
-
+                if (is_null($uc)) {
                     $uc = UnidadeCurricular::create([
                         'codigo' => $d['codigo_uc'],
                         'nome' => $d['nome_uc'],
@@ -186,6 +160,7 @@ class UploadController extends Controller
                         'software' => '',
                         'ects' => '0',
                         'sala_avaliacao' => false,
+                        'restricoes_submetidas' => false
                     ]);
 
                     $words = explode(" ",  $d['nome_uc']);
@@ -200,14 +175,7 @@ class UploadController extends Controller
                 }
 
                 $curso = Curso::where('sigla', $d['curso'])->first();
-                if ($curso == NULL) {
-                    // todo - como lidar
-                    // mesmo caso com as ACNs
-                    // em principio não se irá ter todos os cursos já no sistema
-                    // por isso adicionar um novo quando isto acontece
-                    //  - nome
-                    //  - sigla
-
+                if (is_null($curso)) {
                     throw new Exception('Curso da UC: sigla não reconhecida');
                 }
 
@@ -216,22 +184,16 @@ class UploadController extends Controller
                 }
 
                 if ($uc->docentes->contains($docente)) {
-                    // todo - como lidar
-                    // se a unidade curricular já tem este docente associado é porque:
-                    // - houve um erro no ficheiro input, em que o docente tem duas linhas para a mesma UC
-                    // - o admin tentou enviar o ficheiro mais do que uma vez
-                    // - os dados do ficheiros são de um periodo que já existe no sistema
                     throw new Exception('Docente e UC: este docente já estava associado à UC');
                 }
-
                 $uc->docentes()->attach($docente, ['percentagem_semanal' => $d['percentagem']]);
             }
 
             DB::commit();
-            return redirect(route('inicio.view'), 200);
+            return response()->json(['message' => 'sucesso'], 200);
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect(route('admin.gerir.view'));
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 }
