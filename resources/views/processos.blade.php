@@ -53,7 +53,10 @@
                             ? $docente->ucResponsavel->restricoes_submetidas . '/' . (bool)$docente->ucResponsavel 
                             : 'Não é docente responsável'
                     }}</td>
-                    <td colspan='2' style="text-align:center;">{{$docente->impedimentos()->where('periodo_id' , $periodo->id)->first()->submetido?'Submetido' : 'Pendente'}}</td>
+                    <td colspan='2' style="text-align:center;">{{
+                        $docente->impedimentos()->where('periodo_id' , $periodo->id)->first() == NULL ? 'Pendente':
+                            ($docente->impedimentos()->where('periodo_id' , $periodo->id)->first()->submetido ?'Submetido' : 'Pendente')
+                    }}</td>
                     <td></td>
                 </tr>
                 @endforeach
@@ -90,8 +93,8 @@
             </thead>
             <tbody>
                 <!--Linha Principal--> 
-                @foreach($periodosH as $periodoH)
-                <tr data-bs-toggle="collapse" data-bs-target="#r1">
+                @foreach($periodosH as $index => $periodoH)
+                <tr data-bs-toggle="collapse" data-bs-target="{{'#rh' . $index}}">
                     <th scope='row'></th>
                     <td ><i class="fa-solid fa-chevron-right"></i></td>
                     <td>{{'Formulário ' . $periodoH->ano . '/' . ($periodoH->ano + 1) . ' ' . $periodoH->semestre . 'ºSemestre'}}</td>
@@ -101,7 +104,7 @@
                     <td><i class="fa-solid fa-download"></i></td>
                 </tr>
                     @foreach($docentes as $docente)
-                    <tr class="collapse accordion-collapse bg-terciary" id="r2">
+                    <tr class="collapse accordion-collapse bg-terciary" id="{{'rh' . $index}}">
                         <th scope='row'></th>
                         <td colspan='1'>{{$docente->numero_funcionario}}</td>
                         <td colspan='2'>{{$docente->user->nome}}</td>
@@ -110,7 +113,10 @@
                                 ? $docente->ucResponsavel->restricoes_submetidas . '/' . (bool)$docente->ucResponsavel 
                                 : 'Não é docente responsável'
                         }}</td>
-                        <td colspan='2' style="text-align:center;">{{$docente->impedimentos()->where('periodo_id' , $periodo->id)->first()->submetido?'Submetido' : 'Pendente'}}</td>
+                        <td colspan='2' style="text-align:center;">{{
+                            $docente->impedimentos()->where('periodo_id' , $periodo->id)->first() == NULL ? 'Pendente':
+                                ($docente->impedimentos()->where('periodo_id' , $periodo->id)->first()->submetido ?'Submetido' : 'Pendente')
+                        }}</td>
                         <td></td>
                     </tr>
                     @endforeach

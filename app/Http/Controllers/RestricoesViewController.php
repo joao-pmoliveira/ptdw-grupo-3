@@ -6,6 +6,7 @@ use App\Models\Docente;
 use App\Models\Impedimento;
 use App\Models\UnidadeCurricular;
 use App\Models\Periodo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -85,20 +86,18 @@ class RestricoesViewController extends Controller
         //por cada docente ver impedimentos e ver se está preenchido submetido 
 
         $periodos = Periodo::orderBy('ano', 'desc')
-        ->orderBy('semestre', 'desc')
-        ->get();
+            ->orderBy('semestre', 'desc')
+            ->get();
 
         $docentes = Docente::orderBy('numero_funcionario', 'desc')
-        ->get();
+            ->get();
 
         return view('processos', [
             'page_title' => 'Recolha de Restrições',
             'user' => $user,
             'docentes' => $docentes,
             'periodo' => $periodos[0],
-            'periodosH' => $periodos->slice(2),
+            'periodosH' => $periodos->slice(1),
         ]);
-
-
     }
 }
