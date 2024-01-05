@@ -57,6 +57,7 @@ Route::group(['prefix' => 'docentes'], function () {
     // Route::get('/{docente}', []);
 
     Route::get('/{docente}/editar', [DocenteViewController::class, 'editarDocente'])->name('docentes.editar.view');
+    Route::get('/adicionar', [DocenteViewController::class, 'addDocente'])->name('docente.adicionar.view');
 });
 
 Route::get('/gerir-dados', [AdminViewController::class, 'gerirDados'])->name('admin.gerir.view');

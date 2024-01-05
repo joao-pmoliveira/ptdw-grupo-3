@@ -92,7 +92,7 @@
                         <div><i class="fa-solid fa-search"></i></div>
                     </div>
                     <div class="d-flex align-items-center">
-                        <button class="btn py-0 align-self-stretch">Adicionar Docente</button>
+                    <a href="{{route('docente.adicionar.view')}}" class="btn py-1">Adicionar Docente</a>
                     </div>
                     
                 </div>

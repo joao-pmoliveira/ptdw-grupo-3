@@ -18,7 +18,7 @@
             @csrf
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
                 <label class="col-md-2 p-3" for="uc-codigo">Código</label>
-                <input class="col-md-2 p-1" type="number" name="codigo" id="uc-codigo-input" required>
+                <input class="col-md-2 p-1" type="number" name="codigo" id="uc-codigo-input" required min="0">
             </div>
 
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
@@ -38,12 +38,12 @@
             
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
                 <label class="col-md-2 p-3" for="uc-ects" class="col-md-2 p-3">ECTS</label>
-                <input class="col-md-1 p-1" type="number" name="ects" id="uc-ects-input" required>
+                <input class="col-md-1 p-1" type="number" name="ects" id="uc-ects-input" required min="0">
             </div>
 
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
                 <label class="col-md-2 p-3" for="uc-horas">Horas Semanais</label>
-                <input class="col-md-1 p-1" type="number" name="horas" id="uc-horas-input" required>
+                <input class="col-md-1 p-1" type="number" name="horas" id="uc-horas-input" required min="0">
             </div>
 
             <div class="d-flex align-items-center border border-dark p-2 mb-2">

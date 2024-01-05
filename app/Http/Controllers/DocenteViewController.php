@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Docente;
+use App\Models\ACN;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -27,4 +28,17 @@ class DocenteViewController extends Controller
             'user' => Auth::user(),
         ]);
     }
+
+    public function addDocente()
+    {
+        $user = Auth::check() ? Auth::user() : NULL;
+        $acns = ACN::all();
+
+        return view('addDocente', [
+            'page_title' => 'Adicionar Docente',
+            'acns' => $acns,
+            'user' => $user,
+        ]);
+    }
+
 }

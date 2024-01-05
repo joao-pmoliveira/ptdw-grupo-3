@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class DocenteRequest extends FormRequest
 {
@@ -11,16 +12,17 @@ class DocenteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Gate::allows('admin-access', $this->user());
     }
 
     public function rules(): array
     {
         return [
             'nome' => 'required|string|max:255',
-            'acn_id' => 'required|exists:acns,id',
+            'acn' => 'required|exists:acns,id',
             'email' => 'required|email|unique:docentes,email',
-            'numero_telefone' => 'nullable|regex:/^[0-9+\s]+$/'
+            'telemovel' => 'nullable|regex:/^[0-9+\s]+$/',
+            'numero' => 'required|integer|min:1',
         ];
     }
 }
