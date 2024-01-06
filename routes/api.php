@@ -46,9 +46,9 @@ Route::group(['prefix' => 'unidades-curriculares'], function () {
 
     Route::post('/', [UnidadeCurricularController::class, 'store'])->middleware(['web', 'auth'])->name('ucs.store');
 
-    Route::put('/{id}', [UnidadeCurricularController::class, 'update'])->name('ucs.update');
+    Route::put('/{id}', [UnidadeCurricularController::class, 'update'])->middleware(['web', 'auth'])->name('ucs.update');
 
-    Route::delete('/{id}', [UnidadeCurricularController::class, 'delete'])->name('ucs.delete');
+    Route::delete('/{id}', [UnidadeCurricularController::class, 'delete'])->middleware(['web', 'auth'])->name('ucs.delete');
 });
 
 Route::group(['prefix' => 'impedimentos'], function () {

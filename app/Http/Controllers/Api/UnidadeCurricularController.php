@@ -125,11 +125,100 @@ class UnidadeCurricularController extends Controller
         }
     }
 
-    public function update(UnidadeCurricularRequest $ucRequest, UnidadeCurricular $uc)
-    {
+    public function update(UnidadeCurricularRequest $ucRequest, $uc)
+    { 
+        if (!$ucRequest->authorize()) {
+            return response()->json(['message' => 'Não autorizado'], 403);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $uc = UnidadeCurricular::findOrFail($uc);
+
+            // Obtenha os dados atualizados do request
+            $codigo = $ucRequest->input('codigo');
+            $nome = $ucRequest->input('nome');
+            $horas = $ucRequest->input('horas');
+            $ects = $ucRequest->input('ects');
+            $acn = $ucRequest->input('acn');
+            $docenteRespId = $ucRequest->input('docente_responsavel_id');
+            $docentesId = $ucRequest->input('docentes_id', []);
+
+            // Atualize os campos da unidade curricular
+            $uc->update([
+                'codigo' => $codigo,
+                'nome' => $nome,
+                'acn_id' => $acn,
+                'docente_responsavel_id' => $docenteRespId,
+                'horas_semanais' => $horas,
+                'ects' => $ects,
+            ]);
+
+            // Atualize a sigla com base no nome
+            $words = explode(' ', $nome);
+            $uc->sigla = '';
+            foreach ($words as $word) {
+                $initial = $word[0];
+                if (ctype_upper($initial)) {
+                    $uc->sigla .= $initial;
+                }
+            }
+            $uc->save();
+
+            // Atualize os docentes associados
+            $uc->docentes()->detach(); // Remova todos os docentes associados atualmente
+
+            $docenteResp = Docente::findOrFail($docenteRespId);
+            $uc->docentes()->attach($docenteResp, ['percentagem_semanal' => 1]);
+
+            foreach ($docentesId as $docenteID) {
+                if (is_null($docenteID)) {
+                    continue;
+                }
+
+                $docente = Docente::findOrFail($docenteID);
+                $uc->docentes()->attach($docente, ['percentagem_semanal' => 1]);
+            }
+
+            DB::commit();
+            return response()->json([
+                'message' => 'Sucesso!',
+                'redirect' => route('admin.gerir.view'),
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()]);
+        }
+
     }
 
-    public function delete(UnidadeCurricular $uc)
+    public function delete(UnidadeCurricularRequest $ucRequest, $uc)
     {
+        if (!$ucRequest->authorize()) {
+            return response()->json(['message' => 'Não autorizado'], 403);
+        }
+        try {
+            DB::beginTransaction();
+    
+            $uc = UnidadeCurricular::findOrFail($uc);
+
+            if (!$uc->authorizeDeletion()) {
+                return response()->json(['message' => 'Unauthorized to delete this resource'], 403);
+            }
+
+            $uc->docentes()->detach();
+
+            $uc->delete();
+    
+            DB::commit();
+            return response()->json([
+                'message' => 'sucesso!',
+                'redirect' => route('admin.gerir.view'),
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }
