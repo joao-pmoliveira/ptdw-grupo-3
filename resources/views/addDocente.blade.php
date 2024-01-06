@@ -15,30 +15,26 @@
 
 
     <section class="mt-3">
-        <form id="add-docente-form" action="{{route('docentes.store')}}" method="POST" class="title-separator pt-3"> <!--FLAG-->
+        <form id="add-docente-form" action="{{route('docentes.store')}}" method="POST" class="title-separator pt-3">
             @csrf
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="docente-numero" class="col-md-2 p-3">Número</label>
-                <input type="number" name="docente-numero" id="docente-numero-input" class="col-md-2 p-1" 
-                    value="" required min="0">
+                <label for="numero" class="col-md-2 p-3">Número</label>
+                <input type="number" name="numero" id="docente-numero-input" class="col-md-2 p-1" required min="0">
             </div>
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="docente-nome" class="col-md-2 p-3">Nome</label>
-                <input type="text" name="docente-nome" id="docente-nome-input" class="col-md-4 p-1"
-                    value="" required>
+                <label for="nome" class="col-md-2 p-3">Nome</label>
+                <input type="text" name="nome" id="docente-nome-input" class="col-md-4 p-1" required>
             </div>
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="docente-email" class="col-md-2 p-3">Email</label>
-                <input type="email" name="docente-email" id="docente-email-input" class="col-md-4 p-1"
-                    value="" required>
+                <label for="email" class="col-md-2 p-3">Email</label>
+                <input type="email" name="email" id="docente-email-input" class="col-md-4 p-1" required>
             </div>
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="docente-telemovel" class="col-md-2 p-3">Telemóvel</label>
-                <input type="tel" name="docente-telemovel" id="docente-telemovel" class="col-md-4 p-1"
-                    value="" required>
+                <label for="telemovel" class="col-md-2 p-3">Telemóvel</label>
+                <input type="tel" name="telemovel" id="docente-telemovel" class="col-md-4 p-1" required>
             </div>
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label class="col-md-2 p-3" for="uc-acn">Área Científica</label>
+                <label class="col-md-2 p-3" for="acn">Área Científica</label>
                 <select class="col-md-2 p-1" name="acn" id="ucn-acn-select" required>
                     <option value="" selected>Selecione</option>
                     @foreach ($acns as $acn)

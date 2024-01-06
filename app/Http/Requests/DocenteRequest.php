@@ -18,11 +18,11 @@ class DocenteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
-            'acn' => 'required|exists:acns,id',
-            'email' => 'required|email|unique:docentes,email',
-            'telemovel' => 'nullable|regex:/^[0-9+\s]+$/',
-            'numero' => 'required|integer|min:1',
+            'nome' => 'required|string',
+            'acn' => 'required|integer|exists:acns,id',
+            'email' => 'required|email|unique:users,email',
+            'telemovel' => 'required|integer',
+            'numero' => 'required|integer|min:1|unique:docentes,numero_funcionario',
         ];
     }
 }

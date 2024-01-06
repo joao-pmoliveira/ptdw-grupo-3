@@ -13,10 +13,12 @@ addDocenteForm.addEventListener('submit', async (e) => {
         });
 
         if (!res.ok) {
+            console.log(res)
             throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
         }
 
         const data = await res.json();
+        console.log(data);
 
         if (data.redirect) {
             window.location.href = data.redirect;

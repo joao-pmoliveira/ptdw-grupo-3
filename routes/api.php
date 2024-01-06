@@ -30,7 +30,7 @@ Route::group(['prefix' => 'docentes'], function () {
 
     Route::get('/{docente}', [DocenteController::class, 'show'])->name('docentes.show');
 
-    Route::post('/', [DocenteController::class, 'store'])->name('docentes.store');
+    Route::post('/', [DocenteController::class, 'store'])->middleware(['web', 'auth'])->name('docentes.store');
 
     Route::put('/{id}', [DocenteController::class, 'update'])->name('docentes.update');
 
