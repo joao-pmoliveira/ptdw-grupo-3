@@ -33,7 +33,7 @@ class ImpedimentoFactory extends Factory
             for ($j = 0; $j < 3; $j++) {
                 $randomNumber = rand(0, 1);
                 $result .= $randomNumber;
-                if ($i < 2) {
+                if ($j < 2) {
                     $result .= ',';
                 }
             }
