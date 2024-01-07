@@ -1,7 +1,37 @@
 'use strict'
 
 // Formulário de Impedimentos
-// todo
+const impedimentoForm = document.querySelector('#impedimento-form');
+impedimentoForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // todo - check if at least blocks are free
+
+    // todo - if there's at least block selected, justification textarea needs to have text
+
+    try {
+        const formData = new FormData(impedimentoForm);
+
+        const res = await fetch(impedimentoForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': formData.get('_token'),
+                'X-HTTP-Method-Override': formData.get('_method'),
+            },
+        });
+        if (!res.ok) {
+            throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
+        }
+
+        const data = await res.json();
+        console.log(data);
+
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+        console.error(`Error stack: ${error.stack}`);
+    }
+})
 
 // Tabela com restrições para o próximo semestre
 const tableRestricoes = document.querySelector('#table-restricoes-pendentes');

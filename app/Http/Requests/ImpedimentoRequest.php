@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class ImpedimentoRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class ImpedimentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,11 +22,6 @@ class ImpedimentoRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'periodo_id' => 'required|exists:periodos,id',
-            'docente_id' => 'required|exists:docentes,id',
-            'impedimentos' => 'required|string',
-            'justificacao' => 'nullable|string',
-        ];
+        return [];
     }
 }

@@ -34,6 +34,8 @@ class RestricoesViewController extends Controller
             ->where('periodo_id', $periodo->id)
             ->get();
 
+        $impedimento = $user->docente->impedimentos()->where('periodo_id', $periodo->id)->first();
+
         $historico_ucs = $user->docente->unidadesCurriculares()
             ->where('periodo_id', '!=', $periodo->id)
             ->get()
@@ -52,6 +54,7 @@ class RestricoesViewController extends Controller
             'page_title' => 'Restrições',
             'periodo' => $periodo,
             'ucs' => $ucs,
+            'impedimento' => $impedimento,
             'historico_impedimentos' => $historico_impedimentos,
             'historico_ucs' => $historico_ucs,
             'user' => $user,

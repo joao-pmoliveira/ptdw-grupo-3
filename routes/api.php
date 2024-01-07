@@ -58,7 +58,7 @@ Route::group(['prefix' => 'impedimentos'], function () {
 
     Route::post('/', [ImpedimentoController::class, 'store'])->name('impedimentos.store');
 
-    Route::put('/{id}', [ImpedimentoController::class, 'update'])->name('impedimentos.update');
+    Route::put('/{id}', [ImpedimentoController::class, 'update'])->middleware(['web', 'auth'])->name('impedimentos.update');
 
     Route::delete('/{id}', [ImpedimentoController::class, 'delete'])->name('impedimentos.delete');
 });
