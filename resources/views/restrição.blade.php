@@ -16,15 +16,19 @@
 
     @include('partials._pageTitle', ['title' => 'Restrições de '. $uc->nome. ' - '.$ano_inicial.'/'. ($ano_inicial+1).' '])
     <section class="mt-3">
-        <form action="" method="post">
+        @if ($uc and $semestre and $ano_inicial)
+        <form action="{{route('restricoes.update', ['id' => $uc->id])}}"  method="POST" id="restricao-form">
+            @csrf
+            @method('PUT')
             <div class="class-sub-form-container">
                 @include('partials._restrictionFormItem', ['uc' => $uc])
             </div>
             <div class="d-flex gap-3 mb-5" id="form-btns">
-                <input class="btn" type="button" value="Submeter">
-                <input class="btn" type="button" value="Cancelar">
+                <input class="btn" type="submit" value="Submeter">
+                <a class="btn" href="{{route('restricoes.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
+        @endif
     </section>
 </main>
 

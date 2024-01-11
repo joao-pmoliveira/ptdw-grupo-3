@@ -34,79 +34,79 @@
 
                 <p>Manhã</p>
                 <label for="segundaManha">
-                    <input type="checkbox" name="monday_morning" id="segundaManha">
+                    <input type="checkbox" name="monday_morning" id="segundaManha" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="tercaManha">
-                    <input type="checkbox" name="tuesday_morning" id="tercaManha">
+                    <input type="checkbox" name="tuesday_morning" id="tercaManha" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="quartaManha">
-                    <input type="checkbox" name="wednesday_morning" id="quartaManha">
+                    <input type="checkbox" name="wednesday_morning" id="quartaManha" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="quintaManha">
-                    <input type="checkbox" name="thursday_morning" id="quintaManha">
+                    <input type="checkbox" name="thursday_morning" id="quintaManha" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="sextaManha">
-                    <input type="checkbox" name="friday_morning" id="sextaManha">
+                    <input type="checkbox" name="friday_morning" id="sextaManha" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="sabadoManha">
-                    <input type="checkbox" name="saturday_morning" id="sabadoManha">
+                    <input type="checkbox" name="saturday_morning" id="sabadoManha" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
 
                 <p>Tarde</p>
                 <label for="segundaTarde">
-                    <input type="checkbox" name="monday_afternoon" id="segundaTarde">
+                    <input type="checkbox" name="monday_afternoon" id="segundaTarde" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="tercaTarde">
-                    <input type="checkbox" name="tuesday_afternoon" id="tercaTarde">
+                    <input type="checkbox" name="tuesday_afternoon" id="tercaTarde" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="quartaTarde">
-                    <input type="checkbox" name="wednesday_afternoon" id="quartaTarde">
+                    <input type="checkbox" name="wednesday_afternoon" id="quartaTarde" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="quintaTarde">
-                    <input type="checkbox" name="thursday_afternoon" id="quintaTarde">
+                    <input type="checkbox" name="thursday_afternoon" id="quintaTarde" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="sextaTarde">
-                    <input type="checkbox" name="friday_afternoon" id="sextaTarde">
+                    <input type="checkbox" name="friday_afternoon" id="sextaTarde" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="sabadoTarde">
-                    <input type="checkbox" name="saturday_afternoon" id="sabadoTarde">
+                    <input type="checkbox" name="saturday_afternoon" id="sabadoTarde" @disabled($editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
 
                 <p>Noite</p>
                 <label for="segundaNoite">
-                    <input type="checkbox" name="monday_night" id="segundaNoite">
+                    <input type="checkbox" name="monday_night" id="segundaNoite" @disabled(!$editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="tercaNoite">
-                    <input type="checkbox" name="tuesday_night" id="tercaNoite">
+                    <input type="checkbox" name="tuesday_night" id="tercaNoite" @disabled(!$editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="quartaNoite">
-                    <input type="checkbox" name="wednesday_night" id="quartaNoite">
+                    <input type="checkbox" name="wednesday_night" id="quartaNoite" @disabled(!$editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="quintaNoite">
-                    <input type="checkbox" name="thursday_night" id="quintaNoite">
+                    <input type="checkbox" name="thursday_night" id="quintaNoite" @disabled(!$editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="sextaNoite">
-                    <input type="checkbox" name="friday_night" id="sextaNoite">
+                    <input type="checkbox" name="friday_night" id="sextaNoite" @disabled(!$editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
                 <label for="sabadoNoite">
-                    <input type="checkbox" name="saturday_night" id="sabadoNoite">
+                    <input type="checkbox" name="saturday_night" id="sabadoNoite" @disabled(!$editavel)>
                     <i class="fa-solid fa-x"></i>
                 </label>
             </div>
@@ -115,11 +115,12 @@
                 <h3>Justificação</h3>
                 <p>Para impedimentos, caso existam.</p>
                 <label class="d-block" for="justificacao"></label>
-                <textarea cols="60" rows="8" name="justification" id="justificacao" class="px-2 py-1"></textarea>
+                <textarea cols="60" rows="8" name="justification" id="justificacao" class="px-2 py-1" @disabled(!$editavel)>
+                </textarea>
             </fieldset>
 
             <div class="d-flex gap-3" id="form-btns">
-                <input class="btn" type="button" value="Submeter">
+                <input class="btn" type="button" value="Submeter" @disabled(!$editavel)>
                 <input class="btn" type="button" value="Cancelar">
             </div>
         </form>
