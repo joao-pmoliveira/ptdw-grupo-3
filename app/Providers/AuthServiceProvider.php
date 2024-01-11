@@ -29,5 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('acess-docente-impedimentos', function ($user, $docentePermitido) {
             return $user->docente && $user->docente->id == $docentePermitido->id;
         });
+
+        Gate::define('access-uc-restricoes', function ($user, $unidadeCurricular) {
+            return $user->docente && $unidadeCurricular->docentes->contains($user->docente);
+        });
     }
 }
