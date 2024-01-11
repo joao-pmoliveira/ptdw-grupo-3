@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RestricoesRequest;
 use App\Http\Requests\UnidadeCurricularRequest;
 use App\Models\Docente;
 use App\Models\Periodo;
@@ -126,7 +127,7 @@ class UnidadeCurricularController extends Controller
     }
 
     public function update(UnidadeCurricularRequest $ucRequest, $uc)
-    { 
+    {
         if (!$ucRequest->authorize()) {
             return response()->json(['message' => 'Não autorizado'], 403);
         }
@@ -193,6 +194,41 @@ class UnidadeCurricularController extends Controller
 
     }
 
+    public function updateRestricao(RestricoesRequest $ucRequest, $id)
+    {
+
+        try {
+            DB::beginTransaction();
+
+            $uc = UnidadeCurricular::find($id);
+
+            // Obtenha os dados atualizados do request
+            $laboratorio = $ucRequest->input('obligatory_labs');
+            $software = $ucRequest->input('needed_software');
+            $sala_avaliacao = $ucRequest->input('evaluation_labs');
+  
+            // Atualize os campos da unidade curricular
+            $uc->update([
+                'laboratorio' => is_null($laboratorio)? false : true,
+                'software' => $software,
+                'sala_avalicao' => is_null($sala_avaliacao)? false : true,
+                'restricoes_submetidas' => 1,
+            ]);
+
+            $uc->save();
+
+            DB::commit();
+            return response()->json([
+                'message' => 'Sucesso!',
+                'redirect' => route('restricoes.view'),
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()]);
+        }
+
+    }
+
     public function delete(UnidadeCurricularRequest $ucRequest, $uc)
     {
         if (!$ucRequest->authorize()) {
@@ -200,7 +236,7 @@ class UnidadeCurricularController extends Controller
         }
         try {
             DB::beginTransaction();
-    
+
             $uc = UnidadeCurricular::findOrFail($uc);
 
             if (!$uc->authorizeDeletion()) {
@@ -210,7 +246,7 @@ class UnidadeCurricularController extends Controller
             $uc->docentes()->detach();
 
             $uc->delete();
-    
+
             DB::commit();
             return response()->json([
                 'message' => 'sucesso!',
