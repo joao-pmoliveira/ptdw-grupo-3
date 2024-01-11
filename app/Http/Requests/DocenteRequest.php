@@ -20,9 +20,9 @@ class DocenteRequest extends FormRequest
         return [
             'nome' => 'required|string',
             'acn' => 'required|integer|exists:acns,id',
-            'email' => 'required|email|unique:users,email',
-            'telemovel' => 'required|integer',
-            'numero' => 'required|integer|min:1|unique:docentes,numero_funcionario',
+            'email' => 'required|email',
+            'telemovel' => 'required|integer', 
+            'numero' => 'required|integer|min:1',
         ];
     }
 }

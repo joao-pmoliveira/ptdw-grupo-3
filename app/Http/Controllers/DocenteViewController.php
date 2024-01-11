@@ -17,6 +17,7 @@ class DocenteViewController extends Controller
     public function editarDocente(Docente $docente)
     {
         $user = Auth::user();
+        $acns = ACN::all();
 
         if (Gate::denies('admin-access')) {
             abort(403, 'Sem Autorização');
@@ -25,6 +26,7 @@ class DocenteViewController extends Controller
         return view('docente', [
             'page_title' => 'Docente',
             'docente' => $docente,
+            'acns' => $acns,
             'user' => Auth::user(),
         ]);
     }

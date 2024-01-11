@@ -32,7 +32,7 @@ Route::group(['prefix' => 'docentes'], function () {
 
     Route::post('/', [DocenteController::class, 'store'])->middleware(['web', 'auth'])->name('docentes.store');
 
-    Route::put('/{id}', [DocenteController::class, 'update'])->name('docentes.update');
+    Route::put('/{id}', [DocenteController::class, 'update'])->middleware(['web', 'auth'])->name('docentes.update');
 
     Route::delete('/{id}', [DocenteController::class, 'delete'])->name('docentes.delete');
 });

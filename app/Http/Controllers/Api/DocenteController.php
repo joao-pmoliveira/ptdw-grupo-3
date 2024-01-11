@@ -76,8 +76,48 @@ class DocenteController extends Controller
         }
     }
 
-    public function update(DocenteRequest $docenteRequest, Docente $docente)
+    public function update(DocenteRequest $docenteRequest, $id, Docente $docente)
     {
+        //if (!$docenteRequest->authorize()) {
+          //  return response()->json(['message' => 'nao autorizado'], 403);
+        //}
+
+        try{
+            DB::beginTransaction();
+
+            $docente = Docente::findOrFail($id);
+
+            $nome = $docenteRequest->input('nome');
+            $numero = $docenteRequest->input('numero');
+            $email = $docenteRequest->input('email');
+            $telemovel = $docenteRequest->input('telemovel');
+            $acn = $docenteRequest->input('acn');
+
+            $docente->update([
+                'numero_funcionario' => $numero,
+                'numero_telefone' => $telemovel,
+                'acn_id' => $acn,
+            ]);
+
+            $user = $docente->user;
+            $user->update([
+                'nome' => $nome,
+                'email' => $email,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Sucesso!',
+                'redirect' => route('admin.gerir.view'),
+            ]);
+
+
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()]);
+        }
+
     }
 
     public function delete(Docente $docente)
