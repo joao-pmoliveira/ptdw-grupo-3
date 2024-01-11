@@ -25,5 +25,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('admin-access', fn ($user) => $user->admin);
+
+        Gate::define('acess-docente-impedimentos', function ($user, $docentePermitido) {
+            return $user->docente && $user->docente->id == $docentePermitido->id;
+        });
+
+        Gate::define('access-uc-restricoes', function ($user, $unidadeCurricular) {
+            return $user->docente && $unidadeCurricular->docentes->contains($user->docente);
+        });
     }
 }

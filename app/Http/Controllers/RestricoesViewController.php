@@ -63,6 +63,11 @@ class RestricoesViewController extends Controller
 
     public function restricoesUC(UnidadeCurricular $uc, $ano_inicial, $semestre)
     {
+
+        if (Gate::denies('access-uc-restricoes', $uc)) {
+            return redirect()->back();
+        }
+
         //todo se utilizador não está associado a esta UC,
         //recusar acesso à página
         //se utilizador não é responsavel por uc, nao deixar editar
