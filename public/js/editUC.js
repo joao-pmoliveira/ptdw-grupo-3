@@ -5,19 +5,24 @@ const editUCForm = document.querySelector('#edit-uc-form');
 
 editUCForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const formData = new FormData(editUCForm);
     try {
+        const formData = new FormData(editUCForm);
+        console.log(editUCForm.action);
         const res = await fetch(editUCForm.action, {
-            method: 'PUT',
+            method: 'POST',
             body: formData,
+            headers: {
+                'X-CSRF-TOKEN': formData.get('_token'),
+                'X-HTTP-Method-Override': formData.get('_method'),
+            },
         });
-
+        console.log(res);
         if (!res.ok) {
             throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
         }
 
         const data = await res.json();
-
+        console.log(data);
         if (data.redirect) {
             window.location.href = data.redirect;
         }
@@ -31,16 +36,24 @@ editUCForm.addEventListener('submit', async (e) => {
 deleteUCBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     try {
+        const formData = new FormData(editUCForm);
+        
         const res = await fetch(deleteUCRoute, {
-            method: 'DELETE',     
+            method: 'POST', 
+            body: formData, 
+            headers: {
+                'X-CSRF-TOKEN': formData.get('_token'),
+                'X-HTTP-Method-Override': formData.get('_method'),
+            },   
         });
-        console.log(res);
+        console.log(deleteUCRoute);
+        console.log(res.url);
         if (!res.ok) {
             throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
         }
 
         const data = await res.json();
-
+        console.log(data);
         if (data.redirect) {
             window.location.href = data.redirect;
         }

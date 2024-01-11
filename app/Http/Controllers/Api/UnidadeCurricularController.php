@@ -126,17 +126,17 @@ class UnidadeCurricularController extends Controller
         }
     }
 
-    public function update(UnidadeCurricularRequest $ucRequest, $uc)
-    {
+    public function update(UnidadeCurricularRequest $ucRequest, $id)
+    { 
         if (!$ucRequest->authorize()) {
             return response()->json(['message' => 'Não autorizado'], 403);
         }
 
         try {
             DB::beginTransaction();
-
-            $uc = UnidadeCurricular::findOrFail($uc);
-
+            
+            $uc = UnidadeCurricular::find($id);
+            
             // Obtenha os dados atualizados do request
             $codigo = $ucRequest->input('codigo');
             $nome = $ucRequest->input('nome');
@@ -145,7 +145,7 @@ class UnidadeCurricularController extends Controller
             $acn = $ucRequest->input('acn');
             $docenteRespId = $ucRequest->input('docente_responsavel_id');
             $docentesId = $ucRequest->input('docentes_id', []);
-
+            
             // Atualize os campos da unidade curricular
             $uc->update([
                 'codigo' => $codigo,
@@ -170,7 +170,7 @@ class UnidadeCurricularController extends Controller
             // Atualize os docentes associados
             $uc->docentes()->detach(); // Remova todos os docentes associados atualmente
 
-            $docenteResp = Docente::findOrFail($docenteRespId);
+            $docenteResp = Docente::find($docenteRespId);
             $uc->docentes()->attach($docenteResp, ['percentagem_semanal' => 1]);
 
             foreach ($docentesId as $docenteID) {
@@ -191,53 +191,17 @@ class UnidadeCurricularController extends Controller
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()]);
         }
-
     }
 
-    public function updateRestricao(RestricoesRequest $ucRequest, $id)
-    {
-
-        try {
-            DB::beginTransaction();
-
-            $uc = UnidadeCurricular::find($id);
-
-            // Obtenha os dados atualizados do request
-            $laboratorio = $ucRequest->input('obligatory_labs');
-            $software = $ucRequest->input('needed_software');
-            $sala_avaliacao = $ucRequest->input('evaluation_labs');
-  
-            // Atualize os campos da unidade curricular
-            $uc->update([
-                'laboratorio' => is_null($laboratorio)? false : true,
-                'software' => $software,
-                'sala_avalicao' => is_null($sala_avaliacao)? false : true,
-                'restricoes_submetidas' => 1,
-            ]);
-
-            $uc->save();
-
-            DB::commit();
-            return response()->json([
-                'message' => 'Sucesso!',
-                'redirect' => route('restricoes.view'),
-            ]);
-        } catch (Exception $e) {
-            DB::rollBack();
-            return response()->json(['message' => $e->getMessage()]);
-        }
-
-    }
-
-    public function delete(UnidadeCurricularRequest $ucRequest, $uc)
+    public function delete(UnidadeCurricularRequest $ucRequest, $id)
     {
         if (!$ucRequest->authorize()) {
             return response()->json(['message' => 'Não autorizado'], 403);
         }
         try {
             DB::beginTransaction();
-
-            $uc = UnidadeCurricular::findOrFail($uc);
+    
+            $uc = UnidadeCurricular::findOrFail($id);
 
             if (!$uc->authorizeDeletion()) {
                 return response()->json(['message' => 'Unauthorized to delete this resource'], 403);
