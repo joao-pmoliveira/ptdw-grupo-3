@@ -61,7 +61,7 @@ class RestricoesViewController extends Controller
         ]);
     }
 
-    public function restricoesUC(UnidadeCurricular $uc, $ano_inicial, $semester)
+    public function restricoesUC(UnidadeCurricular $uc, $ano_inicial, $semestre)
     {
 
         if (Gate::denies('access-uc-restricoes', $uc)) {
@@ -76,7 +76,7 @@ class RestricoesViewController extends Controller
             'page_title' => 'Restrições de Sala de Aula',
             'uc' => $uc,
             'ano_inicial' => $ano_inicial,
-            'semestre' => $semester,
+            'semestre' => $semestre,
             'user' => Auth::user(),
         ]);
     }
