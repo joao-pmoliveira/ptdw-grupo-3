@@ -31,10 +31,10 @@
     </nav>
     @include('partials._header', ['sidebar' => false])
     <br>
+    <!--
     <main class="w-100 px-5">
-        @include('partials._pageTitle', ['title' => 'Login'])
         <br>
-        <div class="border border-dark p-3 container">
+        <div class="border border-dark p-3 container row d-flex justify-content-center align-items-center">
             <form action="{{route('login.action')}}" method="post" id="formLogin">
                 @csrf
                 <div class="row p-2">
@@ -50,7 +50,7 @@
                     <input class="col-md-1 col-sm-2 col-2" type="checkbox" name="remember_me" id="user-remember-input">
                 </div>
                 <div class="row p-2">
-                    <div class="col-lg-1 col-md-2 col-sm-3 col-12 p-2 mx-1" >
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-12 p-2 mx-1">
                         <button class="btn" type="submit">Login</button>
                     </div>
                     <div class="col-lg-1 col-md-2 col-sm-3 col-12 p-2 mx-1">
@@ -60,6 +60,59 @@
             </form>
         </div>
     </main>
+    -->
+    <section class="py-3 py-md-5">
+        <div class="container col-lg-6">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+                    <div class="card border border-light-subtle rounded-3 shadow-sm">
+                        <div class="card-body p-3 p-md-4 p-xl-5">
+                        <h1 class="page-title justify-content-center">Login</h1><br>
+                            <form action="{{route('login.action')}}" method="post" id="formLogin">
+                            @csrf
+                                <div class="row gy-2 overflow-hidden">
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" name="email" id="user-email-input"
+                                                placeholder="name@example.com" required>
+                                            <label for="user-email-input" class="form-label">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="password" class="form-control" name="password"
+                                                id="user-password-input" value="" placeholder="Password" required>
+                                            <label for="user-password-input" class="form-label">Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex gap-2 justify-content-between">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    name="remember_me" id="user-remember-input">
+                                                <label class="form-check-label text-primary" for="user-remember-input">
+                                                &emsp;Remember Me
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 justify-content-center">
+                                        <div class="d-grid my-3 justify-content-center">
+                                            <button class="btn" style="width:10rem;" type="submit">Login</button>
+                                        </div>
+                                        <div class="d-grid my-3 justify-content-center">
+                                            <button class="btn"  style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
 </body>
 
 </html>
