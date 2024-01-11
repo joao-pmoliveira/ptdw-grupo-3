@@ -20,6 +20,9 @@ impedimentoForm.addEventListener('submit', async (e) => {
                 'X-HTTP-Method-Override': formData.get('_method'),
             },
         });
+        console.log(impedimentoForm.action)
+        console.log(res.url)
+        alert("  ");
         if (!res.ok) {
             throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
         }

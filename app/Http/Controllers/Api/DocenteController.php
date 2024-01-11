@@ -120,7 +120,30 @@ class DocenteController extends Controller
 
     }
 
-    public function delete(Docente $docente)
+    public function delete(Docente $docente, $id)
     {
+        //if (!$docenteRequest->authorize()) {
+          //  return response()->json(['message' => 'nao autorizado'], 403);
+        //}
+        
+        try {
+            DB::beginTransaction();
+
+            $docente = Docente::findOrFail($id);
+
+            $docente->user->delete();
+
+            $docente->delete();
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Docente removido com sucesso!',
+                'redirect' => route('admin.gerir.view'),
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 }

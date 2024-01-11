@@ -34,7 +34,7 @@ Route::group(['prefix' => 'docentes'], function () {
 
     Route::put('/{id}', [DocenteController::class, 'update'])->middleware(['web', 'auth'])->name('docentes.update');
 
-    Route::delete('/{id}', [DocenteController::class, 'delete'])->name('docentes.delete');
+    Route::delete('/{id}', [DocenteController::class, 'delete'])->middleware(['web', 'auth'])->name('docentes.delete');
 });
 
 Route::group(['prefix' => 'unidades-curriculares'], function () {
