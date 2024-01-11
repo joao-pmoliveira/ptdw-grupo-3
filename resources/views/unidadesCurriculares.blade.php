@@ -38,7 +38,7 @@
     </section>
 
 
-    <table class="w-100 title-separator" id="table-ucs">
+    <table class="w-100" id="table-ucs">
         <thead class="bg-light">
             <tr>
                 <th scope="col"></th>
@@ -47,13 +47,12 @@
                 <th scope="col">Docente Responsável</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="title-separator">
             @foreach ($ucs as $uc)
-                <tr data-id='{{$uc->id}}' data-my-uc='{{
-                    $user ?
-                        $uc->docentes->contains($user->docente) ? 'Y' : 'N'
-                        : ''
-                }}'>
+                <tr class="border border-light" data-id='{{$uc->id}}' 
+                    data-my-uc='{{$user 
+                                    ? $uc->docentes->contains($user->docente) ? 'Y' : 'N'
+                                    : ''}}'>
                     <th scope="row"></th>
                     <td>{{$uc->codigo}}</td>
                     <td>{{$uc->nome}}</td>
