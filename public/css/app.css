@@ -11,36 +11,35 @@
 @import url("components/_sidebar.css");
 @import url("components/_header.css");
 
-:root{
-    --bs-breadcrumb-divider: '>'
+:root {
+    --bs-breadcrumb-divider: ">";
 }
 
-.bg-primary{
+.bg-primary {
     background-color: var(--primary-background-color);
 }
-.bg-secondary{
+.bg-secondary {
     background-color: var(--secondary-background-color);
 }
-.bg-terciary{
+.bg-terciary {
     background-color: var(--terciary-background-color);
 }
-.bg-accent{
+.bg-accent {
     background-color: var(--accent-background-color);
 }
 
-.text-primary{
+.text-primary {
     color: var(--primary-text-color);
 }
-.text-secondary{
+.text-secondary {
     color: var(--secondary-text-color);
 }
-.text-terciary{
+.text-terciary {
     color: var(--terciary-text-color);
 }
 .text-accent {
     color: var(--accent-text-color);
 }
-
 
 /*Geral*/
 ul {
@@ -51,13 +50,13 @@ ul {
 a {
     color: var(--primary-text-color);
 }
-a:hover{
+a:hover {
     color: var(--accent-text-color);
 }
 
-select{
-    margin:0;
-    padding:0;
+select {
+    margin: 0;
+    padding: 0;
 }
 label {
     margin: 0;
@@ -67,26 +66,24 @@ label {
 legend {
     font-size: var(--txt-s-size);
     font-weight: 500;
-    margin:0;
+    margin: 0;
 }
 
 /*Hero Section (Imagem na página de entrada)*/
-#hero{
+#hero {
     background-repeat: no-repeat;
     background-size: cover;
     aspect-ratio: 3;
 }
 #hero > h1 {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 50px;
     font-weight: 600; /*semi-bold*/
     max-width: 15ch;
 }
 
-
-
 /*Material Breadcrumbs override*/
-.breadcrumb{
+.breadcrumb {
     margin: 0;
     padding: 0;
 }
@@ -96,7 +93,7 @@ legend {
 }
 
 /*Título da Página*/
-.page-title{
+.page-title {
     font-size: var(--txt-xl-size);
     font-weight: 500;
     font-family: var(--primary-font-family);
@@ -104,15 +101,15 @@ legend {
 
 /*Cards*/
 #card-grid {
-    margin-top:3rem;
+    margin-top: 3rem;
 }
-.card{
+.card {
     width: max(300px, 30%);
     max-width: 500px;
 }
 
 /*Button Material override*/
-.btn-primary{
+.btn-primary {
     background-color: var(--primary-background-color);
 }
 
@@ -123,35 +120,36 @@ legend {
 .border-primary:hover,
 .border-primary:focus,
 .border-primary:active,
-.btn-primary:not(:disabled):not(.disabled):active{
+.btn-primary:not(:disabled):not(.disabled):active {
     background-color: var(--accent-background-color);
     border-color: var(--accent-background-color);
-    color: var(--secondary-text-color)
+    color: var(--secondary-text-color);
 }
 
 /*Tabelas*/
-thead tr th{
+thead tr th {
     font-size: var(--txt-m-size);
     font-weight: 500;
     padding: 5px;
 }
-tbody tr td, tbody tr th{
+tbody tr td,
+tbody tr th {
     padding: 5px;
 }
-tbody tr:hover{
+tbody tr:hover {
     background-color: var(--accent-background-color);
     color: var(--secondary-text-color);
     cursor: pointer;
 }
 
 /*Horário Semanal*/
-#schedule-grid{
+#schedule-grid {
     max-width: max-content;
     display: grid;
-    grid-template-columns: minmax(1.5em, 1fr) repeat(6,  minmax(1.5em, 1fr));
+    grid-template-columns: minmax(1.5em, 1fr) repeat(6, minmax(1.5em, 1fr));
     grid-template-rows: repeat(3, auto);
     align-content: center;
-    gap:0.3em;
+    gap: 0.3em;
 }
 #schedule-grid p {
     font-weight: 500;
@@ -161,7 +159,7 @@ tbody tr:hover{
     overflow: hidden;
 }
 /*Seleciona primeira linha de elementos (dias da semana)*/
-#schedule-grid p:not( :nth-child(7) ~ p){
+#schedule-grid p:not(:nth-child(7) ~ p) {
     text-align: center;
 }
 /*Seleciona primeira coluna (blocos do dia)*/
@@ -178,7 +176,7 @@ tbody tr:hover{
     height: 100%;
     font-size: 1em;
     line-height: 1em;
-    color: var(--secondary-text-color)
+    color: var(--secondary-text-color);
 }
 #schedule-grid label > i {
     position: absolute;
@@ -187,7 +185,7 @@ tbody tr:hover{
     transform: translate(-50%, -50%);
     pointer-events: none;
 }
-#schedule-grid input[type='checkbox'] {
+#schedule-grid input[type="checkbox"] {
     align-self: center;
     justify-self: center;
 
@@ -200,19 +198,19 @@ tbody tr:hover{
     border-radius: 0;
 
     background-color: var(--primary-background-color);
-    border: 1px solid var(--primary-text-color)
+    border: 1px solid var(--primary-text-color);
 }
-#schedule-grid input[type='checkbox']:hover {
+#schedule-grid input[type="checkbox"]:hover {
     cursor: pointer;
     background-color: var(--primary-backgorund-color);
     border-width: 3px;
     border-color: var(--accent-background-color);
 }
-#schedule-grid input[type='checkbox']:checked {
+#schedule-grid input[type="checkbox"]:checked {
     background-color: var(--accent-background-color);
     border-color: var(--accent-background-color);
 }
-#schedule-grid input[type='checkbox']:focus {
+#schedule-grid input[type="checkbox"]:focus {
     outline: 2px solid var(--secondary-background-color);
 }
 
@@ -220,7 +218,7 @@ tbody tr:hover{
     #schedule-grid p {
         font-weight: 500;
         font-size: var(--txt-s-size);
-    }   
+    }
 }
 
 /*Grelha de Inputs para laboratórios em Restrições*/
@@ -234,7 +232,7 @@ tbody tr:hover{
     font-size: var(--txt-s-size);
     font-weight: 300;
 }
-.class-fieldset-heading{
+.class-fieldset-heading {
     font-size: var(--txt-m-size);
     font-weight: 500;
 }
@@ -253,7 +251,7 @@ tbody tr:hover{
 }
 
 /*Form editar UC*/
-#edit-uc-form > fieldset > div{
+/* #edit-uc-form > fieldset > div{
     display: flex;
     gap: 2em;
     align-items: center;
@@ -266,16 +264,16 @@ tbody tr:hover{
 }
 #edit-uc-form > div:first-of-type {
     padding: 0.5em 0;
-}
+} */
 
-#ua-logo-header-container{
+#ua-logo-header-container {
     cursor: pointer;
 }
 
-#titulo-pagina-inicial{
+#titulo-pagina-inicial {
     cursor: pointer;
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 24px;
 }
 
@@ -291,7 +289,7 @@ tbody tr:hover{
     font-family: var(--primary-font-family);
     margin: 0;
 }
-.nav-tabs .nav-link{
+.nav-tabs .nav-link {
     border-radius: 0;
     border-bottom: 2px solid var(--terciary-background-color);
 }
