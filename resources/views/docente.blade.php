@@ -46,8 +46,8 @@
                 </select>
             </div>
             <div class="d-flex align-items-center gap-2">
-                <input class="btn" type="submit" value="Confirmar">
-                <input class="btn" type="button" value="Remover">
+                <input class="btn" type="submit" value="Submeter">
+                <button class="btn" id="btn-delete">Remover</button>
                 <a class="btn" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
