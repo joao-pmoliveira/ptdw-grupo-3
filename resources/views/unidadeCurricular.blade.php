@@ -13,10 +13,7 @@
 
     @include('partials._pageTitle', ['title' => $uc->codigo . ' - ' . $uc->nome])
 
-    <section class="mt-3">
-        <div class="mb-3 title-separator p-2">
-        </div>
-
+    <section class="my-3 title-separator pt-2">
         <div class="mt-3">
             <div class="d-flex align-items-center border border-dark p-2 mb-2 ">
                 <div class="col-md-2 p-3">Área Científica</div>
@@ -44,7 +41,9 @@
                 <div class="col-md-2 p-3">Restantes Docentes</div>
                 <div class="col-md-10 p-3">
                     @foreach ( $uc->docentes as $docente)
-                        <p>{{$docente->numero_funcionario .' - '. $docente->user->nome}}</p>
+                        @if ($docente->id != $uc->docenteResponsavel->id)
+                            <p>{{$docente->numero_funcionario .' - '. $docente->user->nome}}</p>
+                        @endif
                     @endforeach
                 </div>
             </div>
