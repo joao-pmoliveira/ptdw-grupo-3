@@ -127,16 +127,16 @@ class UnidadeCurricularController extends Controller
     }
 
     public function update(UnidadeCurricularRequest $ucRequest, $id)
-    { 
+    {
         if (!$ucRequest->authorize()) {
             return response()->json(['message' => 'Não autorizado'], 403);
         }
 
         try {
             DB::beginTransaction();
-            
+
             $uc = UnidadeCurricular::find($id);
-            
+
             // Obtenha os dados atualizados do request
             $codigo = $ucRequest->input('codigo');
             $nome = $ucRequest->input('nome');
@@ -145,7 +145,7 @@ class UnidadeCurricularController extends Controller
             $acn = $ucRequest->input('acn');
             $docenteRespId = $ucRequest->input('docente_responsavel_id');
             $docentesId = $ucRequest->input('docentes_id', []);
-            
+
             // Atualize os campos da unidade curricular
             $uc->update([
                 'codigo' => $codigo,
@@ -193,22 +193,29 @@ class UnidadeCurricularController extends Controller
         }
     }
 
-    public function delete(UnidadeCurricularRequest $ucRequest, $id)
+    public function delete(UnidadeCurricularRequest $ucRequest, $docenteid, $ucid)
     {
         if (!$ucRequest->authorize()) {
             return response()->json(['message' => 'Não autorizado'], 403);
         }
+
         try {
             DB::beginTransaction();
-    
-            $uc = UnidadeCurricular::findOrFail($id);
+
+            $uc = UnidadeCurricular::find($ucid);
+            $docente = Docente::find($docenteid);
 
             if (!$uc->authorizeDeletion()) {
                 return response()->json(['message' => 'Unauthorized to delete this resource'], 403);
             }
 
             $uc->docentes()->detach();
+            $uc->cursos()->detach();
+            $uc->periodo()->detach();
+            $uc->acn()->detach();
+            $uc->docenteResponsavel()->detach();
 
+            // Delete the UnidadeCurricular
             $uc->delete();
 
             DB::commit();
@@ -221,4 +228,5 @@ class UnidadeCurricularController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
 }

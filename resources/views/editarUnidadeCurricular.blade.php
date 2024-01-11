@@ -63,22 +63,22 @@
             <div class="d-flex align-items-center border border-dark p-2 mb-2">
                 <label for="uc-teachers" class="col-md-2 p-3">Restantes Docentes</label>
                 <div class="d-flex flex-column gap-2 col-md-4 p-1">
-                    @foreach ( $uc->docentes as $docente)
-                        <select name="docentes_id[]">
-                            <option value="{{$docente->id}}">{{$docente->numero_funcionario .' - '. $docente->user->nome}}
-                        </option>
-                        @foreach($docentes as $docente)
-                            <option value="{{$docente->id}}">{{$docente->numero_funcionario .' - '. $docente->user->nome}}
-                            </option>
-                        @endforeach
-                    </select>
+                    @foreach ($uc->docentes as $docente)
+                        @if ($docente->id != $uc->docenteResponsavel->id)
+                            <select class="col-md-2 p-1 docente-select" name="docentes_id[]">
+                            <option value="">Selecione</option>
+                            <option value="{{$docente->id}}" selected>{{$docente->numero_funcionario .' - '. $docente->user->nome}}</option> 
+                            @foreach($docentes as $docente)
+                                <option value="{{$docente->id}}">{{$docente->numero_funcionario .' - '. $docente->user->nome}}</option>
+                                @endforeach
+                            </select>
+                        @endif
                     @endforeach
-                    @for ($i = 0; $i < 4-count($uc->docentes) ; $i++) 
-                        <select name="docentes_id[]">
+                    @for ($i = 0; $i < 5-count($uc->docentes) ; $i++) 
+                        <select class="col-md-2 p-1 docente-select" name="docentes_id[]">
                         <option value="">Selecione</option>
                             @foreach($docentes as $docente)
-                                <option value="{{$docente->id}}">{{$docente->numero_funcionario .' - '. $docente->user->nome}}
-                                </option>
+                                <option value="{{$docente->id}}">{{$docente->numero_funcionario .' - '. $docente->user->nome}}</option> 
                             @endforeach
                         </select>
                     @endfor
@@ -86,17 +86,12 @@
             </div>
             <div class="d-flex gap-3 mt-3 mb-5" id="form-btns">
                 <input class="btn" type="submit" value="Submeter">
-                <input class="btn" id="btnDelete" type="button" value="Remover">
+                <button class="btn" id="btn-delete">Remover</button>
                 <a class="btn" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
-
     </section>
-
 </main>
-<script>
-    const deleteUCRoute = "{{route('ucs.delete', ['id' => $uc->id])}}";
-</script>
 @auth
 <script>
     const authUser = @json(auth() -> user());
