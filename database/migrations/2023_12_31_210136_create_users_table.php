@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamp('email_verificado_a')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->boolean('admin');
+            $table->boolean('admin')->nullable(false);
             $table->unsignedBigInteger('docente_id')->nullable();
 
             $table->foreign('docente_id')->references('id')->on('docentes');

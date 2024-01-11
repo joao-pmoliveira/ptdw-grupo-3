@@ -30,6 +30,12 @@ class UnidadesCurricularesTableSeeder extends Seeder
 
         ];
 
+        $docentes = Docente::all()
+            ->pluck('id')
+            ->toArray();
+        $numeroDocentes = count($docentes);
+        $index = 0;
+
         foreach ($ucs as $uc) {
             $codigo = $faker->randomNumber(5);
             $nome = $uc[0];
@@ -40,15 +46,18 @@ class UnidadesCurricularesTableSeeder extends Seeder
             $software = $faker->text();
             $ects = $faker->randomElement([4, 6]);
             $sala_avaliacao = $faker->boolean();
-            $docente_responsavel_id = Docente::pluck('id')->random();
             $restricoes_submetidas = $faker->boolean();
+            $docente_responsavel_id = $docentes[$index];
+
+            $numeroDocentesAssociados = $faker->randomElement([2, 3]);
+
+            $docentesAssociados = [];
+            for ($j = 0; $j < $numeroDocentesAssociados; $j++) {
+                array_push($docentesAssociados, $docentes[($index + $j) % $numeroDocentes]);
+            }
 
             $periodos_ids = Periodo::pluck('id')->all();
-
-            $docentes = Docente::pluck('id')->random(1, 2);
             $cursos = Curso::pluck('id')->random(1, 2);
-
-
             foreach ($periodos_ids as $periodo_id) {
                 $ucPeriodo = UnidadeCurricular::factory()->create([
                     'codigo' => $codigo,
@@ -65,8 +74,9 @@ class UnidadesCurricularesTableSeeder extends Seeder
                     'restricoes_submetidas' => $restricoes_submetidas,
                 ]);
 
+
                 $ucPeriodo->docentes()->attach(
-                    $docentes,
+                    $docentesAssociados,
                     ['percentagem_semanal' => $ucPeriodo->horas_semanais / count($docentes)]
                 );
 
@@ -74,6 +84,7 @@ class UnidadesCurricularesTableSeeder extends Seeder
                     $cursos
                 );
             }
+            $index++;
         }
     }
 }
