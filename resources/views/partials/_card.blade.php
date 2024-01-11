@@ -1,4 +1,4 @@
-<div class="card p-4 gap-4 rounded-0 ">
+<div class="card p-4 gap-4 rounded-0 border border-light">
     <div class="card-header m-0 p-0">
         <h2>{{$title ?? 'Título ñ definido'}}</h2>
     </div>
