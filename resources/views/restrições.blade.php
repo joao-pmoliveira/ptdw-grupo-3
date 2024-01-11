@@ -12,7 +12,7 @@
 
     @include('partials._pageTitle', ['title' => 'Recolha de restrições'])
 
-    <section class="mt-5">
+    <section class="mt-3">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" data-bs-toggle='tab' data-bs-target='#manage-schedule'>
@@ -32,8 +32,8 @@
         </ul>
     </section>
 
-    <div class="tab-content pt-3">
-        <section id="manage-schedule" class="tab-pane active">
+    <div class="tab-content">
+        <section id="manage-schedule" class="tab-pane active p-3">
             @if ($impedimento)
 
             @php
@@ -48,102 +48,103 @@
             <form action="{{route('impedimentos.update', ['id' => $impedimento->id])}}" method="POST" id="impedimento-form">
                 @csrf
                 @method('PUT')
-                <h3 class="p-3" >Horário semanal</h3>
-                <p>Selecione todos os blocos para os quais <strong>não tem disponibilidade</strong>.
-                    Mínimo de 2 blocos disponíveis
-                </p>
-                <div class="mb-5" id="schedule-grid">
-                    <p></p>
-                    <p>Segunda</p>
-                    <p>Terça</p>
-                    <p>Quarta</p>
-                    <p>Quinta</p>
-                    <p>Sexta</p>
-                    <p>Sábado</p>
+                <fieldset class="mb-5">
+                    <h3 class="">Horário semanal</h3>
+                    <p class="mb-2">Selecione todos os blocos para os quais <strong>não tem disponibilidade</strong>.
+                        Mínimo de 2 blocos disponíveis
+                    </p>
+                    <div class="" id="schedule-grid">
+                        <p></p>
+                        <p>Segunda</p>
+                        <p>Terça</p>
+                        <p>Quarta</p>
+                        <p>Quinta</p>
+                        <p>Sexta</p>
+                        <p>Sábado</p>
+    
+                        <p>Manhã</p>
+                        <label for="segunda-manha-input">
+                            <input type="checkbox" name="segunda_manha" id="segunda-manha-input" @checked($segunda[0])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="terca-manha-input">
+                            <input type="checkbox" name="terca_manha" id="terca-manha-input" @checked($terca[0])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="quarta-manha-input">
+                            <input type="checkbox" name="quarta_manha" id="quarta-manha-input" @checked($quarta[0])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="quinta-manha-input">
+                            <input type="checkbox" name="quinta_manha" id="quinta-manha-input" @checked($quinta[0])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="sexta-manha-input">
+                            <input type="checkbox" name="sexta_manha" id="sexta-manha-input" @checked($sexta[0])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="sabada-manha-input">
+                            <input type="checkbox" name="sabado_manha" id="sabada-manha-input" @checked($sabado[0])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+    
+                        <p>Tarde</p>
+                        <label for="segunda-tarde-input">
+                            <input type="checkbox" name="segunda_tarde" id="segunda-tarde-input" @checked($segunda[1])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="terca-tarde-input">
+                            <input type="checkbox" name="terca_tarde" id="terca-tarde-input" @checked($terca[1])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="quarta-tarde-input">
+                            <input type="checkbox" name="quarta_tarde" id="quarta-tarde-input" @checked($quarta[1])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="quinta-tarde-input">
+                            <input type="checkbox" name="quinta_tarde" id="quinta-tarde-input" @checked($quinta[1])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="sexta-tarde-input">
+                            <input type="checkbox" name="sexta_tarde" id="sexta-tarde-input" @checked($sexta[1])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="sabado-tarde-input">
+                            <input type="checkbox" name="sabado_tarde" id="sabado-tarde-input" @checked($sabado[1])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+    
+                        <p>Noite</p>
+                        <label for="segunda-noite-input">
+                            <input type="checkbox" name="segunda_noite" id="segunda-noite-input" @checked($segunda[2])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="terca-noite-input">
+                            <input type="checkbox" name="terca_noite" id="terca-noite-input" @checked($terca[2])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="quarta-noite-input">
+                            <input type="checkbox" name="quarta_noite" id="quarta-noite-input" @checked($quarta[2])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="quinta-noite-input">
+                            <input type="checkbox" name="quinta_noite" id="quinta-noite-input" @checked($quinta[2])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="sexta-noite-input">
+                            <input type="checkbox" name="sexta_noite" id="sexta-noite-input" @checked($sexta[2])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                        <label for="sabado-noite-input">
+                            <input type="checkbox" name="sabado_noite" id="sabado-noite-input" @checked($sabado[2])>
+                            <i class="fa-solid fa-x"></i>
+                        </label>
+                    </div>
+                </fieldset>
 
-                    <p>Manhã</p>
-                    <label for="segunda-manha-input">
-                        <input type="checkbox" name="segunda_manha" id="segunda-manha-input" @checked($segunda[0])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="terca-manha-input">
-                        <input type="checkbox" name="terca_manha" id="terca-manha-input" @checked($terca[0])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="quarta-manha-input">
-                        <input type="checkbox" name="quarta_manha" id="quarta-manha-input" @checked($quarta[0])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="quinta-manha-input">
-                        <input type="checkbox" name="quinta_manha" id="quinta-manha-input" @checked($quinta[0])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="sexta-manha-input">
-                        <input type="checkbox" name="sexta_manha" id="sexta-manha-input" @checked($sexta[0])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="sabada-manha-input">
-                        <input type="checkbox" name="sabado_manha" id="sabada-manha-input" @checked($sabado[0])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-
-                    <p>Tarde</p>
-                    <label for="segunda-tarde-input">
-                        <input type="checkbox" name="segunda_tarde" id="segunda-tarde-input" @checked($segunda[1])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="terca-tarde-input">
-                        <input type="checkbox" name="terca_tarde" id="terca-tarde-input" @checked($terca[1])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="quarta-tarde-input">
-                        <input type="checkbox" name="quarta_tarde" id="quarta-tarde-input" @checked($quarta[1])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="quinta-tarde-input">
-                        <input type="checkbox" name="quinta_tarde" id="quinta-tarde-input" @checked($quinta[1])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="sexta-tarde-input">
-                        <input type="checkbox" name="sexta_tarde" id="sexta-tarde-input" @checked($sexta[1])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="sabado-tarde-input">
-                        <input type="checkbox" name="sabado_tarde" id="sabado-tarde-input" @checked($sabado[1])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-
-                    <p>Noite</p>
-                    <label for="segunda-noite-input">
-                        <input type="checkbox" name="segunda_noite" id="segunda-noite-input" @checked($segunda[2])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="terca-noite-input">
-                        <input type="checkbox" name="terca_noite" id="terca-noite-input" @checked($terca[2])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="quarta-noite-input">
-                        <input type="checkbox" name="quarta_noite" id="quarta-noite-input" @checked($quarta[2])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="quinta-noite-input">
-                        <input type="checkbox" name="quinta_noite" id="quinta-noite-input" @checked($quinta[2])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="sexta-noite-input">
-                        <input type="checkbox" name="sexta_noite" id="sexta-noite-input" @checked($sexta[2])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                    <label for="sabado-noite-input">
-                        <input type="checkbox" name="sabado_noite" id="sabado-noite-input" @checked($sabado[2])>
-                        <i class="fa-solid fa-x"></i>
-                    </label>
-                </div>
-
-
-                <fieldset id="justification-fieldset" class="mb-5">
+                <fieldset id="justification-fieldset" class="mb-4">
                     <h3>Justificação</h3>
-                    <p>Para impedimentos, caso existam.</p>
+                    <p class="mb-2">Para impedimentos, caso existam.</p>
                     <label class="d-block" for="justicacao-input"></label>
                     <textarea cols="60" rows="8" name="justificacao" id="justificao-input" class="px-2 py-1">{{$impedimento->justificacao}}</textarea>
                 </fieldset>
@@ -158,11 +159,12 @@
             @endif
         </section>
 
-        <section id="manage-uc-restrictions" class="tab-pane">
-            <div class="d-flex p-3 gap-2 align-items-center">
-                <h3>Restrições de UCs {{$periodo->ano . '/' . ($periodo->ano+1 . ' ' . $periodo->semestre . 'º semestre')}}</h3>
-            </div>
-            <table class="w-100 shadow p-3 mb-5" id="table-restricoes-pendentes">
+        <section id="manage-uc-restrictions" class="tab-pane p-3">
+            
+            <h3 class="mb-2">
+                Restrições de UCs {{$periodo->ano . '/' . ($periodo->ano+1) . ' ' . $periodo->semestre . 'º semestre'}}
+            </h3>
+            <table class="w-100 shadow" id="table-restricoes-pendentes">
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
@@ -184,11 +186,9 @@
             </table>
         </section>
 
-        <section id="history" class="tab-pane">
-            <div class="d-flex p-3 gap-2 align-items-center">
-                <h3>Histórico de Impedimentos</h3>
-            </div>
-            <table class="w-100 shadow p-3 mb-5" id="table-impedimentos-historico">
+        <section id="history" class="tab-pane p-3">
+            <h3 class="mb-2">Histórico de Impedimentos</h3>
+            <table class="w-100 shadow mb-5" id="table-impedimentos-historico">
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
@@ -210,11 +210,9 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="d-flex p-3 gap-2 align-items-center">
 
-                <h3>Histórico de Restrições</h3>
-            </div>
-            <table class="w-100 shadow p-3 mb-5" id="table-restricoes-historico">
+            <h3 class="mb-2">Histórico de Restrições</h3>
+            <table class="w-100 shadow mb-5" id="table-restricoes-historico">
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
