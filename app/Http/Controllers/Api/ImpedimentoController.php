@@ -119,7 +119,7 @@ class ImpedimentoController extends Controller
             $impedimento->save();
             DB::commit();
 
-            return response()->json(['message' => 'sucesso']);
+            return response()->json(['message' => 'sucesso'], 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()]);

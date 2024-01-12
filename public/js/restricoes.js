@@ -6,7 +6,6 @@ impedimentoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // todo - check if at least blocks are free
-
     // todo - if there's at least block selected, justification textarea needs to have text
 
     try {
@@ -20,16 +19,11 @@ impedimentoForm.addEventListener('submit', async (e) => {
                 'X-HTTP-Method-Override': formData.get('_method'),
             },
         });
-        console.log(impedimentoForm.action)
-        console.log(res.url)
-        alert("  ");
         if (!res.ok) {
             throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
         }
-
         const data = await res.json();
-        console.log(data);
-
+        location.reload();
     } catch (error) {
         console.error(`Error: ${error.message}`);
         console.error(`Error stack: ${error.stack}`);

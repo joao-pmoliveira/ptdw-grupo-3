@@ -151,7 +151,8 @@
 
                 <div class="d-flex gap-3" id="form-btns">
                     <input class="btn" type="submit" value="Submeter">
-                    <input class="btn" type="button" value="Cancelar">
+                    <a class="btn" href="{{route('inicio.view')}}">Cancelar</a>
+                    <input class="btn" type="reset" value="Reset">
                 </div>
             </form>
             @else
