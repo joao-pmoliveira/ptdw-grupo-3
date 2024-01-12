@@ -50,7 +50,7 @@ class UnidadeCurricularController extends Controller
             ->with('docenteResponsavel.user')
             ->with('docentes.user')
             ->with('cursos')
-            ->orderByRaw('CAST(codigo as UNSIGNED) asc')
+            ->orderByRaw('CAST(codigo as INTEGER) asc')
             ->get();
 
         return response()->json($ucs);
