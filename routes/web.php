@@ -22,10 +22,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('welcome.view');
-});
-
 Route::group(['prefix' => '~ptdw-grupo-gr3'], function () {
     Route::get('/', [WelcomeViewController::class, 'welcome'])->name('welcome.view');
 
