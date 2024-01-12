@@ -19,12 +19,8 @@ restricaoForm.addEventListener('submit', async (e) => {
         if (!res.ok) {
             throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
         }
-
         const data = await res.json();
-
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        }
+        location.reload();
 
     } catch (error) {
         console.error(`Error: ${error.message}`);

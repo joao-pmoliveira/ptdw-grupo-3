@@ -229,4 +229,21 @@ class UnidadeCurricularController extends Controller
         }
     }
 
+    public function updateRestricao(RestricoesRequest $request, $id)
+    {
+        $uc = UnidadeCurricular::find($id);
+
+        $laboratorio = $request->input('obligatory_labs');
+        $software = $request->input('needed_software');
+        $salaAvaliacao = $request->input('evaluation_labs');
+
+
+        $uc->update([
+            'laboratorio' => is_null($laboratorio) ? false : true,
+            'software' => $software,
+            'sala_avaliacao' => is_null($salaAvaliacao) ? false : true,
+        ]);
+
+        return response()->json(['message' => 'sucesso'], 200);
+    }
 }

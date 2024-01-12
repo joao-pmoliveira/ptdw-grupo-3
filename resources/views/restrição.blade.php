@@ -15,8 +15,8 @@
         ])
 
     @include('partials._pageTitle', ['title' => 'Restrições de '. $uc->nome. ' - '.$ano_inicial.'/'. ($ano_inicial+1).' '])
+
     <section class="mt-3">
-        @if ($uc and $semestre and $ano_inicial)
         <form action="{{route('restricoes.update', ['id' => $uc->id])}}"  method="POST" id="restricao-form">
             @csrf
             @method('PUT')
@@ -28,7 +28,6 @@
                 <a class="btn" href="{{route('restricoes.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
-        @endif
     </section>
 </main>
 
