@@ -11,7 +11,7 @@
     
     @include('partials._pageTitle', ['title' => 'Gerir Dados'])
 
-    <section class="mt-5">
+    <section class="mt-3">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" data-bs-toggle='tab' data-bs-target='#manage-ucs'>
@@ -34,7 +34,7 @@
     <div class="tab-content pt-3">
         <section id="manage-ucs" class="tab-pane active">
             <div class="d-flex flex-column gap-3">
-                <div class="d-flex mb-3 flex-wrap">
+                <div class="d-flex flex-wrap">
                     <div class="d-flex gap-4 align-items-stretch my-2 flex-grow-1 flex-wrap">
                         <select class="px-2" name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
                             @foreach ($periodos as $periodo)
@@ -59,8 +59,8 @@
                     </div>
                 </div>
                 
-                <table class="title-separator" id="table-edit-ucs">
-                    <thead>
+                <table  id="table-edit-ucs">
+                    <thead class="bg-light">
                         <tr>
                             <th scope="col"></th>
                             <th scope="col-1">Cód.</th>
@@ -69,9 +69,9 @@
                             <th scope="col-1"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="title-separator">
                         @foreach($ucs as $uc)
-                            <tr data-id='{{$uc->id}}' data-curso-id='{{implode(",",$uc->cursos->pluck('id')->toArray())}}'>
+                            <tr class="border border-light" data-id='{{$uc->id}}' data-curso-id='{{implode(",",$uc->cursos->pluck('id')->toArray())}}'>
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
                                 <td>{{$uc->nome}}</td>
@@ -86,18 +86,17 @@
 
         <section id="manage-teachers" class="tab-pane">
             <div class="d-flex flex-column gap-3">
-                <div class="d-flex mb-3 flex-wrap justify-content-between">
+                <div class="d-flex flex-wrap justify-content-between  my-2">
                     <div class="paco-searchbox">
                         <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="Número ou Nome" aria-label="Filtre por número mecanográfico ou nome do docente">
                         <div><i class="fa-solid fa-search"></i></div>
                     </div>
                     <div class="d-flex align-items-center">
-                    <a href="{{route('docente.adicionar.view')}}" class="btn py-1">Adicionar Docente</a>
+                        <a href="{{route('docente.adicionar.view')}}" class="btn py-1">Adicionar Docente</a>
                     </div>
-                    
                 </div>
-                <table class="title-separator" id="table-edit-teachers">
-                    <thead>
+                <table id="table-edit-teachers">
+                    <thead class="bg-light">
                         <tr>
                             <th scope="col"></th>
                             <th scope="col">Nº</th>
@@ -105,9 +104,9 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="title-separator">
                         @foreach($docentes as $docente)
-                            <tr data-id='{{$docente->id}}'>
+                            <tr class="border border-light" data-id='{{$docente->id}}'>
                                 <th scope="row"></th>
                                 <td>{{$docente->numero_funcionario}}</td>
                                 <td>{{$docente->user->nome}}</td>

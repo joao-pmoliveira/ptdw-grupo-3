@@ -102,25 +102,6 @@
                             @endforeach
                         </select>
                     @endfor
-                    {{-- @foreach ($uc->docentes as $docente)
-                        @if ($docente->id != $uc->docenteResponsavel->id)
-                            <select class="col-md-2 p-1 docente-select" name="docentes_id[]">
-                            <option value="">Selecione</option>
-                            <option value="{{$docente->id}}" selected>{{$docente->numero_funcionario .' - '. $docente->user->nome}}</option> 
-                            @foreach($docentes as $docente)
-                                <option value="{{$docente->id}}">{{$docente->numero_funcionario .' - '. $docente->user->nome}}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                    @endforeach --}}
-                    {{-- @for ($i = 0; $i < 5-count($uc->docentes) ; $i++) 
-                        <select class="col-md-2 p-1 docente-select" name="docentes_id[]">
-                        <option value="">Selecione</option>
-                            @foreach($docentes as $docente)
-                                <option value="{{$docente->id}}">{{$docente->numero_funcionario .' - '. $docente->user->nome}}</option> 
-                            @endforeach
-                        </select>
-                    @endfor --}}
                 </div>
             </div>
             <div class="d-flex gap-3 mt-3 mb-5" id="form-btns">
