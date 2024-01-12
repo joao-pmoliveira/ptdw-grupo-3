@@ -5,8 +5,18 @@ const impedimentoForm = document.querySelector('#impedimento-form');
 impedimentoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // todo - check if at least blocks are free
-    // todo - if there's at least block selected, justification textarea needs to have text
+    const unchecked = document.querySelectorAll('#schedule-grid input[type="checkbox"]:not(:checked)');
+    if (unchecked.length < 2) {
+        alert('Pelo menos 2 blocos livres!');
+        return;
+    }
+
+    const checked = document.querySelectorAll('#schedule-grid input[type="checkbox"]:checked');
+    const justification = document.getElementById('justificao-input');
+    if (checked.length > 0 && justification.value.trim() == '') {
+        alert('Justificação é necessária!');
+        return;
+    }
 
     try {
         const formData = new FormData(impedimentoForm);
