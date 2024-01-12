@@ -10,6 +10,7 @@
     @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
 
     <section class="mt-3">
+        @if ($user->docente)
         <h2 class="m-2 text-terciary">Docente</h2>
         <div class="d-flex flex-wrap gap-4">
             @include('partials._card', [
@@ -27,9 +28,15 @@
                     'url' => route('restricoes.view')
                 ])
         </div>
+        @endif
     </section>
-    <hr>
+    
+    @if ($user->admin && $user->docente)
+        <hr>
+    @endif
+    
     <section class="mt-3">
+        @if ($user->admin)
         <h2 class="m-2 text-terciary">Admin</h2>
         <div class="d-flex flex-wrap gap-4">
             @include('partials._card', [
@@ -51,6 +58,7 @@
                     'url' => route('admin.gerir.view')
                 ])
         </div>
+        @endif
     </section>
     <section class="mt-3" hidden>
         @include('partials._card', [
