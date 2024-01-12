@@ -38,7 +38,7 @@ class AdminViewController extends Controller
         $acns = ACN::all();
 
         $ucs = UnidadeCurricular::where('periodo_id', $periodos[0]->id)
-            ->orderByRaw('CAST(codigo as UNSIGNED) asc')
+            ->orderByRaw('CAST(codigo as INTEGER) asc')
             ->get();
 
         return view('gerirDados', [
