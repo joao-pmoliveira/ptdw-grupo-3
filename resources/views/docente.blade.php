@@ -56,9 +56,14 @@
             
             <div class="d-flex gap-3 mt-3 mb-5">
                 <input class="btn" type="submit" value="Submeter">
-                <button class="btn" id="btn-delete">Remover</button>
+                <input type="button" class="btn" id="btn-delete" value="Remover">
                 <a class="btn" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
             </div>
+        </form>
+
+        <form id="delete-docente-form" action="{{route('docentes.delete', ['id' => $docente->id])}}" method="POST">
+            @csrf
+            @method('DELETE')
         </form>
     </section>
 </main>

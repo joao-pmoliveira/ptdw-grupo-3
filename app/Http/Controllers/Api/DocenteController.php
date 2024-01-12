@@ -79,10 +79,10 @@ class DocenteController extends Controller
     public function update(DocenteRequest $docenteRequest, $id, Docente $docente)
     {
         //if (!$docenteRequest->authorize()) {
-          //  return response()->json(['message' => 'nao autorizado'], 403);
+        //  return response()->json(['message' => 'nao autorizado'], 403);
         //}
 
-        try{
+        try {
             DB::beginTransaction();
 
             $docente = Docente::findOrFail($id);
@@ -111,27 +111,31 @@ class DocenteController extends Controller
                 'message' => 'Sucesso!',
                 'redirect' => route('admin.gerir.view'),
             ]);
-
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()]);
         }
-
     }
 
     public function delete(Docente $docente, $id)
     {
         //if (!$docenteRequest->authorize()) {
-          //  return response()->json(['message' => 'nao autorizado'], 403);
+        //  return response()->json(['message' => 'nao autorizado'], 403);
         //}
-        
+
         try {
             DB::beginTransaction();
 
             $docente = Docente::findOrFail($id);
 
             $docente->user->delete();
+            $docente->impedimentos()->delete();
+            $docente->unidadesCurriculares()->detach();
+            foreach ($docente->ucsResponsavel as $uc) {
+                $uc->docente_responsavel_id = null;
+                $uc->save();
+            }
+
 
             $docente->delete();
 
