@@ -47,14 +47,14 @@ Route::group(['prefix' => 'unidades-curriculares'], function () {
     Route::post('/', [UnidadeCurricularController::class, 'store'])->middleware(['web', 'auth'])->name('ucs.store');
 
     Route::put('/{id}', [UnidadeCurricularController::class, 'update'])->middleware(['web', 'auth'])->name('ucs.update');
-    
+
     Route::delete('/{id}', [UnidadeCurricularController::class, 'delete'])->middleware(['web', 'auth'])->name('ucs.delete');
 });
 
 Route::group(['prefix' => 'restricoes'], function () {
     Route::put('/{id}', [UnidadeCurricularController::class, 'updateRestricao'])->middleware(['web', 'auth'])->name('restricoes.update');
-}); 
- 
+});
+
 Route::group(['prefix' => 'impedimentos'], function () {
     Route::get('/', [ImpedimentoController::class, 'index'])->name('impedimentos.index');
 
@@ -64,7 +64,7 @@ Route::group(['prefix' => 'impedimentos'], function () {
 
     Route::put('/{id}', [ImpedimentoController::class, 'update'])->middleware(['web', 'auth'])->name('impedimentos.update');
 
-    Route::delete('/{id}', [ImpedimentoController::class, 'delete'])->name('impedimentos.delete');
+    Route::delete('/{id}', [ImpedimentoController::class, 'delete'])->middleware(['web', 'auth'])->name('impedimentos.delete');
 });
 
 Route::post('/upload-excel', [UploadController::class, 'upload'])->name('upload');

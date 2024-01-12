@@ -193,27 +193,17 @@ class UnidadeCurricularController extends Controller
         }
     }
 
-    public function delete(UnidadeCurricularRequest $ucRequest, $docenteid, $ucid)
+    public function delete(Request $ucRequest, $ucid)
     {
-        if (!$ucRequest->authorize()) {
-            return response()->json(['message' => 'Não autorizado'], 403);
-        }
 
         try {
             DB::beginTransaction();
 
             $uc = UnidadeCurricular::find($ucid);
-            $docente = Docente::find($docenteid);
 
-            if (!$uc->authorizeDeletion()) {
-                return response()->json(['message' => 'Unauthorized to delete this resource'], 403);
-            }
 
             $uc->docentes()->detach();
             $uc->cursos()->detach();
-            $uc->periodo()->detach();
-            $uc->acn()->detach();
-            $uc->docenteResponsavel()->detach();
 
             // Delete the UnidadeCurricular
             $uc->delete();

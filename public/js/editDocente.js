@@ -20,13 +20,9 @@ editDocenteForm.addEventListener('submit', async (e) => {
             console.log(res);
             throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
         }
-        console.log("dfsdf")
         const data = await res.json();
-        console.log(data);
 
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        }
+        location.reload();
 
     } catch (error) {
         console.error(`Error: ${error.message}`);

@@ -104,11 +104,16 @@
                     @endfor
                 </div>
             </div>
-            <div class="d-flex gap-3 mt-3 mb-5" id="form-btns">
+            <div class="d-flex gap-3 mt-3 mb-5">
                 <input class="btn" type="submit" value="Submeter">
-                <button class="btn" id="btn-delete">Remover</button>
+                <input type="button" class="btn" id="btn-delete" value="Remover">
                 <a class="btn" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
             </div>
+        </form>
+
+        <form id="delete-uc-form" action="{{route('ucs.delete', ['id' => $uc->id])}}" method="POST">
+            @csrf
+            @method('DELETE')
         </form>
     </section>
 </main>
