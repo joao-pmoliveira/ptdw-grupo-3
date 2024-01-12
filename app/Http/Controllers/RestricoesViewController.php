@@ -89,10 +89,6 @@ class RestricoesViewController extends Controller
             abort(403, 'Sem autorização');
         }
 
-        //buscar periodo mais recente
-        //por cada docente ver uc responsaveis e ver se já estar preenchido/submitido
-        //por cada docente ver impedimentos e ver se está preenchido submetido 
-
         $periodos = Periodo::orderBy('ano', 'desc')
             ->orderBy('semestre', 'desc')
             ->get();

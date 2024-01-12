@@ -35,11 +35,11 @@ class Docente extends Model
             ->withTimestamps();
     }
 
-    public function ucResponsavel(): HasOne
+    public function ucsResponsavel(): HasMany
     {
-        return $this->hasOne(UnidadeCurricular::class, 'docente_responsavel_id');
+        return $this->hasMany(UnidadeCurricular::class, 'docente_responsavel_id');
     }
-    
+
     protected $table = 'docentes';
 
     protected $fillable = ['numero_funcionario', 'acn_id', 'numero_telefone'];
