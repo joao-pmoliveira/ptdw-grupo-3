@@ -22,53 +22,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '~ptdw-grupo-gr3'], function () {
-    Route::get('/', [WelcomeViewController::class, 'welcome'])->name('welcome.view');
+Route::get('/', [WelcomeViewController::class, 'welcome'])->name('welcome.view');
 
-    Route::get('/inicio', [WelcomeViewController::class, 'inicio'])->name('inicio.view');
+Route::get('/inicio', [WelcomeViewController::class, 'inicio'])->name('inicio.view');
 
-    Route::group(['prefix' => 'restricoes'], function () {
+Route::group(['prefix' => 'restricoes'], function () {
 
-        Route::get('/', [RestricoesViewController::class, 'restricoes'])->name('restricoes.view');
+    Route::get('/', [RestricoesViewController::class, 'restricoes'])->name('restricoes.view');
 
-        Route::get('/{uc}/{ano_inicial}/{semestre}', [RestricoesViewController::class, 'restricoesUC'])->name('restricoes.uc.view');
+    Route::get('/{uc}/{ano_inicial}/{semestre}', [RestricoesViewController::class, 'restricoesUC'])->name('restricoes.uc.view');
 
-        Route::get('/recolha', [RestricoesViewController::class, 'recolha'])->name('restricoes.recolha.view');
-    });
-
-    Route::group(['prefix' => 'impedimentos'], function () {
-
-        Route::get('/{docente}/{ano_inicial}/{semestre}/', [ImpedimentosViewController::class, 'impedimentos'])->name('impedimentos.view');
-    });
-
-    Route::group(['prefix' => 'ucs'], function () {
-
-        Route::get('/adicionar', [UnidadeCurricularViewController::class, 'addUnidadeCurricular'])->name('ucs.adicionar.view');
-
-        Route::get('/{uc}', [UnidadeCurricularViewController::class, 'unidadeCurricular'])->name('ucs.uc.view');
-
-        Route::get('/{uc}/editar', [UnidadeCurricularViewController::class, 'editarUnidadeCurricular'])->name('ucs.editar.view');
-
-        Route::get('/', [UnidadeCurricularViewController::class, 'unidadesCurriculares'])->name('ucs.view');
-    });
-
-    Route::group(['prefix' => 'docentes'], function () {
-
-        // todo - página para visualizar informações do docente
-        // Route::get('/{docente}', []);
-
-        Route::get('/{docente}/editar', [DocenteViewController::class, 'editarDocente'])->name('docentes.editar.view');
-        Route::get('/adicionar', [DocenteViewController::class, 'addDocente'])->name('docente.adicionar.view');
-    });
-
-    Route::get('/gerir-dados', [AdminViewController::class, 'gerirDados'])->name('admin.gerir.view');
-
-    // Rotas de Autenticação
-    Route::group(['prefix' => 'login'], function () {
-        Route::get('/', [LoginController::class, 'show'])->name('login.view');
-
-        Route::post('/', [LoginController::class, 'authenticate'])->name('login.action');
-    });
-
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
+    Route::get('/recolha', [RestricoesViewController::class, 'recolha'])->name('restricoes.recolha.view');
 });
+
+Route::group(['prefix' => 'impedimentos'], function () {
+
+    Route::get('/{docente}/{ano_inicial}/{semestre}/', [ImpedimentosViewController::class, 'impedimentos'])->name('impedimentos.view');
+});
+
+Route::group(['prefix' => 'ucs'], function () {
+
+    Route::get('/adicionar', [UnidadeCurricularViewController::class, 'addUnidadeCurricular'])->name('ucs.adicionar.view');
+
+    Route::get('/{uc}', [UnidadeCurricularViewController::class, 'unidadeCurricular'])->name('ucs.uc.view');
+
+    Route::get('/{uc}/editar', [UnidadeCurricularViewController::class, 'editarUnidadeCurricular'])->name('ucs.editar.view');
+
+    Route::get('/', [UnidadeCurricularViewController::class, 'unidadesCurriculares'])->name('ucs.view');
+});
+
+Route::group(['prefix' => 'docentes'], function () {
+
+    // todo - página para visualizar informações do docente
+    // Route::get('/{docente}', []);
+
+    Route::get('/{docente}/editar', [DocenteViewController::class, 'editarDocente'])->name('docentes.editar.view');
+    Route::get('/adicionar', [DocenteViewController::class, 'addDocente'])->name('docente.adicionar.view');
+});
+
+Route::get('/gerir-dados', [AdminViewController::class, 'gerirDados'])->name('admin.gerir.view');
+
+// Rotas de Autenticação
+Route::group(['prefix' => 'login'], function () {
+    Route::get('/', [LoginController::class, 'show'])->name('login.view');
+
+    Route::post('/', [LoginController::class, 'authenticate'])->name('login.action');
+});
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
