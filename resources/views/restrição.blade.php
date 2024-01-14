@@ -21,43 +21,38 @@
             @csrf
             @method('PUT')
             <div class="title-separator d-flex flex-column gap-3 py-4">
-                <fieldset class="">
-                    <legend>Tipo de Sala</legend>
-                    <div class="d-flex gap-3 px-3 lab-requirement-type-container flex-wrap">
-                        <div class="paco-checkbox">
-                            <label class="form-check-label" for="obligatory-labs">Sala Comum</label>
-                            <div class="form-check form-switch d-flex align-items-center mx-2 gap-2">
-                                <input class="form-check-input" 
-                                    name="obligatory_labs" id="obligatory-labs" type="checkbox" @checked($uc->laboratorio) 
-                                    role="switch" @disabled(!$editavel)>
-                                <label class="form-check-label" for="obligatory-labs">Laboratório de Informática</label>
-                            </div>
-                        </div>
+                <fieldset>
+                    <legend>Requisão de Laboratórios</legend>
+                    <div class="col-md-3 d-flex justify-content-between">
+                        <label for="aula-laboratorio-input">Sala de Aula</label>
+                        <input type="checkbox" name="aula_laboratorio" id="aula-laboratorio-input"
+                            @checked($uc->sala_laboratorio) @disabled(!$editavel)>
+                    </div>
+                    <div class="col-md-3 d-flex justify-content-between">
+                        <label for="exame-final-laboratorio">Exame Época Normal</label>
+                        <input type="checkbox" name="exame_final_laboratorio" id="exame-final-laboratorio"
+                            @checked($uc->exame_final_laboratorio) @disabled(!$editavel)>
+                    </div>
+                    <div class="col-md-3 d-flex justify-content-between">
+                        <label for="exame-recurso-laboratorio">Exame Época Recurso</label>
+                        <input type="checkbox" name="exame_recurso_laboratorio" id="exame-recurso-laboratorio"
+                            @checked($uc->exame_recurso_laboratorio) @disabled(!$editavel)>
                     </div>
                 </fieldset>
-            
+                
+                <fieldset>
+                    <legend>Observações sobre requisão de salas/laboratórios</legend>
+                    <label class="d-none" for="observacoes-input">Observações</label>
+                    <textarea class="px-2 py-1" name="observacoes" id="observacoes-input" cols="70" rows="5"
+                        @disabled(!$editavel)>{{$uc->observacoes_laboratorios}}</textarea>
+                </fieldset>
+
                 <fieldset>
                     <legend>Software necessário</legend>
-                    <p>Identifique nome, fabricante, versão, e sistema operativo</p>
-                    <label for="needed-soft"></label>
-                    <textarea class="mx-3 px-2 py-1" name="needed_software" id="needed-soft" @disabled(!$editavel)
-                        cols="100" rows="7">{{$uc->software}}</textarea>
+                    <label class="d-block" for="software-necessario-input">Identifique nome, fabricante, versão e sistem operativo</label>
+                    <textarea class="px-2 py-1" name="software" id="software-necessario-input" cols="90" rows="8"
+                        @disabled(!$editavel)>{{$uc->software}}</textarea>
                 </fieldset>
-            
-                <fieldset class=" px3">
-                    <legend>Tipo de sala para avaliações</legend>
-                    <div class="d-flex gap-3 px-3 lab-requirement-type-container flex-wrap">
-                        <div class="paco-checkbox">
-                            <label class="form-check-label" for="evaluation-labs">Sala Comum</label>
-                            <div class="form-check form-switch d-flex align-items-center mx-2 gap-2">
-                                <input class="form-check-input"
-                                    name="evaluation_labs" id="evaluation-labs" type="checkbox" @checked($uc->sala_avaliacao)
-                                    role="switch" @disabled(!$editavel)>
-                                <label class="form-check-label" for="evaluation-labs">Laboratório de Informática</label>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset> 
             </div>
             <div class="d-flex gap-3 mb-5" id="form-btns">
                 <input class="btn" type="submit" value="Submeter" @disabled(!$editavel)>

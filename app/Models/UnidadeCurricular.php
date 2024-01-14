@@ -48,11 +48,13 @@ class UnidadeCurricular extends Model
         'nome',
         'acn_id',
         'horas_semanais',
-        'laboratorio',
-        'software',
         'ects',
-        'sala_avaliacao',
         'docente_responsavel_id',
         'restricoes_submetidas',
+        'sala_laboratorio',
+        'exame_final_laboratorio',
+        'exame_recurso_laboratorio',
+        'observacoes_laboratorios',
+        'software',
     ];
 }

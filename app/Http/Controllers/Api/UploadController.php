@@ -163,11 +163,13 @@ class UploadController extends Controller
                         'docente_responsavel_id' => NULL,
                         'sigla' => '',
                         'horas_semanais' => $d['horas'],
-                        'laboratorio' => false,
-                        'software' => '',
                         'ects' => '0',
-                        'sala_avaliacao' => false,
-                        'restricoes_submetidas' => false
+                        'restricoes_submetidas' => false,
+                        'sala_laboratorio' => false,
+                        'exame_final_laboratorio' => false,
+                        'exame_recurso_laboratorio' => false,
+                        'observacoes_laboratorios' => '',
+                        'software' => '',
                     ]);
 
                     if (!empty(trim($d['responsavel_uc']))) {

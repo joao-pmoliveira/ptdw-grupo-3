@@ -48,21 +48,27 @@
         </div>
         <hr class="m-0 bg-secondary">
         <div class="d-flex align-items-center p-2">
-            <div class="col-md-2">Restrições de Unidade Curricular </div>
+            <div class="col-md-2 align-self-start">Restrições de Unidade Curricular </div>
             <div class="col-md-10">
                 <div class="mb-2">
-                    <h3 class="font-weight-normal">Tipo de Sala de aula:</h3>
-                    <p>{{$uc->laboratorio ? 'Laboratório de Informática' : 'Sala Comum'}}</p>
+                    <h3 class="font-weight-normal">Sala para aulas</h3>
+                    <p>{{$uc->sala_laboratorio ? 'Laboratório de Informática' : 'Sala Comum'}}</p>
                 </div>
-
+                <div class="mb-2">
+                    <h3 class="font-weight-normal">Sala para Exames (Época Normal)</h3>
+                    <p>{{$uc->exame_final_laboratorio ? 'Laboratório de Informática' : 'Sala Comum'}}</p>
+                </div>
+                <div class="mb-2">
+                    <h3 class="font-weight-normal">Sala para Exames (Época Recurso)</h3>
+                    <p>{{$uc->exame_recurso_laboratorio ? 'Laboratório de Informática' : 'Sala Comum'}}</p>
+                </div>
+                <div class="mb-2">
+                    <h3 class="font-weight-normal">Observações sobre requisão de salas:</h3>
+                    <p>{{$uc->observacoes_laboratorios ? $uc->observacoes_laboratorios : 'Não especificado.'}}</p>
+                </div>
                 <div class="mb-2">
                     <h3 class="font-weight-normal">Software necessário</h3>
                     <p>{{$uc->software ? $uc->software : 'Não especificado.'}}</p>
-                </div>
-
-                <div class="mb-2">
-                    <h3 class="font-weight-normal">Tipo de Sala para Avaliação:</h3>
-                    <p>{{$uc->sala_avaliacao ? 'Laboratório de Informática' : 'Sala Comum'}}</p>
                 </div>
             </div>
         </div>

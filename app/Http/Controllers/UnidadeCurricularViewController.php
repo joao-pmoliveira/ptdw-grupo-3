@@ -24,8 +24,10 @@ class UnidadeCurricularViewController extends Controller
             ->orderBy('semestre', 'desc')
             ->get();
 
+
+        $dataType = getenv('DB_CONNECTION') === 'mysql' ? 'UNSIGNED' : 'INTEGER';
         $unidadesCurriculares = UnidadeCurricular::where("periodo_id", $periodos[0]->id)
-            ->orderByRaw('CAST(codigo as INTEGER) asc')
+            ->orderByRaw('CAST(codigo as ' . $dataType . ') asc')
             ->get();
 
         return view('unidadesCurriculares', [

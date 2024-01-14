@@ -42,12 +42,14 @@ class UnidadesCurricularesTableSeeder extends Seeder
             $sigla = $uc[1];
             $horas_semanais = $faker->randomElement([2, 4, 6]);
             $acn_id = ACN::pluck('id')->random();
-            $laboratorio = $faker->boolean();
-            $software = $faker->text();
             $ects = $faker->randomElement([4, 6]);
-            $sala_avaliacao = $faker->boolean();
-            $restricoes_submetidas = $faker->boolean();
             $docente_responsavel_id = $docentes[$index];
+            $restricoes_submetidas = $faker->boolean();
+            $sala_laboratorio = $faker->boolean();
+            $exame_final_laboratorio = $faker->boolean();
+            $exame_recurso_laboratorio = $faker->boolean();
+            $observacoes_laboratorios = $faker->text();
+            $software = $faker->text();
 
             $numeroDocentesAssociados = $faker->randomElement([2, 3]);
 
@@ -66,12 +68,14 @@ class UnidadesCurricularesTableSeeder extends Seeder
                     'nome' => $nome,
                     'acn_id' => $acn_id,
                     'horas_semanais' => $horas_semanais,
-                    'laboratorio' => $laboratorio,
-                    'software' => $software,
                     'ects' => $ects,
-                    'sala_avaliacao' => $sala_avaliacao,
                     'docente_responsavel_id' => $docente_responsavel_id,
                     'restricoes_submetidas' => $restricoes_submetidas,
+                    'sala_laboratorio' => $sala_laboratorio,
+                    'exame_final_laboratorio' => $exame_final_laboratorio,
+                    'exame_recurso_laboratorio' => $exame_recurso_laboratorio,
+                    'observacoes_laboratorios' => $observacoes_laboratorios,
+                    'software' => $software,
                 ]);
 
 

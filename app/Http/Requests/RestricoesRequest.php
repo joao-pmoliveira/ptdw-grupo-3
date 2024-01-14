@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\UnidadeCurricular;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RestricoesRequest extends FormRequest
@@ -11,16 +12,22 @@ class RestricoesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $uc = UnidadeCurricular::findOrFail($this->route('id'));
+
+        $user = $this->user();
+
+        return !is_null($user) && !is_null($uc) && $user->docente->id == $uc->docenteResponsavel->id;
     }
 
 
     public function rules(): array
     {
         return [
-            'obligatory_labs' => '',
-            'needed_software' => '',
-            'evaluation_labs' => '',
+            'aula_laboratorio' => 'nullable',
+            'exame_final_laboratorio' => 'nullable',
+            'exame_recurso_laboratorio' => 'nullable',
+            'observacoes' => 'nullable|string',
+            'software' => 'nullable|string',
         ];
     }
 }

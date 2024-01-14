@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use function PHPSTORM_META\map;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UnidadeCurricular>
  */
@@ -23,12 +25,14 @@ class UnidadeCurricularFactory extends Factory
             'nome' => fake()->name(),
             'acn_id' => fake()->numberBetween(0, 10),
             'horas_semanais' => fake()->numberBetween(0, 8),
-            'laboratorio' => fake()->boolean(),
-            'software' => fake()->text(),
             'ects' => fake()->numberBetween(0, 16),
-            'sala_avaliacao' => fake()->boolean(),
             'docente_responsavel_id' => fake()->numberBetween(0, 10),
-            'restricoes_submetidas' => fake()->boolean()
+            'restricoes_submetidas' => fake()->boolean(),
+            'sala_laboratorio' => fake()->boolean(),
+            'exame_final_laboratorio' => fake()->boolean(),
+            'exame_recurso_laboratorio' => fake()->boolean(),
+            'observacoes_laboratorios' => fake()->boolean(),
+            'software' => fake()->text(),
         ];
     }
 }

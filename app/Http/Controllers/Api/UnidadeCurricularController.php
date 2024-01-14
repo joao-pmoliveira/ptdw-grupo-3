@@ -86,11 +86,13 @@ class UnidadeCurricularController extends Controller
                 'docente_responsavel_id' => $docenteRespId,
                 'sigla' => '',
                 'horas_semanais' => $horas,
-                'laboratorio' => false,
-                'software' => '',
                 'ects' => $ects,
-                'sala_avaliacao' => false,
                 'restricoes_submetidas' => false,
+                'sala_laboratorio' => false,
+                'exame_final_laboratorio' => false,
+                'exame_recurso_laboratorio' => false,
+                'observacoes_laboratorios' => '',
+                'software' => '',
             ]);
             $words = explode(' ', $nome);
             foreach ($words as $word) {
@@ -223,15 +225,27 @@ class UnidadeCurricularController extends Controller
     {
         $uc = UnidadeCurricular::find($id);
 
-        $laboratorio = $request->input('obligatory_labs');
-        $software = $request->input('needed_software');
-        $salaAvaliacao = $request->input('evaluation_labs');
+        if (is_null($uc)) {
+            return response()->json(['message' => 'uc nao encontrada'], 404);
+        }
+
+        if (!$request->authorize()) {
+            return response()->json(['message' => 'user não autorizado'], 401);
+        }
+
+        $salaLaboratorio = $request->filled('sala_laboratorio');
+        $exameFinalLaboratorio = $request->filled('exame_final_laboratorio');
+        $exameRecursoLaboratorio = $request->filled('exame_recurso_laboratorio');
+        $observacoes = $request->input('observacoes');
+        $software = $request->input('software');
 
 
         $uc->update([
-            'laboratorio' => is_null($laboratorio) ? false : true,
+            'sala_laboratorio' => $salaLaboratorio,
+            'exame_final_laboratorio' => $exameFinalLaboratorio,
+            'exame_recurso_laboratorio' => $exameRecursoLaboratorio,
             'software' => $software,
-            'sala_avaliacao' => is_null($salaAvaliacao) ? false : true,
+            'observacoes_laboratorios' => $observacoes,
         ]);
 
         return response()->json(['message' => 'sucesso'], 200);
