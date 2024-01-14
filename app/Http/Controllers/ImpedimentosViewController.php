@@ -35,12 +35,17 @@ class ImpedimentosViewController extends Controller
 
         $editavel = $hoje->lt($data_final) && $hoje->gt($data_inicial);
 
+        $impedimento = $user->docente->impedimentos()
+            ->where('periodo_id', $periodo->id)
+            ->first();
+
         return view('impedimento', [
             'page_title' => 'Impedimentos de Horário',
             'ano_inicial' => $ano_inicial,
             'semestre' => $semestre,
             'docente' => $docente,
             'user' => $user,
+            'impedimento' => $impedimento,
             'editavel' => $editavel,
         ]);
     }

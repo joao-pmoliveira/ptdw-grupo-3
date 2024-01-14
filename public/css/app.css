@@ -213,6 +213,19 @@ tbody tr:hover {
 #schedule-grid input[type="checkbox"]:focus {
     outline: 2px solid var(--secondary-background-color);
 }
+#schedule-grid input[type="checkbox"]:disabled {
+    background-color: var(--terciary-background-color);
+    border: none;
+}
+#schedule-grid input[type="checkbox"]:disabled + i {
+    color: var(--terciary-background-color);
+}
+#schedule-grid input[type="checkbox"]:checked:disabled {
+    background-color: var(--accent-background-color);
+}
+#schedule-grid input[type="checkbox"]:checked:disabled + i {
+    color: var(--secondary-text-color);
+}
 
 @media (max-width: 767px) {
     #schedule-grid p {
