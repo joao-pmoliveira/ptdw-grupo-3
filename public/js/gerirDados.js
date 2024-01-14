@@ -64,6 +64,8 @@ const searchUCBtn = document.querySelector('#manage-ucs .paco-searchbox > div');
 searchUCBtn.addEventListener('click', filterTableEditUCs);
 const cursoSelect = document.querySelector('#school-year-school_course');
 cursoSelect.addEventListener('change', filterTableEditUCs);
+const semDocenteRespCheck = document.querySelector('#ucs-sem-responsavel-check');
+semDocenteRespCheck.addEventListener('change', filterTableEditUCs);
 
 function filterTableEditUCs() {
     Array.from(tableEditUCs.querySelectorAll('tbody tr')).forEach(row => {
@@ -71,15 +73,15 @@ function filterTableEditUCs() {
         const codigo = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
         const searchInput = searchUCTextInput.value.toLowerCase();
         const cursoID = cursoSelect.value;
+        const docenteResp = row.querySelector('td:nth-child(4)').innerText;
+
 
         const filterByNameCode = nome.includes(searchInput) || codigo.includes(searchInput);
         const filterByCurso = cursoID === '' || row.getAttribute('data-curso-id').split(',').indexOf(cursoID) != -1;
+        const filterByUCSemResp = !semDocenteRespCheck.checked || (semDocenteRespCheck.checked && docenteResp === '---');
 
-        if (filterByNameCode)
-            if (filterByCurso)
-                row.style.display = 'table-row'
-            else
-                row.style.display = 'none'
+        if (filterByNameCode && filterByCurso && filterByUCSemResp)
+            row.style.display = 'table-row'
         else
             row.style.display = 'none'
 

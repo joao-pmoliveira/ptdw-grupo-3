@@ -53,6 +53,10 @@
                             <input type="text" name="nome_cod_uc" id="input-filter-ucs-nome" aria-label="Filtre por código ou nome de uc">
                             <div><i class="fa-solid fa-search"></i></div>
                         </div>
+                        <div class="paco-checkbox ">
+                            <label class="d-block" for="ucs-sem-responsavel-check">Sem Docente Responsável</label>
+                            <input type="checkbox" name="" id="ucs-sem-responsavel-check">
+                        </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <a href="{{route('ucs.adicionar.view')}}" class="btn py-1">Adicionar UC</a>
@@ -70,7 +74,7 @@
                         </tr>
                     </thead>
                     <tbody class="title-separator">
-                        @foreach($ucs as $uc)
+                        @foreach($ucs as $index => $uc)
                             <tr class="border border-light" data-id='{{$uc->id}}' data-curso-id='{{implode(",",$uc->cursos->pluck("id")->toArray())}}'>
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
@@ -78,7 +82,7 @@
                                 @if($uc->docenteResponsavel)
                                 <td>{{$uc->docenteResponsavel->user->nome}}</td>
                                 @else
-                                <td>Sem docente responsável</td>
+                                <td>---</td>
                                 @endif
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
