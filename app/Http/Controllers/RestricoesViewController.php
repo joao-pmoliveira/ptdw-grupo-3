@@ -68,16 +68,26 @@ class RestricoesViewController extends Controller
             return redirect()->back();
         }
 
-        //todo se utilizador não está associado a esta UC,
-        //recusar acesso à página
-        //se utilizador não é responsavel por uc, nao deixar editar
+        $user = Auth::user();
+
+        $periodo = Periodo::where('ano', $ano_inicial)
+            ->where('semestre', $semestre)
+            ->first();
+
+        $hoje = Carbon::now();
+        $data_inicial = Carbon::createFromFormat('Y-m-d', $periodo->data_inicial);
+        $data_final = Carbon::createFromFormat('Y-m-d', $periodo->data_final);
+
+        $editavel = ($uc->docenteResponsavel->id == $user->docente->id) &&
+            ($hoje->lt($data_final) && $hoje->gt($data_inicial));
 
         return view('restrição', [
             'page_title' => 'Restrições de Sala de Aula',
             'uc' => $uc,
             'ano_inicial' => $ano_inicial,
             'semestre' => $semestre,
-            'user' => Auth::user(),
+            'user' => $user,
+            'editavel' => $editavel,
         ]);
     }
 
