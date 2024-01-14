@@ -65,6 +65,8 @@ Route::group(['prefix' => 'impedimentos'], function () {
     Route::put('/{id}', [ImpedimentoController::class, 'update'])->middleware(['web', 'auth'])->name('impedimentos.update');
 
     Route::delete('/{id}', [ImpedimentoController::class, 'delete'])->middleware(['web', 'auth'])->name('impedimentos.delete');
+
+    Route::post('/periodo', [ImpedimentoController::class, 'gerarPorPeriodo'])->middleware(['web', 'auth'])->name('impedimentos.periodo');
 });
 
 Route::post('/upload-excel', [UploadController::class, 'upload'])->name('upload');
