@@ -14,27 +14,39 @@
     @include('partials._pageTitle', ['title' => 'Adicionar Docente'])
 
 
-    <section class="mt-3">
-        <form id="add-docente-form" action="{{route('docentes.store')}}" method="POST" class="title-separator pt-3">
+    <section class="mt-3 title-separator  pt-2">
+        <form id="add-docente-form" action="{{route('docentes.store')}}" method="POST">
             @csrf
-            <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="numero" class="col-md-2 p-3">Número</label>
-                <input type="number" name="numero" id="docente-numero-input" class="col-md-2 p-1" required min="0">
+            <div class="d-flex align-items-center p-2">
+                <label for="numero" class="col-md-2">Número</label>
+                <input type="number" name="numero" id="docente-numero-input" class="col-md-2 px-1" required min="0">
             </div>
-            <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="nome" class="col-md-2 p-3">Nome</label>
-                <input type="text" name="nome" id="docente-nome-input" class="col-md-4 p-1" required>
+
+            <hr class="m-0 bg-secondary">
+
+            <div class="d-flex align-items-center p-2">
+                <label for="nome" class="col-md-2">Nome</label>
+                <input type="text" name="nome" id="docente-nome-input" class="col-md-4 px-1" required>
             </div>
-            <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="email" class="col-md-2 p-3">Email</label>
-                <input type="email" name="email" id="docente-email-input" class="col-md-4 p-1" required>
+
+            <hr class="m-0 bg-secondary">
+
+            <div class="d-flex align-items-center p-2">
+                <label for="email" class="col-md-2">Email</label>
+                <input type="email" name="email" id="docente-email-input" class="col-md-4 px-1" required>
             </div>
-            <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label for="telemovel" class="col-md-2 p-3">Telemóvel</label>
-                <input type="tel" name="telemovel" id="docente-telemovel" class="col-md-4 p-1" required>
+
+            <hr class="m-0 bg-secondary">
+
+            <div class="d-flex align-items-center p-2">
+                <label for="telemovel" class="col-md-2">Telemóvel</label>
+                <input type="tel" name="telemovel" id="docente-telemovel" class="col-md-4 px-1" required>
             </div>
-            <div class="d-flex align-items-center border border-dark p-2 mb-2">
-                <label class="col-md-2 p-3" for="acn">Área Científica</label>
+
+            <hr class="m-0 bg-secondary">
+            
+            <div class="d-flex align-items-center p-2">
+                <label class="col-md-2" for="acn">Área Científica</label>
                 <select class="col-md-2 p-1" name="acn" id="ucn-acn-select" required>
                     <option value="" selected>Selecione</option>
                     @foreach ($acns as $acn)

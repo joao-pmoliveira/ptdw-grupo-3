@@ -71,11 +71,15 @@
                     </thead>
                     <tbody class="title-separator">
                         @foreach($ucs as $uc)
-                            <tr class="border border-light" data-id='{{$uc->id}}' data-curso-id='{{implode(",",$uc->cursos->pluck('id')->toArray())}}'>
+                            <tr class="border border-light" data-id='{{$uc->id}}' data-curso-id='{{implode(",",$uc->cursos->pluck("id")->toArray())}}'>
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
                                 <td>{{$uc->nome}}</td>
+                                @if($uc->docenteResponsavel)
                                 <td>{{$uc->docenteResponsavel->user->nome}}</td>
+                                @else
+                                <td>Sem docente responsável</td>
+                                @endif
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
                         @endforeach
