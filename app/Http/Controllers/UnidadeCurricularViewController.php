@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ACN;
+use App\Models\Curso;
 use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
@@ -30,10 +31,13 @@ class UnidadeCurricularViewController extends Controller
             ->orderByRaw('CAST(codigo as ' . $dataType . ') asc')
             ->get();
 
+        $cursos = Curso::all();
+
         return view('unidadesCurriculares', [
             'page_title' => 'Consultar Unidades Curriculares',
             'periodos' => $periodos,
             'ucs' => $unidadesCurriculares,
+            'cursos' => $cursos,
             'user' => $user,
         ]);
     }

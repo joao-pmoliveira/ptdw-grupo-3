@@ -4,10 +4,10 @@
 
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
-    'crumbs' => [
-    ['página inicial', route('inicio.view')],
-    ['unidades curriculares', route('ucs.view')]
-    ]
+        'crumbs' => [
+            ['página inicial', route('inicio.view')],
+            ['unidades curriculares', route('ucs.view')]
+        ]
     ])
 
     @include('partials._pageTitle', ['title' => 'Consultar Unidades Curriculares'])
@@ -23,6 +23,12 @@
                 @endforeach
             </select>
 
+            <select name="curso" id="curso-uc-select">
+                <option value="">Filtre por Curso</option>
+                @foreach ($cursos as $curso)
+                    <option value="{{$curso->id}}">{{$curso->sigla}}</option>
+                @endforeach
+            </select>
 
             <div class="paco-searchbox" id="filter-ucs-by-name-btn">
                 <input type="text" name="uc" id="uc" aria-label="Filtre por código ou nome de uc">
@@ -33,10 +39,8 @@
                 <label for="my-classes-check">As minhas UC's</label>
                 <input type="checkbox" name="my_classes" id="my-classes-check">
             </div>
-
         </div>
     </section>
-
 
     <table class="w-100" id="table-ucs">
         <thead class="bg-light">
@@ -52,13 +56,19 @@
                 <tr class="border border-light" data-id='{{$uc->id}}' 
                     data-my-uc='{{$user 
                                     ? $uc->docentes->contains($user->docente) ? 'Y' : 'N'
-                                    : ''}}'>
+                                    : ''}}'
+                    data-curso-id='{{implode(",",$uc->cursos->pluck("id")->toArray())}}'>
                     <th scope="row"></th>
                     <td>{{$uc->codigo}}</td>
                     <td>{{$uc->nome}}</td>
                     <td>{{$uc->docenteResponsavel ? $uc->docenteResponsavel->user->nome : '-'}}</td>
                 </tr>
             @endforeach
+
+            <tr class="border border-light" id="ucs-no-match-row">
+                <th scope="row"></th>
+                <td colspan="3">Sem correspondências</td>
+            </tr>
         </tbody>
     </table>
 

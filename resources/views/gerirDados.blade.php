@@ -87,6 +87,10 @@
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
                         @endforeach
+                        <tr class="border border-light" id="edit-ucs-no-match-row">
+                            <th scope="row"></th>
+                            <td colspan="3">Sem correspondências</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -121,6 +125,11 @@
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
                         @endforeach
+                        
+                        <tr class="border border-light" id="edit-teachers-no-match-row">
+                            <th scope="row"></th>
+                            <td colspan="3">Sem correspondências</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

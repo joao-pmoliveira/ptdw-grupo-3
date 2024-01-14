@@ -1,7 +1,7 @@
 'use strict'
 
 const tableUCs = document.querySelector('#table-ucs');
-const initRows = tableUCs.querySelectorAll('#table-ucs tbody tr');
+const initRows = tableUCs.querySelectorAll('#table-ucs tbody tr:not(:is([id="ucs-no-match-row"]))');
 initRows.forEach(row => {
     row.addEventListener('click', () => redirectToUCPage(row));
 })
@@ -64,24 +64,39 @@ const searchUCBtn = document.querySelector('#filter-ucs-by-name-btn');
 searchUCBtn.addEventListener('click', filterTableUcs);
 const userUCsFilterToggle = document.querySelector('#my-classes-check');
 userUCsFilterToggle.addEventListener('click', filterTableUcs);
+const cursoUcSelect = document.querySelector('#curso-uc-select');
+cursoUcSelect.addEventListener('change', filterTableUcs);
 
 function filterTableUcs() {
-    const rows = Array.from(document.querySelectorAll('#table-ucs tbody tr'));
+    let match = false;
+    const rows = Array.from(document.querySelectorAll('#table-ucs tbody tr:not(:is([id="ucs-no-match-row"]))'));
+    const hiddenRow = document.querySelector('#ucs-no-match-row');
     rows.forEach(row => {
         const ucName = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
         const ucCode = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
         const searchInput = searchUCTextInput.value.toLowerCase();
+        const cursoID = cursoUcSelect.value;
 
         const checked = userUCsFilterToggle.checked;
         const userUC = row.getAttribute('data-my-uc') === 'Y';
 
         const filterByNameCode = ucName.includes(searchInput) || ucCode.includes(searchInput)
-        const filterByUserUCs = !checked || row.getAttribute('data-my-uc') === 'Y';
+        const filterByUserUCs = !checked || userUC;
+        const filterByCurso = cursoID === '' || row.getAttribute('data-curso-id').split(',').indexOf(cursoID) != -1;
 
-        if (filterByNameCode && filterByUserUCs) {
+        if (filterByNameCode && filterByUserUCs && filterByCurso) {
             row.style.display = 'table-row';
+            match = true
         } else {
             row.style.display = 'none';
         }
     });
+
+    hiddenRow.style.display = match ? 'none' : 'table-row'
 }
+
+//Acionar 'Minhas UCs' quando a página inicia
+document.addEventListener('DOMContentLoaded', () => {
+    userUCsFilterToggle.checked = true;
+    filterTableUcs();
+})

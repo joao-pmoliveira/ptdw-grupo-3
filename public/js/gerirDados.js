@@ -2,7 +2,7 @@
 
 //#region Tabela de Unidades Curriculares
 const tableEditUCs = document.querySelector('#table-edit-ucs');
-tableEditUCs.querySelectorAll('tbody tr').forEach(row => {
+tableEditUCs.querySelectorAll('tbody tr:not(:is([id="edit-ucs-no-match-row"]))').forEach(row => {
     const ucID = row.getAttribute('data-id');
     row.addEventListener('click', () => {
         window.location.href = `/ucs/${ucID}/editar`;
@@ -68,7 +68,9 @@ const semDocenteRespCheck = document.querySelector('#ucs-sem-responsavel-check')
 semDocenteRespCheck.addEventListener('change', filterTableEditUCs);
 
 function filterTableEditUCs() {
-    Array.from(tableEditUCs.querySelectorAll('tbody tr')).forEach(row => {
+    const hiddenRow = document.querySelector('#edit-ucs-no-match-row');
+    let match = false;
+    Array.from(tableEditUCs.querySelectorAll('tbody tr:not(:is([id="edit-ucs-no-match-row"]))')).forEach(row => {
         const nome = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
         const codigo = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
         const searchInput = searchUCTextInput.value.toLowerCase();
@@ -80,21 +82,25 @@ function filterTableEditUCs() {
         const filterByCurso = cursoID === '' || row.getAttribute('data-curso-id').split(',').indexOf(cursoID) != -1;
         const filterByUCSemResp = !semDocenteRespCheck.checked || (semDocenteRespCheck.checked && docenteResp === '---');
 
-        if (filterByNameCode && filterByCurso && filterByUCSemResp)
+        if (filterByNameCode && filterByCurso && filterByUCSemResp) {
             row.style.display = 'table-row'
-        else
+            match = true
+        }
+        else {
             row.style.display = 'none'
+        }
 
     });
-}
 
+    hiddenRow.style.display = match ? 'none' : 'table-row';
+}
 //#endregion
 
 
 //#region Tabela de Docentes
 
 const tableEditDocentes = document.querySelector('#table-edit-teachers');
-tableEditDocentes.querySelectorAll('tbody tr').forEach(row => {
+tableEditDocentes.querySelectorAll('tbody tr:not(:is([id="edit-teachers-no-match-row"]))').forEach(row => {
     const docenteID = row.getAttribute('data-id');
     row.addEventListener('click', () => window.location.href = `/docentes/${docenteID}/editar`);
 })
@@ -105,17 +111,22 @@ const searchDocenteBtn = document.querySelector('#manage-teachers .paco-searchbo
 searchDocenteBtn.addEventListener('input', filterTableEditDocentes);
 
 function filterTableEditDocentes() {
-    Array.from(tableEditDocentes.querySelectorAll('tbody tr')).forEach(row => {
+    const hiddenRow = document.querySelector('#edit-teachers-no-match-row');
+    let match = false;
+    Array.from(tableEditDocentes.querySelectorAll('tbody tr:not(:is([id="edit-teachers-no-match-row"]))')).forEach(row => {
         const nome = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
         const codigo = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
         const searchInput = searchDocenteTextInput.value.toLowerCase();
 
         if (nome.includes(searchInput) || codigo.includes(searchInput)) {
             row.style.display = 'table-row'
+            match = true
         } else {
             row.style.display = 'none'
         }
     })
+
+    hiddenRow.style.display = match ? 'none' : 'table-row';
 }
 //#endregion
 
@@ -141,3 +152,8 @@ submitForm.addEventListener('submit', async (e) => {
 })
 
 //#endregion
+
+document.addEventListener('DOMContentLoaded', () => {
+    filterTableEditUCs();
+    filterTableEditDocentes();
+})
