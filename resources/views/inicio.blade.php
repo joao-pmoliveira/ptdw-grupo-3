@@ -10,15 +10,9 @@
     @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
 
     <section class="mt-3">
-        @if ($user->docente)
-        <h2 class="m-2 text-terciary">Docente</h2>
+        <h2 class="m-2 text-terciary">Geral</h2>
         <div class="d-flex flex-wrap gap-4">
-            @include('partials._card', [
-                    'title' => 'Unidades Curriculares',
-                    'body' => ['Consulta da lista de Unidades Curriculares'],
-                    'button' => 'Consultar',
-                    'url' => route('ucs.view')
-                ])
+            @if ($user->docente)
             @include('partials._card', [
                     'title' => 'Preencher Restrições',
                     'body' => [
@@ -26,9 +20,17 @@
                         ],
                     'button' => 'Preencher',
                     'url' => route('restricoes.view')
+                    ])
+            @endif
+
+            @include('partials._card', [
+                    'title' => 'Unidades Curriculares',
+                    'body' => ['Consulta da lista de Unidades Curriculares'],
+                    'button' => 'Consultar',
+                    'url' => route('ucs.view')
                 ])
+
         </div>
-        @endif
     </section>
     
     @if ($user->admin && $user->docente)
