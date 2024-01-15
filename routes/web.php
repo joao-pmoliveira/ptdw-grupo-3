@@ -9,6 +9,7 @@ use App\Http\Controllers\RegistoController;
 use App\Http\Controllers\RestricoesViewController;
 use App\Http\Controllers\UnidadeCurricularViewController;
 use App\Http\Controllers\WelcomeViewController;
+use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -77,3 +78,10 @@ Route::group(['prefix' => 'registo'], function () {
 
     Route::post('/', [RegistoController::class, 'register'])->name('registo.action');
 });
+
+Route::group(['prefix' => 'perfil'], function () {
+    Route::get('/', [PerfilController::class, 'perfil'])->name('perfil.view');
+
+    Route::post("/", [PerfilController::class, 'editarPerfil'])->name('perfil.edit.view');
+});
+
