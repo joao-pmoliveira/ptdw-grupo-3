@@ -10,8 +10,17 @@
             [strtolower($uc->nome), route('ucs.uc.view', ['uc' => $uc->id])]
         ]
     ])
-
-    @include('partials._pageTitle', ['title' => $uc->codigo . ' - ' . $uc->nome])
+    <div class="d-flex align-items-center justify-content-between">
+        @include('partials._pageTitle', ['title' => $uc->codigo . ' - ' . $uc->nome])
+        <div class="d-flex gap-2">
+            @if ($user->admin)
+            <a href="{{route('ucs.editar.view', ['uc' => $uc->id])}}" class="btn">Editar</a>
+            @endif
+            @if ($uc->docenteResponsavel->id == $user->docente->id)
+            <a href="{{route('restricoes.uc.view', ['uc' => $uc->id, 'ano_inicial' => $uc->periodo->ano, 'semestre' => $uc->periodo->semestre])}}" class="btn">Restrições</a>
+            @endif
+        </div>
+    </div>
 
     <section class="my-3 title-separator pt-2">
         <div class="d-flex align-items-center p-2">
