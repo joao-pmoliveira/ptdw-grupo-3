@@ -2,6 +2,13 @@
 
 // Formulário de Impedimentos
 const impedimentoForm = document.querySelector('#impedimento-form');
+
+if (window.location.hostname === 'localhost') {
+    baseUrl = 'http://localhost';
+} else {
+    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
+}
+
 impedimentoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -51,7 +58,7 @@ tableRestricoes.querySelectorAll('tbody tr').forEach(row => {
 })
 
 function redirectToRestrictionPage(ucID, ano, semestre) {
-    window.location.href = `/restricoes/${ucID}/${ano}/${semestre}`
+    window.location.href = baseUrl +`/restricoes/${ucID}/${ano}/${semestre}`
 }
 
 // Secção de Históricos
@@ -64,7 +71,7 @@ tableHistImpedimentos.querySelectorAll('tbody tr').forEach(row => {
     const docenteID = authUser.id;
 
     row.addEventListener('click', () => {
-        window.location.href = `/impedimentos/${docenteID}/${ano}/${semestre}`;
+        window.location.href = baseUrl +`/impedimentos/${docenteID}/${ano}/${semestre}`;
     })
 })
 

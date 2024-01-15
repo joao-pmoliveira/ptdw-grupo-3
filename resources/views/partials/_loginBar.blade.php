@@ -1,6 +1,6 @@
 <ul id="login-bar" class="d-flex justify-content-end px-5 py-2 gap-2 login-txt text-accent bg-primary">
     <li>
-        {{$user ? $user->nome : 'user'}}
+        <a href="{{route('perfil.view')}}">{{$user ? $user->nome : 'user'}}</a>
     </li>
     <li>|</li>
     <li>

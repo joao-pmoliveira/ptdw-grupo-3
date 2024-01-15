@@ -84,6 +84,8 @@
     </section>
 
 
-
+    <script>
+        var baseUrl = "{{ config('app.url') }}";
+    </script>
 </main>
 @endsection
