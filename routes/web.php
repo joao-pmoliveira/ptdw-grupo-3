@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\UnidadeCurricularController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DocenteViewController;
 use App\Http\Controllers\ImpedimentosViewController;
+use App\Http\Controllers\RegistoController;
 use App\Http\Controllers\RestricoesViewController;
 use App\Http\Controllers\UnidadeCurricularViewController;
 use App\Http\Controllers\WelcomeViewController;
@@ -71,4 +72,8 @@ Route::group(['prefix' => 'login'], function () {
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
 
-Route::get('/registro', [LoginController::class, 'registro'])->name('registro.action');
+Route::group(['prefix' => 'registo'], function () {
+    Route::get('/', [RegistoController::class, 'show'])->name('registo.view');
+
+    Route::post('/', [RegistoController::class, 'register'])->name('registo.action');
+});

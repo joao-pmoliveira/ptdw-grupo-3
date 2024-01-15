@@ -36,7 +36,8 @@
                                         </div>
                                     </div>
                                     <div class="d-grid my-3 justify-content-left mt-0">
-                                        <a href="{{ route('registro.action') }}" class="text-sm" style="width: 10rem;">Associar Conta</a>
+                                        Não tem conta? 
+                                        <a href="{{ route('registro.action') }}" class="text-sm" style="width: 10rem;">S</a>
                                     </div>
                                     <div class="col-12 justify-content-center">
                                         <div class="d-grid my-3 justify-content-center">
