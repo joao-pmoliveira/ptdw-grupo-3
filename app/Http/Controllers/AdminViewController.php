@@ -37,8 +37,9 @@ class AdminViewController extends Controller
 
         $acns = ACN::all();
 
-        $ucs = UnidadeCurricular::where('periodo_id', $periodos[0]->id)
-            ->orderByRaw('CAST(codigo as UNSIGNED) asc')
+        $dataType = getenv('DB_CONNECTION') === 'mysql' ? 'UNSIGNED' : 'INTEGER';
+        $ucs = UnidadeCurricular::where("periodo_id", $periodos[0]->id)
+            ->orderByRaw('CAST(codigo as ' . $dataType . ') asc')
             ->get();
 
         return view('gerirDados', [

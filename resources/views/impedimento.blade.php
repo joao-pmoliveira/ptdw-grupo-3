@@ -142,5 +142,8 @@
         </form>
     </section>
 </main>
+<script>
+    var baseUrl = "{{ config('app.url') }}";
+</script>
 
 @endsection

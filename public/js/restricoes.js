@@ -58,6 +58,7 @@ tableRestricoes.querySelectorAll('tbody tr').forEach(row => {
 })
 
 function redirectToRestrictionPage(ucID, ano, semestre) {
+    alert(window.location.hostname);
     window.location.href = baseUrl +`/restricoes/${ucID}/${ano}/${semestre}`
 }
 
