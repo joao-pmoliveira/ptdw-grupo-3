@@ -20,4 +20,3 @@
 
 </div>
 </main>
-@endsection

@@ -19,8 +19,8 @@
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
                     <div class="card border border-light-subtle rounded-3 shadow-sm custom-width" style="width: 110%;">
                         <div class="card-body p-3 p-md-4 p-xl-5">
-                            <h1 class="page-title justify-content-center">Login</h1><br>
-                            <form action="{{route('login.action')}}" method="post" id="formLogin">
+                            <h1 class="page-title justify-content-center">Associar Conta</h1><br>
+                            <form action="" method="" id=""> <!--action="{{route('login.action')}}" method="post" id="formLogin" -->
                                 @csrf
                                 <div class="row gy-3 overflow-hidden">
                                     <div class="col-12">
@@ -31,16 +31,19 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating mb-3 border border-2 rounded">
+                                            <input type="number" class="form-control border-0" name="codigo" id="user-codifo-input" placeholder="name@example.com" required>
+                                            <label for="user-codigo-input" class="form-label">Número funcionário</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3 border border-2 rounded">
                                             <input type="password" class="form-control border-0" name="password" id="user-password-input" value="" placeholder="Password" required>
                                             <label for="user-password-input" class="form-label">Password</label>
                                         </div>
                                     </div>
-                                    <div class="d-grid my-3 justify-content-left mt-0">
-                                        <a href="{{ route('registro.action') }}" class="text-sm" style="width: 10rem;">Associar Conta</a>
-                                    </div>
                                     <div class="col-12 justify-content-center">
                                         <div class="d-grid my-3 justify-content-center">
-                                            <button class="btn" style="width:10rem;" type="submit">Login</button>
+                                            <button class="btn" style="width:10rem;">Associar Conta</button>
                                         </div>
                                         <div class="d-grid my-3 justify-content-center">
                                             <button class="btn" style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</button>

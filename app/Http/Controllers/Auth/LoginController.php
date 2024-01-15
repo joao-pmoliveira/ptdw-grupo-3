@@ -38,4 +38,9 @@ class LoginController extends Controller
 
         return redirect()->route('welcome.view');
     }
+
+    public function registro()
+    {
+        return view('registro', ['page_title' => 'Criar Conta']);
+    }    
 }

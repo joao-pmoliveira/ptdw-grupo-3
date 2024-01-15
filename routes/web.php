@@ -70,3 +70,5 @@ Route::group(['prefix' => 'login'], function () {
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout.action');
+
+Route::get('/registro', [LoginController::class, 'registro'])->name('registro.action');
