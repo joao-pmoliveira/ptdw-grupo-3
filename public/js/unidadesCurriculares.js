@@ -2,12 +2,19 @@
 
 const tableUCs = document.querySelector('#table-ucs');
 const initRows = tableUCs.querySelectorAll('#table-ucs tbody tr:not(:is([id="ucs-no-match-row"]))');
+
+if (window.location.hostname === 'localhost') {
+    baseUrl = 'http://localhost';
+} else {
+    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
+}
+
 initRows.forEach(row => {
     row.addEventListener('click', () => redirectToUCPage(row));
 })
 
 function redirectToUCPage(ucRow) {
-    window.location.href = `/ucs/${ucRow.getAttribute('data-id')}`;
+    window.location.href = baseUrl + `/ucs/${ucRow.getAttribute('data-id')}`;
 }
 
 const periodoSelect = document.querySelector('select#ano_semestre');

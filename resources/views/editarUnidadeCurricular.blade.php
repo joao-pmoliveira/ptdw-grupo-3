@@ -117,6 +117,7 @@
 @auth
 <script>
     const authUser = @json(auth() -> user());
+    var baseUrl = "{{ config('app.url') }}";
 </script>
 @endauth
 <script src="{{asset('js/editUC.js')}}" defer></script>

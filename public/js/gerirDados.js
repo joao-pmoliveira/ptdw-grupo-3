@@ -2,10 +2,17 @@
 
 //#region Tabela de Unidades Curriculares
 const tableEditUCs = document.querySelector('#table-edit-ucs');
+
+if (window.location.hostname === 'localhost') {
+    baseUrl = 'http://localhost';
+} else {
+    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3'; 
+}
+
 tableEditUCs.querySelectorAll('tbody tr:not(:is([id="edit-ucs-no-match-row"]))').forEach(row => {
     const ucID = row.getAttribute('data-id');
     row.addEventListener('click', () => {
-        window.location.href = `/ucs/${ucID}/editar`;
+        window.location.href = baseUrl + `/ucs/${ucID}/editar`;
     })
 });
 

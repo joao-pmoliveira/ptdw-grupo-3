@@ -210,7 +210,9 @@
     </div>
 
 </main>
-
+<script>
+        var baseUrl = "{{ config('app.url') }}";
+    </script>
 <script src="{{asset('js/processos.js')}}" defer></script>
 
 @endsection
