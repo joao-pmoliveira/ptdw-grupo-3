@@ -80,7 +80,7 @@
                 </thead>
                 <tbody class="title-separator">
                     @foreach ($periodo->impedimentos as $impedimento)
-                    <tr class="border border-light">
+                    <tr class="border border-light pe-none">
                         <th scope="row"></th>
                         <td colspan="1">{{$impedimento->docente->numero_funcionario}}</td>
                         <td colspan="1">{{$impedimento->docente->user->nome}}</td>
@@ -210,7 +210,9 @@
     </div>
 
 </main>
-
+<script>
+        var baseUrl = "{{ config('app.url') }}";
+    </script>
 <script src="{{asset('js/processos.js')}}" defer></script>
 
 @endsection

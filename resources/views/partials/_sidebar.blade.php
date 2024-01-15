@@ -26,15 +26,19 @@
         <li>
             <a class="{{request()->route()->named('ucs.view') ? 'active' : ''}}" href="{{route('ucs.view')}}">Unidades Curriculares</a>
         </li>
+        @if($user->docente)
         <li>
             <a class="{{request()->route()->named('restricoes.view') ? 'active' : ''}}" href="{{route('restricoes.view')}}">Preencher Restrições</a>
         </li>
+        @endif
+        @if($user->admin)
         <li>
             <a class="{{request()->route()->named('restricoes.recolha.view') ? 'active' : ''}}" href="{{route('restricoes.recolha.view')}}">Recolha de Restrições</a>
         </li>
         <li>
             <a class="{{request()->route()->named('admin.gerir.view') ? 'active' : ''}}" href="{{route('admin.gerir.view')}}">Gerir Dados</a>
         </li>
+        @endif
         <li>
             <a class="">Ajuda</a>
         </li>
