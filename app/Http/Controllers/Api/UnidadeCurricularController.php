@@ -9,11 +9,13 @@ use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
 use Exception;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rule;
 
 class UnidadeCurricularController extends Controller
 {
@@ -78,6 +80,14 @@ class UnidadeCurricularController extends Controller
                 ->orderBy('semestre', 'desc')
                 ->first();
 
+            if (UnidadeCurricular::where('codigo', $codigo)->exists()) {
+                if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->where('periodo_id', $periodo->id)->exists()) {
+                    throw new Exception('Código e Nome já estão atribuídos para uma UC do periodo ' . $periodo->ano . ' semestre ' . $periodo->semestre);
+                } else if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->doesntExist()) {
+                    throw new Exception('Código e Nome não coincidem com dados na base de dados.');
+                }
+            }
+
             $uc = UnidadeCurricular::create([
                 'codigo' => $codigo,
                 'nome' => $nome,
@@ -117,7 +127,7 @@ class UnidadeCurricularController extends Controller
             }
             $uc->refresh();
 
-            DB::commit();
+            DB::rollBack();
             return response()->json([
                 'message' => 'sucesso!',
                 'redirect' => route('admin.gerir.view'),

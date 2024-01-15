@@ -12,7 +12,7 @@ class UnidadeCurricularRequest extends FormRequest
      */
     public function authorize(): bool
     {
-       return Gate::allows('admin-access', $this->user());
+        return Gate::allows('admin-access', $this->user());
     }
 
 

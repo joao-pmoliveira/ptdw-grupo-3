@@ -21,7 +21,7 @@ class DocenteRequest extends FormRequest
             'nome' => 'required|string',
             'acn' => 'required|integer|exists:acns,id',
             'email' => 'required|email',
-            'telemovel' => 'required|integer', 
+            'telemovel' => 'required|integer',
             'numero' => 'required|integer|min:1',
         ];
     }
