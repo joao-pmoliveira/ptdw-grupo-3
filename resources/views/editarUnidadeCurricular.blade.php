@@ -35,11 +35,8 @@
             <div class="d-flex align-items-center p-2">
                 <label for="uc-acn-select" class="col-md-2">Área Científica</label>
                 <select class="col-md-1 p-1" name="acn" id="uc-acn-select" required>
-                    <option value="{{$uc->acn->id}}" selected>{{$uc->acn->sigla}}</option>
                     @foreach ($acns as $acn)
-                        @if ($acn->id != $uc->acn->id)
-                        <option value="{{$acn->id}}">{{$acn->sigla}}</option>
-                        @endif
+                        <option value="{{$acn->id}}" @selected($uc->acn->id == $acn->id)>{{$acn->nome}}</option>
                     @endforeach
                 </select>
             </div>

@@ -49,7 +49,7 @@
                 <label for="docente-acn" class="col-md-2">Área Científica</label>
                 <select class="col-md-1 p-1" name="acn" id="uc-acn-select" required>
                     @foreach ($acns as $acn)
-                        <option value="{{$acn->id}}" @selected($docente->acn->id == $acn->id)>{{$acn->sigla}}</option>
+                        <option value="{{$acn->id}}" @selected($docente->acn->id == $acn->id)>{{$acn->nome}}</option>
                     @endforeach
                 </select>
             </div>

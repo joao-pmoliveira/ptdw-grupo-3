@@ -33,9 +33,9 @@
             <div class="d-flex align-items-center p-2">
                 <label class="col-md-2" for="uc-acn">Área Científica</label>
                 <select class="col-md-2 p-1" name="acn" id="ucn-acn-select" required>
-                    <option value="" selected>Selecione</option>
+                    <option value="" selected>---</option>
                     @foreach ($acns as $acn)
-                        <option value="{{$acn->id}}">{{$acn->sigla}}</option>
+                        <option value="{{$acn->id}}">{{$acn->nome}}</option>
                     @endforeach
                 </select>
             </div>
@@ -59,7 +59,7 @@
             <div class="d-flex align-items-center p-2">
                 <label class="col-md-2" for="uc-main-teacher">Docente Responsável</label>
                 <select class="col-md-2 p-1" name="docente_responsavel_id" id="uc-main-teacher-select" required>
-                    <option value="" selected>Selecione</option>
+                    <option value="" selected>---</option>
                     @foreach ($docentes as $docente)
                         <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                     @endforeach
@@ -72,19 +72,19 @@
                 <label class="col-md-2 p-3" for="uc-teachers">Restantes Docentes</label>
                 <div class="d-flex flex-column gap-2 col-md-4 py-1">
                     <select class="p-1" name="docentes_id[]" id="uc-teachers-select-1">
-                        <option value="" selected>Selecione</option>
+                        <option value="" selected>---</option>
                         @foreach ($docentes as $docente)
                         <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                         @endforeach
                     </select>
                     <select class="p-1" name="docentes_id[]" id="uc-teachers-select-2">
-                        <option value="" selected>Selecione</option>
+                        <option value="" selected>---</option>
                         @foreach ($docentes as $docente)
                         <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                         @endforeach
                     </select>
                     <select class="p-1" name="docentes_id[]" id="uc-teachers-select-3">
-                        <option value="" selected>Selecione</option>
+                        <option value="" selected>---</option>
                         @foreach ($docentes as $docente)
                         <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                         @endforeach

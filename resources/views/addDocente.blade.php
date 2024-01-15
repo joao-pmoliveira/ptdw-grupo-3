@@ -48,9 +48,9 @@
             <div class="d-flex align-items-center p-2">
                 <label class="col-md-2" for="acn">Área Científica</label>
                 <select class="col-md-2 p-1" name="acn" id="ucn-acn-select" required>
-                    <option value="" selected>Selecione</option>
+                    <option value="" selected>---</option>
                     @foreach ($acns as $acn)
-                        <option value="{{$acn->id}}">{{$acn->sigla}}</option>
+                        <option value="{{$acn->id}}">{{$acn->nome}}</option>
                     @endforeach
                 </select>
             </div>
