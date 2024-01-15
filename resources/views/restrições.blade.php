@@ -179,7 +179,13 @@
                     <tr class="border border-light" data-ano='{{$uc->periodo->ano}}' data-semestre='{{$uc->periodo->semestre}}' data-uc-id='{{$uc->id}}'>
                         <th scope='row'></th>
                         <td>{{$uc->nome}}</td>
-                        <td>{{$uc->restricoes_submetidas ? 'Submetido' : 'Pendente'}}</td>
+                        <td>
+                            @if ($uc->restricoes_submetidas)
+                                <i class="fa fa-check"></i>
+                            @else
+                                Pendente
+                            @endif
+                        </td>
                         <td>{{$uc->periodo->data_final}}</td>
                     </tr>
                 @endforeach

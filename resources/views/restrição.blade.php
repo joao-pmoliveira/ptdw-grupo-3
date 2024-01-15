@@ -25,7 +25,7 @@
                     <legend>Requisão de Laboratórios</legend>
                     <div class="col-md-3 d-flex justify-content-between">
                         <label for="aula-laboratorio-input">Sala de Aula</label>
-                        <input type="checkbox" name="aula_laboratorio" id="aula-laboratorio-input"
+                        <input type="checkbox" name="sala_laboratorio" id="aula-laboratorio-input"
                             @checked($uc->sala_laboratorio) @disabled(!$editavel)>
                     </div>
                     <div class="col-md-3 d-flex justify-content-between">

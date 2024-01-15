@@ -11,6 +11,7 @@ use App\Models\UnidadeCurricular;
 use Exception;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -243,19 +244,19 @@ class UnidadeCurricularController extends Controller
             return response()->json(['message' => 'user não autorizado'], 401);
         }
 
-        $salaLaboratorio = $request->filled('sala_laboratorio');
-        $exameFinalLaboratorio = $request->filled('exame_final_laboratorio');
-        $exameRecursoLaboratorio = $request->filled('exame_recurso_laboratorio');
+        $salaLaboratorio = $request->input('sala_laboratorio');
+        $exameFinalLaboratorio = $request->input('exame_final_laboratorio');
+        $exameRecursoLaboratorio = $request->input('exame_recurso_laboratorio');
         $observacoes = $request->input('observacoes');
         $software = $request->input('software');
 
-
         $uc->update([
-            'sala_laboratorio' => $salaLaboratorio,
-            'exame_final_laboratorio' => $exameFinalLaboratorio,
-            'exame_recurso_laboratorio' => $exameRecursoLaboratorio,
-            'software' => $software,
-            'observacoes_laboratorios' => $observacoes,
+            'sala_laboratorio' => is_null($salaLaboratorio) ? false : true,
+            'exame_final_laboratorio' => is_null($exameFinalLaboratorio) ? false : true,
+            'exame_recurso_laboratorio' => is_null($exameRecursoLaboratorio) ? false : true,
+            'software' => is_null($software) ? '' : $software,
+            'observacoes_laboratorios' => is_null($observacoes) ? '' : $observacoes,
+            'restricoes_submetidas' => true,
         ]);
 
         return response()->json(['message' => 'sucesso'], 200);
