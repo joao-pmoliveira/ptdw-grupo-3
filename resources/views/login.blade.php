@@ -35,9 +35,9 @@
                                             <label for="user-password-input" class="form-label">Password</label>
                                         </div>
                                     </div>
-                                    <div class="d-grid my-3 justify-content-left mt-0">
+                                    <div class="d-flex my-3 justify-content-left mt-0 align-items-center gap-2">
                                         Não tem conta? 
-                                        <a href="{{ route('registro.action') }}" class="text-sm" style="width: 10rem;">S</a>
+                                        <a href="{{ route('registo.action') }}" class="text-sm" style="width: 10rem;">Clique Aqui</a>
                                     </div>
                                     <div class="col-12 justify-content-center">
                                         <div class="d-grid my-3 justify-content-center">

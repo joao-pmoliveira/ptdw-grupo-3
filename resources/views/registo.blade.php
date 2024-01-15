@@ -25,25 +25,25 @@
                                     <div class="row gy-3 overflow-hidden">
                                         <div class="col-12">
                                             <div class="form-floating mb-3 border border-2 rounded">
-                                                <label for="user-email-input" class="form-label">Email</label>
                                                 <input type="email" class="form-control border-0" name="email" id="user-email-input" placeholder="name@example.com" required>
+                                                <label for="user-email-input" class="form-label">Email</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-floating mb-3 border border-2 rounded">
+                                                <input type="number" class="form-control border-0" name="numero_funcionario" id="user-codifo-input" placeholder="name@example.com" required>
                                                 <label for="user-codigo-input" class="form-label">Número funcionário</label>
-                                                <input type="number" class="form-control border-0" name="codigo" id="user-codifo-input" placeholder="name@example.com" required>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-floating mb-3 border border-2 rounded">
-                                                <label for="user-password-input" class="form-label">Password</label>
                                                 <input type="password" class="form-control border-0" name="password" id="user-password-input" value="" placeholder="Password" required>
+                                                <label for="user-password-input" class="form-label">Password</label>
                                             </div>
                                         </div>
                                         <div class="col-12 justify-content-center">
                                             <div class="d-grid my-3 justify-content-center">
-                                                <button class="btn" style="width:10rem;">Registar</button>
+                                                <input class="btn" type="submit" style="width:10rem;" value="Registrar">
                                             </div>
                                             <div class="d-grid my-3 justify-content-center">
                                                 <a class="btn" style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</a>
