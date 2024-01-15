@@ -71,7 +71,7 @@ legend {
 
 /*Hero Section (Imagem na página de entrada)*/
 #hero {
-    background-image: url("/img/bg-hero.jpg");
+    background-image: url('../img/bg-hero.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     aspect-ratio: 3;
