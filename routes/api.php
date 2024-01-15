@@ -70,3 +70,5 @@ Route::group(['prefix' => 'impedimentos'], function () {
 });
 
 Route::post('/upload-excel', [UploadController::class, 'upload'])->name('upload');
+
+Route::get('/download-excel', [UploadController::class, 'download'])->name('download');

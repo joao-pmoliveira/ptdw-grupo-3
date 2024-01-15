@@ -13,10 +13,10 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Faker\Factory as FakerFactory;
-
-use function PHPSTORM_META\map;
-use function PHPUnit\Framework\isNull;
+use Illuminate\Support\Facades\Response;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class UploadController extends Controller
 {
@@ -214,5 +214,87 @@ class UploadController extends Controller
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 500);
         }
+    }
+
+    public function download(Request $request)
+    {
+        $periodo = Periodo::orderBy('ano', 'desc')
+            ->orderBy('semestre', 'desc')
+            ->first();
+
+        $filename = 'output_restricoes_' . $periodo->ano . '_' . $periodo->semestre . '.xlsx';
+
+        try {
+            $spreadsheet = new Spreadsheet();
+
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
+            //Primeira Linha
+            $cabecalho = [
+                '1' => 'n.º Fun',           //Número funcionário
+                '2' => 'nome docente',
+                '3' => 'cód',               //código da UC
+                '4' => 'ACN',               //ACN (uc?)
+                '5' => 'R',                 //Responsável pela UC
+                '6' => 'nome UC',
+                '7' => 'curso',
+                '8' => 'lab',               //Laboratório para sala de aula
+                '9' => 'restrições',        //Impedimentos do docente
+                '10' => 'software',         //software requisitado
+                '11' => 'email',            //email docente
+                '12' => 'telefone',         //telefone docente
+                '13' => 'h',                //numero de horas da UC
+                '14' => '%',                //percentagem atribuida ao docente
+                '15' => 'subT',             //numero horas p/semana (subT = % * h)
+            ];
+
+            foreach ($cabecalho as $index => $value) {
+                $sheet->setCellValue($colunas[$index - 1] . '' . (1), $value);
+            }
+
+            $rowIndex = 2;
+
+            foreach (Docente::all() as $docente) {
+                foreach ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get() as $uc) {
+                    $row = [
+                        'num_func' => $docente->numero_funcionario,
+                        'nome_docente' => $docente->user->nome,
+                        'codigo_uc' => $uc->codigo,
+                        'acn_uc' => $uc->acn->sigla,
+                        'responsavel' => ($uc->docenteResponsavel && $uc->docenteResponsavel->id == $docente->id) ? 'X' : ' ',
+                        'nome_uc' => $uc->nome,
+                        'cursos' => implode(',', $uc->cursos()->pluck('sigla')->toArray()),
+                        'sala_laboratorio' => $uc->sala_laboratorio,
+                        'impedimentos' => $docente->impedimentos()->where('periodo_id', $periodo->id)->exists() ?
+                            $docente->impedimentos()->where('periodo_id', $periodo->id)->first()->impedimentos :
+                            '-',
+                        'software' => $uc->software,
+                        'email_docente' => $docente->user->email,
+                        'telefone_docente' => $docente->numero_telefone,
+                        'horas_semanais_uc' => $uc->horas_semanais,
+                        'percentagem_docente_uc' => $uc->pivot->percentagem_semanal,
+                        'subT' => $uc->pivot->percentagem_semanal * $uc->horas_semanais
+                    ];
+
+                    $colIndex = 0;
+                    foreach ($row as $cell) {
+                        $sheet->setCellValue($colunas[$colIndex++] . '' . $rowIndex, $cell);
+                    }
+                    $rowIndex++;
+                }
+            }
+
+            $writer = new Xlsx($spreadsheet, 'Xlsx');
+            $writer->setPreCalculateFormulas(false);
+
+            return response($writer->save('php://output'))
+                ->header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
+        } catch (Exception $e) {
+            return response()->json(['message' => 'erro']);
+        }
+
+        return response()->json(['message' => $periodo->ano . ' | ' . $periodo->semestre]);
     }
 }
