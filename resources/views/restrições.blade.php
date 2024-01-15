@@ -10,7 +10,7 @@
         ]
     ])
 
-    @include('partials._pageTitle', ['title' => 'Recolha de restrições'])
+    @include('partials._pageTitle', ['title' => 'Preencher restrições'])
 
     <section class="mt-3">
         <ul class="nav nav-tabs" role="tablist">
