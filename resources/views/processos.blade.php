@@ -80,7 +80,7 @@
                 </thead>
                 <tbody class="title-separator">
                     @foreach ($periodo->impedimentos as $impedimento)
-                    <tr class="border border-light">
+                    <tr class="border border-light pe-none">
                         <th scope="row"></th>
                         <td colspan="1">{{$impedimento->docente->numero_funcionario}}</td>
                         <td colspan="1">{{$impedimento->docente->user->nome}}</td>
