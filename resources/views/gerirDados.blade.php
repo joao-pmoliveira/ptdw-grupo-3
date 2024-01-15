@@ -50,7 +50,7 @@
                             @endforeach
                         </select>
                         <div class="paco-searchbox">
-                            <input type="text" name="nome_cod_uc" id="input-filter-ucs-nome" aria-label="Filtre por código ou nome de uc">
+                            <input type="text" name="nome_cod_uc" id="input-filter-ucs-nome" aria-label="Filtre por código ou nome de uc" placeholder="Procurar por UC">
                             <div><i class="fa-solid fa-search"></i></div>
                         </div>
                         <div class="paco-checkbox ">
@@ -98,9 +98,9 @@
 
         <section id="manage-teachers" class="tab-pane">
             <div class="d-flex flex-column gap-3">
-                <div class="d-flex flex-wrap justify-content-between  my-2">
+                <div class="d-flex flex-wrap justify-content-between my-2">
                     <div class="paco-searchbox">
-                        <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="Número ou Nome" aria-label="Filtre por número mecanográfico ou nome do docente">
+                        <input type="text" name="teacher_identifier" id="teacher-identifier" placeholder="Procurar por Docente" aria-label="Filtre por número mecanográfico ou nome do docente">
                         <div><i class="fa-solid fa-search"></i></div>
                     </div>
                     <div class="d-flex align-items-center">
