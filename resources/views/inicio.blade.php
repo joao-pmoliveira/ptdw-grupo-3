@@ -4,7 +4,9 @@
 
 <main class="w-100 px-5">
     @include('partials._breadcrumbs', [
-        'crumbs' => []
+        'crumbs' => [
+            ['página inicial', route('inicio.view')]
+        ]
     ])
 
     @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
