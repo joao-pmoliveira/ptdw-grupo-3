@@ -31,7 +31,7 @@
             </select>
 
             <div class="paco-searchbox" id="filter-ucs-by-name-btn">
-                <input type="text" name="uc" id="uc" aria-label="Filtre por código ou nome de uc">
+                <input type="text" name="uc" id="uc" aria-label="Filtre por código ou nome de uc" placeholder="Procurar por UCs">
                 <div><i class="fa-solid fa-search"></i></div>
             </div>
 

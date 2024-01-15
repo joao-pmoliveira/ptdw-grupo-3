@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DocenteController extends Controller
 {
@@ -127,6 +128,10 @@ class DocenteController extends Controller
             DB::beginTransaction();
 
             $docente = Docente::findOrFail($id);
+
+            if ($docente->user == Auth::user()) {
+                throw new Exception('A tentar eliminar docente associado ao utilizador atual');
+            }
 
             $docente->user->delete();
             $docente->impedimentos()->delete();

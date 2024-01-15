@@ -64,34 +64,18 @@ deleteUCBtn.addEventListener('click', async () => {
 });
 
 
-// var selectedDocentes = [];
+const docentesSelect = Array.from(document.querySelectorAll('select:not(:is([id="uc-acn-select"]))'));
+docentesSelect.forEach((select) => {
+    select.addEventListener('change', () => {
+        if (select.value === '')
+            return
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     var docenteSelects = document.querySelectorAll(".docente-select");
+        docentesSelect.forEach((s) => {
+            if (select === s)
+                return
 
-//     docenteSelects.forEach(function (select) {
-//         checkDuplicate(select);
-
-//         select.addEventListener("change", function () {
-//             checkDuplicate(this);
-//         });
-//     });
-// });
-
-// function checkDuplicate(select) {
-//     var selectedOption = select.value;
-
-//     if (selectedOption === "") {
-//         // Selecione a opção - não faz nada
-//         return;
-//     }
-
-//     // Verifica se a opção já está selecionada em algum outro select
-//     if (selectedDocentes.includes(selectedOption)) {
-//         alert("Docente já selecionado. Escolha outra opção.");
-//         select.value = ""; // Volta para a opção "Selecione"
-//     } else {
-//         // Adiciona o docente selecionado ao array
-//         selectedDocentes.push(selectedOption);
-//     }
-// }
+            if (select.value === s.value)
+                s.value = ''
+        })
+    });
+});
