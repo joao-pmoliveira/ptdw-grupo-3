@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Mail\TestMail;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Mail;
 
 class ImpedimentoController extends Controller
@@ -42,93 +43,95 @@ class ImpedimentoController extends Controller
     {
     }
 
-    public function update(ImpedimentoRequest $impedimentoRequest, $id)
+    public function update(Request $request, $id)
     {
-        if (!$impedimentoRequest->authorize()) {
-            return response()->json(['message' => 'nao autorizado'], 403);
-        }
-
-        $num_blocos_livres = count(array_filter([
-            $impedimentoRequest->input('segunda_manha'),
-            $impedimentoRequest->input('segunda_tarde'),
-            $impedimentoRequest->input('segunda_noite'),
-            $impedimentoRequest->input('terca_manha'),
-            $impedimentoRequest->input('terca_tarde'),
-            $impedimentoRequest->input('terca_noite'),
-            $impedimentoRequest->input('quarta_manha'),
-            $impedimentoRequest->input('quarta_tarde'),
-            $impedimentoRequest->input('quarta_noite'),
-            $impedimentoRequest->input('quinta_manha'),
-            $impedimentoRequest->input('quinta_tarde'),
-            $impedimentoRequest->input('quinta_noite'),
-            $impedimentoRequest->input('sexta_manha'),
-            $impedimentoRequest->input('sexta_tarde'),
-            $impedimentoRequest->input('sexta_noite'),
-            $impedimentoRequest->input('sabado_manha'),
-            $impedimentoRequest->input('sabado_tarde'),
-            $impedimentoRequest->input('sabado_noite'),
-        ], function ($var) {
-            return is_null($var);
-        }));
-
-        if ($num_blocos_livres < 2) {
-            return response()->json(['message' => 'Número de blocos livres unsuficiente'], 422);
-        }
-
-        if (($num_blocos_livres != (6 * 3)) and empty($impedimentoRequest->input('justificacao'))) {
-            return response()->json(['message' => 'Justificacao obrigatória'], 422);
-        }
-
-        $map_to_string = function ($val) {
-            return is_null($val) ? '0' : '1';
-        };
-
-        $segunda = implode(',', array_map($map_to_string, [
-            $impedimentoRequest->input('segunda_manha'),
-            $impedimentoRequest->input('segunda_tarde'),
-            $impedimentoRequest->input('segunda_noite'),
-        ]));
-        $terca = implode(',', array_map($map_to_string, [
-            $impedimentoRequest->input('terca_manha'),
-            $impedimentoRequest->input('terca_tarde'),
-            $impedimentoRequest->input('terca_noite'),
-        ]));
-        $quarta = implode(',', array_map($map_to_string, [
-            $impedimentoRequest->input('quarta_manha'),
-            $impedimentoRequest->input('quarta_tarde'),
-            $impedimentoRequest->input('quarta_noite'),
-        ]));
-        $quinta = implode(',', array_map($map_to_string, [
-            $impedimentoRequest->input('quinta_manha'),
-            $impedimentoRequest->input('quinta_tarde'),
-            $impedimentoRequest->input('quinta_noite'),
-        ]));
-        $sexta = implode(',', array_map($map_to_string, [
-            $impedimentoRequest->input('sexta_manha'),
-            $impedimentoRequest->input('sexta_tarde'),
-            $impedimentoRequest->input('sexta_noite'),
-        ]));
-        $sabado = implode(',', array_map($map_to_string, [
-            $impedimentoRequest->input('sabado_manha'),
-            $impedimentoRequest->input('sabado_tarde'),
-            $impedimentoRequest->input('sabado_noite'),
-        ]));
-
-
         try {
+            $impedimento = Impedimento::findOrFail($id);
+
+            $this->authorize('updateImpedimento', $impedimento);
+
+            $num_blocos_livres = count(array_filter([
+                $request->input('segunda_manha'),
+                $request->input('segunda_tarde'),
+                $request->input('segunda_noite'),
+                $request->input('terca_manha'),
+                $request->input('terca_tarde'),
+                $request->input('terca_noite'),
+                $request->input('quarta_manha'),
+                $request->input('quarta_tarde'),
+                $request->input('quarta_noite'),
+                $request->input('quinta_manha'),
+                $request->input('quinta_tarde'),
+                $request->input('quinta_noite'),
+                $request->input('sexta_manha'),
+                $request->input('sexta_tarde'),
+                $request->input('sexta_noite'),
+                $request->input('sabado_manha'),
+                $request->input('sabado_tarde'),
+                $request->input('sabado_noite'),
+            ], function ($var) {
+                return is_null($var);
+            }));
+
+            if ($num_blocos_livres < 2) {
+                return redirect()->back()->with('alerta', 'Tem que manter pelo menos DOIS blocos livres!');
+            }
+
+            $max_blocos_livres = 6 * 3;
+            if ($num_blocos_livres !== ($max_blocos_livres) && empty($request->input('justificacao'))) {
+                return redirect()->back()->with('alerta', 'Tem que incluir justificação para impedimentos de horário!');
+            }
+
+            $map_to_string = function ($val) {
+                return is_null($val) ? '0' : '1';
+            };
+
+            $segunda = implode(',', array_map($map_to_string, [
+                $request->input('segunda_manha'),
+                $request->input('segunda_tarde'),
+                $request->input('segunda_noite'),
+            ]));
+            $terca = implode(',', array_map($map_to_string, [
+                $request->input('terca_manha'),
+                $request->input('terca_tarde'),
+                $request->input('terca_noite'),
+            ]));
+            $quarta = implode(',', array_map($map_to_string, [
+                $request->input('quarta_manha'),
+                $request->input('quarta_tarde'),
+                $request->input('quarta_noite'),
+            ]));
+            $quinta = implode(',', array_map($map_to_string, [
+                $request->input('quinta_manha'),
+                $request->input('quinta_tarde'),
+                $request->input('quinta_noite'),
+            ]));
+            $sexta = implode(',', array_map($map_to_string, [
+                $request->input('sexta_manha'),
+                $request->input('sexta_tarde'),
+                $request->input('sexta_noite'),
+            ]));
+            $sabado = implode(',', array_map($map_to_string, [
+                $request->input('sabado_manha'),
+                $request->input('sabado_tarde'),
+                $request->input('sabado_noite'),
+            ]));
+
             DB::beginTransaction();
-            $impedimento = Impedimento::find($id);
+
             $impedimento->impedimentos = implode(';', [$segunda, $terca, $quarta, $quinta, $sexta, $sabado]);
-            $impedimento->justificacao = $impedimentoRequest->input('justificacao');
+            $impedimento->justificacao = $request->input('justificacao');
             $impedimento->submetido = true;
             $impedimento->save();
-            DB::commit();
 
-            return response()->json(['message' => 'sucesso'], 200);
-        } catch (Exception $e) {
-            DB::rollBack();
-            return response()->json(['message' => $e->getMessage()]);
+            DB::commit();
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('alerta', 'Erro ao enviar formulário!');
+        } catch (AuthorizationException $e) {
+            return redirect()->back()->with('alerta', 'Não tem permissões para submeter formulário!');
         }
+
+        return redirect()->back()->with('sucesso', 'Impedimentos submetidos com sucesso!');
     }
 
     public function delete(Impedimento $impedimento)
@@ -178,10 +181,10 @@ class ImpedimentoController extends Controller
                 $impedimento->save();
             }
             DB::commit();
-            foreach($docentes as $docente) {
-                $ucsResp=$docente->ucsResponsavel;
-                $ucs=$docente->unidadesCurriculares;
-                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente,$periodo,$ucsResp,$ucs));
+            foreach ($docentes as $docente) {
+                $ucsResp = $docente->ucsResponsavel;
+                $ucs = $docente->unidadesCurriculares;
+                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $ucsResp, $ucs));
             }
         } catch (Exception $e) {
             DB::rollBack();

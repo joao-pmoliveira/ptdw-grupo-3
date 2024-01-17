@@ -1,49 +1,28 @@
 'use strict'
 
-// Formulário de Impedimentos
-const impedimentoForm = document.querySelector('#impedimento-form');
-
 if (window.location.hostname === 'localhost') {
     baseUrl = 'http://localhost';
 } else {
     baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
 }
 
-impedimentoForm.addEventListener('submit', async (e) => {
+// Formulário de Impedimentos
+const impedimentoForm = document.querySelector('#impedimento-form');
+impedimentoForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const unchecked = document.querySelectorAll('#schedule-grid input[type="checkbox"]:not(:checked)');
-    if (unchecked.length < 2) {
-        alert('Pelo menos 2 blocos livres!');
-        return;
-    }
-
     const checked = document.querySelectorAll('#schedule-grid input[type="checkbox"]:checked');
     const justification = document.getElementById('justificao-input');
-    if (checked.length > 0 && justification.value.trim() == '') {
-        alert('Justificação é necessária!');
-        return;
-    }
 
-    try {
-        const formData = new FormData(impedimentoForm);
+    const minFreeBlocks = unchecked.length >= 2
+    const justificationNeeded = checked.length > 0 && justification.value.trim() == ''
 
-        const res = await fetch(impedimentoForm.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': formData.get('_token'),
-                'X-HTTP-Method-Override': formData.get('_method'),
-            },
-        });
-        if (!res.ok) {
-            throw new Error(`HTTP Error! Status: ${res.status}, Message: ${res.message}`);
-        }
-        const data = await res.json();
-        location.reload();
-    } catch (error) {
-        console.error(`Error: ${error.message}`);
-        console.error(`Error stack: ${error.stack}`);
+    if (!minFreeBlocks || justificationNeeded) {
+        if (!minFreeBlocks) document.getElementById('schedule-grid-error').classList.remove('d-none');
+        if (justificationNeeded) document.getElementById('justification-error').classList.remove('d-none');
+    } else {
+        impedimentoForm.submit();
     }
 })
 
@@ -58,7 +37,7 @@ tableRestricoes.querySelectorAll('tbody tr').forEach(row => {
 })
 
 function redirectToRestrictionPage(ucID, ano, semestre) {
-    window.location.href = baseUrl +`/restricoes/${ucID}/${ano}/${semestre}`
+    window.location.href = baseUrl + `/restricoes/${ucID}/${ano}/${semestre}`
 }
 
 // Secção de Históricos
@@ -71,7 +50,7 @@ tableHistImpedimentos.querySelectorAll('tbody tr').forEach(row => {
     const docenteID = authUser.id;
 
     row.addEventListener('click', () => {
-        window.location.href = baseUrl +`/impedimentos/${docenteID}/${ano}/${semestre}`;
+        window.location.href = baseUrl + `/impedimentos/${docenteID}/${ano}/${semestre}`;
     })
 })
 

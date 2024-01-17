@@ -7,7 +7,7 @@ const menuBtn = document.querySelector('#menu-btn')
 if (window.location.hostname === 'localhost') {
     baseUrl = 'http://localhost';
 } else {
-    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3'; 
+    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
 }
 
 menuBtn?.addEventListener('click', () => {
@@ -18,7 +18,7 @@ menuBtn?.addEventListener('click', () => {
 const uaLogo = document.querySelector('#ua-logo-header-container');
 uaLogo?.addEventListener('click', () => {
     if (window.location.pathname != "/") {
-        window.location.href = baseUrl +"/inicio";
+        window.location.href = baseUrl + "/inicio";
     }
 })
 
@@ -37,4 +37,13 @@ logoutBtn?.addEventListener('click', () => {
             _token: csrfToken
         })
     })
+})
+
+
+//Alerts
+const secondsPerAlert = 3;
+document.querySelectorAll('#alerts > div').forEach(a => {
+    setTimeout(() => {
+        a.querySelector('.btn-close').click()
+    }, secondsPerAlert * 1000);
 })

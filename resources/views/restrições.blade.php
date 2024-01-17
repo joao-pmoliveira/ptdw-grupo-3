@@ -12,6 +12,25 @@
 
     @include('partials._pageTitle', ['title' => 'Preencher restrições'])
 
+    <section id="alerts">
+        @if (session('alerta'))
+            <div class="alert alert-dismissible fade show bg-alert" role="alert">
+                <p><i class="fa-solid fa-check">{{session('alerta')}}</i></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="fa-solid fa-x"></i>
+                </button> 
+            </div>
+        @endif
+        @if (session('sucesso'))
+            <div class="alert alert-dismissible fade show bg-accent" role="alert">
+                <p><i class="fa-solid fa-check">{{session('sucesso')}}</i></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="fa-solid fa-x"></i>
+                </button> 
+            </div>
+        @endif
+    </section>
+
     <section class="mt-3">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
@@ -71,7 +90,7 @@
                           </div>
                     @endif
 
-                    <div class="" id="schedule-grid">
+                    <div class="mb-2" id="schedule-grid">
                         <p></p>
                         <p>Segunda</p>
                         <p>Terça</p>
@@ -158,6 +177,10 @@
                             <i class="fa-solid fa-x"></i>
                         </label>
                     </div>
+
+                    <div class="d-none" id="schedule-grid-error">
+                        <p class="text-alert fw-bold">*Manter pelo menos DOIS blocos livres!</p>
+                    </div>
                 </fieldset>
 
                 <fieldset id="justification-fieldset" class="mb-4">
@@ -165,6 +188,9 @@
                     <p class="mb-2">Para impedimentos, caso existam.</p>
                     <label class="d-block" for="justicacao-input"></label>
                     <textarea data-history="{{$historico_impedimentos[0]['justificacao']}}" cols="60" rows="8" name="justificacao" id="justificao-input" class="px-2 py-1">{{$impedimento->justificacao}}</textarea>
+                    <div class="d-none" id="justification-error">
+                        <p class="text-alert fw-bold">*Justifica obrigatória</p>
+                    </div>
                 </fieldset>
 
                 <div class="d-flex gap-3" id="form-btns">
@@ -262,11 +288,12 @@
         </section>
     </div>
 </main>
-
 @auth
     <script>
         const authUser = @json(auth()->user());
         var baseUrl = "{{ config('app.url') }}";
+
+        window.onload = () => window.scrollTo(0,0);
     </script>
 @endauth
 <script src="{{asset('js/restricoes.js')}}" defer></script>
