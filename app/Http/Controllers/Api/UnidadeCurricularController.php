@@ -21,6 +21,8 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 
 class UnidadeCurricularController extends Controller
 {
@@ -134,7 +136,7 @@ class UnidadeCurricularController extends Controller
 
             DB::commit();
             $todays_date = now();
-            if ($todays_date->between(Carbon::parse($uc->periodo->data_inicial), Carbon::parse($uc->periodo->data_final))){
+            if ($todays_date->between(Carbon::parse($uc->periodo->data_inicial), Carbon::parse($uc->periodo->data_final))) {
                 Mail::to($docenteResp->user->email)->send(new emailMudancaRestricoes($docenteResp, $uc->periodo, $uc, $uc->periodo->data_final));
             }
             return response()->json([
@@ -147,79 +149,100 @@ class UnidadeCurricularController extends Controller
         }
     }
 
-    public function update(UnidadeCurricularRequest $ucRequest, $id)
+    public function update(Request $request, $id)
     {
-        if (!$ucRequest->authorize()) {
-            return response()->json(['message' => 'Não autorizado'], 403);
-        }
-
         try {
+            $this->authorize('admin-access');
+
+            $uc = UnidadeCurricular::findOrFail($id);
+
+            $rules = [
+                'codigo' => ['required', 'integer', 'min:1'],
+                'nome' => ['required', 'string'],
+                'horas' => ['required', 'integer', 'min:1'],
+                'ects' => ['required', 'integer', 'min:1'],
+                'acn' => ['required', 'integer', 'exists:acns,id'],
+                'docente_responsavel_id' => ['required', 'integer', 'exists:docentes,id'],
+                'docentes_id' => ['array'],
+            ];
+            $messages = [
+                'codigo.required' => 'Preencha o código da UC!',
+                'codigo.integer' => 'Código tem que ser número inteiro!',
+                'codigo.min' => 'Código tem que ser superior a 1!',
+                'nome.required' => 'Preencha o nome da UC!',
+                'nome.string' => 'Introduza um nome válido!',
+                'horas.required' => 'Preencha as horas semanais da UC!',
+                'horas.integer' => 'Horas semanais têm que ser um número inteiro',
+                'horas.min' => 'Horas semanais têm que ser superiores a 1!',
+                'ects.required' => 'Preencha os ECTs da UC!',
+                'ects.integer' => 'ECTs têm que ser número inteiro!',
+                'ects.min' => 'ECTS têm que ser superiores a 1!',
+                'acn.required' => 'Selecione a Área Científica Nuclear da UC!',
+                'acn.integer' => 'Área Científica Nuclear inválida!',
+                'acn.exists' => 'Área Científica Nuclear inválida!',
+                'docente_responsavel_id.required' => 'Selecione o Docente Responsável pela UC!',
+                'docente_responsavel_id.integer' => 'Docente Responsável inválido!',
+                'docente_responsavel_id.exists' => 'Docente Responsável inválido!',
+            ];
+
+            $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
+
+            $antigoDocResponsavel = $uc->docenteResponsavel ?? null;
+            $docentesId = $validatedData['docentes_id'];
+
             DB::beginTransaction();
 
-            $uc = UnidadeCurricular::find($id);
-
-            $oldDocRespId=$uc->docente_responsavel_id;
-
-            // Obtenha os dados atualizados do request
-            $codigo = $ucRequest->input('codigo');
-            $nome = $ucRequest->input('nome');
-            $horas = $ucRequest->input('horas');
-            $ects = $ucRequest->input('ects');
-            $acn = $ucRequest->input('acn');
-            $docenteRespId = $ucRequest->input('docente_responsavel_id');
-            $docentesId = $ucRequest->input('docentes_id', []);
-
-            // Atualize os campos da unidade curricular
             $uc->update([
-                'codigo' => $codigo,
-                'nome' => $nome,
-                'acn_id' => $acn,
-                'docente_responsavel_id' => $docenteRespId,
-                'horas_semanais' => $horas,
-                'ects' => $ects,
+                'codigo' => $validatedData['codigo'],
+                'nome' => $validatedData['nome'],
+                'acn_id' => $validatedData['acn'],
+                'docente_responsave_id' => $validatedData['docente_responsavel_id'],
+                'horas_semanais' => $validatedData['horas'],
+                'ects' => $validatedData['ects'],
             ]);
 
-            // Atualize a sigla com base no nome
-            $words = explode(' ', $nome);
-            $uc->sigla = '';
-            foreach ($words as $word) {
-                $initial = $word[0];
-                if (ctype_upper($initial)) {
-                    $uc->sigla .= $initial;
-                }
-            }
-            $uc->save();
+            $uc->docentes()->detach();
 
-            // Atualize os docentes associados
-            $uc->docentes()->detach(); // Remova todos os docentes associados atualmente
+            $docenteResponsavel = Docente::findOrFail($validatedData['docente_responsavel_id']);
+            //todo @joao: definir percentagem semanal
+            $uc->docentes()->attach($docenteResponsavel, ['percentagem_semanal' => 1]);
 
-            $docenteResp = Docente::find($docenteRespId);
-            $uc->docentes()->attach($docenteResp, ['percentagem_semanal' => 1]);
-
-            foreach ($docentesId as $docenteID) {
-                if (is_null($docenteID)) {
+            foreach ($docentesId as $docenteId) {
+                if (is_null($docenteId)) {
                     continue;
                 }
 
-                $docente = Docente::findOrFail($docenteID);
+                $docente = Docente::findOrFail($docenteId);
+                //todo @joao: definir percentagem semanal
                 $uc->docentes()->attach($docente, ['percentagem_semanal' => 1]);
             }
 
             DB::commit();
-            $todays_date = now();
-            if ($todays_date->between(Carbon::parse($uc->periodo->data_inicial), Carbon::parse($uc->periodo->data_final))){
-                if($docenteResp->id!=$oldDocRespId){
-                    Mail::to($docenteResp->user->email)->send(new emailMudancaRestricoes($docenteResp, $uc->periodo, $uc, $uc->periodo->data_final));
+
+            if ($antigoDocResponsavel && (!$uc->docenteResponsavel || $antigoDocResponsavel->id !== $uc->docenteResponsavel->id)) {
+                $hoje = now();
+                $data_inicial = Carbon::createFromFormat('Y-m-d', $uc->periodo->data_inicial);
+                $data_final = Carbon::createFromFormat('Y-m-d', $uc->periodo->data_final);
+
+                if ($hoje->betweenIncluded($data_inicial, $data_final)) {
+                    //todo @joao: enviar aviso para os outros docentes tbm
+                    //tanto aqueles que foram adicionar como 'docentes restante'
+                    //tanto aqueles que foram retirados da UC, seja o antigo responsavel 
+                    // seja os antigos 'restantes'
+                    Mail::to($docenteResponsavel->user->email)->send(new emailMudancaRestricoes($docenteResponsavel, $uc->periodo, $uc, $uc->periodo->data_final));
                 }
             }
 
-            return response()->json([
-                'message' => 'Sucesso!',
-                'redirect' => route('admin.gerir.view'),
-            ]);
-        } catch (Exception $e) {
+            return redirect(route('admin.gerir.view'))->with('sucesso', 'Unidade Curricular editada com sucesso!');
+        } catch (AuthorizationException $e) {
             DB::rollBack();
-            return response()->json(['message' => $e->getMessage()]);
+            return redirect()->back()->with('alerta', 'Sem permissões para editar esta Unidade Curricular!');
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', 'Erro ao submeter edições');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 

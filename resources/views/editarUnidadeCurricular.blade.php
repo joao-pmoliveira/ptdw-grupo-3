@@ -13,6 +13,25 @@
     @include('partials._pageTitle', ['title' => $uc->codigo . ' - ' . $uc->nome])
 
     <section class="mt-3 title-separator pt-2">
+        <div id="alerts">
+            @if (session('alerta'))
+                <div class="alert alert-dismissible fade show bg-alert mb-2" role="alert">
+                    <p><i class="fa-solid fa-check"></i>{{session('alerta')}}</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa-solid fa-x"></i>
+                    </button> 
+                </div>
+            @endif
+            @if (session('sucesso'))
+                <div class="alert alert-dismissible fade show bg-accent mb-2" role="alert">
+                    <p><i class="fa-solid fa-check"></i>{{session('sucesso')}}</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa-solid fa-x"></i>
+                    </button> 
+                </div>
+            @endif
+        </div>
+
         <form id="edit-uc-form" action="{{route('ucs.update', ['id' => $uc->id])}}" method="POST">
             @csrf
             @method('PUT')
@@ -127,11 +146,6 @@
     </section>
 </main>
 
-
-<script>
-    const authUser = @json(auth() -> user());
-    var baseUrl = "{{ config('app.url') }}";
-</script>
 <script src="{{asset('js/editUC.js')}}" defer></script>
 
 @endsection

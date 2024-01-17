@@ -15,18 +15,6 @@ function getRestantesDocsIds() {
     return Array.from(restDocsSelects).map(s => s.value);
 }
 
-console.log(getDocenteRespId());
-console.log(getRestantesDocsIds());
-
-
-// const selectedDocIds = Array.from(document.querySelectorAll('select:not(:is([id="uc-acn-select"]))'))
-//     .map(select => select.value)
-//     .filter(id => id != '')
-//     .map(id => parseInt(id));
-
-// console.log(selectedDocIds);
-
-
 const docentesSelect = Array.from(document.querySelectorAll('select:not(:is([id="uc-acn-select"]))'));
 
 function updateDisabledOptions() {
@@ -46,7 +34,6 @@ function updateDisabledOptions() {
 }
 
 document.addEventListener('DOMContentLoaded', updateDisabledOptions);
-
 docentesSelect.forEach((select) => {
     select.addEventListener('change', updateDisabledOptions);
 });

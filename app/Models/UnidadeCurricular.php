@@ -57,4 +57,19 @@ class UnidadeCurricular extends Model
         'observacoes_laboratorios',
         'software',
     ];
+
+    protected function setNomeAttribute($value)
+    {
+        $this->attributes['nome'] = $value;
+
+        $words = explode(' ', $value);
+        $this->attributes['sigla'] = '';
+
+        foreach ($words as $word) {
+            $initial = $word;
+            if (ctype_upper($initial)) {
+                $this->attributes['sigla'] .= $initial;
+            }
+        }
+    }
 }
