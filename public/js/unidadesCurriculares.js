@@ -3,19 +3,13 @@
 const tableUCs = document.querySelector('#table-ucs');
 const initRows = tableUCs.querySelectorAll('#table-ucs tbody tr:not(:is([id="ucs-no-match-row"]))');
 
-if (window.location.hostname === 'localhost') {
-    baseUrl = 'http://localhost';
-} else {
-    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
-}
 
 initRows.forEach(row => {
-    row.addEventListener('click', () => redirectToUCPage(row));
+    row.addEventListener('click', () => {
+        const url = row.getAttribute('data-link');
+        window.location.href = url;
+    });
 })
-
-function redirectToUCPage(ucRow) {
-    window.location.href = baseUrl + `/ucs/${ucRow.getAttribute('data-id')}`;
-}
 
 const periodoSelect = document.querySelector('select#ano_semestre');
 periodoSelect?.addEventListener('change', async () => {

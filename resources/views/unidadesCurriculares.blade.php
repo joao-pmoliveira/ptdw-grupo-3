@@ -57,7 +57,8 @@
                     data-my-uc='{{$user 
                                     ? $uc->docentes->contains($user->docente) ? 'Y' : 'N'
                                     : ''}}'
-                    data-curso-id='{{implode(",",$uc->cursos->pluck("id")->toArray())}}'>
+                    data-curso-id='{{implode(",",$uc->cursos->pluck("id")->toArray())}}'
+                    data-link='{{route('ucs.uc.view', ['uc' => $uc->id])}}'>
                     <th scope="row"></th>
                     <td>{{$uc->codigo}}</td>
                     <td>{{$uc->nome}}</td>
@@ -74,11 +75,6 @@
 
 </main>
 
-@auth
-    <script>
-        const authUser = @json(auth()->user());
-        var baseUrl = "{{ config('app.url') }}";
-    </script>
-@endauth
+<script>const authUser = @json($user)</script>
 <script src="{{asset('js/unidadesCurriculares.js')}}" defer></script>
 @endsection

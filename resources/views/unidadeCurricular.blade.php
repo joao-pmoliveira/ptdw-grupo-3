@@ -10,13 +10,14 @@
             [strtolower($uc->nome), route('ucs.uc.view', ['uc' => $uc->id])]
         ]
     ])
+
     <div class="d-flex align-items-center justify-content-between">
         @include('partials._pageTitle', ['title' => $uc->codigo . ' - ' . $uc->nome])
         <div class="d-flex gap-2">
             @if ($user->admin)
             <a href="{{route('ucs.editar.view', ['uc' => $uc->id])}}" class="btn">Editar</a>
             @endif
-            @if ($uc->docenteResponsavel->id == $user->docente->id)
+            @if ($uc->docenteResponsavel && $user->docente && $uc->docenteResponsavel->id == $user->docente->id)
             <a href="{{route('restricoes.uc.view', ['uc' => $uc->id, 'ano_inicial' => $uc->periodo->ano, 'semestre' => $uc->periodo->semestre])}}" class="btn">Restrições</a>
             @endif
         </div>
@@ -41,7 +42,11 @@
         <div class="d-flex align-items-center p-2">
             <div class="col-md-2">Docente Responsável</div>
             <div class="col-md-10">
-                <p>{{$uc->docenteResponsavel->numero_funcionario .' - '. $uc->docenteResponsavel->user->nome}}</p>
+                @if ($uc->docenteResponsavel)
+                    <p>{{$uc->docenteResponsavel->numero_funcionario}} - {{$uc->docenteResponsavel->user->nome}}</p>
+                @else
+                    <p>N/A</p>
+                @endif
             </div>
         </div>
         <hr class="m-0 bg-secondary">
@@ -49,8 +54,8 @@
             <div class="col-md-2">Restantes Docentes</div>
             <div class="col-md-10">
                 @foreach ( $uc->docentes as $docente)
-                    @if ($docente->id != $uc->docenteResponsavel->id)
-                        <p>{{$docente->numero_funcionario .' - '. $docente->user->nome}}</p>
+                    @if (!$uc->docenteResponsavel || $uc->docenteResponsavel->id === $docente->id)
+                    <p>{{$docente->numero_funcionario}} - {{$docente->user->nome}}</p>
                     @endif
                 @endforeach
             </div>
@@ -83,9 +88,5 @@
         </div>
     </section>
 
-
-    <script>
-        var baseUrl = "{{ config('app.url') }}";
-    </script>
 </main>
 @endsection
