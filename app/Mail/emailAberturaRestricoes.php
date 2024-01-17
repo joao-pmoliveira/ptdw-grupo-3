@@ -25,6 +25,8 @@ class emailAberturaRestricoes extends Mailable
     public $withUcs;
     public $link;
     public $appName;
+    public $ucsList;
+    public $ucsRespList;
     public function __construct($docente,$periodo,$ucsResp,$ucs)
     {
         //
@@ -37,6 +39,8 @@ class emailAberturaRestricoes extends Mailable
         $this->withUcs = $ucs ? " e os formulários de Restrições de Unidades Curriculares" : "";
         $this->link=env('APP_URL')."/restricoes";
         $this->appname=env('APP_NAME');
+        $this->ucsList=$this->ucsList();
+        $this->ucsRespList=$this->ucsRespList();
     }
 
     /**
