@@ -131,7 +131,7 @@ class UnidadeCurricularController extends Controller
             }
             $uc->refresh();
 
-            DB::rollBack();
+            DB::commit();
             $todays_date = now();
             if ($todays_date->between(Carbon::parse($uc->periodo->data_inicial), Carbon::parse($uc->periodo->data_final))){
                 Mail::to($docenteResp->user->email)->send(new emailMudancaRestricoes($docenteResp, $uc->periodo, $uc, $uc->periodo->data_final));
