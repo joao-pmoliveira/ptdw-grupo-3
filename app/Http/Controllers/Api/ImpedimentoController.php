@@ -120,7 +120,7 @@ class ImpedimentoController extends Controller
             DB::beginTransaction();
 
             $impedimento->impedimentos = implode(';', [$segunda, $terca, $quarta, $quinta, $sexta, $sabado]);
-            $impedimento->justificacao = $request->input('justificacao');
+            $impedimento->justificacao = $request->input('justificacao') ?? '';
             $impedimento->submetido = true;
             $impedimento->save();
 
@@ -181,10 +181,10 @@ class ImpedimentoController extends Controller
                 $impedimento->save();
             }
             DB::commit();
-            foreach($docentes as $docente) {
-                $ucsResp=$docente->ucsResponsavel;
-                $ucs=$docente->unidadesCurriculares;
-                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente,$periodo,$ucsResp,$ucs,$dataLimite));
+            foreach ($docentes as $docente) {
+                $ucsResp = $docente->ucsResponsavel;
+                $ucs = $docente->unidadesCurriculares;
+                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $ucsResp, $ucs, $dataLimite));
             }
         } catch (Exception $e) {
             DB::rollBack();
