@@ -166,10 +166,10 @@
                     <label class="d-block" for="justicacao-input"></label>
                     <textarea data-history="{{$historico_impedimentos[0]['justificacao']}}" cols="60" rows="8" name="justificacao" id="justificao-input" class="px-2 py-1">{{$impedimento->justificacao}}</textarea>
                 </fieldset>
-                {{$historico_impedimentos[0]['impedimentos']}}
+
                 <div class="d-flex gap-3" id="form-btns">
                     <input class="btn" type="submit" value="Submeter">
-                    <a class="btn" href="{{route('inicio.view')}}">Cancelar</a>
+                    <a class="btn cancelar" href="{{route('inicio.view')}}">Cancelar</a>
                     <input class="btn" type="reset" value="Reset">
                 </div>
             </form>

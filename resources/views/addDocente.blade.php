@@ -56,7 +56,7 @@
             </div>
             <div class="d-flex align-items-center gap-2">
                 <input class="btn" type="submit" value="Submeter">
-                <a class="btn" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
+                <a class="btn cancelar" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
     </section>

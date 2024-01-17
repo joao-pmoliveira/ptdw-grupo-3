@@ -37,7 +37,7 @@
             
             <div class="d-flex gap-3 mt-3 mb-5">
                 <input class="btn" type="submit" value="Editar">
-                <a class="btn" href="{{route('inicio.view')}}" value="Cancelar">Cancelar</a>
+                <a class="btn cancelar" href="{{route('inicio.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
     </section>

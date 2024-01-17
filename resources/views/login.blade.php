@@ -39,12 +39,12 @@
                                         Não tem conta? 
                                         <a href="{{ route('registo.action') }}" class="text-sm" style="width: 10rem;">Clique Aqui</a>
                                     </div>
-                                    <div class="col-12 justify-content-center">
-                                        <div class="d-grid my-3 justify-content-center">
+                                    <div class="col-12 justify-content-center row">
+                                        <div class="d-grid my-3 justify-content-center col-md-6 col-s-12">
                                             <button class="btn" style="width:10rem;" type="submit">Login</button>
                                         </div>
-                                        <div class="d-grid my-3 justify-content-center">
-                                            <button class="btn" style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</button>
+                                        <div class="d-grid my-3 justify-content-center col-md-6 col-s-12">
+                                            <button class="btn cancelar" style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</button>
                                         </div>
                                     </div>
                                 </div>

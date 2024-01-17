@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImpedimentoRequest;
+use App\Mail\emailAberturaRestricoes;
 use App\Models\Docente;
 use App\Models\Impedimento;
 use App\Models\Periodo;
@@ -13,6 +14,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 class ImpedimentoController extends Controller
 {
@@ -175,6 +178,11 @@ class ImpedimentoController extends Controller
                 $impedimento->save();
             }
             DB::commit();
+            foreach($docentes as $docente) {
+                $ucsResp=$docente->ucsResponsavel;
+                $ucs=$docente->unidadesCurriculares;
+                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente,$periodo,$ucsResp,$ucs));
+            }
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 200);
