@@ -181,7 +181,7 @@ class ImpedimentoController extends Controller
             foreach($docentes as $docente) {
                 $ucsResp=$docente->ucsResponsavel;
                 $ucs=$docente->unidadesCurriculares;
-                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente,$periodo,$ucsResp,$ucs));
+                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente,$periodo,$ucsResp,$ucs,$dataLimite));
             }
         } catch (Exception $e) {
             DB::rollBack();
