@@ -75,9 +75,15 @@ class emailAberturaRestricoes extends Mailable
     public function ucsRespList(): string
     {
         $list = "";
-        if ($this->ucsResp != null) {
+        $ucsResp2=collect();
+        foreach($this->ucsResp as $uc){
+            if($uc->periodo->ano==$this->ano && $uc->periodo->semestre==$this->semestre){
+                $ucsResp2->add($uc);
+            }
+        }
+        if ($ucsResp2->isNotEmpty()) {
             $list .= "<p>&emsp;Foi lhe atribuído as Unidades Curriculares, como docente responsável:</p><ul>";
-            foreach ($this->ucsResp as $uc) {
+            foreach ($ucsResp2 as $uc) {
                 $list .= "<li>" . $uc->codigo . " - " . $uc->nome . "</li>";
             }
             $list .= "</ul><br>";
@@ -88,13 +94,25 @@ class emailAberturaRestricoes extends Mailable
     public function ucsList(): string
     {
         $list = "";
-        if ($this->ucs != null) {
-            if ($this->ucsResp != null) {
+        $ucsResp2=collect();
+        foreach($this->ucsResp as $uc){
+            if($uc->periodo->ano==$this->ano && $uc->periodo->semestre==$this->semestre){
+                $ucsResp2->add($uc);
+            }
+        }
+        $ucs2=collect();
+        foreach($this->ucs as $uc){
+            if($uc->periodo->ano==$this->ano && $uc->periodo->semestre==$this->semestre){
+                $ucs2->add($uc);
+            }
+        }
+        if ($ucs2->isNotEmpty()) {
+            if ($ucsResp2->isNotEmpty()) {
                 $list .= "<p>&emsp;E como docente auxiliar:</p><ul>";
             } else {
                 $list .= "<p>&emsp;Foi lhe atribuído as Unidades Curriculares, como docente auxiliar:</p><ul>";
             }
-            foreach ($this->ucs as $uc) {
+            foreach ($ucs2 as $uc) {
                 $list .= "<li>" . $uc->codigo . " - " . $uc->nome . "</li>";
             }
             $list .= "</ul><br>";

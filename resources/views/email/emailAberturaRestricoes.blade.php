@@ -6,7 +6,7 @@
     <p>&emsp;Para preencher as suas restrições diriga-se à plataforma de {{$appName}}, na página <a href={{$link}}>Preencher restrições</a>.</p>
     <br>
     <div>
-        {{$ucsRespList()}}
-        {{ $ucsList()}}
+        {!!$ucsRespList!!}
+        {!!$ucsList!!}
     </div>
 </div>
