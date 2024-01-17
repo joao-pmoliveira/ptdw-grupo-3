@@ -127,51 +127,58 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
-                    @foreach ($periodosH as $index => $periodoH)
-                        <tr data-bs-toggle="collapse" data-bs-target="{{'#rh'.$index}}">
-                            <th scope="row"></th>
-                            <td><i class="fa-solid fa-chevron-right"></i></td>
-                            <td>Formulários {{$periodoH->ano . '/' . ($periodoH->ano+1)}} - {{$periodoH->semestre}}º semestre</td>
-                            <td class="text-center">
-                                Submetidos:
-                                {{$periodoH->unidadesCurriculares()->where('restricoes_submetidas', true)->count()}}
-                                /
-                                {{$periodoH->unidadesCurriculares()->count()}}
-                            </td>
-                            <td class="text-center">
-                                Submetidos:
-                                {{$periodoH->impedimentos->where('submetido', true)->count()}}
-                                /
-                                {{$periodoH->impedimentos->count()}}
-                            </td>
-                            <td><i class="fa-solid fa-download"></i></td>
-                        </tr>
-                        @foreach ($docentes as $docente)
-                            @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->exists())   
-                            <tr class="collapse accordion-collapse bg-terciary" id="{{'rh'.$index}}">
+                    @if ($periodosH->count() > 0)
+                        @foreach ($periodosH as $index => $periodoH)
+                            <tr data-bs-toggle="collapse" data-bs-target="{{'#rh'.$index}}">
                                 <th scope="row"></th>
-                                <td colspan="1">{{$docente->numero_funcionario}}</td>
-                                <td colspan="1">{{$docente->user->nome}}</td>
-                                <td colspan="1" class="text-center">
-                                    @if ($docente->ucsResponsavel)
-                                        {{$docente->ucsResponsavel()->where('periodo_id', $periodoH->id)->where('restricoes_submetidas', true)->count()}}
-                                        /
-                                        {{$docente->ucsResponsavel()->where('periodo_id', $periodoH->id)->count()}}
-                                    @else ---
-                                    @endif
+                                <td><i class="fa-solid fa-chevron-right"></i></td>
+                                <td>Formulários {{$periodoH->ano . '/' . ($periodoH->ano+1)}} - {{$periodoH->semestre}}º semestre</td>
+                                <td class="text-center">
+                                    Submetidos:
+                                    {{$periodoH->unidadesCurriculares()->where('restricoes_submetidas', true)->count()}}
+                                    /
+                                    {{$periodoH->unidadesCurriculares()->count()}}
                                 </td>
-                                <td colspan="1" class="text-center">
-                                    @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->first()->submetido)
-                                        <i class="fa fa-check"></i>
-                                    @else
-                                        Não submetido
-                                    @endif
+                                <td class="text-center">
+                                    Submetidos:
+                                    {{$periodoH->impedimentos->where('submetido', true)->count()}}
+                                    /
+                                    {{$periodoH->impedimentos->count()}}
                                 </td>
-                                <td></td>
+                                <td><i class="fa-solid fa-download"></i></td>
                             </tr>
-                            @endif
+                            @foreach ($docentes as $docente)
+                                @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->exists())   
+                                <tr class="collapse accordion-collapse bg-terciary" id="{{'rh'.$index}}">
+                                    <th scope="row"></th>
+                                    <td colspan="1">{{$docente->numero_funcionario}}</td>
+                                    <td colspan="1">{{$docente->user->nome}}</td>
+                                    <td colspan="1" class="text-center">
+                                        @if ($docente->ucsResponsavel)
+                                            {{$docente->ucsResponsavel()->where('periodo_id', $periodoH->id)->where('restricoes_submetidas', true)->count()}}
+                                            /
+                                            {{$docente->ucsResponsavel()->where('periodo_id', $periodoH->id)->count()}}
+                                        @else ---
+                                        @endif
+                                    </td>
+                                    <td colspan="1" class="text-center">
+                                        @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->first()->submetido)
+                                            <i class="fa fa-check"></i>
+                                        @else
+                                            Não submetido
+                                        @endif
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                @endif
+                            @endforeach
                         @endforeach
-                    @endforeach
+                    @else
+                        <tr class="border border-light pe-none">
+                            <th scope="row"></th>
+                            <td colspan="5">Sem correspondências</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </section>
