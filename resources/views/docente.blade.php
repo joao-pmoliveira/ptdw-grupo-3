@@ -13,13 +13,32 @@
 
     @include('partials._pageTitle', ['title' => $docente->numero_funcionario . ' - ' . $docente->user->nome])
 
-    <section class="mt-3 title-separator  pt-2">
+    <section class="mt-3 title-separator pt-2">
+        <div id="alerts">
+            @if (session('alerta'))
+                <div class="alert alert-dismissible fade show bg-alert mb-2" role="alert">
+                    <p><i class="fa-solid fa-check"></i>{{session('alerta')}}</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa-solid fa-x"></i>
+                    </button> 
+                </div>
+            @endif
+            @if (session('sucesso'))
+                <div class="alert alert-dismissible fade show bg-accent mb-2" role="alert">
+                    <p><i class="fa-solid fa-check"></i>{{session('sucesso')}}</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa-solid fa-x"></i>
+                    </button> 
+                </div>
+            @endif
+        </div>
+        
         <form id="edit-docente-form" action="{{route('docentes.update', ['id' => $docente->id])}}" method="POST">
             @csrf
             @method('PUT')
             <div class="d-flex align-items-center p-2">
                 <label for="docente-numero" class="col-md-2">Número</label>
-                <input type="number" name="numero" id="docente-numero-input" class="col-md-1 px-1" value="{{$docente->numero_funcionario}}" required>
+                <input type="number" name="numero_funcionario" id="docente-numero-input" class="col-md-1 px-1" value="{{$docente->numero_funcionario}}" required>
             </div>
 
             <hr class="m-0 bg-secondary">
@@ -39,8 +58,8 @@
             <hr class="m-0 bg-secondary">
 
             <div class="d-flex align-items-center p-2">
-                <label for="docente-telemovel" class="col-md-2 ">Telemóvel</label>
-                <input type="tel" name="telemovel" id="docente-telemovel" class="col-md-2 px-1" value="{{$docente->numero_telefone}}" required>
+                <label for="docente-telefone" class="col-md-2 ">Telefone</label>
+                <input type="tel" name="telefone" id="docente-telefone" class="col-md-2 px-1" value="{{$docente->numero_telefone}}" required>
             </div>
 
             <hr class="m-0 bg-secondary">
@@ -68,11 +87,5 @@
     </section>
 </main>
 
-@auth
-    <script>
-        const authUser = @json(auth()->user());
-        var baseUrl = "{{ config('app.url') }}";
-    </script>
-@endauth
 <script src="{{asset('js/editDocente.js')}}" defer></script>
 @endsection
