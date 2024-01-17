@@ -31,19 +31,19 @@
                 @endif
                 <fieldset>
                     <legend>Requisão de Laboratórios</legend>
-                    <div class="col-md-3 d-flex justify-content-between">
-                        <label for="aula-laboratorio-input">Sala de Aula</label>
-                        <input type="checkbox" data-history="{{$ultimaRestricao_uc->sala_laboratorio}}" name="sala_laboratorio" id="aula-laboratorio-input"
+                    <div class="col-md-3 form-check p-0 d-flex justify-content-between">
+                        <label class="form-check-label" for="aula-laboratorio-input">Sala de Aula</label>
+                        <input class="form-check-input" type="checkbox" data-history="{{$ultimaRestricao_uc->sala_laboratorio}}" name="sala_laboratorio" id="aula-laboratorio-input"
                             @checked($uc->sala_laboratorio) @disabled(!$editavel)>
                     </div>
-                    <div class="col-md-3 d-flex justify-content-between">
-                        <label for="exame-final-laboratorio">Exame Época Normal</label>
-                        <input type="checkbox" data-history="{{$ultimaRestricao_uc->exame_final_laboratorio}}" name="exame_final_laboratorio" id="exame-final-laboratorio"
+                    <div class="col-md-3 form-check p-0 d-flex justify-content-between">
+                        <label class="form-check-label" for="exame-final-laboratorio">Exame Época Normal</label>
+                        <input class="form-check-input" type="checkbox" data-history="{{$ultimaRestricao_uc->exame_final_laboratorio}}" name="exame_final_laboratorio" id="exame-final-laboratorio"
                             @checked($uc->exame_final_laboratorio) @disabled(!$editavel)>
                     </div>
-                    <div class="col-md-3 d-flex justify-content-between">
-                        <label for="exame-recurso-laboratorio">Exame Época Recurso</label>
-                        <input type="checkbox" data-history="{{$ultimaRestricao_uc->exame_recurso_laboratorio}}"  name="exame_recurso_laboratorio" id="exame-recurso-laboratorio"
+                    <div class="col-md-3 form-check p-0 d-flex justify-content-between">
+                        <label class="form-check-label" for="exame-recurso-laboratorio">Exame Época Recurso</label>
+                        <input class="form-check-input" type="checkbox" data-history="{{$ultimaRestricao_uc->exame_recurso_laboratorio}}"  name="exame_recurso_laboratorio" id="exame-recurso-laboratorio"
                             @checked($uc->exame_recurso_laboratorio) @disabled(!$editavel)>
                     </div>
                 </fieldset>
