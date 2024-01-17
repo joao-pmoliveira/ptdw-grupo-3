@@ -41,6 +41,7 @@ class emailAberturaRestricoes extends Mailable
         $this->appName=env('APP_NAME');
         $this->ucsList=$this->ucsList();
         $this->ucsRespList=$this->ucsRespList();
+        $this->dataFim=$dataFim;
     }
 
     /**
