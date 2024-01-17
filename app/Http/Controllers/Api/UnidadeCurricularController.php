@@ -9,6 +9,7 @@ use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -232,33 +233,33 @@ class UnidadeCurricularController extends Controller
         }
     }
 
-    public function updateRestricao(RestricoesRequest $request, $id)
+    public function updateRestricao(Request $request, $id)
     {
-        $uc = UnidadeCurricular::find($id);
+        try {
+            $uc = UnidadeCurricular::findOrFail($id);
 
-        if (is_null($uc)) {
-            return response()->json(['message' => 'uc nao encontrada'], 404);
+            $this->authorize('updateRestricoes', $uc);
+
+            $salaLaboratorio = is_null($request->input('sala_laboratorio')) ? false : true;
+            $exameFinalLaboratorio = is_null($request->input('exame_final_laboratorio')) ? false : true;
+            $exameRecursoLaboratorio = is_null($request->input('exame_recurso_laboratorio')) ? false : true;
+            $observacoes = $request->input('observacoes') ?? '';
+            $software = $request->input('software') ?? '';
+
+            $uc->update([
+                'sala_laboratorio' => $salaLaboratorio,
+                'exame_final_laboratorio' => $exameFinalLaboratorio,
+                'exame_recurso_laboratorio' => $exameRecursoLaboratorio,
+                'software' => $software,
+                'observacoes_laboratorios' => $observacoes,
+                'restricoes_submetidas' => true,
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('alerta', 'Erro ao enviar formulário!');
+        } catch (AuthorizationException $e) {
+            return redirect()->back()->with('alerta', 'Não tem permissões para submeter este formulário!');
         }
 
-        if (!$request->authorize()) {
-            return response()->json(['message' => 'user não autorizado'], 401);
-        }
-
-        $salaLaboratorio = $request->input('sala_laboratorio');
-        $exameFinalLaboratorio = $request->input('exame_final_laboratorio');
-        $exameRecursoLaboratorio = $request->input('exame_recurso_laboratorio');
-        $observacoes = $request->input('observacoes');
-        $software = $request->input('software');
-
-        $uc->update([
-            'sala_laboratorio' => is_null($salaLaboratorio) ? false : true,
-            'exame_final_laboratorio' => is_null($exameFinalLaboratorio) ? false : true,
-            'exame_recurso_laboratorio' => is_null($exameRecursoLaboratorio) ? false : true,
-            'software' => is_null($software) ? '' : $software,
-            'observacoes_laboratorios' => is_null($observacoes) ? '' : $observacoes,
-            'restricoes_submetidas' => true,
-        ]);
-
-        return response()->json(['message' => 'sucesso'], 200);
+        return redirect()->back()->with('sucesso', 'Restrições submetidas com sucesso!');
     }
 }

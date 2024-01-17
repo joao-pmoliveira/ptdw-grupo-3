@@ -5,7 +5,9 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Impedimento;
+use App\Models\UnidadeCurricular;
 use App\Policies\ImpedimentoPolicy;
+use App\Policies\UnidadeCurricularPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Impedimento::class => ImpedimentoPolicy::class,
+        UnidadeCurricular::class => UnidadeCurricularPolicy::class,
     ];
 
     /**

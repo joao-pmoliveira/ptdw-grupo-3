@@ -78,8 +78,7 @@ class RestricoesViewController extends Controller
         $data_inicial = Carbon::createFromFormat('Y-m-d', $periodo->data_inicial);
         $data_final = Carbon::createFromFormat('Y-m-d', $periodo->data_final);
 
-        $editavel = ($uc->docenteResponsavel->id == $user->docente->id) &&
-            ($hoje->lt($data_final) && $hoje->gt($data_inicial));
+        $aberto = ($hoje->lt($data_final) && $hoje->gt($data_inicial));
 
         return view('restrição', [
             'page_title' => 'Restrições de Sala de Aula',
@@ -87,7 +86,8 @@ class RestricoesViewController extends Controller
             'ano_inicial' => $ano_inicial,
             'semestre' => $semestre,
             'user' => $user,
-            'editavel' => $editavel,
+            'aberto' => $aberto,
+            'permissao_editar' => $uc->docenteResponsavel && $uc->docenteResponsavel->id === $user->docente->id
         ]);
     }
 
