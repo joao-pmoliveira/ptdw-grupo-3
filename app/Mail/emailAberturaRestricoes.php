@@ -27,6 +27,7 @@ class emailAberturaRestricoes extends Mailable
     public $appName;
     public $ucsList;
     public $ucsRespList;
+    public $dataFim;
     public function __construct($docente,$periodo,$ucsResp,$ucs,$dataFim)
     {
         //
