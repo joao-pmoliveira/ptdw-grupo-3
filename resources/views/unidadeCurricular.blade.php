@@ -54,7 +54,7 @@
             <div class="col-md-2">Restantes Docentes</div>
             <div class="col-md-10">
                 @foreach ( $uc->docentes as $docente)
-                    @if (!$uc->docenteResponsavel || $uc->docenteResponsavel->id === $docente->id)
+                    @if (!$uc->docenteResponsavel || $uc->docenteResponsavel->id !== $docente->id)
                     <p>{{$docente->numero_funcionario}} - {{$docente->user->nome}}</p>
                     @endif
                 @endforeach
