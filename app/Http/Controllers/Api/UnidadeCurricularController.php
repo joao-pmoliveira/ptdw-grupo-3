@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RestricoesRequest;
 use App\Http\Requests\UnidadeCurricularRequest;
+use App\Mail\emailMudancaRestricoes;
 use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
@@ -17,6 +18,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class UnidadeCurricularController extends Controller
 {
@@ -129,6 +132,10 @@ class UnidadeCurricularController extends Controller
             $uc->refresh();
 
             DB::rollBack();
+            $todays_date = now();
+            if ($todays_date->between(Carbon::parse($uc->periodo->data_inicial), Carbon::parse($uc->periodo->data_final))){
+                Mail::to($docenteResp->user->email)->send(new emailMudancaRestricoes($docenteResp, $uc->periodo, $uc, $uc->periodo->data_final));
+            }
             return response()->json([
                 'message' => 'sucesso!',
                 'redirect' => route('admin.gerir.view'),
@@ -149,6 +156,8 @@ class UnidadeCurricularController extends Controller
             DB::beginTransaction();
 
             $uc = UnidadeCurricular::find($id);
+
+            $oldDocRespId=$uc->docente_responsavel_id;
 
             // Obtenha os dados atualizados do request
             $codigo = $ucRequest->input('codigo');
@@ -196,6 +205,13 @@ class UnidadeCurricularController extends Controller
             }
 
             DB::commit();
+            $todays_date = now();
+            if ($todays_date->between(Carbon::parse($uc->periodo->data_inicial), Carbon::parse($uc->periodo->data_final))){
+                if($docenteResp->id!=$oldDocRespId){
+                    Mail::to($docenteResp->user->email)->send(new emailMudancaRestricoes($docenteResp, $uc->periodo, $uc, $uc->periodo->data_final));
+                }
+            }
+
             return response()->json([
                 'message' => 'Sucesso!',
                 'redirect' => route('admin.gerir.view'),
