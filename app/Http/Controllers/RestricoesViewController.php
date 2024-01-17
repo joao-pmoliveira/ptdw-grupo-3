@@ -74,6 +74,13 @@ class RestricoesViewController extends Controller
             ->where('semestre', $semestre)
             ->first();
 
+        $ultimaRestricao_uc = UnidadeCurricular::where('codigo', $uc->codigo)
+            ->where('periodo_id', '!=', $periodo->id)->get()
+            ->sortByDesc(function ($item) {
+                return $item->periodo->ano * 10 + $item->periodo->semestre;
+            })
+            ->first();
+
         $hoje = Carbon::now();
         $data_inicial = Carbon::createFromFormat('Y-m-d', $periodo->data_inicial);
         $data_final = Carbon::createFromFormat('Y-m-d', $periodo->data_final);
@@ -87,7 +94,8 @@ class RestricoesViewController extends Controller
             'semestre' => $semestre,
             'user' => $user,
             'aberto' => $aberto,
-            'permissao_editar' => $uc->docenteResponsavel && $uc->docenteResponsavel->id === $user->docente->id
+            'permissao_editar' => $uc->docenteResponsavel && $uc->docenteResponsavel->id === $user->docente->id,
+            'ultimaRestricao_uc' => $ultimaRestricao_uc,
         ]);
     }
 
