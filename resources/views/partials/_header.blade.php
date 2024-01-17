@@ -2,9 +2,9 @@
     <div id="menu-btn" class="{{$sidebar ? '' : 'invisible'}}" onclick= "toggleSidebar()">
         <i class="fa-solid fa-bars"></i>
     </div>
-    <div class="img-wrapper" id="ua-logo-header-container">
+    <a class="img-wrapper" href="{{route('inicio.view')}}">
         <img src="{{ asset('img/Logo.png') }}" alt="">
-    </div>
+    </a>
     <div id="titulo-pagina-inicial">
         <p>Suporte à Criação de Horários</p>
     </div>

@@ -4,22 +4,8 @@
 const sidebar = document.querySelector('aside')
 const menuBtn = document.querySelector('#menu-btn')
 
-if (window.location.hostname === 'localhost') {
-    baseUrl = 'http://localhost';
-} else {
-    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
-}
-
 menuBtn?.addEventListener('click', () => {
     sidebar?.classList.toggle('show')
-})
-
-//UA Logo Header
-const uaLogo = document.querySelector('#ua-logo-header-container');
-uaLogo?.addEventListener('click', () => {
-    if (window.location.pathname != "/") {
-        window.location.href = baseUrl + "/inicio";
-    }
 })
 
 //Logout
