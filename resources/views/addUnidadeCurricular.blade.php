@@ -94,7 +94,7 @@
 
             <div class="d-flex gap-3 mt-3 mb-5" id="form-btns">
                 <input class="btn" type="submit" value="Submeter">
-                <a class="btn" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
+                <a class="btn cancelar" href="{{route('admin.gerir.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
     </section>

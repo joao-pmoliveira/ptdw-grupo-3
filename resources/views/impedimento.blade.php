@@ -131,13 +131,13 @@
 
             <div class="d-flex gap-3" id="form-btns">
                 <input class="btn" type="button" value="Submeter" @if(!$editavel)hidden @endif @disabled(!$editavel)>
-                <a class="btn" href="{{route('restricoes.view')}}">
+                
                     @if (!$editavel)
-                        Voltar
+                        <a class="btn" href="{{route('restricoes.view')}}">Voltar</a>
                     @else
-                        Cancelar
+                        <a class="btn cancelar" href="{{route('restricoes.view')}}">Cancelar</a>
                     @endif
-                </a>
+                
             </div>
         </form>
     </section>

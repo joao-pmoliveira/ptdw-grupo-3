@@ -20,7 +20,8 @@
     transition: none;
 }
 
-.btn:focus {
+
+.btn:focus, .btnCancelar:focus {
     outline: 1px solid var(--primary-text-color);
 }
 .btn:active,
@@ -30,11 +31,43 @@
     color: var(--secondary-text-color);
 }
 
+.btn.remover{
+    border-color: var(--remove-background-color);
+    color: var(--remove-background-color); 
+}
+.btn.cancelar{
+    border-color: var(--cancel-background-color);
+    color: var(--cancel-background-color);   
+}
+.btn.reset{
+    border-color: var(--reset-background-color);
+    color: var(--reset-background-color);   
+}
+
+.btn.remover:hover,.btn.remover:active
+{
+    border-color: var(--remove-background-color);
+    background-color: var(--remove-background-color);
+    color: var(--secondary-text-color);    
+}
+.btn.cancelar:hover,.btn.cancelar:active
+{
+    border-color: var(--cancel-background-color);
+    background-color: var(--cancel-background-color);
+    color: var(--secondary-text-color);
+}
+.btn.reset:hover,.btn.reset:active
+{
+    border-color: var(--reset-background-color);
+    background-color: var(--reset-background-color);
+    color: var(--secondary-text-color);
+}
+
 /*Reset Material Dashboard Button*/
-.btn:active {
+.btn:active, .btnCancelar:active {
     box-shadow: none;
     opacity: 1;
 }
-.btn:focus {
+.btn:focus, .btnCancelar:focus {
     box-shadow: none;
 }

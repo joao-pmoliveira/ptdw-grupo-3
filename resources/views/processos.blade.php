@@ -201,7 +201,7 @@
                     </div>
                     <div class="d-flex gap-3 justify-content-center" id="form-btns">
                         <input class="btn" type="submit" value="Submeter">
-                        <input class="btn" data-bs-dismiss="modal" type="button" value="Cancelar">
+                        <input class="btn cancelar" data-bs-dismiss="modal" type="button" value="Cancelar">
                     </div>
                 </form>
             </div>

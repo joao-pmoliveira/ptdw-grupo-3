@@ -56,7 +56,7 @@
             </div>
             <div class="d-flex gap-3 mb-5" id="form-btns">
                 <input class="btn" type="submit" value="Submeter" @disabled(!$editavel)>
-                <a class="btn" href="{{route('restricoes.view')}}" value="Cancelar">Cancelar</a>
+                <a class="btn cancelar" href="{{route('restricoes.view')}}" value="Cancelar">Cancelar</a>
             </div>
         </form>
     </section>

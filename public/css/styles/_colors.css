@@ -10,4 +10,8 @@
     --accent-background-color: #0EB4BD;
 
     --accent-background-color-light: #0EB4BD45;
+
+    --cancel-background-color:  #6c757d;
+    --remove-background-color: rgba(219, 40, 40, 0.7);
+    --reset-background-color: #d9d9d9;
 }

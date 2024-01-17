@@ -46,7 +46,7 @@
                                                 <input class="btn" type="submit" style="width:10rem;" value="Registrar">
                                             </div>
                                             <div class="d-grid my-3 justify-content-center">
-                                                <a class="btn" style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</a>
+                                                <a class="btn cancelar" style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</a>
                                             </div>
                                         </div>
                                     </div>
