@@ -149,7 +149,7 @@
                             </tr>
                             @foreach ($docentes as $docente)
                                 @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->exists())   
-                                <tr class="collapse accordion-collapse bg-terciary" id="{{'rh'.$index}}">
+                                <tr class="collapse accordion-collapse bg-terciary pe-none" id="{{'rh'.$index}}">
                                     <th scope="row"></th>
                                     <td colspan="1">{{$docente->numero_funcionario}}</td>
                                     <td colspan="1">{{$docente->user->nome}}</td>
