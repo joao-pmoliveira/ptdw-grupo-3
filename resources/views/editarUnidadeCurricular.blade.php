@@ -19,7 +19,7 @@
             <div class="d-flex align-items-center p-2">
                 <label for="uc-codigo-input" class="col-md-2">Código</label>
                 <input class="col-md-2 px-1" type="text" name="codigo" id="uc-codigo-input" value="{{$uc->codigo}}"
-                    placeholder="Cód" required>
+                    placeholder="Código" required>
             </div>
 
             <hr class="m-0 bg-secondary">
@@ -64,9 +64,16 @@
                 <select class="col-md-2 p-1" name="docente_responsavel_id" id="uc-main-teacher-select" required>
                     <option value="">---</option>
                     @foreach ($docentes as $docente)
-                    <option value="{{$docente->id}}" @selected($uc->docente_responsavel_id && $uc->docente_responsavel_id == $docente->id)>
-                        {{$docente->numero_funcionario . ' - ' . $docente->user->nome}}
-                    </option>
+                        @php
+                            $responsavel = $uc->docenteResponsavel && $uc->docenteResponsavel->id === $docente->id;
+                            $jaAssociado = !$responsavel && $uc->docentes->contains($docente);
+                        @endphp
+                        <option value="{{$docente->id}}" 
+                            @selected($responsavel)
+                            @disabled($jaAssociado)
+                        >    
+                            {{$docente->numero_funcionario}} - {{$docente->user->nome}}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -77,25 +84,30 @@
                 <label for="uc-teachers" class="col-md-2">Restantes Docentes</label>
                 <div class="d-flex flex-column gap-2 col-md-6">
                     @foreach ($uc->docentes as $ucDocente)
-                    @if ($ucDocente->id != $uc->docente_responsavel_id)
-                    <select class="col-md-2 p-1" name="docentes_id[]">
-                        <option value="">---</option>
-                        @foreach ($docentes as $docente)
-                        <option value="{{$docente->id}}" @selected($docente->id == $ucDocente->id)>
-                            {{$docente->numero_funcionario . ' - ' . $docente->user->nome}}
-                        </option>
-                        @endforeach
-                    </select>
-                    @endif
+                        @if (!$uc->docenteResponsavel || $ucDocente->id !== $uc->docenteResponsavel->id)
+                            <select class="col-md-2 p-1" name="docentes_id[]">
+                                <option value="">---</option>
+                                @foreach ($docentes as $docente)
+                                    @php
+                                        $selecionado = $ucDocente->id === $docente->id
+                                    @endphp
+                                    <option value="{{$docente->id}}"
+                                        @selected($selecionado)
+                                    >
+                                        {{$docente->numero_funcionario}} - {{$docente->user->nome}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        @endif
                     @endforeach
 
-                    @for ($i = 0; $i < 4-count($uc->docentes); $i++)
+                    @for ($i = 0; $i < 4-count($uc->Docentes); $i++)
                         <select class="col-md-2 p-1" name="docentes_id[]">
                             <option value="">---</option>
                             @foreach ($docentes as $docente)
-                            <option value="{{$docente->id}}">
-                                {{$docente->numero_funcionario . ' - ' . $docente->user->nome}}
-                            </option>
+                                <option value="{{$docente->id}}" @disabled($uc->docentes->contains($docente))>
+                                    {{$docente->numero_funcionario}} - {{$docente->user->nome}}
+                                </option>
                             @endforeach
                         </select>
                     @endfor
@@ -114,12 +126,12 @@
         </form>
     </section>
 </main>
-@auth
+
+
 <script>
     const authUser = @json(auth() -> user());
     var baseUrl = "{{ config('app.url') }}";
 </script>
-@endauth
 <script src="{{asset('js/editUC.js')}}" defer></script>
 
 @endsection
