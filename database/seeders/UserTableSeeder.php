@@ -49,7 +49,7 @@ class UserTableSeeder extends Seeder
     public static function developerAccounts()
     {
         Docente::create([
-            'numero_funcionario' => fake()->unique()->randomNumber(4, true),
+            'numero_funcionario' => "85095",
             'acn_id' => 1,
             'numero_telefone' => '960444644',
         ]);
@@ -62,7 +62,7 @@ class UserTableSeeder extends Seeder
         ]);
 
         Docente::create([
-            'numero_funcionario' => fake()->unique()->randomNumber(4, true),
+            'numero_funcionario' => "85096",
             'acn_id' => 1,
             'numero_telefone' => '',
         ]);
