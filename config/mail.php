@@ -100,8 +100,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply.sch.ua@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Suporte à Criação de Horários'),
     ],
 
     /*

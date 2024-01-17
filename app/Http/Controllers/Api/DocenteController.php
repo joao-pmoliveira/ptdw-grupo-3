@@ -13,6 +13,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 class DocenteController extends Controller
 {
@@ -66,7 +68,7 @@ class DocenteController extends Controller
             ]);
             $docente->user()->save($user);
             DB::commit();
-
+            Mail::to('miguelmvieira@ua.pt')->send(new TestMail());
             return response()->json([
                 'message' => 'sucesso!',
                 'redirect' => route('admin.gerir.view'),

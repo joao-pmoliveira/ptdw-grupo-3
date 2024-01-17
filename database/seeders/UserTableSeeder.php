@@ -36,6 +36,7 @@ class UserTableSeeder extends Seeder
                 'admin' => true,
             ]);
         }
+        $this->developerAccounts();
     }
 
     public static function getEmailFromName($name)
@@ -43,5 +44,41 @@ class UserTableSeeder extends Seeder
         return strtolower(str_replace(' ', '_', iconv('UTF-8', 'ASCII//TRANSLIT', $name))) .
             fake()->randomNumber(5, false) .
             '@estga.pt';
+    }
+
+    public static function developerAccounts()
+    {
+        Docente::create([
+            'numero_funcionario' => fake()->unique()->randomNumber(4, true),
+            'acn_id' => 1,
+            'numero_telefone' => '960444644',
+        ]);
+        User::create([
+            'nome' => 'Miguel Marques Vieira',
+            'email' => 'miguelnamarinha@gmail.com',
+            'password' => bcrypt('password'),
+            'admin' => true,
+            'docente_id' => 12
+        ]);
+
+        Docente::create([
+            'numero_funcionario' => fake()->unique()->randomNumber(4, true),
+            'acn_id' => 1,
+            'numero_telefone' => '',
+        ]);
+        User::create([
+            'nome' => 'Miguel Marques Vieira Docente',
+            'email' => 'miguelmvieira@ua.pt',
+            'password' => bcrypt('password'),
+            'admin' => false,
+            'docente_id' => 13
+        ]);
+
+        User::create([
+            'nome' => 'Miguel Marques Vieira Admin',
+            'email' => 'miguelnamarinha@sapo.pt',
+            'password' => bcrypt('password'),
+            'admin' => true
+        ]);
     }
 }
