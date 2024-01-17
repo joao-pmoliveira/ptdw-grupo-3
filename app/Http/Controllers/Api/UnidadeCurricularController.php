@@ -246,29 +246,29 @@ class UnidadeCurricularController extends Controller
         }
     }
 
-    public function delete(Request $ucRequest, $ucid)
+    public function delete($id)
     {
-
         try {
+            $this->authorize('admin-access');
+
+            $uc = UnidadeCurricular::findOrFail($id);
+
             DB::beginTransaction();
 
-            $uc = UnidadeCurricular::find($ucid);
-
+            $nome = $uc->nome;
 
             $uc->docentes()->detach();
             $uc->cursos()->detach();
-
-            // Delete the UnidadeCurricular
             $uc->delete();
 
             DB::commit();
-            return response()->json([
-                'message' => 'sucesso!',
-                'redirect' => route('admin.gerir.view'),
-            ]);
-        } catch (Exception $e) {
+            return redirect(route('admin.gerir.view'))->with('sucesso', $nome . ' : UC eliminada com sucesso!');
+        } catch (ValidationException $e) {
             DB::rollBack();
-            return response()->json(['message' => $e->getMessage()], 500);
+            return redirect()->back()->with('alerta', 'Sem permissões para eliminar UC!');
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', 'Erro ao tentar eliminar UC!');
         }
     }
 
