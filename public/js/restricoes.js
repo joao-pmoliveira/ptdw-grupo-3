@@ -58,7 +58,6 @@ tableRestricoes.querySelectorAll('tbody tr').forEach(row => {
 })
 
 function redirectToRestrictionPage(ucID, ano, semestre) {
-    alert(window.location.hostname);
     window.location.href = baseUrl +`/restricoes/${ucID}/${ano}/${semestre}`
 }
 
@@ -84,3 +83,25 @@ tableHistRestricoes.querySelectorAll('tbody tr').forEach(row => {
     const ucID = row.getAttribute('data-uc-id');
     row.addEventListener('click', () => redirectToRestrictionPage(ucID, ano, semestre))
 })
+
+// Preender impedimentos anteriores
+const checkboxImpedimento = document.querySelector('#ultimoImpedimento');
+checkboxImpedimento.addEventListener("click", () => {
+    const daysOfWeek = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
+    const dayPeriods = ['manha', 'tarde', 'noite'];
+
+    if (checkboxImpedimento.checked) {
+        daysOfWeek.forEach(day => {
+            dayPeriods.forEach(period => {
+                const checkbox = document.querySelector(`#${day}-${period}-input`);
+                checkbox.checked = parseInt(checkbox.getAttribute("data-history"));
+            });
+        });
+
+        const justificacaoInput = document.querySelector('#justificao-input');
+        justificacaoInput.value = justificacaoInput.getAttribute("data-history");
+    } else {
+        const formImpedimentos = document.querySelector('#impedimento-form');
+        formImpedimentos.reset();
+    }
+});
