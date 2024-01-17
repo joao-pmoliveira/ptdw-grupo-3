@@ -1,11 +1,5 @@
 'use strict'
 
-if (window.location.hostname === 'localhost') {
-    baseUrl = 'http://localhost';
-} else {
-    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
-}
-
 // Formulário de Impedimentos
 const impedimentoForm = document.querySelector('#impedimento-form');
 impedimentoForm.addEventListener('submit', (e) => {
@@ -29,38 +23,30 @@ impedimentoForm.addEventListener('submit', (e) => {
 // Tabela com restrições para o próximo semestre
 const tableRestricoes = document.querySelector('#table-restricoes-pendentes');
 tableRestricoes.querySelectorAll('tbody tr').forEach(row => {
-    const ucID = row.getAttribute('data-uc-id');
-    const ano = row.getAttribute('data-ano');
-    const semestre = row.getAttribute('data-semestre');
+    const url = row.getAttribute('data-link');
+    if (!url) return;
 
-    row.addEventListener('click', () => redirectToRestrictionPage(ucID, ano, semestre))
+    row.addEventListener('click', () => window.location.href = url);
 })
-
-function redirectToRestrictionPage(ucID, ano, semestre) {
-    window.location.href = baseUrl + `/restricoes/${ucID}/${ano}/${semestre}`
-}
 
 // Secção de Históricos
 
 // Tabela Histórico de Impedimentos
 const tableHistImpedimentos = document.querySelector('#table-impedimentos-historico');
 tableHistImpedimentos.querySelectorAll('tbody tr').forEach(row => {
-    const ano = row.getAttribute('data-ano');
-    const semestre = row.getAttribute('data-semestre');
-    const docenteID = authUser.id;
+    const url = row.getAttribute('data-link');
+    if (!url) return;
 
-    row.addEventListener('click', () => {
-        window.location.href = baseUrl + `/impedimentos/${docenteID}/${ano}/${semestre}`;
-    })
+    row.addEventListener('click', () => window.location.href = url);
 })
 
 //Tabela Histórico de Restrições
 const tableHistRestricoes = document.querySelector('#table-restricoes-historico');
 tableHistRestricoes.querySelectorAll('tbody tr').forEach(row => {
-    const ano = row.getAttribute('data-ano');
-    const semestre = row.getAttribute('data-semestre');
-    const ucID = row.getAttribute('data-uc-id');
-    row.addEventListener('click', () => redirectToRestrictionPage(ucID, ano, semestre))
+    const url = row.getAttribute('data-link');
+    if (!url) return;
+
+    row.addEventListener('click', () => window.location.href = url);
 })
 
 // Preender impedimentos anteriores

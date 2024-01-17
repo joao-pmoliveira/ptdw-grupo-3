@@ -207,8 +207,9 @@
         <section id="manage-uc-restrictions" class="tab-pane p-3">
             
             <h3 class="mb-2">
-                Restrições de UCs {{$periodo->ano . '/' . ($periodo->ano+1) . ' ' . $periodo->semestre . 'º semestre'}}
+                Restrições de UCs {{$periodo->ano}}/{{$periodo->ano+1}} - {{$periodo->semestre}} º semestre
             </h3>
+
             <table class="w-100 shadow" id="table-restricoes-pendentes">
                 <thead class="bg-light">
                     <tr>
@@ -219,20 +220,28 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
-                @foreach($ucs as $uc)
-                    <tr class="border border-light" data-ano='{{$uc->periodo->ano}}' data-semestre='{{$uc->periodo->semestre}}' data-uc-id='{{$uc->id}}'>
-                        <th scope='row'></th>
-                        <td>{{$uc->nome}}</td>
-                        <td>
-                            @if ($uc->restricoes_submetidas)
-                                <i class="fa fa-check"></i>
-                            @else
-                                Pendente
-                            @endif
-                        </td>
-                        <td>{{$uc->periodo->data_final}}</td>
-                    </tr>
-                @endforeach
+                    @if ($ucs->count() > 0)
+                    @foreach($ucs as $uc)
+                        <tr class="border border-light" 
+                        data-link="{{route('restricoes.uc.view', ['uc'=>$uc->id, 'ano_inicial'=>$periodo->ano, 'semestre'=>$periodo->semestre])}}">
+                            <th scope='row'></th>
+                            <td>{{$uc->nome}}</td>
+                            <td>
+                                @if ($uc->restricoes_submetidas)
+                                    <i class="fa fa-check"></i>
+                                @else
+                                    Pendente
+                                @endif
+                            </td>
+                            <td>{{$uc->periodo->data_final}}</td>
+                        </tr>
+                    @endforeach
+                    @else 
+                        <tr class="border border-light pe-none">
+                            <th scope="row"></th>
+                            <td colspan="4">Sem correspondências</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </section>
@@ -250,15 +259,22 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
+                    @if ($historico_impedimentos->count() > 0)
                     @foreach($historico_impedimentos as $impedimento)
-                    <tr data-ano="{{$impedimento->periodo->ano}}" data-semestre="{{$impedimento->periodo->semestre}}">
-                        <th scope="row"></th>
-                        <td>{{$impedimento->periodo->ano}}</td>
-                        <td>{{$impedimento->periodo->semestre}}</td>
-                        <td>{{$impedimento->docente->user->nome}}</td>
-                        <td>{{$impedimento->periodo->data_final}}</td>
-                    </tr>
+                        <tr data-link="{{route('impedimentos.view', ['docente'=>$user->docente->id, 'ano_inicial'=>$impedimento->periodo->ano, 'semestre'=>$impedimento->periodo->semestre])}}">
+                            <th scope="row"></th>
+                            <td>{{$impedimento->periodo->ano}}</td>
+                            <td>{{$impedimento->periodo->semestre}}</td>
+                            <td>{{$impedimento->docente->user->nome}}</td>
+                            <td>{{$impedimento->periodo->data_final}}</td>
+                        </tr>
                     @endforeach
+                    @else
+                        <tr class="border border-light pe-none">
+                            <th scope="row"></th>
+                            <td colspan="4">Sem correspondências</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
@@ -274,27 +290,31 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
+                    @if ($historico_ucs->count() > 0)
                     @foreach($historico_ucs as $uc)
-                    <tr data-ano="{{$uc->periodo->ano}}" data-semestre="{{$uc->periodo->semestre}}" data-uc-id="{{$uc->id}}">
+                    <tr data-link="{{route('restricoes.uc.view', ['uc'=>$uc->id, 
+                    'ano_inicial'=>$uc->periodo->ano,'semestre'=>$uc->periodo->semestre])}}">
                         <th scope="row"></th>
                         <td>{{$uc->periodo->ano}}</td>
                         <td>{{$uc->periodo->semestre}}</td>
                         <td>{{$uc->nome}}</td>
                         <td>{{$uc->periodo->data_final}}</td>
                     </tr>
-                    @endforeach
+                    @endforeach 
+                    @else
+                        <tr class="border border-light pe-none">
+                            <th scope="row"></th>
+                            <td colspan="4">Sem correspondências</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </section>
     </div>
 </main>
-@auth
-    <script>
-        const authUser = @json(auth()->user());
-        var baseUrl = "{{ config('app.url') }}";
 
-        window.onload = () => window.scrollTo(0,0);
-    </script>
-@endauth
+<script>
+    window.onload = () => window.scrollTo(0,0);
+</script>
 <script src="{{asset('js/restricoes.js')}}" defer></script>
 @endsection
