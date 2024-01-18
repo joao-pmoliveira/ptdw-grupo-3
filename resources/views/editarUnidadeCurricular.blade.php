@@ -120,7 +120,11 @@
                         @endif
                     @endforeach
 
-                    @for ($i = 0; $i < 4-count($uc->Docentes); $i++)
+                    @php
+                        $count = $uc->docenteResponsavel ? 4-count($uc->docentes) : 3-count($uc->docentes);
+                    @endphp
+
+                    @for ($i = 0; $i < $count; $i++)
                         <select class="col-md-2 p-1" name="docentes_id[]">
                             <option value="">---</option>
                             @foreach ($docentes as $docente)
