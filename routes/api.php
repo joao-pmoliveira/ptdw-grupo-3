@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\DocenteController;
 use App\Http\Controllers\Api\ImpedimentoController;
 use App\Http\Controllers\Api\UnidadeCurricularController;
 use App\Http\Controllers\Api\UploadController;
+use App\Http\Controllers\PerfilController;
 use App\Models\Docente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -72,3 +73,5 @@ Route::group(['prefix' => 'impedimentos'], function () {
 Route::post('/upload-excel', [UploadController::class, 'upload'])->middleware(['web', 'auth'])->name('upload');
 
 Route::get('/download-excel', [UploadController::class, 'download'])->middleware(['web', 'auth'])->name('download');
+
+Route::post("/", [PerfilController::class, 'editarPerfil'])->middleware(['web', 'auth'])->name('perfil.edit.view');

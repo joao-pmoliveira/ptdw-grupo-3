@@ -14,6 +14,31 @@
 @include('partials._pageTitle', ['title' => $user->nome])
 
     <section class="mt-3 title-separator pt-2">
+        <section id="alerts">
+            @if (session('alerta'))
+                <div class="alert alert-dismissible fade show bg-alert" role="alert">
+                    <p>
+                        <i class="fa-solid fa-check"></i>
+                        {{session('alerta')}}
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa-solid fa-x"></i>
+                    </button> 
+                </div>
+            @endif
+            @if (session('sucesso'))
+                <div class="alert alert-dismissible fade show bg-accent" role="alert">
+                    <p>
+                        <i class="fa-solid fa-check"></i>
+                        {{session('sucesso')}}
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa-solid fa-x"></i>
+                    </button> 
+                </div>
+            @endif
+        </section>
+
         <form id="edit-perfil-form" action="{{route('perfil.edit.view')}}" method="POST">
             @csrf   
             <div class="d-flex align-items-center p-2">
@@ -42,11 +67,4 @@
         </form>
     </section>
 </main>
-
-@auth
-    <script>
-        const authUser = @json(auth()->user());
-    </script>
-@endauth
-<script src="" defer></script>
 @endsection
