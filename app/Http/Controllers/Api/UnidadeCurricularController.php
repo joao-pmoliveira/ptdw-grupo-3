@@ -248,6 +248,18 @@ class UnidadeCurricularController extends Controller
 
             DB::beginTransaction();
 
+            $codigo = $validatedData['codigo'];
+            $nome = $validatedData['nome'];
+            $periodo = $uc->periodo;
+
+            if (UnidadeCurricular::where('codigo', $codigo)->exists()) {
+                if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->where('periodo_id', $periodo->id)->exists()) {
+                    throw new Exception('Código e Nome já estão atribuídos para uma UC, no ano ' . $periodo->ano . ' e semestre ' . $periodo->semestre);
+                } else if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->doesntExist()) {
+                    throw new Exception('Código e Nome não coincidem com dados na base de dados.');
+                }
+            }
+
             $uc->update([
                 'codigo' => $validatedData['codigo'],
                 'nome' => $validatedData['nome'],
@@ -297,6 +309,9 @@ class UnidadeCurricularController extends Controller
             DB::rollBack();
             return redirect()->back()->with('alerta', 'Erro ao submeter edições');
         } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('alerta', $e->getMessage());
         }
