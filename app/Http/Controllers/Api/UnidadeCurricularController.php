@@ -252,7 +252,7 @@ class UnidadeCurricularController extends Controller
                 'codigo' => $validatedData['codigo'],
                 'nome' => $validatedData['nome'],
                 'acn_id' => $validatedData['acn'],
-                'docente_responsave_id' => $validatedData['docente_responsavel_id'],
+                'docente_responsavel_id' => $validatedData['docente_responsavel_id'],
                 'horas_semanais' => $validatedData['horas'],
                 'ects' => $validatedData['ects'],
             ]);
