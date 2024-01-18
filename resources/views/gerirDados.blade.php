@@ -165,11 +165,13 @@
                 @csrf
                 <div>
                     <label class="col-md-2" for="file-start-year">Começo de Ano Letivo</label>
-                    <input class="col-md-1" type="number" name="file-start-year" id="file-start-year-input" placeholder="2023" required>
+                    <input class="col-md-1 px-1" type="number" name="file-start-year" id="file-start-year-input"
+                         placeholder="Ano" min="2023" required>
                 </div>
                 <div>
                     <label class="col-md-2" for="file-semestre">Semestre</label>
-                    <input class="col-md-1" type="number" name="file-semestre" id="file-semestre-input" placeholder="2" required>
+                    <input class="col-md-1 px-1" type="number" name="file-semestre" id="file-semestre-input" 
+                        placeholder="Semestre" min="1" max="2" required>
                 </div>
                 <div>
                     <label class="col-md-2" for="import-file-input">Selecione um ficheiro</label>

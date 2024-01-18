@@ -235,6 +235,9 @@ class UploadController extends Controller
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->back()->with('alerta', $e->getMessage());
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 
