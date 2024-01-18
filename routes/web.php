@@ -81,7 +81,4 @@ Route::group(['prefix' => 'registo'], function () {
 
 Route::group(['prefix' => 'perfil'], function () {
     Route::get('/', [PerfilController::class, 'perfil'])->name('perfil.view');
-
-    Route::post("/", [PerfilController::class, 'editarPerfil'])->name('perfil.edit.view');
 });
-

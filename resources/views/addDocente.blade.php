@@ -63,11 +63,5 @@
 
 </main>
 
-@auth
-    <script>
-        const authUser = @json(auth()->user());
-        var baseUrl = "{{ config('app.url') }}";
-    </script>
-@endauth
 <script src="{{asset('js/addDocente.js')}}" defer></script>
 @endsection

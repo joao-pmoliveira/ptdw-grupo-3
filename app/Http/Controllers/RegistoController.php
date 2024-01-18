@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Docente;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class RegistoController extends Controller
 {
@@ -16,28 +20,48 @@ class RegistoController extends Controller
 
     public function register(Request $request)
     {
+        try {
+            $rules = [
+                'email' => ['required', 'email'],
+                'numero_funcionario' => ['required', 'exists:docentes,numero_funcionario'],
+                'password' => ['required'],
+            ];
 
-        $request->validate([
-            'email' => ['required', 'email'],
-            'numero_funcionario' => ['required'],
-            'password' => ['required']
-        ]);
+            $messages = [
+                'email.required' => 'Insira o seu email!',
+                'email.email' => 'Email inválido!',
+                'numero_funcionario.required' => 'Insira o seu número de funcionário!',
+                'numero_funcionario.exist' => 'Número de funcionário inválido!',
+                'password.required' => 'Insira a sua password!',
+            ];
 
-        $docente = Docente::where('numero_funcionario', $request->input('numero_funcionario'))->first();
+            $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
 
-        if ($docente) {
+            $docente = Docente::where('numero_funcionario', $validatedData['numero_funcionario'])->first();
+
+            if (!$docente) {
+                throw new Exception('Erro ao associar conta!');
+            }
+
+            DB::beginTransaction();
+
             $user = $docente->user;
 
+            // todo @joao: verificar se este user já não tem os dados
+            // se já tiver os dados, é porque já foi associado
             $user->update([
-                'email' => $request->input('email'),
-                'password' => bcrypt($request->input('password')),
+                'email' => $validatedData['email'],
+                'password' => bcrypt($validatedData['password']),
             ]);
 
-            return response()->json([
-                'message' => 'Docente associado com sucesso',
-            ]);
-        } else {
-            return response()->json(['error' => 'Número de funcionário não existe'], 404);
+            DB::commit();
+            return redirect(route('login.view'))->with('sucesso', 'Sucesso na associação de conta!');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 }

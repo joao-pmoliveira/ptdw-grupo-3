@@ -19,7 +19,25 @@
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
                     <div class="card border border-light-subtle rounded-3 shadow-sm custom-width" style="width: 110%;">
                         <div class="card-body p-3 p-md-4 p-xl-5">
-                            <h1 class="page-title justify-content-center">Login</h1><br>
+                            <h1 class="page-title justify-content-center">Login</h1>
+                            <div id="alerts">
+                                @if (session('alerta'))
+                                    <div class="alert alert-dismissible fade show bg-alert mb-2" role="alert">
+                                        <p><i class="fa-solid fa-check"></i>{{session('alerta')}}</p>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                            <i class="fa-solid fa-x"></i>
+                                        </button> 
+                                    </div>
+                                @endif
+                                @if (session('sucesso'))
+                                    <div class="alert alert-dismissible fade show bg-accent mb-2" role="alert">
+                                        <p><i class="fa-solid fa-check"></i>{{session('sucesso')}}</p>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                            <i class="fa-solid fa-x"></i>
+                                        </button> 
+                                    </div>
+                                @endif
+                            </div>
                             <form action="{{route('login.action')}}" method="post" id="formLogin">
                                 @csrf
                                 <div class="row gy-3 overflow-hidden">
@@ -41,10 +59,10 @@
                                     </div>
                                     <div class="col-12 justify-content-center row">
                                         <div class="d-grid my-3 justify-content-center col-md-6 col-s-12">
-                                            <button class="btn" style="width:10rem;" type="submit">Login</button>
+                                            <input type="submit" class="btn" value="Login" style="width:10rem;">
                                         </div>
                                         <div class="d-grid my-3 justify-content-center col-md-6 col-s-12">
-                                            <button class="btn cancelar" style="width:10rem;" href="{{route('inicio.view')}}">Cancelar</button>
+                                            <a href="{{route('welcome.view')}}" class="btn cancelar" style="width:10rem;">Cancelar</a>
                                         </div>
                                     </div>
                                 </div>
