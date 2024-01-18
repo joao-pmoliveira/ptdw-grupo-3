@@ -216,11 +216,11 @@ class ImpedimentoController extends Controller
             $dataLimite=$impedimento->periodo->data_final;
             $horaEmFalta=$impedimento->submetido;
             Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin($impedimento->docente, $impedimento->periodo, $filteredUcsResp, $dataLimite,$horaEmFalta));
-            return response()->json(['message' => 'yay'], 200);
+            return redirect(route('restricoes.recolha.view'))->with('sucesso', 'Emails enviados com sucesso!');
         }
         }
         catch(Exception $e){
-            return response()->json(['message' => $e->getMessage()], 200);
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 }
