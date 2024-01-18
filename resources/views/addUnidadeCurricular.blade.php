@@ -13,6 +13,31 @@
 
     @include('partials._pageTitle', ['title' => 'Adicionar Unidade Curricular'])
 
+    <section id="alerts">
+        @if (session('alerta'))
+            <div class="alert alert-dismissible fade show bg-alert" role="alert">
+                <p>
+                    <i class="fa-solid fa-check"></i>
+                    {{session('alerta')}}
+                </p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="fa-solid fa-x"></i>
+                </button> 
+            </div>
+        @endif
+        @if (session('sucesso'))
+            <div class="alert alert-dismissible fade show bg-accent" role="alert">
+                <p>
+                    <i class="fa-solid fa-check"></i>
+                    {{session('sucesso')}}
+                </p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="fa-solid fa-x"></i>
+                </button> 
+            </div>
+        @endif
+    </section>
+
     <section class="mt-3 title-separator pt-2">
         <form id="add-uc-form" action="{{route('ucs.store')}}" method="post">
             @csrf
@@ -99,12 +124,6 @@
         </form>
     </section>
 </main>
-    
-@auth
-    <script>
-        const authUser = @json(auth()->user());
-        var baseUrl = "{{ config('app.url') }}";
-    </script>
-@endauth
+
 <script src="{{asset('js/addUC.js')}}" defer></script>
 @endsection

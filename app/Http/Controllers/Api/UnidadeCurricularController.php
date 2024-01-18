@@ -65,31 +65,66 @@ class UnidadeCurricularController extends Controller
         return response()->json($ucs);
     }
 
-    public function store(UnidadeCurricularRequest $ucRequest)
+    public function store(Request $request)
     {
-        if (!$ucRequest->authorize()) {
-            return response()->json(['message' => 'nao autorizado'], 403);
-        }
-
-        $codigo = $ucRequest->input('codigo');
-        $nome = $ucRequest->input('nome');
-        $horas = $ucRequest->input('horas');
-        $ects = $ucRequest->input('ects');
-        $acn = $ucRequest->input('acn');
-        $docenteRespId = $ucRequest->input('docente_responsavel_id');
-        $docentesId = $ucRequest->input('docentes_id', []);
-
         try {
+            $this->authorize('admin-access');
+
+            $rules = [
+                'codigo' => ['required', 'integer', 'min:1'],
+                'nome' => ['required', 'string'],
+                'horas' => ['required', 'integer', 'min:1'],
+                'ects' => ['required', 'integer', 'min:0'],
+                'acn' => ['required', 'integer', 'exists:acns,id'],
+                'docente_responsavel_id' => ['required', 'integer', 'exists:docentes,id'],
+                'docentes_id' => ['array'],
+            ];
+
+            $messages = [
+                'codigo.required' => 'Preencha o código da UC!',
+                'codigo.integer' => 'Código da UC tem de ser número inteiro!',
+                'codigo.min' => 'Código da UC tem de ser superior a 1!',
+                'nome.required' => 'Preencha o nome da UC!',
+                'nome.string' => 'Nome da UC inválido!',
+                'horas.required' => 'Preencha as horas semanais da UC!',
+                'horas.integer' => 'Horas semanais têm de ser número inteiro!',
+                'horas.min' => 'Horas semanais têm de ser superiores a 1!',
+                'ects.required' => 'Preencha as ECTs da UC!',
+                'ects.integer' => 'ECTs têm de ser número inteiro!',
+                'ects.min' => 'ECTs têm de ser superiores a 0!',
+                'acn.required' => 'Seleciona a Área Científica Nuclear da UC!',
+                'acn.integer' => 'Área Científica Nuclear selecionada inválida!',
+                'acn.exists' => 'Área Científica Nuclear selecionada inválida!',
+                'docente_responsavel_id.required' => 'Selecione o docente responsável pela UC!',
+                'docente_responsavel_id.integer' => 'Docente responsável selecionado inválido!',
+                'docente_responsavel_id.exists' => 'Docente responsável selecionado inválido!',
+                'docentes_id.array' => 'Erro de formato na seleção de docentes!',
+            ];
+
+            $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
+
             DB::beginTransaction();
 
-            //Assume que se está a adicionar a UC ao periodo mais recente
             $periodo = Periodo::orderBy('ano', 'desc')
                 ->orderBy('semestre', 'desc')
                 ->first();
 
+            if (is_null($periodo)) {
+                throw new Exception('Não foi possível encontrar um período (ano-semestre) disponível para a UC!');
+            }
+
+            $codigo = $validatedData['codigo'];
+            $nome = $validatedData['nome'];
+            $horas = $validatedData['horas'];
+            $ects = $validatedData['ects'];
+            $acn = $validatedData['acn'];
+            $docenteResponsavelId = $validatedData['docente_responsavel_id'];
+            $docentesId = $validatedData['docentes_id'] ?? [];
+
+
             if (UnidadeCurricular::where('codigo', $codigo)->exists()) {
                 if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->where('periodo_id', $periodo->id)->exists()) {
-                    throw new Exception('Código e Nome já estão atribuídos para uma UC do periodo ' . $periodo->ano . ' semestre ' . $periodo->semestre);
+                    throw new Exception('Código e Nome já estão atribuídos para uma UC, no ano ' . $periodo->ano . ' e semestre ' . $periodo->semestre);
                 } else if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->doesntExist()) {
                     throw new Exception('Código e Nome não coincidem com dados na base de dados.');
                 }
@@ -100,8 +135,7 @@ class UnidadeCurricularController extends Controller
                 'nome' => $nome,
                 'periodo_id' => $periodo->id,
                 'acn_id' => $acn,
-                'docente_responsavel_id' => $docenteRespId,
-                'sigla' => '',
+                'docente_responsavel_id' => $docenteResponsavelId,
                 'horas_semanais' => $horas,
                 'ects' => $ects,
                 'restricoes_submetidas' => false,
@@ -111,41 +145,57 @@ class UnidadeCurricularController extends Controller
                 'observacoes_laboratorios' => '',
                 'software' => '',
             ]);
-            $words = explode(' ', $nome);
-            foreach ($words as $word) {
-                $initial = $word[0];
-                if (ctype_upper($initial)) {
-                    $uc->sigla .= $initial;
-                }
-            }
+
             $uc->save();
 
-            $docenteResp = Docente::where('id', $docenteRespId)->first();
-            $uc->docentes()->attach($docenteResp, ['percentagem_semanal' => 1]);
+            //todo @joao: se se permitir adicionar/editar UCs enviado o DocResp como nulo:
+            // é necessário editar isto para verificar se o campo é nulo
+
+            $docenteResponsavel = Docente::where('id', $docenteResponsavelId)->first();
+            //todo @joao: calcular % semanal do docente
+            $uc->docentes()->attach($docenteResponsavel, ['percentagem_semanal' => 1]);
             $uc->refresh();
 
-            foreach ($docentesId as $docenteID) {
-                if (is_null($docenteID)) {
+            foreach ($docentesId as $docenteId) {
+                if (is_null($docenteId)) {
                     continue;
                 }
 
-                $docente = Docente::where('id', $docenteID)->first();
+                $docente = Docente::findOrFail($docenteId);
+                // todo @joao: calcular %semanal
                 $uc->docentes()->attach($docente, ['percentagem_semanal' => 1]);
             }
             $uc->refresh();
 
             DB::commit();
-            $todays_date = now();
-            if ($todays_date->between(Carbon::parse($uc->periodo->data_inicial), Carbon::parse($uc->periodo->data_final))) {
-                Mail::to($docenteResp->user->email)->send(new emailMudancaRestricoes($docenteResp, $uc->periodo, $uc, $uc->periodo->data_final));
+
+            // todo @joao: enviar para os restantes docentes tbm
+            if ($docenteResponsavel) {
+                $hoje = now();
+                $data_inicial = Carbon::createFromFormat('Y-m-d', $uc->periodo->data_inicial);
+                $data_final = Carbon::createFromFormat('Y-m-d', $uc->periodo->data_final);
+
+                if ($hoje->betweenIncluded($data_inicial, $data_final)) {
+                    // todo @joao: rever processo de mandar email, parece que dá para simplificar bastante
+                    Mail::to($docenteResponsavel->user->email)->send(new emailMudancaRestricoes($docenteResponsavel, $uc->periodo, $uc, $uc->periodo->data_final));
+                }
             }
-            return response()->json([
-                'message' => 'sucesso!',
-                'redirect' => route('admin.gerir.view'),
-            ]);
+
+
+            // todo @joao: mais informação? inserir nome da UC e/ou periodo
+            return redirect(route('admin.gerir.view'))->with('sucesso', 'Unidade Curricular adicionada com sucesso!');
+        } catch (AuthorizationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', 'Sem permissões para adicionar nova UC!');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', 'Erro ao enviar formulário!');
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => $e->getMessage()]);
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 
