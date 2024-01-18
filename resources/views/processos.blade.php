@@ -57,7 +57,7 @@
             @php
                 $docentesSemForm = $docentes->contains(fn ($item, $key) => $item->impedimentos()->where('periodo_id', $periodo->id)->doesntExist());
             @endphp
-
+            <form method="post" action="{{route('mailMissingForms')}}">
             <div class="d-flex justify-content-between mb-2">
                 @if ($periodo->impedimentos->count() > 0)
                 <div>
@@ -77,9 +77,9 @@
                     @endif
 
                     @if ($periodo->impedimentos->count() > 0)
-                    <a href="{{route('mailMissingForms')}}" class="btn d-flex justify-content-center align-items-center">
+                    <button type="submit" class="btn d-flex justify-content-center align-items-center">
                         <i class="fa fa-envelope-o"></i>
-                    </a>
+                    </button>
 
                     <a href="{{route('download')}}" class="btn d-flex justify-content-center align-items-center" download="output_restricoes.xlsx">
                         <i class="fa-solid fa-download"></i>
@@ -127,12 +127,15 @@
                                 Pendente
                             @endif
                         </td>
+                        <td>
+                            <input type="checkbox" name="impedimento_selecionados[]" id="{{$impedimento}}">
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
             @endif
-
+            </form>
         </section>
 
         <section id="history" class="tab-pane p-3">
