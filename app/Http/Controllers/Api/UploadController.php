@@ -9,111 +9,132 @@ use App\Models\Docente;
 use App\Models\Periodo;
 use App\Models\UnidadeCurricular;
 use App\Models\User;
+use Database\Factories\PeriodoFactory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Faker\Factory as FakerFactory;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class UploadController extends Controller
 {
     public function upload(Request $request)
     {
-        $request->validate([
-            'uc-data-file' => 'required|mimes:xlsx|max:10240',
-            'file-start-year' => 'required|numeric|gte:2023',
-            'file-semestre' => 'required|numeric|in:1,2'
-        ]);
+        try {
 
-        $ano = $request->input('file-start-year');
-        $semestre = $request->input('file-semestre');
-        $file = $request->file('uc-data-file');
+            $this->authorize('admin-access');
 
-        // return response()->json([
-        //     'ano' => $ano_inicial,
-        //     'semestre' => $semestre
-        // ]);
 
-        $reader = IOFactory::createReaderForFile($file);
-        $reader->setReadDataOnly(true);
-        $spreasheet = $reader->load($file);
-        $worksheet = $spreasheet->getActiveSheet();
-
-        $data = [];
-
-        foreach ($worksheet->getRowIterator() as $index => $row) {
-            if ($index < 3) {
-                // assume que as duas primeiras linhas são ocupadas por:
-                // 1 -> cabeçalho
-                // 2 -> linha em branco
-                // como no ficheiro exemplo fornecido
-                continue;
-            }
-
-            $cellIterator = $row->getCellIterator();
-            $cellIterator->setIterateOnlyExistingCells(FALSE);
-
-            $columnsMap = [
-                'A' => 'numero_docente',
-                'B' => 'nome_docente',
-                'C' => 'acn_docente',
-                'D' => 'codigo_uc',
-                'E' => 'acn_uc',
-                'F' => 'responsavel_uc',
-                'G' => 'nome_uc',
-                'H' => 'curso',
-                'I' => 'horas',
-                'J' => 'percentagem',
+            $rules = [
+                'uc-data-file' => ['required', 'mimes:xlsx', 'max:10240'],
+                'file-start-year' => ['required', 'integer', 'gte:2023'],
+                'file-semestre' => ['required', 'integer', 'in:1,2'],
             ];
 
-            foreach ($cellIterator as $index => $cell) {
-                $val = $cell->getValue();
+            $messages = [
+                'uc-data-file.required' => 'Introduza um ficheiro Excel (xlsx)!',
+                'uc-data-file.mimes' => 'Ficheiro introduzido num formato inálido. Insira um ficheiro xlsx!',
+                'uc-data-file.max' => 'Ficheiro introduzido demasiado grande!',
+                'file-start-year.required' => 'Preencha o ano correspondente ao ficheiro!',
+                'file-start-year.integer' => 'Ano introduzido inválido!',
+                'file-start-year.gte' => 'Ano introduzido inválido!',
+                'file-semestre.required' => 'Preencha o semestre correspondente ao ficheiro!',
+                'file-semestre.integer' => 'Semestre introduzido inválido!',
+                'file-semestre.in' => 'Semestre introduzido inválido!',
+            ];
 
-                $lineData[$columnsMap[$index]] = $val;
+            $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
+
+            $ano = $validatedData['file-start-year'];
+            $semestre = $validatedData['file-semestre'];
+            $file = $validatedData['uc-data-file'];
+
+            $reader = IOFactory::createReaderForFile($file);
+            $reader->setReadDataOnly(true);
+            $spreasheet = $reader->load($file);
+            $worksheet = $spreasheet->getActiveSheet();
+
+            $data = [];
+
+            foreach ($worksheet->getRowIterator() as $index => $row) {
+                if ($index < 3) {
+                    // assume que as duas primeiras linhas são ocupadas por:
+                    // 1 -> cabeçalho
+                    // 2 -> linha em branco
+                    // como no ficheiro exemplo fornecido
+                    continue;
+                }
+
+                $cellIterator = $row->getCellIterator();
+                $cellIterator->setIterateOnlyExistingCells(FALSE);
+
+                $columnsMap = [
+                    'A' => 'numero_docente',
+                    'B' => 'nome_docente',
+                    'C' => 'acn_docente',
+                    'D' => 'codigo_uc',
+                    'E' => 'acn_uc',
+                    'F' => 'responsavel_uc',
+                    'G' => 'nome_uc',
+                    'H' => 'curso',
+                    'I' => 'horas',
+                    'J' => 'percentagem',
+                ];
+
+                foreach ($cellIterator as $index => $cell) {
+                    $val = $cell->getValue();
+
+                    $lineData[$columnsMap[$index]] = $val;
+                }
+
+                array_push($data, $lineData);
             }
 
-            array_push($data, $lineData);
-        }
+            // todo - adicionar maneira para o admin visualizar os dados a importar antes de submter (e erros)
+            // visualização em tabela ou mais hierárquico
+            // em tabela: talvez valores 'maus' aparecem com outra cor
+            //      ou problemas aparecem numa caixa de diálogo perto da tabela
+            //      e o admin pode editar os valores diretamente
 
-        /*  
-            todo - adicionar maneira para o admin visualizar dados antes de submeter
-            visualização em tabela? ou mais hierárquico
-            em tabela talvez valores 'maus' aparecem contra outra cor,
-                ou problemas aparecem numa caixa de dialogo perto da tabela
-                e o admin pode editar os valores
-                - nesse caso, para manter o parsing do Excel no servidor
-                  vair ser preciso mais código no cliente, para lidar com as respostas
-                  e voltar a mandar os novos dados?
-        */
-
-        DB::beginTransaction();
-        try {
+            DB::beginTransaction();
             $periodo = Periodo::where('ano', $ano)
                 ->where('semestre', $semestre)
                 ->first();
 
             if (is_null($periodo)) {
+
+                $datas = PeriodoFactory::gerarDatasPeriodo($ano, $semestre);
+
                 $periodo = Periodo::create([
                     'ano' => $ano,
                     'semestre' => $semestre,
-                    'data_inicial' => '2024-08-01',
-                    'data_final' => '2024-09-01'
+                    'data_inicial' => $datas['data_inicial'],
+                    'data_final' => $datas['data_final'],
                 ]);
-
                 $periodo->save();
             }
 
             $faker = FakerFactory::create('pt_PT');
 
             foreach ($data as $d) {
+                //Assume que se o ACN não está na BD, é um ACN errado
                 $acn_docente = ACN::where('sigla', $d['acn_docente'])->first();
                 if (is_null($acn_docente)) {
-                    throw new Exception('ACN do Docente: não reconhecida!');
+                    //todo @joao: adicionar o nome ou linha em que acontece
+                    throw new Exception('Área Científica do Docente: não reconhecida!');
                 }
 
+                // Assume que se o docente não está na BD, este é um docente novo
                 $docente = Docente::where('numero_funcionario', $d['numero_docente'])->with('user')->first();
                 if (is_null($docente)) {
                     $docente = Docente::create([
@@ -128,6 +149,7 @@ class UploadController extends Controller
                 if (is_null($user)) {
                     $user = User::create([
                         'nome' => $d['nome_docente'],
+                        //todo @joao: remover geração automática do email
                         'email' => strtolower(str_replace(' ', '.', $d['nome_docente'])) . $faker->unique()->randomNumber(5, true) . '@estga.pt',
                         'password' => bcrypt('password'),
                         'admin' => false,
@@ -138,22 +160,26 @@ class UploadController extends Controller
 
                 $docente->refresh();
                 if ($docente->user->nome !== $d['nome_docente']) {
+                    //todo @joao: adicionar mais informação onde o erro ocorre
                     throw new Exception('Nome docente: diferenças entre nome no ficheiro e nome na base de dados!');
                 }
-
                 if ($docente->acn->sigla !== $d['acn_docente']) {
+                    //todo @joao: adicionar mais informação onde o erro ocorre
                     throw new Exception('ACN do Docente: mais do que uma ACN para o mesmo docente!');
                 }
-
                 $acn_uc = ACN::where('sigla', $d['acn_uc'])->first();
                 if (is_null($acn_uc)) {
+                    //todo @joao: adicionar mais informação onde o erro ocorre
                     throw new Exception('ACN da UC: não reconhecida!');
                 }
 
+                //Compara apenas o período indicado pelo o ficheiro
+                //evitar conflitos com UCs com o mesmo código mas de diferentes períodos
                 $uc = UnidadeCurricular::where('codigo', $d['codigo_uc'])
                     ->where('periodo_id', $periodo->id)
                     ->first();
 
+                //Assume que se a UC não está na BD é uma UC nova
                 if (is_null($uc)) {
                     $uc = UnidadeCurricular::create([
                         'codigo' => $d['codigo_uc'],
@@ -161,7 +187,6 @@ class UploadController extends Controller
                         'periodo_id' => $periodo->id,
                         'acn_id' => $acn_docente->id,
                         'docente_responsavel_id' => NULL,
-                        'sigla' => '',
                         'horas_semanais' => $d['horas'],
                         'ects' => '0',
                         'restricoes_submetidas' => false,
@@ -172,16 +197,11 @@ class UploadController extends Controller
                         'software' => '',
                     ]);
 
+                    //todo @joao: não está a verificar se a UC já tem responsavel
+                    //caso haja erro no ficheiro com dois docentes responsaveis para a UC
+                    //o que 'aparecer' depois é o docente responsável
                     if (!empty(trim($d['responsavel_uc']))) {
                         $uc->docente_responsavel_id = $docente->id;
-                    }
-
-                    $words = explode(" ",  $d['nome_uc']);
-                    foreach ($words as $word) {
-                        $initial = $word[0];
-                        if (ctype_upper($initial)) {
-                            $uc->sigla .= $initial;
-                        }
                     }
 
                     $uc->save();
@@ -193,15 +213,14 @@ class UploadController extends Controller
                     $uc->save();
                 }
 
+                //Assume que se o Curso não está na BD é porque é erro
                 $curso = Curso::where('sigla', $d['curso'])->first();
                 if (is_null($curso)) {
                     throw new Exception('Curso da UC: sigla não reconhecida');
                 }
-
                 if (!$uc->cursos->contains($curso)) {
                     $uc->cursos()->attach($curso);
                 }
-
                 if ($uc->docentes->contains($docente)) {
                     throw new Exception('Docente e UC: este docente já estava associado à UC');
                 }
@@ -209,14 +228,17 @@ class UploadController extends Controller
             }
 
             DB::commit();
-            return response()->json(['message' => 'sucesso'], 200);
-        } catch (Exception $e) {
+            return redirect()->back()->with('sucesso', 'Dados importados com sucesso!');
+        } catch (AuthorizationException $e) {
             DB::rollBack();
-            return response()->json(['message' => $e->getMessage()], 500);
+            return redirect()->back()->with('alerta', 'Sem permissões para importar dados!');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 
-    public function download(Request $request)
+    public function download()
     {
         $periodo = Periodo::orderBy('ano', 'desc')
             ->orderBy('semestre', 'desc')
@@ -226,10 +248,10 @@ class UploadController extends Controller
 
         try {
             $spreadsheet = new Spreadsheet();
-
             $sheet = $spreadsheet->getActiveSheet();
 
             $colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
+
             //Primeira Linha
             $cabecalho = [
                 '1' => 'n.º Fun',           //Número funcionário
@@ -252,9 +274,9 @@ class UploadController extends Controller
             foreach ($cabecalho as $index => $value) {
                 $sheet->setCellValue($colunas[$index - 1] . '' . (1), $value);
             }
-
             $rowIndex = 2;
 
+            //First Worksheet - Por Docente
             foreach (Docente::all() as $docente) {
                 foreach ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get() as $uc) {
                     $row = [
@@ -265,7 +287,7 @@ class UploadController extends Controller
                         'responsavel' => ($uc->docenteResponsavel && $uc->docenteResponsavel->id == $docente->id) ? 'X' : ' ',
                         'nome_uc' => $uc->nome,
                         'cursos' => implode(',', $uc->cursos()->pluck('sigla')->toArray()),
-                        'sala_laboratorio' => $uc->sala_laboratorio,
+                        'sala_laboratorio' => $uc->sala_laboratorio ? 'X' : ' ',
                         'impedimentos' => $docente->impedimentos()->where('periodo_id', $periodo->id)->exists() ?
                             $docente->impedimentos()->where('periodo_id', $periodo->id)->first()->impedimentos :
                             '-',
@@ -278,23 +300,31 @@ class UploadController extends Controller
                     ];
 
                     $colIndex = 0;
-                    foreach ($row as $cell) {
-                        $sheet->setCellValue($colunas[$colIndex++] . '' . $rowIndex, $cell);
+                    foreach ($row as $key => $cell) {
+                        if ($key === 'telefone_docente') {
+                            $sheet->setCellValueExplicit($colunas[$colIndex++] . '' . $rowIndex, $cell, DataType::TYPE_STRING);
+                        } else {
+                            $sheet->setCellValue($colunas[$colIndex++] . '' . $rowIndex, $cell);
+                        }
                     }
                     $rowIndex++;
                 }
             }
 
+            //todo @joao: Second Worksheet - Por UC
+            //todo @joao: Third Worksheet - Por Curso
+
             $writer = new Xlsx($spreadsheet, 'Xlsx');
             $writer->setPreCalculateFormulas(false);
+
+            Session::flash('sucesso', 'Ficheiro descarregado com sucesso');
 
             return response($writer->save('php://output'))
                 ->header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
                 ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
         } catch (Exception $e) {
+            Session::flash('alerta', 'Erro ao descarregar ficheiro!');
             return response()->json(['message' => 'erro']);
         }
-
-        return response()->json(['message' => $periodo->ano . ' | ' . $periodo->semestre]);
     }
 }

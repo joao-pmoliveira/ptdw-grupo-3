@@ -69,6 +69,6 @@ Route::group(['prefix' => 'impedimentos'], function () {
     Route::post('/periodo', [ImpedimentoController::class, 'gerarPorPeriodo'])->middleware(['web', 'auth'])->name('impedimentos.periodo');
 });
 
-Route::post('/upload-excel', [UploadController::class, 'upload'])->name('upload');
+Route::post('/upload-excel', [UploadController::class, 'upload'])->middleware(['web', 'auth'])->name('upload');
 
-Route::get('/download-excel', [UploadController::class, 'download'])->name('download');
+Route::get('/download-excel', [UploadController::class, 'download'])->middleware(['web', 'auth'])->name('download');

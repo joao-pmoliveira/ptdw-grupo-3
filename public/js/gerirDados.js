@@ -6,7 +6,7 @@ const tableEditUCs = document.querySelector('#table-edit-ucs');
 if (window.location.hostname === 'localhost') {
     baseUrl = 'http://localhost';
 } else {
-    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3'; 
+    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
 }
 
 tableEditUCs.querySelectorAll('tbody tr:not(:is([id="edit-ucs-no-match-row"]))').forEach(row => {
@@ -137,28 +137,6 @@ function filterTableEditDocentes() {
 }
 //#endregion
 
-//#region Upload Ficheiro do Serviço-Docente
-
-const submitForm = document.querySelector('#import-data form')
-submitForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(submitForm);
-
-    try {
-        const res = await fetch(submitForm.action, {
-            method: 'POST',
-            body: formData
-        })
-        const data = await res.json();
-
-        console.log(data);
-    } catch (error) {
-        console.log(error);
-    }
-})
-
-//#endregion
 
 document.addEventListener('DOMContentLoaded', () => {
     filterTableEditUCs();

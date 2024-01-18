@@ -183,11 +183,10 @@
     </div>
     
 </main>
-@auth
-    <script>
-        const authUser = @json(auth()->user());
-        var baseUrl = "{{ config('app.url') }}";
-    </script>
-@endauth
+
+
+<script>
+    var baseUrl = "{{ config('app.url') }}";
+</script>
 <script src="{{asset('js/gerirDados.js')}}" defer></script>
 @endsection

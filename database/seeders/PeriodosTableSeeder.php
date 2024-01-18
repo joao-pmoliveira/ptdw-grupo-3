@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Periodo;
+use Database\Factories\PeriodoFactory;
 use Illuminate\Database\Seeder;
 
 class PeriodosTableSeeder extends Seeder
@@ -17,13 +18,10 @@ class PeriodosTableSeeder extends Seeder
 
             for ($semestre = 1; $semestre < 3; $semestre++) {
 
-                $data_inicial = $semestre == 1 ?
-                    fake()->dateTimeBetween("$ano-08-01", "$ano-08-20")->format("Y-m-d") :
-                    fake()->dateTimeBetween("$ano-11-15", "$ano-11-30")->format("Y-m-d");
+                $datas = PeriodoFactory::gerarDatasPeriodo($ano, $semestre);
 
-                $data_final = $semestre == 1 ?
-                    fake()->dateTimeBetween("{$ano}-09-01", "{$ano}-09-07")->format("Y-m-d") :
-                    fake()->dateTimeBetween(($ano + 1) . "-02-01", ($ano + 1) . "-02-05")->format("Y-m-d");
+                $data_inicial = $datas['data_inicial'];
+                $data_final = $datas['data_final'];
 
                 Periodo::factory()->create([
                     'ano' => $ano,
