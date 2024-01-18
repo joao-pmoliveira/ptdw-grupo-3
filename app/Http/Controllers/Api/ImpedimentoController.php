@@ -206,8 +206,9 @@ class ImpedimentoController extends Controller
     public function mailMissingForms(Request $request)
     {   
         try{
-            $impedimento_selecionados=$request->input('impedimento_selecionados');
-        foreach($impedimento_selecionados as $impedimento){
+            $impedimentoIds = $request->input('impedimento_selecionados');
+            foreach ($impedimentoIds as $impedimentoId) {
+                $impedimento = Impedimento::find($impedimentoId);
             $periodo=$impedimento->periodo;
             $filteredUcsResp = $impedimento->docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
                 return $ucsResponsavel->periodo == $periodo;

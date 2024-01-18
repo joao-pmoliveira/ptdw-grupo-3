@@ -132,7 +132,7 @@
                             @endif
                         </td>
                         <td>
-                            <input type="checkbox" name="impedimento_selecionados[]" id="impedimento_{{$impedimento->id}}" value="{{$impedimento}}">
+                        <input type="checkbox" name="impedimento_selecionados[]" id="impedimento_{{$impedimento->id}}" value="{{$impedimento->id}}">
                         </td>
                     </tr>
                     @endforeach
