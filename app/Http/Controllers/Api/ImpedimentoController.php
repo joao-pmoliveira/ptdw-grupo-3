@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImpedimentoRequest;
 use App\Mail\emailAberturaRestricoes;
+use App\Mail\emailRestricoesEmFaltaAPedidoDoAdmin;
 use App\Models\Docente;
 use App\Models\Impedimento;
 use App\Models\Periodo;
@@ -204,6 +205,15 @@ class ImpedimentoController extends Controller
     }
     public function mailMissingForms(Request $request)
     {
-        
+        $impedimento_selecionados=$request->input('impedimento_selecionados');
+        foreach($impedimento_selecionados as $impedimento){
+            $periodo=$impedimento->periodo;
+            $filteredUcsResp = $impedimento->docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
+                return $ucsResponsavel->periodo == $periodo;
+            });
+            $dataLimite=$impedimento->periodo->data_final;
+            $horaEmFalta=$impedimento->submetido;
+            Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin($impedimento->docente, $impedimento->periodo, $filteredUcsResp, $dataLimite,$horaEmFalta));
+        }
     }
 }
