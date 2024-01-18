@@ -50,7 +50,7 @@ class DocenteController extends Controller
                 'acn' => ['required', 'integer', 'exists:acns,id'],
                 'email' => ['required', 'email'],
                 'telemovel' => ['required', 'string'],
-                'numero' => ['required', 'integer', 'min:1'],
+                'numero' => ['required', 'integer', 'min:1', 'unique:docentes,numero_funcionario'],
             ];
 
             $messages = [
@@ -66,6 +66,7 @@ class DocenteController extends Controller
                 'numero.required' => 'Preencha o número de funcionário do Docente!',
                 'numero.integer' => 'Número de funcionário do Docente inválido!',
                 'numero.min' => 'Número de funcionário tem de ser superior a 1!',
+                'numero.unique' => 'Número de funcionário já está em uso!',
             ];
 
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
