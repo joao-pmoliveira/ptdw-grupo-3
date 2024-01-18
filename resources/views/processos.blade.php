@@ -58,6 +58,7 @@
                 $docentesSemForm = $docentes->contains(fn ($item, $key) => $item->impedimentos()->where('periodo_id', $periodo->id)->doesntExist());
             @endphp
             <form method="post" action="{{route('mailMissingForms')}}">
+            @csrf
             <div class="d-flex justify-content-between mb-2">
                 @if ($periodo->impedimentos->count() > 0)
                 <div>
@@ -101,6 +102,9 @@
                         <th scope="col-1" class="text-center">
                             Impedimento de Horário 
                             ({{$periodo->impedimentos()->where('submetido', true)->count()}}/{{$periodo->impedimentos->count()}})
+                        </th>
+                        <th scope="col-1" class="text-center">
+                            Emails
                         </th>
                     </tr>
                 </thead>
