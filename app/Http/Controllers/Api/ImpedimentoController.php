@@ -216,7 +216,7 @@ class ImpedimentoController extends Controller
             $dataLimite=$impedimento->periodo->data_final;
             $horaEmFalta=$impedimento->submetido;
             Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin($impedimento->docente, $impedimento->periodo, $filteredUcsResp, $dataLimite,$horaEmFalta));
-            return redirect(route('restricoes.recolha.view'))->with('sucesso', 'Adicionado docente com sucesso!');
+            return redirect(route('restricoes.recolha.view'))->with('sucesso', 'Emails enviados com sucesso!');
         }
         }
         catch(Exception $e){
