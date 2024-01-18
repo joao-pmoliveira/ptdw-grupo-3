@@ -74,4 +74,5 @@ Route::post('/upload-excel', [UploadController::class, 'upload'])->middleware(['
 
 Route::get('/download-excel', [UploadController::class, 'download'])->middleware(['web', 'auth'])->name('download');
 
+Route::get('/mailMissingForms', [ImpedimentoController::class, 'mailMissingForms'])->middleware(['web', 'auth'])->name('mailMissingForms');
 Route::post("/", [PerfilController::class, 'editarPerfil'])->middleware(['web', 'auth'])->name('perfil.edit.view');

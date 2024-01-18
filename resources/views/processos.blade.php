@@ -77,9 +77,9 @@
                     @endif
 
                     @if ($periodo->impedimentos->count() > 0)
-                    <button class="btn d-flex justify-content-center align-items-center">
+                    <a href="{{route('mailMissingForms')}}" class="btn d-flex justify-content-center align-items-center">
                         <i class="fa fa-envelope-o"></i>
-                    </button>
+                    </a>
 
                     <a href="{{route('download')}}" class="btn d-flex justify-content-center align-items-center" download="output_restricoes.xlsx">
                         <i class="fa-solid fa-download"></i>

@@ -168,6 +168,9 @@ class ImpedimentoController extends Controller
         try {
             DB::beginTransaction();
             foreach ($docentes as $docente) {
+                if ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get()->isEmpty() && $docente->ucsResponsavel()->where('periodo_id', $periodo->id)->get()->isEmpty()){
+                    continue;
+                }
                 if ($docente->impedimentos()->where('periodo_id', $periodo->id)->get()->isNotEmpty()) {
                     continue;
                 }
@@ -184,14 +187,14 @@ class ImpedimentoController extends Controller
             }
             DB::commit();
             foreach ($docentes as $docente) {
-                $ucsResp = $docente->ucsResponsavel;
-                $ucs = $docente->unidadesCurriculares;
-                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $ucsResp, $ucs, $dataLimite));
+                $filteredUcsResp = $docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
+                    return $ucsResponsavel->periodo == $periodo;
+                });
+                $filteredUcs = $docente->unidadesCurriculares->filter(function ($unidadesCurriculares) use ($periodo) {
+                    return $unidadesCurriculares->periodo == $periodo;
+                });
+                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $filteredUcsResp, $filteredUcs, $dataLimite,$dataInicial));
             }
-
-            //$this->scheduleTask($dataLimite);
-            $dataLimite2 = date(DATE_ATOM, mktime(13, 30, 00, 1, 18, 2024));
-            $this->scheduleTask($dataLimite2);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 200);
@@ -199,30 +202,8 @@ class ImpedimentoController extends Controller
 
         return response()->json(['message' => 'yay'], 200);
     }
-
-    protected function scheduleTask($scheduledTime)
+    public function mailMissingForms(Request $request)
     {
-        $command = 'app:send-test-date-emails';
-        $commandPath = base_path('artisan');
-
-        $cronExpression = $this->getCronExpression($scheduledTime);
-
-        $outputPath = storage_path('logs/scheduled-task.log'); // Adjust the log path
-
-        // Add the task to the schedule
-        app(Schedule::class)->exec("{$commandPath} {$command} >> {$outputPath} 2>&1")->cron($cronExpression);
-    }
-    protected function getCronExpression($scheduledTime)
-    {
-        // Convert your scheduled time to a cron expression
-        $dateTime = new \DateTime($scheduledTime);
-        $minute = $dateTime->format('i');
-        $hour = $dateTime->format('H');
-        $day = $dateTime->format('d');
-        $month = $dateTime->format('m');
-
-        $cronExpression = "{$minute} {$hour} {$day} {$month} *";
-
-        return $cronExpression;
+        
     }
 }

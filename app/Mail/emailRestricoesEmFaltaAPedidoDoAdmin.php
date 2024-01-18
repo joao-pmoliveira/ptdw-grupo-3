@@ -9,42 +9,35 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class emailAberturaRestricoes extends Mailable
+class emailRestricoesEmFaltaAPedidoDoAdmin extends Mailable
 {
     use Queueable, SerializesModels;
-
-    /**
-     * Create a new message instance.
-     */
     public $docente;
     public $ano;
     public $anoProximo;
     public $semestre;
-    public $ucs;
     public $ucsResp;
-    public $withUcs;
     public $link;
     public $appName;
-    public $ucsList;
     public $ucsRespList;
     public $dataFim;
-    public $dataInicio;
-    public function __construct($docente,$periodo,$ucsResp,$ucs,$dataFim,$dataInicio)
+    public $formType;
+    /**
+     * Create a new message instance.
+     */
+    public function __construct($docente,$periodo,$ucsResp,$dataFim,$horaEmFalta)
     {
         //
         $this->docente=$docente->nome;
         $this->ano=$periodo->ano;
         $this->anoProximo = is_numeric($periodo->ano) ? (int)$periodo->ano + 1 : null;
         $this->semestre=$periodo->semestre;
-        $this->ucs=$ucs;
-        $this->ucsResp=$ucsResp;
-        $this->withUcs = $ucsResp ? " e os formulários de Restrições de Unidades Curriculares" : "";
+        $this->ucsResp=$ucsResp->where('restricoes_submetidas',False);
+        $this->formType=$this->formType($horaEmFalta,$ucsResp);
         $this->link=env('APP_URL')."/restricoes";
         $this->appName=env('APP_NAME');
-        $this->ucsList=$this->ucsList();
         $this->ucsRespList=$this->ucsRespList();
         $this->dataFim=$dataFim;
-        $this->dataInicio=$dataInicio;
     }
 
     /**
@@ -53,7 +46,7 @@ class emailAberturaRestricoes extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Formulário de Restrições Disponivel - SCH - ESTGA - UA',
+            subject: 'Email Restricoes Em Falta A Pedido Do Admin',
         );
     }
 
@@ -63,7 +56,7 @@ class emailAberturaRestricoes extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.emailAberturaRestricoes',
+            view: 'view.name',
         );
     }
 
@@ -76,30 +69,26 @@ class emailAberturaRestricoes extends Mailable
     {
         return [];
     }
+    public function formType($horaEmFalta,$ucsResp): string
+    {
+        $text = "";
+        if($horaEmFalta==true){
+            $text.=" de Impedimentos de Horários";
+            if($ucsResp->isNotEmpty()){
+                $text.=" e os formulários de Restrições de Unidades Curriculares";
+            }
+        }
+        else{
+            $text.=" de Restrições de Unidades Curriculares";
+        }
+        return $text;
+    }
     public function ucsRespList(): string
     {
         $list = "";
         if ($this->ucsResp->isNotEmpty()) {
-            $list .= "<p>&emsp;Foi lhe atribuído as Unidades Curriculares, como docente responsável:</p><ul>";
+            $list .= "<p>&emsp;Tem em falta o preenchimento das restrições das Unidades Curriculares, em que é docente responsável:</p><ul>";
             foreach ($this->ucsResp as $uc) {
-                $list .= "<li>" . $uc->codigo . " - " . $uc->nome . "</li>";
-            }
-            $list .= "</ul><br>";
-        }
-
-        return $list;
-    }
-    public function ucsList(): string
-    {
-        $list = "";
-        
-        if ($this->ucs->isNotEmpty()) {
-            if ($this->ucsResp->isNotEmpty()) {
-                $list .= "<p>&emsp;E como docente auxiliar:</p><ul>";
-            } else {
-                $list .= "<p>&emsp;Foi lhe atribuído as Unidades Curriculares, como docente auxiliar:</p><ul>";
-            }
-            foreach ($this->ucs as $uc) {
                 $list .= "<li>" . $uc->codigo . " - " . $uc->nome . "</li>";
             }
             $list .= "</ul><br>";
