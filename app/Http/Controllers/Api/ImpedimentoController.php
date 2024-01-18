@@ -9,9 +9,11 @@ use App\Models\Docente;
 use App\Models\Impedimento;
 use App\Models\Periodo;
 use Exception;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Mail\TestMail;
@@ -186,11 +188,41 @@ class ImpedimentoController extends Controller
                 $ucs = $docente->unidadesCurriculares;
                 Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $ucsResp, $ucs, $dataLimite));
             }
+
+            //$this->scheduleTask($dataLimite);
+            $dataLimite2 = date(DATE_ATOM, mktime(13, 30, 00, 1, 18, 2024));
+            $this->scheduleTask($dataLimite2);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 200);
         }
 
         return response()->json(['message' => 'yay'], 200);
+    }
+
+    protected function scheduleTask($scheduledTime)
+    {
+        $command = 'app:send-test-date-emails';
+        $commandPath = base_path('artisan');
+
+        $cronExpression = $this->getCronExpression($scheduledTime);
+
+        $outputPath = storage_path('logs/scheduled-task.log'); // Adjust the log path
+
+        // Add the task to the schedule
+        app(Schedule::class)->exec("{$commandPath} {$command} >> {$outputPath} 2>&1")->cron($cronExpression);
+    }
+    protected function getCronExpression($scheduledTime)
+    {
+        // Convert your scheduled time to a cron expression
+        $dateTime = new \DateTime($scheduledTime);
+        $minute = $dateTime->format('i');
+        $hour = $dateTime->format('H');
+        $day = $dateTime->format('d');
+        $month = $dateTime->format('m');
+
+        $cronExpression = "{$minute} {$hour} {$day} {$month} *";
+
+        return $cronExpression;
     }
 }
