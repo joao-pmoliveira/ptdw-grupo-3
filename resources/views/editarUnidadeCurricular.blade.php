@@ -80,7 +80,7 @@
 
             <div class="d-flex align-items-center p-2">
                 <label for="uc-main-teacher" class="col-md-2">Docente Responsável</label>
-                <select class="col-md-2 p-1" name="docente_responsavel_id" id="uc-main-teacher-select" required>
+                <select class="col-md-2 p-1" name="docente_responsavel_id" id="uc-main-teacher-select">
                     <option value="">---</option>
                     @foreach ($docentes as $docente)
                         @php

@@ -218,7 +218,7 @@ class UnidadeCurricularController extends Controller
                 'horas' => ['required', 'integer', 'min:1'],
                 'ects' => ['required', 'integer', 'min:1'],
                 'acn' => ['required', 'integer', 'exists:acns,id'],
-                'docente_responsavel_id' => ['required', 'integer', 'exists:docentes,id'],
+                'docente_responsavel_id' => ['nullable', 'integer', 'exists:docentes,id'],
                 'docentes_id' => ['array'],
             ];
             $messages = [
@@ -236,7 +236,6 @@ class UnidadeCurricularController extends Controller
                 'acn.required' => 'Selecione a Área Científica Nuclear da UC!',
                 'acn.integer' => 'Área Científica Nuclear inválida!',
                 'acn.exists' => 'Área Científica Nuclear inválida!',
-                'docente_responsavel_id.required' => 'Selecione o Docente Responsável pela UC!',
                 'docente_responsavel_id.integer' => 'Docente Responsável inválido!',
                 'docente_responsavel_id.exists' => 'Docente Responsável inválido!',
             ];
@@ -252,11 +251,17 @@ class UnidadeCurricularController extends Controller
             $nome = $validatedData['nome'];
             $periodo = $uc->periodo;
 
-            if (UnidadeCurricular::where('codigo', $codigo)->exists()) {
-                if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->where('periodo_id', $periodo->id)->exists()) {
-                    throw new Exception('Código e Nome já estão atribuídos para uma UC, no ano ' . $periodo->ano . ' e semestre ' . $periodo->semestre);
-                } else if (UnidadeCurricular::where('codigo', $codigo)->where('nome', $nome)->doesntExist()) {
-                    throw new Exception('Código e Nome não coincidem com dados na base de dados.');
+
+            $ucsComMesmoCodigo = UnidadeCurricular::where('codigo', $codigo)->get();
+            if ($ucsComMesmoCodigo->isNotEmpty()) {
+                $ucsComMesmoNome = $ucsComMesmoCodigo->where('nome', $nome);
+                if ($ucsComMesmoNome->isNotEmpty()) {
+                    $ucsComMesmoPeriodo = $ucsComMesmoNome->where('periodo_id', $uc->periodo->id)->where('id', '<>', $uc->id);
+                    if ($ucsComMesmoPeriodo->isNotEmpty()) {
+                        throw new Exception('Já existe UC com o mesmo Código e Nome!');
+                    }
+                } else {
+                    throw new Exception('Código e Nome não disponíveis!');
                 }
             }
 
@@ -271,9 +276,11 @@ class UnidadeCurricularController extends Controller
 
             $uc->docentes()->detach();
 
-            $docenteResponsavel = Docente::findOrFail($validatedData['docente_responsavel_id']);
-            //todo @joao: definir percentagem semanal
-            $uc->docentes()->attach($docenteResponsavel, ['percentagem_semanal' => 1]);
+            $atualDocenteResponsavel = Docente::find($validatedData['docente_responsavel_id']) ?? null;
+            if ($atualDocenteResponsavel) {
+                //todo @joao: definir percentagem semanal
+                $uc->docentes()->attach($atualDocenteResponsavel, ['percentagem_semanal' => 1]);
+            }
 
             foreach ($docentesId as $docenteId) {
                 if (is_null($docenteId)) {
@@ -287,7 +294,14 @@ class UnidadeCurricularController extends Controller
 
             DB::commit();
 
-            if ($antigoDocResponsavel && (!$uc->docenteResponsavel || $antigoDocResponsavel->id !== $uc->docenteResponsavel->id)) {
+            //* Enviar email se:
+            //  - não havia docente responsavel e agora há
+            //  - havia e já não há
+            //  - havia e também há mas é diferente
+            if ((!$antigoDocResponsavel && $atualDocenteResponsavel) ||
+                ($antigoDocResponsavel && !$atualDocenteResponsavel) ||
+                ($antigoDocResponsavel && $atualDocenteResponsavel && $antigoDocResponsavel->id !== $atualDocenteResponsavel->id)
+            ) {
                 $hoje = now();
                 $data_inicial = Carbon::createFromFormat('Y-m-d', $uc->periodo->data_inicial);
                 $data_final = Carbon::createFromFormat('Y-m-d', $uc->periodo->data_final);
@@ -297,7 +311,7 @@ class UnidadeCurricularController extends Controller
                     //tanto aqueles que foram adicionar como 'docentes restante'
                     //tanto aqueles que foram retirados da UC, seja o antigo responsavel 
                     // seja os antigos 'restantes'
-                    Mail::to($docenteResponsavel->user->email)->send(new emailMudancaRestricoes($docenteResponsavel, $uc->periodo, $uc, $uc->periodo->data_final));
+                    Mail::to($atualDocenteResponsavel->user->email)->send(new emailMudancaRestricoes($atualDocenteResponsavel, $uc->periodo, $uc, $uc->periodo->data_final));
                 }
             }
 
