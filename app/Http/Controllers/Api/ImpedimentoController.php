@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Mail\TestMail;
@@ -186,11 +187,24 @@ class ImpedimentoController extends Controller
                 $ucs = $docente->unidadesCurriculares;
                 Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $ucsResp, $ucs, $dataLimite));
             }
+            $scheduleTime = '12:30'; // Replace with your desired time
+            $cronExpression = $this->generateCronExpression($scheduleTime);
+
+            Artisan::call('app:send-test-date-emails', [
+                '--schedule' => $cronExpression,
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 200);
         }
 
         return response()->json(['message' => 'yay'], 200);
+    }
+    private function generateCronExpression($scheduleTime)
+    {
+        list($hour, $minute) = explode(':', $scheduleTime);
+
+        // Assume daily execution
+        return "{$minute} {$hour} * * *";
     }
 }
