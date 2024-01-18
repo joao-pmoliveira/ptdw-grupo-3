@@ -1,13 +1,12 @@
 <div>
-    <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
+    <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
     <p>&emsp;Caro(a) docente {{$docente}},</p>
-    <p>&emsp;A partir de {{$dataInicio}} encontram-se disponíveis os formulários de Impedimentos de Horários{{$withUcs}} referente ao ano lectivo {{$ano}}/{{$anoProximo}} e {{$semestre}}º semestre.</p>
+    <p>&emsp;Encontram-se disponíveis formulários {{$formType}}, <b>que ainda não foram preenchidos</b>, referente ao ano lectivo {{$ano}}/{{$anoProximo}} e {{$semestre}}º semestre.</p>
     <br>
     <p>&emsp;Para preencher as suas restrições diriga-se à plataforma de {{$appName}}, na página <a href={{$link}}>Preencher restrições</a>.</p>
     <br>
     <div>
         {!!$ucsRespList!!}
-        {!!$ucsList!!}
     </div>
     <p>&emsp;Agradeçemos que preencha os formulários de restrições até à data <b>{{$dataFim}}</b>.</p>
     <p>&emsp;Cumprimentos,</p>
