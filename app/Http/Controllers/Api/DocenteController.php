@@ -165,20 +165,18 @@ class DocenteController extends Controller
         }
     }
 
-    public function delete(Docente $docente, $id)
+    public function delete($id)
     {
-        //if (!$docenteRequest->authorize()) {
-        //  return response()->json(['message' => 'nao autorizado'], 403);
-        //}
-
         try {
-            DB::beginTransaction();
+            $this->authorize('admin-access');
 
             $docente = Docente::findOrFail($id);
 
-            if ($docente->user == Auth::user()) {
-                throw new Exception('A tentar eliminar docente associado ao utilizador atual');
+            if ($docente->user->id == Auth::user()->id) {
+                throw new Exception('Não é possível remover o docente associado a esta conta!');
             }
+
+            DB::beginTransaction();
 
             $docente->user->delete();
             $docente->impedimentos()->delete();
@@ -187,19 +185,19 @@ class DocenteController extends Controller
                 $uc->docente_responsavel_id = null;
                 $uc->save();
             }
-
-
             $docente->delete();
 
             DB::commit();
-
-            return response()->json([
-                'message' => 'Docente removido com sucesso!',
-                'redirect' => route('admin.gerir.view'),
-            ]);
+            return redirect(route('admin.gerir.view'))->with('sucesso', 'Docente removido com sucesso!');
+        } catch (AuthorizationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', 'Sem permissões para remover Docente!');
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', 'Erro ao tentar remover docente!');
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => $e->getMessage()]);
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 }
