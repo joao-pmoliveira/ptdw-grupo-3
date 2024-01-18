@@ -40,26 +40,48 @@ class DocenteController extends Controller
         }
     }
 
-    public function store(DocenteRequest $docenteRequest)
+    public function store(Request $request)
     {
-        if (!$docenteRequest->authorize()) {
-            return response()->json(['message' => 'nao autorizado'], 403);
-        }
-
-        $nome = $docenteRequest->input('nome');
-        $numero = $docenteRequest->input('numero');
-        $email = $docenteRequest->input('email');
-        $telemovel = $docenteRequest->input('telemovel');
-        $acn = $docenteRequest->input('acn');
-
         try {
-            DB::beginTransaction();
+            $this->authorize('admin-access');
 
+            $rules = [
+                'nome' => ['required', 'string'],
+                'acn' => ['required', 'integer', 'exists:acns,id'],
+                'email' => ['required', 'email'],
+                'telemovel' => ['required', 'string'],
+                'numero' => ['required', 'integer', 'min:1'],
+            ];
+
+            $messages = [
+                'nome.required' => 'Preencha o nome do Docente!',
+                'nome.string' => 'Nome do docente inválido!',
+                'acn.required' => 'Selecione a Área Científica Nuclear do Docente!',
+                'acn.integer' => 'Área Científica Nuclear do Docente inválida!',
+                'acn.exists' => 'Área Científica Nuclear do Docente inválida!',
+                'email.required' => 'Preencha o email do Docente!',
+                'email.email' => 'Email do docente inválido!',
+                'telemovel.required' => 'Preencha o número telefónico do docente!',
+                'telemovel.string' => 'Número de telefone do Docente inválido!',
+                'numero.required' => 'Preencha o número de funcionário do Docente!',
+                'numero.integer' => 'Número de funcionário do Docente inválido!',
+                'numero.min' => 'Número de funcionário tem de ser superior a 1!',
+            ];
+
+            $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
+
+            $nome = $validatedData['nome'];
+            $numero = $validatedData['numero'];
+            $email = $validatedData['email'];
+            $telemovel = $validatedData['telemovel'];
+            $acn = $validatedData['acn'];
+
+            DB::beginTransaction();
 
             $docente = Docente::create([
                 'numero_funcionario' => $numero,
                 'numero_telefone' => $telemovel,
-                'acn_id' => $acn
+                'acn_id' => $acn,
             ]);
             $docente->save();
 
@@ -70,15 +92,18 @@ class DocenteController extends Controller
                 'admin' => false,
             ]);
             $docente->user()->save($user);
-            DB::commit();
+
+            // todo @joao:
             Mail::to('miguelmvieira@ua.pt')->send(new TestMail());
-            return response()->json([
-                'message' => 'sucesso!',
-                'redirect' => route('admin.gerir.view'),
-            ]);
-        } catch (Exception $e) {
+
+            DB::commit();
+            return redirect(route('admin.gerir.view'))->with('sucesso', 'Adicionado docente com sucesso!');
+        } catch (AuthorizationException $e) {
             DB::rollBack();
-            return response()->json(['message' => $e->getMessage()]);
+            return redirect()->back()->with('alerta', 'Sem permissões para adicionar Docente!');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->back()->with('alerta', $e->getMessage());
         }
     }
 
