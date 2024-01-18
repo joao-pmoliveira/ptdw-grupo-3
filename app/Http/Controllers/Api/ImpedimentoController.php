@@ -204,8 +204,9 @@ class ImpedimentoController extends Controller
         return response()->json(['message' => 'yay'], 200);
     }
     public function mailMissingForms(Request $request)
-    {
-        $impedimento_selecionados=$request->input('impedimento_selecionados');
+    {   
+        try{
+            $impedimento_selecionados=$request->input('impedimento_selecionados');
         foreach($impedimento_selecionados as $impedimento){
             $periodo=$impedimento->periodo;
             $filteredUcsResp = $impedimento->docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
@@ -214,6 +215,11 @@ class ImpedimentoController extends Controller
             $dataLimite=$impedimento->periodo->data_final;
             $horaEmFalta=$impedimento->submetido;
             Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin($impedimento->docente, $impedimento->periodo, $filteredUcsResp, $dataLimite,$horaEmFalta));
+            return response()->json(['message' => 'yay'], 200);
+        }
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 200);
         }
     }
 }
