@@ -14,8 +14,8 @@
 
     <section class="mt-3 mb-4 p-0 d-flex flex-column gap-4">
         <div class="d-flex gap-4 align-items-stretch flex-wrap">
-
-            <select class="" name="ano_semestre" id="ano_semestre" aria-label="Filtre por ano e semestre">
+            <select class="" name="ano_semestre" id="ano_semestre" aria-label="Filtre por ano e semestre" 
+            data-link="{{route('ucs.index')}}">
                 @foreach ($periodos as $p)
                 <option value="{{$p->ano . '_' . ($p->ano+1) . '_' . $p->semestre}}">
                     {{$p->ano . '/' . (substr($p->ano+1, 2,2)) . ' - ' . $p->semestre . 'º semestre'}}
@@ -75,6 +75,6 @@
 
 </main>
 
-<script>const authUser = @json($user)</script>
+<script>const authUser = @json($user);</script>
 <script src="{{asset('js/unidadesCurriculares.js')}}" defer></script>
 @endsection

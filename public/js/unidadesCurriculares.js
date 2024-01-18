@@ -5,33 +5,46 @@ const initRows = tableUCs.querySelectorAll('#table-ucs tbody tr:not(:is([id="ucs
 
 
 initRows.forEach(row => {
-    row.addEventListener('click', () => {
-        const url = row.getAttribute('data-link');
-        window.location.href = url;
-    });
+    row.addEventListener('click', () => redirectToUCPage(row));
 })
+
+function redirectToUCPage(row) {
+    const url = row.getAttribute('data-link')
+    window.location.href = url;
+}
 
 const periodoSelect = document.querySelector('select#ano_semestre');
 periodoSelect?.addEventListener('change', async () => {
     const selected = periodoSelect.value;
 
     const [anoInicial, anoFinal, semestre] = selected.split('_');
-    const baseURL = '/api/unidades-curriculares/por-ano-semestre';
+    const baseURL = `${periodoSelect.getAttribute('data-link')}/por-ano-semestre`;
 
     const res = await fetch(`${baseURL}/${anoInicial}/${semestre}`);
     const data = await res.json();
 
     const tableBody = document.querySelector('#table-ucs tbody');
-    tableBody.innerHTML = '';
+
+    tableBody.querySelectorAll('tr:not([id="ucs-no-match-row"])').forEach(row => row.remove());
+    // tableBody.innerHTML = '';
 
     data.forEach(uc => {
+        console.log(uc);
         const id = uc['id'];
         const nome = uc['nome'];
         const codigo = uc['codigo'];
+        const cursos = uc['cursos'];
+        const link = uc['link'];
         const nomeDocenteResponsavel = uc['docente_responsavel']['user']['nome'];
 
         const row = document.createElement('tr');
         row.setAttribute('data-id', id);
+        row.classList.add('border', 'border-light');
+
+        const cursosID = cursos.map(c => c['id']).join(',');
+        row.setAttribute('data-curso-id', cursosID);
+
+        row.setAttribute('data-link', link);
 
         const userUC = Array.from(uc['docentes']).map(d => d['id']).filter(id => id == authUser.id);
         row.setAttribute('data-my-uc', userUC.length !== 0 ? 'Y' : 'N');

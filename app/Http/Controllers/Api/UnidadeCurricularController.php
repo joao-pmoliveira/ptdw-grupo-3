@@ -55,12 +55,18 @@ class UnidadeCurricularController extends Controller
             return response()->json(['error' => 'Sem registos para ano: ' . $ano . ', semestre' . $semestre], 404);
         }
 
+        $dataType = getenv('DB_CONNECTION') === 'mysql' ? 'UNSIGNED' : 'INTEGER';
         $ucs = UnidadeCurricular::where('periodo_id', $periodo->id)
             ->with('docenteResponsavel.user')
             ->with('docentes.user')
             ->with('cursos')
-            ->orderByRaw('CAST(codigo as INTEGER) asc')
+            ->orderByRaw('CAST(codigo as ' . $dataType . ') asc')
             ->get();
+
+        $ucs = $ucs->map(function ($uc) {
+            $uc['link'] = route('ucs.uc.view', ['uc' => $uc->id]);
+            return $uc;
+        });
 
         return response()->json($ucs);
     }
