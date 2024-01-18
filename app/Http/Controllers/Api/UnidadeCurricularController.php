@@ -82,7 +82,7 @@ class UnidadeCurricularController extends Controller
                 'horas' => ['required', 'integer', 'min:1'],
                 'ects' => ['required', 'integer', 'min:0'],
                 'acn' => ['required', 'integer', 'exists:acns,id'],
-                'docente_responsavel_id' => ['required', 'integer', 'exists:docentes,id'],
+                'docente_responsavel_id' => ['nullable', 'integer', 'exists:docentes,id'],
                 'docentes_id' => ['array'],
             ];
 
@@ -101,7 +101,6 @@ class UnidadeCurricularController extends Controller
                 'acn.required' => 'Seleciona a Área Científica Nuclear da UC!',
                 'acn.integer' => 'Área Científica Nuclear selecionada inválida!',
                 'acn.exists' => 'Área Científica Nuclear selecionada inválida!',
-                'docente_responsavel_id.required' => 'Selecione o docente responsável pela UC!',
                 'docente_responsavel_id.integer' => 'Docente responsável selecionado inválido!',
                 'docente_responsavel_id.exists' => 'Docente responsável selecionado inválido!',
                 'docentes_id.array' => 'Erro de formato na seleção de docentes!',
@@ -157,10 +156,13 @@ class UnidadeCurricularController extends Controller
             //todo @joao: se se permitir adicionar/editar UCs enviado o DocResp como nulo:
             // é necessário editar isto para verificar se o campo é nulo
 
-            $docenteResponsavel = Docente::where('id', $docenteResponsavelId)->first();
-            //todo @joao: calcular % semanal do docente
-            $uc->docentes()->attach($docenteResponsavel, ['percentagem_semanal' => 1]);
-            $uc->refresh();
+            $docenteResponsavel = Docente::find($docenteResponsavelId) ?? null;
+
+            if ($docenteResponsavel) {
+                //todo @joao: calcular % semanal do docente
+                $uc->docentes()->attach($docenteResponsavel, ['percentagem_semanal' => 1]);
+                $uc->refresh();
+            }
 
             foreach ($docentesId as $docenteId) {
                 if (is_null($docenteId)) {

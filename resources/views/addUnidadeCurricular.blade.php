@@ -83,7 +83,7 @@
 
             <div class="d-flex align-items-center p-2">
                 <label class="col-md-2" for="uc-main-teacher">Docente Responsável</label>
-                <select class="col-md-2 p-1" name="docente_responsavel_id" id="uc-main-teacher-select" required>
+                <select class="col-md-2 p-1" name="docente_responsavel_id" id="uc-main-teacher-select">
                     <option value="" selected>---</option>
                     @foreach ($docentes as $docente)
                         <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
