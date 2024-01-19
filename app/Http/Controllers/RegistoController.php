@@ -53,6 +53,7 @@ class RegistoController extends Controller
             if (!empty($user->email)) {
                 return redirect(route('registo.view'))->with('alerta', 'O Número de Funcionário já se encontra atribuído!');
             }
+            dd(Carbon::now());
             $user->update([
                 'email' => $validatedData['email'],
                 'password' => bcrypt($validatedData['password']),
