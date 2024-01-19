@@ -20,6 +20,7 @@ use Illuminate\Validation\ValidationException;
 use App\Mail\TestMail;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class ImpedimentoController extends Controller
 {
@@ -143,36 +144,45 @@ class ImpedimentoController extends Controller
 
     public function gerarPorPeriodo(Request $request)
     {
-        $ano = $request->input('ano');
-        $semestre = $request->input('semestre');
-        $dataInicial = $request->input('data_inicial');
-        $dataLimite = $request->input('data_limite');
-
-        $periodo = Periodo::where('ano', $ano)
-            ->where('semestre', $semestre)
-            ->first();
-
-        if (is_null($periodo)) {
-            return response()->json(['message' => 'sem período correspondente'], 200);
-        }
-
-        $periodoMaisRecente = Periodo::orderBy('ano', 'desc')
-            ->orderBy('semestre', 'desc')
-            ->first();
-
-        if ($periodoMaisRecente->id != $periodo->id) {
-            return response()->json(['message' => 'periodo indicado não é o mais recente']);
-        }
-
-        $docentes = Docente::all();
-
         try {
+            $this->authorize('admin-access');
+
+            $rules = [
+                'data_inicial' => ['required'],
+                'data_final' => ['required'],
+            ];
+
+            $messages = [
+                'data_inicial.required' => 'Preencha a data de aberto dos formulários',
+                'data_final.required' => 'Preencha a data de fecho dos formulários',
+            ];
+
+            $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
+
+            $periodo = Periodo::orderBy('ano', 'desc')
+                ->orderBy('semestre', 'desc')
+                ->first();
+
+            if (is_null($periodo)) {
+                return redirect()->back()->with('alerta', 'Erro ao gerar formulários para o ano e semestre indicado!');
+            }
+
             DB::beginTransaction();
+
+            $periodo->update([
+                'data_inicial' => $validatedData['data_inicial'],
+                'data_final' => $validatedData['data_final'],
+            ]);
+
+            $docentes = Docente::all();
+
             foreach ($docentes as $docente) {
-                if ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get()->isEmpty() && $docente->ucsResponsavel()->where('periodo_id', $periodo->id)->get()->isEmpty()){
+                $semUCsAssociadas = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->doesntExist();
+                if ($semUCsAssociadas) {
                     continue;
                 }
-                if ($docente->impedimentos()->where('periodo_id', $periodo->id)->get()->isNotEmpty()) {
+                $comImpedimentos = $docente->impedimentos()->where('periodo_id', $periodo->id)->exists();
+                if ($comImpedimentos) {
                     continue;
                 }
 
@@ -183,10 +193,12 @@ class ImpedimentoController extends Controller
                     'justificacao' => '',
                     'submetido' => false,
                 ]);
-
                 $impedimento->save();
             }
+
             DB::commit();
+
+            // todo @joao: passar para dentro do ciclo anterior
             foreach ($docentes as $docente) {
                 $filteredUcsResp = $docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
                     return $ucsResponsavel->periodo == $periodo;
@@ -194,32 +206,32 @@ class ImpedimentoController extends Controller
                 $filteredUcs = $docente->unidadesCurriculares->filter(function ($unidadesCurriculares) use ($periodo) {
                     return $unidadesCurriculares->periodo == $periodo;
                 });
-                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $filteredUcsResp, $filteredUcs, $dataLimite,$dataInicial));
+                Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $filteredUcsResp, $filteredUcs, $validatedData['data_final'], $validatedData['data_inicial']));
             }
-        } catch (Exception $e) {
-            DB::rollBack();
-            return response()->json(['message' => $e->getMessage()], 200);
+            return redirect()->back()->with('sucesso', 'Formulários gerados com sucesso!');
+        } catch (AuthorizationException $e) {
+            return redirect()->back()->with('alerta', 'Sem permissões para gerar formulários!');
+        } catch (ValidationException $e) {
+            return redirect()->back()->with('alerta', $e->validator->errors()->all());
         }
-
-        return response()->json(['message' => 'yay'], 200);
     }
+
     public function mailMissingForms(Request $request)
-    {   
-        try{
+    {
+        try {
             $impedimentoIds = $request->input('impedimento_selecionados');
             foreach ($impedimentoIds as $impedimentoId) {
                 $impedimento = Impedimento::find($impedimentoId);
-            $periodo=$impedimento->periodo;
-            $filteredUcsResp = $impedimento->docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
-                return $ucsResponsavel->periodo == $periodo;
-            });
-            $dataLimite=$impedimento->periodo->data_final;
-            $horaEmFalta=$impedimento->submetido;
-            Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin($impedimento->docente, $impedimento->periodo, $filteredUcsResp, $dataLimite,$horaEmFalta));
-            return redirect(route('restricoes.recolha.view'))->with('sucesso', 'Emails enviados com sucesso!');
-        }
-        }
-        catch(Exception $e){
+                $periodo = $impedimento->periodo;
+                $filteredUcsResp = $impedimento->docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
+                    return $ucsResponsavel->periodo == $periodo;
+                });
+                $dataLimite = $impedimento->periodo->data_final;
+                $horaEmFalta = $impedimento->submetido;
+                Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin($impedimento->docente, $impedimento->periodo, $filteredUcsResp, $dataLimite, $horaEmFalta));
+                return redirect(route('restricoes.recolha.view'))->with('sucesso', 'Emails enviados com sucesso!');
+            }
+        } catch (Exception $e) {
             return redirect()->back()->with('alerta', $e->getMessage());
         }
     }

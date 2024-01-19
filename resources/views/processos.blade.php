@@ -36,6 +36,11 @@
                     return $docente->impedimentos()->where('periodo_id', $periodo->id)->doesntExist() &&
                         $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
                 });
+
+                $countDocentesSemForm = $docentes->filter(function ($docente) use ($periodo) {
+                    return $docente->impedimentos()->where('periodo_id', $periodo->id)->doesntExist() &&
+                        $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
+                })->count();
             @endphp
             <div class="d-flex justify-content-between mb-2">
                 @if ($periodo->impedimentos->count() > 0)
@@ -51,7 +56,7 @@
                 <div class="d-flex gap-2">
                     @if ($docentesSemForm)
                     <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-process">
-                        Gerar Formulários
+                        Gerar Formulários {{$countDocentesSemForm}}
                     </button>
                     @endif
 
@@ -208,20 +213,12 @@
                 <form id="gerar-formularios-form" class="d-flex flex-column gap-3 px-5 py-4" action="{{route('impedimentos.periodo')}}" method="post">
                     @csrf
                     <div class="d-flex gap-3 justify-content-between align-items-center">
-                        <label class="w-50" for="ano-impedimentos-input">Ano Letivo:</label>
-                        <input class="w-50" type="text" name="ano" id="ano-impedimentos-input">
-                    </div>
-                    <div class="d-flex gap-3 justify-content-between align-items-center">
-                        <label class="w-50" for="semestre-impedimentos-input">Semestre:</label>
-                        <input class="w-50" type="number" name="semestre" id="semestre-impedimentos-input" min="1" max="2">
-                    </div>
-                    <div class="d-flex gap-3 justify-content-between align-items-center">
                         <label class="w-50" for="data-inicial-impedimentos-input">Abre a :</label>
-                        <input class="w-50" type="date" name="data_inicial" id="data-inicial-impedimentos-input">
+                        <input class="w-50" type="date" name="data_inicial" id="data-inicial-impedimentos-input" value="{{$periodo->data_inicial}}">
                     </div>
                     <div class="d-flex gap-3 justify-content-between align-items-center">
                         <label class="w-50" for="data-limite-impedimentos-input">Fecha a:</label>
-                        <input class="w-50" type="date" name="data_limite" id="data-limite-impedimentos-input">
+                        <input class="w-50" type="date" name="data_final" id="data-limite-impedimentos-input" value="{{$periodo->data_final}}">
                     </div>
                     <div class="d-flex gap-3 justify-content-center" id="form-btns">
                         <input class="btn" type="submit" value="Submeter">
