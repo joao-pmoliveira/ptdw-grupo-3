@@ -96,7 +96,9 @@ class UploadController extends Controller
                 foreach ($cellIterator as $index => $cell) {
                     $val = $cell->getValue();
 
-                    $lineData[$columnsMap[$index]] = $val;
+                    if (array_key_exists($index, $columnsMap)) {
+                        $lineData[$columnsMap[$index]] = $val;
+                    }
                 }
 
                 array_push($data, $lineData);
