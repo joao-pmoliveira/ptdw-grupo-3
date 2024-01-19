@@ -19,9 +19,12 @@ class UserTableSeeder extends Seeder
             $nome = $faker->unique()->name();
             User::create([
                 'nome' => $nome,
+                // todo @joao: remover geração do automatica do email
                 'email' => $this->getEmailFromName($nome),
                 'password' => bcrypt('password'),
                 'admin' => rand(0, 9) < 3 ? true : false,
+                'numero_funcionario' => $faker->unique()->randomNumber(4, true),
+                'numero_telefone' => $faker->phoneNumber(),
                 'docente_id' => $docente->id
             ]);
         }
@@ -31,9 +34,12 @@ class UserTableSeeder extends Seeder
             $nome = $faker->unique()->name();
             User::create([
                 'nome' => $nome,
+                // todo @joao: remover geração do automatica do email
                 'email' => $this->getEmailFromName($nome),
                 'password' => bcrypt('password'),
                 'admin' => true,
+                'numero_funcionario' => $faker->unique()->randomNumber(4, true),
+                'numero_telefone' => $faker->phoneNumber(),
             ]);
         }
         $this->developerAccounts();
@@ -49,36 +55,38 @@ class UserTableSeeder extends Seeder
     public static function developerAccounts()
     {
         Docente::create([
-            'numero_funcionario' => "85095",
             'acn_id' => 1,
-            'numero_telefone' => '960444644',
         ]);
         User::create([
             'nome' => 'Miguel Marques Vieira',
             'email' => 'miguelnamarinha@gmail.com',
             'password' => bcrypt('password'),
             'admin' => true,
-            'docente_id' => 12
+            'docente_id' => 12,
+            'numero_telefone' => '960444644',
+            'numero_funcionario' => 85095,
         ]);
 
         Docente::create([
-            'numero_funcionario' => "85096",
             'acn_id' => 1,
-            'numero_telefone' => '',
         ]);
         User::create([
             'nome' => 'Miguel Marques Vieira Docente',
             'email' => 'miguelmvieira@ua.pt',
             'password' => bcrypt('password'),
             'admin' => false,
-            'docente_id' => 13
+            'docente_id' => 13,
+            'numero_funcionario' => 85096,
+            'numero_telefone' => '',
         ]);
 
         User::create([
             'nome' => 'Miguel Marques Vieira Admin',
             'email' => 'miguelnamarinha@sapo.pt',
             'password' => bcrypt('password'),
-            'admin' => true
+            'admin' => true,
+            'numero_funcionario' => 85097,
+            'numero_telefone' => '',
         ]);
     }
 }

@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('docentes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedInteger('numero_funcionario')->nullable(false);
             $table->unsignedBigInteger('acn_id')->nullable(false);
-            $table->string('numero_telefone');
 
             $table->foreign('acn_id')->references('id')->on('acns');
         });

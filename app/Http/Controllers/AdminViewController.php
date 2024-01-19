@@ -23,7 +23,8 @@ class AdminViewController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('admin-access')) {
-            abort(403, 'Sem autorização');
+            // todo @joao: adicionar alertas na view
+            return redirect(route('inicio.view'));
         }
 
         $periodos = Periodo::orderBy('ano', 'desc')
@@ -32,8 +33,9 @@ class AdminViewController extends Controller
 
         $cursos = Curso::all();
 
-        $docentes = Docente::orderBy('numero_funcionario', 'asc')
-            ->get();
+        $docentes = Docente::all()->sortBy(function ($docente) {
+            return $docente->user->numero_funcionario;
+        });
 
         $acns = ACN::all();
 

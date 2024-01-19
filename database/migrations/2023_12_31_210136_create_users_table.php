@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->boolean('admin')->nullable(false);
+            $table->unsignedInteger('numero_funcionario')->nullable(false);
+            $table->string('numero_telefone')->nullable(true);
             $table->unsignedBigInteger('docente_id')->nullable();
 
             $table->foreign('docente_id')->references('id')->on('docentes');

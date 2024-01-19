@@ -9,6 +9,7 @@ if (window.location.hostname === 'localhost') {
     baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
 }
 
+// todo @joao: alterar para incluir links nas linhas da tabela
 tableEditUCs.querySelectorAll('tbody tr:not(:is([id="edit-ucs-no-match-row"]))').forEach(row => {
     const ucID = row.getAttribute('data-id');
     row.addEventListener('click', () => {
@@ -34,6 +35,8 @@ periodoSelect.addEventListener('change', async () => {
         const codigo = uc['codigo'];
         const nomeDocenteResponsavel = uc['docente_responsavel']['user']['nome'];
 
+
+        // todo @joao: adicionar atributos que faltam
         const row = document.createElement('tr');
         row.setAttribute('data-id', id);
         row.setAttribute('data-curso-id', uc['cursos'].map(curso => curso['id']).toString());

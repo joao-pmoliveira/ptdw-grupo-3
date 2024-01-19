@@ -91,7 +91,7 @@
                             @selected($responsavel)
                             @disabled($jaAssociado)
                         >    
-                            {{$docente->numero_funcionario}} - {{$docente->user->nome}}
+                            {{$docente->user->numero_funcionario}} - {{$docente->user->nome}}
                         </option>
                     @endforeach
                 </select>
@@ -113,7 +113,7 @@
                                     <option value="{{$docente->id}}"
                                         @selected($selecionado)
                                     >
-                                        {{$docente->numero_funcionario}} - {{$docente->user->nome}}
+                                        {{$docente->user->numero_funcionario}} - {{$docente->user->nome}}
                                     </option>
                                 @endforeach
                             </select>
@@ -129,7 +129,7 @@
                             <option value="">---</option>
                             @foreach ($docentes as $docente)
                                 <option value="{{$docente->id}}" @disabled($uc->docentes->contains($docente))>
-                                    {{$docente->numero_funcionario}} - {{$docente->user->nome}}
+                                    {{$docente->user->numero_funcionario}} - {{$docente->user->nome}}
                                 </option>
                             @endforeach
                         </select>

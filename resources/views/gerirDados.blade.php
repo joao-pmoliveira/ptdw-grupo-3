@@ -145,7 +145,7 @@
                         @foreach($docentes as $docente)
                             <tr class="border border-light" data-id='{{$docente->id}}'>
                                 <th scope="row"></th>
-                                <td>{{$docente->numero_funcionario}}</td>
+                                <td>{{$docente->user->numero_funcionario}}</td>
                                 <td>{{$docente->user->nome}}</td>
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>

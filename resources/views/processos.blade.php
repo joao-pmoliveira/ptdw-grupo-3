@@ -70,7 +70,7 @@
                     <p>Nenhum formulário ativo de momento.</p>
                 </div>
                 @endif
-                <d-flex class="d-flex gap-2">
+                <div class="d-flex gap-2">
                     @if ($docentesSemForm)
                     <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-process">
                         Gerar Formulários
@@ -86,7 +86,7 @@
                         <i class="fa-solid fa-download"></i>
                     </a>
                     @endif
-                </d-flex>
+                </div>
             </div>
             @if ($periodo->impedimentos->count() > 0)
             <table class="table-ua w-100" id="table">
@@ -109,10 +109,16 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
-                    @foreach ($periodo->impedimentos as $impedimento)
+                    @php
+                        $impedimentosOrd = $periodo->impedimentos->sortByDesc(function ($imp){
+                            return $imp->docente->user->numero_funcionario;
+                        });
+                    @endphp
+
+                    @foreach ($impedimentosOrd as $impedimento)
                     <tr class="border border-light pe-none">
                         <th scope="row"></th>
-                        <td colspan="1">{{$impedimento->docente->numero_funcionario}}</td>
+                        <td colspan="1">{{$impedimento->docente->user->numero_funcionario}}</td>
                         <td colspan="1">{{$impedimento->docente->user->nome}}</td>
                         <td colspan="1" class="text-center">
                             @if ($impedimento->docente->ucsResponsavel()->where('periodo_id', $periodo->id)->count() > 0)
@@ -183,7 +189,7 @@
                                 @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->exists())   
                                 <tr class="collapse accordion-collapse bg-terciary pe-none" id="{{'rh'.$index}}">
                                     <th scope="row"></th>
-                                    <td colspan="1">{{$docente->numero_funcionario}}</td>
+                                    <td colspan="1">{{$docente->user->numero_funcionario}}</td>
                                     <td colspan="1">{{$docente->user->nome}}</td>
                                     <td colspan="1" class="text-center">
                                         @if ($docente->ucsResponsavel)

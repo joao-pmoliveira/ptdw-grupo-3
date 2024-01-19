@@ -86,7 +86,7 @@
                 <select class="col-md-2 p-1" name="docente_responsavel_id" id="uc-main-teacher-select">
                     <option value="" selected>---</option>
                     @foreach ($docentes as $docente)
-                        <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
+                        <option value="{{$docente->id}}">{{$docente->user->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                     @endforeach
                 </select>
             </div>
@@ -99,19 +99,19 @@
                     <select class="p-1" name="docentes_id[]" id="uc-teachers-select-1">
                         <option value="" selected>---</option>
                         @foreach ($docentes as $docente)
-                        <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
+                        <option value="{{$docente->id}}">{{$docente->user->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                         @endforeach
                     </select>
                     <select class="p-1" name="docentes_id[]" id="uc-teachers-select-2">
                         <option value="" selected>---</option>
                         @foreach ($docentes as $docente)
-                        <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
+                        <option value="{{$docente->id}}">{{$docente->user->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                         @endforeach
                     </select>
                     <select class="p-1" name="docentes_id[]" id="uc-teachers-select-3">
                         <option value="" selected>---</option>
                         @foreach ($docentes as $docente)
-                        <option value="{{$docente->id}}">{{$docente->numero_funcionario . ' - ' . $docente->user->nome}}</option>
+                        <option value="{{$docente->id}}">{{$docente->user->numero_funcionario . ' - ' . $docente->user->nome}}</option>
                         @endforeach
                     </select>
                 </div>

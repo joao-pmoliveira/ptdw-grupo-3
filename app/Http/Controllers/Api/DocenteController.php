@@ -49,8 +49,8 @@ class DocenteController extends Controller
                 'nome' => ['required', 'string'],
                 'acn' => ['required', 'integer', 'exists:acns,id'],
                 'email' => ['required', 'email'],
-                'telemovel' => ['required', 'string'],
-                'numero' => ['required', 'integer', 'min:1', 'unique:docentes,numero_funcionario'],
+                'telemovel' => ['nullable', 'string'],
+                'numero' => ['required', 'integer', 'min:1', 'unique:users,numero_funcionario'],
             ];
 
             $messages = [
@@ -61,10 +61,9 @@ class DocenteController extends Controller
                 'acn.exists' => 'Área Científica Nuclear do Docente inválida!',
                 'email.required' => 'Preencha o email do Docente!',
                 'email.email' => 'Email do docente inválido!',
-                'telemovel.required' => 'Preencha o número telefónico do docente!',
                 'telemovel.string' => 'Número de telefone do Docente inválido!',
-                'numero.required' => 'Preencha o número de funcionário do Docente!',
-                'numero.integer' => 'Número de funcionário do Docente inválido!',
+                'numero.required' => 'Preencha o número de funcionário!',
+                'numero.integer' => 'Número de funcionário inválido!',
                 'numero.min' => 'Número de funcionário tem de ser superior a 1!',
                 'numero.unique' => 'Número de funcionário já está em uso!',
             ];
@@ -80,8 +79,6 @@ class DocenteController extends Controller
             DB::beginTransaction();
 
             $docente = Docente::create([
-                'numero_funcionario' => $numero,
-                'numero_telefone' => $telemovel,
                 'acn_id' => $acn,
             ]);
             $docente->save();
@@ -91,6 +88,8 @@ class DocenteController extends Controller
                 'email' => $email,
                 'password' => bcrypt('password'),
                 'admin' => false,
+                'numero_funcionario' => $numero,
+                'numero_telefone' => $telemovel,
             ]);
             $docente->user()->save($user);
 
@@ -120,7 +119,7 @@ class DocenteController extends Controller
                 'acn' => ['required', 'integer', 'exists:acns,id'],
                 'email' => ['required', 'email'],
                 //todo @joao: o telefone vale a pena ser obrigatório?
-                'telefone' => ['required'],
+                'telefone' => ['nullable'],
                 'numero_funcionario' => ['required', 'integer', 'min:1'],
             ];
 
@@ -132,8 +131,7 @@ class DocenteController extends Controller
                 'acn.exists' => 'Área Científica Nuclear inválida!',
                 'email.required' => 'Preencha o email do docente!',
                 'email.email' => 'Email inválido',
-                'telefone.required' => 'Preencha o número de telefone do docente!',
-                'numero_funcionario.required' => 'Preencha o número de funcionário do docente!',
+                'numero_funcionario.required' => 'Preencha o número de funcionário!',
                 'numero_funcionario.integer' => 'Número de funcionário tem de ser número inteiro!',
                 'numero_funcionario.min' => 'Número de funcionário tem de ser superior a 1!',
             ];
@@ -141,14 +139,14 @@ class DocenteController extends Controller
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
 
             $docente->update([
-                'numero_funcionario' => $validatedData['numero_funcionario'],
-                'numero_telefone' => $validatedData['telefone'],
                 'acn_id' => $validatedData['acn'],
             ]);
 
             $docente->user->update([
                 'nome' => $validatedData['nome'],
-                'email' => $validatedData['email']
+                'email' => $validatedData['email'],
+                'numero_funcionario' => $validatedData['numero_funcionario'],
+                'numero_telefone' => $validatedData['telefone'],
             ]);
 
             DB::commit();

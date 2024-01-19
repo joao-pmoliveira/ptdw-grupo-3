@@ -42,5 +42,5 @@ class Docente extends Model
 
     protected $table = 'docentes';
 
-    protected $fillable = ['numero_funcionario', 'acn_id', 'numero_telefone'];
+    protected $fillable = ['acn_id'];
 }

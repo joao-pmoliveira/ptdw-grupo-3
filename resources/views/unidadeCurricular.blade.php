@@ -49,7 +49,7 @@
             <div class="col-md-2">Docente Responsável</div>
             <div class="col-md-10">
                 @if ($uc->docenteResponsavel)
-                    <p>{{$uc->docenteResponsavel->numero_funcionario}} - {{$uc->docenteResponsavel->user->nome}}</p>
+                    <p>{{$uc->docenteResponsavel->user->numero_funcionario}} - {{$uc->docenteResponsavel->user->nome}}</p>
                 @else
                     <p>N/A</p>
                 @endif
@@ -61,7 +61,7 @@
             <div class="col-md-10">
                 @foreach ( $uc->docentes as $docente)
                     @if (!$uc->docenteResponsavel || $uc->docenteResponsavel->id !== $docente->id)
-                    <p>{{$docente->numero_funcionario}} - {{$docente->user->nome}}</p>
+                    <p>{{$docente->user->numero_funcionario}} - {{$docente->user->nome}}</p>
                     @endif
                 @endforeach
             </div>

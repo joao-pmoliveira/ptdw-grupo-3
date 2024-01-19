@@ -18,9 +18,7 @@ class DocenteFactory extends Factory
         $faker = FakerFactory::create('pt_PT');
 
         return [
-            'numero_funcionario' => fake()->unique()->randomNumber(4, true),
             'acn_id' => fake()->randomElement($acns_ids),
-            'numero_telefone' => $faker->phoneNumber(),
         ];
     }
 }

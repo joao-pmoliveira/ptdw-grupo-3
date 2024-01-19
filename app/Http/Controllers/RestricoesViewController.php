@@ -104,15 +104,17 @@ class RestricoesViewController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('admin-access')) {
-            abort(403, 'Sem autorização');
+            //todo @joao: adicionar alertas na página inicial
+            return redirect(route('inicio.view'));
         }
 
         $periodos = Periodo::orderBy('ano', 'desc')
             ->orderBy('semestre', 'desc')
             ->get();
 
-        $docentes = Docente::orderBy('numero_funcionario', 'desc')
-            ->get();
+        $docentes = Docente::all()->sortByDesc(function ($docente) {
+            return $docente->user->numero_funcionario;
+        });
 
         return view('processos', [
             'page_title' => 'Recolha de Restrições',

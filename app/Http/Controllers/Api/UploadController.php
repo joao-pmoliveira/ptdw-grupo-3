@@ -135,11 +135,13 @@ class UploadController extends Controller
                 }
 
                 // Assume que se o docente não está na BD, este é um docente novo
-                $docente = Docente::where('numero_funcionario', $d['numero_docente'])->with('user')->first();
+
+                $docente = Docente::all()->filter(function ($docente) use ($d) {
+                    return $docente->user->numero_funcionario == $d['numero_docente'];
+                })->first();
+
                 if (is_null($docente)) {
                     $docente = Docente::create([
-                        'numero_funcionario' => $d['numero_docente'],
-                        'numero_telefone' => $faker->phoneNumber(),
                         'acn_id' => $acn_docente->id
                     ]);
                     $docente->save();
@@ -153,6 +155,8 @@ class UploadController extends Controller
                         'email' => strtolower(str_replace(' ', '.', $d['nome_docente'])) . $faker->unique()->randomNumber(5, true) . '@estga.pt',
                         'password' => bcrypt('password'),
                         'admin' => false,
+                        'numero_funcionario' => $d['numero_docente'],
+                        'numero_telefone' => null,
                     ]);
                     $user->docente()->associate($docente);
                     $user->save();
@@ -283,7 +287,7 @@ class UploadController extends Controller
             foreach (Docente::all() as $docente) {
                 foreach ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get() as $uc) {
                     $row = [
-                        'num_func' => $docente->numero_funcionario,
+                        'num_func' => $docente->user->numero_funcionario,
                         'nome_docente' => $docente->user->nome,
                         'codigo_uc' => $uc->codigo,
                         'acn_uc' => $uc->acn->sigla,
@@ -296,7 +300,7 @@ class UploadController extends Controller
                             '-',
                         'software' => $uc->software,
                         'email_docente' => $docente->user->email,
-                        'telefone_docente' => $docente->numero_telefone,
+                        'telefone_docente' => $docente->user->numero_telefone,
                         'horas_semanais_uc' => $uc->horas_semanais,
                         'percentagem_docente_uc' => $uc->pivot->percentagem_semanal,
                         'subT' => $uc->pivot->percentagem_semanal * $uc->horas_semanais
