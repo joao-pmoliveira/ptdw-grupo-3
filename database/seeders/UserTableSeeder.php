@@ -88,5 +88,27 @@ class UserTableSeeder extends Seeder
             'numero_funcionario' => 85097,
             'numero_telefone' => '',
         ]);
+
+        Docente::create([
+            'acn_id' => 1,
+        ]);
+        User::create([
+            'nome' => 'Docente Exemplo',
+            'email' => 'docente.exemplo@ua.pt',
+            'password' => bcrypt('password'),
+            'admin' => false,
+            'docente_id' => 14,
+            'numero_funcionario' => 85195,
+            'numero_telefone' => '',
+        ]);
+
+        User::create([
+            'nome' => 'Comissão de Horário Exemplo',
+            'email' => 'admin.exemplo@ua.pt',
+            'password' => bcrypt('password'),
+            'admin' => true,
+            'numero_funcionario' => 85196,
+            'numero_telefone' => '',
+        ]);
     }
 }
