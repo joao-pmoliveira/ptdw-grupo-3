@@ -37,19 +37,19 @@ class RegistoController extends Controller
 
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
 
-            $docente = Docente::where('numero_funcionario', $validatedData['numero_funcionario'])->first();
+            $user = User::where('numero_funcionario', $validatedData['numero_funcionario'])->first();
 
-            if (!$docente) {
+            if (!$user) {
                 throw new Exception('Erro ao associar conta!');
             }
 
             DB::beginTransaction();
 
-            $user = $docente->user;
+            //$user = $docente->user;
 
             // todo @joao: verificar se este user já não tem os dados
             // se já tiver os dados, é porque já foi associado
-            if (empty($user->email) || empty($user->password)) {
+            if (!empty($user->email) || !empty($user->password)) {
                 return redirect(route('registo.view'))->with('alerta', 'O Número de Funcionário já se encontra atribuído!');
             }
             $user->update([
