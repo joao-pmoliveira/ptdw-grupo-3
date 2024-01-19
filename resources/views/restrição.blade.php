@@ -63,8 +63,12 @@
                 </fieldset>
             </div>
             <div class="d-flex gap-3 mb-5" id="form-btns">
-                <input class="btn" type="submit" value="Submeter" @disabled(!$aberto || !$permissao_editar)>
-                <a class="btn cancelar" href="{{route('restricoes.view')}}" value="Cancelar">Cancelar</a>
+                <input class="btn" type="submit" value="Submeter" @if(!$aberto || !$permissao_editar) hidden @endif @disabled(!$aberto || !$permissao_editar)>
+                @if (!$aberto || !$permissao_editar)
+                    <a class="btn " href="{{route('restricoes.view')}}">Voltar</a>
+                @else
+                    <a class="btn cancelar" href="{{route('restricoes.view')}}">Cancelar</a>
+                @endif
             </div>
         </form>
     </section>
