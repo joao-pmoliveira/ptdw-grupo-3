@@ -246,15 +246,14 @@ class UploadController extends Controller
         }
     }
 
-    public function download()
+    public function download($periodo_id)
     {
-        $periodo = Periodo::orderBy('ano', 'desc')
-            ->orderBy('semestre', 'desc')
-            ->first();
+        try{
+        $periodo = Periodo::find($periodo_id);
 
         $filename = 'output_restricoes_' . $periodo->ano . '_' . $periodo->semestre . '.xlsx';
 
-        try {
+
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
             $sheet->setTitle('Por Docente');
@@ -290,7 +289,7 @@ class UploadController extends Controller
             foreach (Docente::all() as $docente) {
                 foreach ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get() as $uc) {
                     $row = [
-                        'num_func' => $docente->user->numero_funcionario,
+                        'num_func' => $docente->numero_funcionario,
                         'nome_docente' => $docente->user->nome,
                         'codigo_uc' => $uc->codigo,
                         'acn_uc' => $uc->acn->sigla,
@@ -303,7 +302,7 @@ class UploadController extends Controller
                             '-',
                         'software' => $uc->software,
                         'email_docente' => $docente->user->email,
-                        'telefone_docente' => $docente->user->numero_telefone,
+                        'telefone_docente' => $docente->numero_telefone,
                         'horas_semanais_uc' => $uc->horas_semanais,
                         'percentagem_docente_uc' => $uc->pivot->percentagem_semanal,
                         'subT' => $uc->pivot->percentagem_semanal * $uc->horas_semanais

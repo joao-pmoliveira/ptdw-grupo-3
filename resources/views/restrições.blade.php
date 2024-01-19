@@ -203,7 +203,7 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col-3">Nome</th>
-                        <th scope="col-1" class="text-center">Responsável?</th>
+                        <th scope="col-1" class="text-center">Responsável</th>
                         <th scope="col-1">Estado</th>
                         <th scope="col-1">Data Limite</th>
                     </tr>

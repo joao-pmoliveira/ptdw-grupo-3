@@ -124,7 +124,8 @@
                     </thead>
                     <tbody class="title-separator">
                         @foreach($docentes as $docente)
-                            <tr class="border border-light" data-id='{{$docente->id}}'>
+                            <tr class="border border-light" data-id='{{$docente->id}}'
+                                data-link='{{route('docentes.editar.view', ['docente' => $docente->id])}}'>
                                 <th scope="row"></th>
                                 <td>{{$docente->user->numero_funcionario}}</td>
                                 <td>{{$docente->user->nome}}</td>

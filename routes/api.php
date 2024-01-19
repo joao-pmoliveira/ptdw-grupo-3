@@ -72,7 +72,7 @@ Route::group(['prefix' => 'impedimentos'], function () {
 
 Route::post('/upload-excel', [UploadController::class, 'upload'])->middleware(['web', 'auth'])->name('upload');
 
-Route::get('/download-excel', [UploadController::class, 'download'])->middleware(['web', 'auth'])->name('download');
+Route::get('/download-excel/{periodo}', [UploadController::class, 'download'])->middleware(['web', 'auth'])->name('download');
 
 Route::post('/mailMissingForms', [ImpedimentoController::class, 'mailMissingForms'])->middleware(['web', 'auth'])->name('mailMissingForms');
 Route::post("/", [PerfilController::class, 'editarPerfil'])->middleware(['web', 'auth'])->name('perfil.edit.view');
