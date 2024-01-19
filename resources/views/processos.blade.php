@@ -68,7 +68,7 @@
                             <i class="fa fa-envelope-o"></i>
                         </button>
 
-                        <a href="{{route('download', ['periodo' => $periodo->id])}}" class="btn d-flex justify-content-center align-items-center" download="output_restricoes_".{{$periodo->ano}}."_".{{$periodo->semestre}}.".xlsx">
+                        <a href="{{route('download', ['periodo' => $periodo->id])}}" class="btn d-flex justify-content-center align-items-center" download="output_restricoes_{{$periodo->ano}}_{{$periodo->semestre}}.xlsx">
                             <i class="fa-solid fa-download"></i>
                         </a>
                         @endif
@@ -186,7 +186,7 @@
                         </td>
 
                         
-                        <td><a href="{{route('download', ['periodo' => $periodoH->id])}}" download="output_restricoes_".{{$periodoH->ano}}."_".{{$periodoH->semestre}}.".xlsx">
+                        <td><a href="{{route('download', ['periodo' => $periodoH->id])}}" download="output_restricoes_{{$periodoH->ano}}_{{$periodoH->semestre}}.xlsx">
                             <i class="fa-solid fa-download"></i>
                         </a></td>
                     </tr>
