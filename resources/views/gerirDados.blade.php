@@ -38,7 +38,9 @@
             <div class="d-flex flex-column gap-3">
                 <div class="d-flex flex-wrap">
                     <div class="d-flex gap-4 align-items-stretch my-2 flex-grow-1 flex-wrap">
-                        <select class="px-2" name="school_year_semester" id="school-year-semester" aria-label="Filtre por ano e semestre">
+                        <select class="px-2" name="school_year_semester" id="school-year-semester" 
+                        data-link="{{route('ucs.index')}}"
+                        aria-label="Filtre por ano e semestre">
                             @foreach ($periodos as $periodo)
                                 <option value="{{$periodo->ano . "_" . ($periodo->ano+1) . "_" . $periodo->semestre}}">
                                     {{$periodo->ano . "/" . substr($periodo->ano+1, 2,2) . " " . $periodo->semestre . "º Semestre"}}
@@ -77,7 +79,9 @@
                     </thead>
                     <tbody class="title-separator">
                         @foreach($ucs as $index => $uc)
-                            <tr class="border border-light" data-id='{{$uc->id}}' data-curso-id='{{implode(",",$uc->cursos->pluck("id")->toArray())}}'>
+                            <tr class="border border-light" data-id='{{$uc->id}}' 
+                                data-link='{{route('ucs.editar.view', ['uc' => $uc->id])}}'
+                                data-curso-id='{{implode(",",$uc->cursos->pluck("id")->toArray())}}'>
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
                                 <td>{{$uc->nome}}</td>
@@ -163,9 +167,5 @@
     
 </main>
 
-
-<script>
-    var baseUrl = "{{ config('app.url') }}";
-</script>
 <script src="{{asset('js/gerirDados.js')}}" defer></script>
 @endsection

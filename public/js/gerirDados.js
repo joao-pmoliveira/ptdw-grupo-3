@@ -3,17 +3,10 @@
 //#region Tabela de Unidades Curriculares
 const tableEditUCs = document.querySelector('#table-edit-ucs');
 
-if (window.location.hostname === 'localhost') {
-    baseUrl = 'http://localhost';
-} else {
-    baseUrl = 'http://estga-dev.ua.pt/~ptdw-2023-gr3';
-}
-
 // todo @joao: alterar para incluir links nas linhas da tabela
 tableEditUCs.querySelectorAll('tbody tr:not(:is([id="edit-ucs-no-match-row"]))').forEach(row => {
-    const ucID = row.getAttribute('data-id');
     row.addEventListener('click', () => {
-        window.location.href = baseUrl + `/ucs/${ucID}/editar`;
+        window.location.href = row.getAttribute('data-link');
     })
 });
 
@@ -22,24 +15,26 @@ const periodoSelect = document.querySelector('#school-year-semester');
 periodoSelect.addEventListener('change', async () => {
     const [anoInicial, anoFinal, semestre] = periodoSelect.value.split('_');
 
-    const baseURL = '/api/unidades-curriculares/por-ano-semestre';
+    const baseURL = `${periodoSelect.getAttribute('data-link')}/por-ano-semestre`;
     const res = await fetch(`${baseURL}/${anoInicial}/${semestre}`);
     const data = await res.json();
 
     const tableBody = tableEditUCs.querySelector('tbody');
-    tableBody.innerHTML = '';
+    tableBody.querySelectorAll('tr:not([id="edit-ucs-no-match-row"])').forEach(row => row.remove());
 
     data.forEach(uc => {
         const id = uc['id'];
         const nome = uc['nome'];
         const codigo = uc['codigo'];
+        const link = uc['link']
         const nomeDocenteResponsavel = uc['docente_responsavel']['user']['nome'];
-
 
         // todo @joao: adicionar atributos que faltam
         const row = document.createElement('tr');
+        row.classList.add('border', 'border-light');
         row.setAttribute('data-id', id);
         row.setAttribute('data-curso-id', uc['cursos'].map(curso => curso['id']).toString());
+        row.setAttribute('data-link', link);
 
         const th = document.createElement('th');
         th.setAttribute('scope', 'row');
@@ -62,7 +57,7 @@ periodoSelect.addEventListener('change', async () => {
 
         tableBody.appendChild(row);
 
-        row.addEventListener('click', () => window.location.href = `/ucs/${id}/editar`);
+        row.addEventListener('click', () => window.location.href = `${row.getAttribute('data-link')}/editar`);
     })
 
     filterTableEditUCs();

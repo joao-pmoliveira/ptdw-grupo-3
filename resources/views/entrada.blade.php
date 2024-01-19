@@ -17,7 +17,4 @@
         <h1 class="text-light">suporte à criação de horários da estga</h1>
     </div>
 </main>
-<script>
-    var baseUrl = "{{ config('app.url') }}";
-</script>
 @endsection
