@@ -31,12 +31,18 @@
         <hr class="m-0 bg-secondary">
         <div class="d-flex align-items-center p-2">
             <div class="col-md-2">ECTS</div>
-            <div class="col-md-10"><p>{{ $uc->ects }}</p></div>
+            <div class="col-md-10"><p>{{ $uc->ects ?? 'N/A' }}</p></div>
         </div>
         <hr class="m-0 bg-secondary">
         <div class="d-flex align-items-center p-2">
             <div class="col-md-2">Horas Semanais</div>
-            <div class="col-md-10"><p>{{ $uc->horas_semanais}} horas</p></div>
+            <div class="col-md-10">
+                @if ($uc->horas_semanais)
+                    <p>{{$uc->horas_semanais}} horas</p>
+                @else
+                    <p>N/A</p>
+                @endif
+            </div>
         </div>
         <hr class="m-0 bg-secondary">
         <div class="d-flex align-items-center p-2">

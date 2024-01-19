@@ -69,14 +69,14 @@
             
             <div class="d-flex align-items-center p-2">
                 <label class="col-md-2" for="uc-ects" class="col-md-2 p-3">ECTS</label>
-                <input class="col-md-1 p-1" type="number" name="ects" id="uc-ects-input" required min="0">
+                <input class="col-md-1 p-1" type="number" name="ects" id="uc-ects-input" min="0">
             </div>
             
             <hr class="m-0 bg-secondary">
 
             <div class="d-flex align-items-center p-2">
                 <label class="col-md-2" for="uc-horas">Horas Semanais</label>
-                <input class="col-md-1 p-1" type="number" name="horas" id="uc-horas-input" required min="0">
+                <input class="col-md-1 p-1" type="number" name="horas" id="uc-horas-input" min="0">
             </div>
             
             <hr class="m-0 bg-secondary">

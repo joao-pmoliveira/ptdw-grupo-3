@@ -65,7 +65,7 @@
             <div class="d-flex align-items-center p-2">
                 <label for="uc-ects-input" class="col-md-2">ECTS</label>
                 <input class="col-md-2 px-1" type="number" name="ects" id="uc-ects-input" 
-                    value="{{$uc->ects}}" required>
+                    value="{{$uc->ects}}">
             </div>
 
             <hr class="m-0 bg-secondary">
@@ -73,7 +73,7 @@
             <div class="d-flex align-items-center p-2">
                 <label for="uc-horas" class="col-md-2">Horas Semanais</label>
                 <input class="col-md-2 px-1" type="number" name="horas" id="uc-horas-input"
-                    value="{{$uc->horas_semanais}}" required>
+                    value="{{$uc->horas_semanais}}">
             </div>
 
             <hr class="m-0 bg-secondary">

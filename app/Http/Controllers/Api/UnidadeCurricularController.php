@@ -79,8 +79,8 @@ class UnidadeCurricularController extends Controller
             $rules = [
                 'codigo' => ['required', 'integer', 'min:1'],
                 'nome' => ['required', 'string'],
-                'horas' => ['required', 'integer', 'min:1'],
-                'ects' => ['required', 'integer', 'min:0'],
+                'horas' => ['nullable', 'integer', 'min:1'],
+                'ects' => ['nullable', 'integer', 'min:0'],
                 'acn' => ['required', 'integer', 'exists:acns,id'],
                 'docente_responsavel_id' => ['nullable', 'integer', 'exists:docentes,id'],
                 'docentes_id' => ['array'],
@@ -92,10 +92,8 @@ class UnidadeCurricularController extends Controller
                 'codigo.min' => 'Código da UC tem de ser superior a 1!',
                 'nome.required' => 'Preencha o nome da UC!',
                 'nome.string' => 'Nome da UC inválido!',
-                'horas.required' => 'Preencha as horas semanais da UC!',
                 'horas.integer' => 'Horas semanais têm de ser número inteiro!',
                 'horas.min' => 'Horas semanais têm de ser superiores a 1!',
-                'ects.required' => 'Preencha as ECTs da UC!',
                 'ects.integer' => 'ECTs têm de ser número inteiro!',
                 'ects.min' => 'ECTs têm de ser superiores a 0!',
                 'acn.required' => 'Seleciona a Área Científica Nuclear da UC!',
@@ -152,9 +150,6 @@ class UnidadeCurricularController extends Controller
             ]);
 
             $uc->save();
-
-            //todo @joao: se se permitir adicionar/editar UCs enviado o DocResp como nulo:
-            // é necessário editar isto para verificar se o campo é nulo
 
             $docenteResponsavel = Docente::find($docenteResponsavelId) ?? null;
 
@@ -217,8 +212,8 @@ class UnidadeCurricularController extends Controller
             $rules = [
                 'codigo' => ['required', 'integer', 'min:1'],
                 'nome' => ['required', 'string'],
-                'horas' => ['required', 'integer', 'min:1'],
-                'ects' => ['required', 'integer', 'min:1'],
+                'horas' => ['nullable', 'integer', 'min:1'],
+                'ects' => ['nullable', 'integer', 'min:1'],
                 'acn' => ['required', 'integer', 'exists:acns,id'],
                 'docente_responsavel_id' => ['nullable', 'integer', 'exists:docentes,id'],
                 'docentes_id' => ['array'],
@@ -229,10 +224,8 @@ class UnidadeCurricularController extends Controller
                 'codigo.min' => 'Código tem que ser superior a 1!',
                 'nome.required' => 'Preencha o nome da UC!',
                 'nome.string' => 'Introduza um nome válido!',
-                'horas.required' => 'Preencha as horas semanais da UC!',
                 'horas.integer' => 'Horas semanais têm que ser um número inteiro',
                 'horas.min' => 'Horas semanais têm que ser superiores a 1!',
-                'ects.required' => 'Preencha os ECTs da UC!',
                 'ects.integer' => 'ECTs têm que ser número inteiro!',
                 'ects.min' => 'ECTS têm que ser superiores a 1!',
                 'acn.required' => 'Selecione a Área Científica Nuclear da UC!',

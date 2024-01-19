@@ -19,15 +19,15 @@ return new class extends Migration
             $table->unsignedBigInteger('periodo_id')->nullable(false);
             $table->string('nome')->nullable(false);
             $table->unsignedBigInteger('acn_id')->nullable(false);
-            $table->string('horas_semanais')->nullable(false);
-            $table->string('ects')->nullable(false);
+            $table->string('horas_semanais')->nullable();
+            $table->string('ects')->nullable();
             $table->unsignedBigInteger('docente_responsavel_id')->nullable();
-            $table->boolean('restricoes_submetidas');
+            $table->boolean('restricoes_submetidas')->nullable(false);
             $table->boolean('sala_laboratorio')->nullable(false);
             $table->boolean('exame_final_laboratorio')->nullable(false);
             $table->boolean('exame_recurso_laboratorio')->nullable(false);
-            $table->text('observacoes_laboratorios');
-            $table->text('software');
+            $table->text('observacoes_laboratorios')->nullable();
+            $table->text('software')->nullable();
 
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->foreign('acn_id')->references('id')->on('acns');
