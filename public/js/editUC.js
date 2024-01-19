@@ -23,13 +23,6 @@ function updateDisabledOptions() {
             disableOptionsForDocenteResponsavel(s);
         else
             disableOptionsForRestantesDocentes(s);
-
-
-        // Array.from(s.querySelectorAll('option:not(:first-child)')).forEach(opt => {
-        //     if ((getRestantesDocsIds().includes(opt.value) && opt.value !== '') || (getDocenteRespId() == opt.value && opt.value !== '')) {
-        //         opt.disabled = true
-        //     }
-        // })
     })
 }
 
