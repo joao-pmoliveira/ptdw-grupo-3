@@ -13,6 +13,7 @@
     @include('partials._pageTitle', ['title' => 'Consultar Unidades Curriculares'])
 
     <section class="mt-3 mb-4 p-0 d-flex flex-column gap-4">
+        @include('partials._alerts')
         <div class="d-flex gap-4 align-items-stretch flex-wrap">
             <select class="" name="ano_semestre" id="ano_semestre" aria-label="Filtre por ano e semestre" 
             data-link="{{route('ucs.index')}}">

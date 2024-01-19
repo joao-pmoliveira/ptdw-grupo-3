@@ -18,6 +18,7 @@
     @include('partials._pageTitle', ['title' => 'Impedimentos de Horário '.$ano_inicial.'/'.($ano_inicial+1).' '.$semestre.'º Semestre'])
 
     <section class="mt-5">
+        @include('partials._alerts')
         <form action="" method="post">
             <h3 class="p-3" >Horário semanal</h3>
             <p>Selecione todos os blocos para os quais <strong>não tem disponibilidade</strong>.

@@ -12,30 +12,7 @@
 
     @include('partials._pageTitle', ['title' => $page_title])
 
-    <section id="alerts">
-        @if (session('alerta'))
-            <div class="alert alert-dismissible fade show bg-alert" role="alert">
-                <p>
-                    <i class="fa-solid fa-check"></i>
-                    {{session('alerta')}}
-                </p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    <i class="fa-solid fa-x"></i>
-                </button> 
-            </div>
-        @endif
-        @if (session('sucesso'))
-            <div class="alert alert-dismissible fade show bg-accent" role="alert">
-                <p>
-                    <i class="fa-solid fa-check"></i>
-                    {{session('sucesso')}}
-                </p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    <i class="fa-solid fa-x"></i>
-                </button> 
-            </div>
-        @endif
-    </section>
+    @include('partials._alerts')
 
     <section class="mt-3">
         <ul class="nav nav-tabs" role="tablist">
@@ -55,10 +32,11 @@
     <div class="tab-content">
         <section id="manage-forms" class="tab-pane active p-3">
             @php
-                $docentesSemForm = $docentes->contains(fn ($item, $key) => $item->impedimentos()->where('periodo_id', $periodo->id)->doesntExist());
+                $docentesSemForm = $docentes->contains(function ($docente) use ($periodo) {
+                    return $docente->impedimentos()->where('periodo_id', $periodo->id)->doesntExist() &&
+                        $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
+                });
             @endphp
-            <form method="post" action="{{route('mailMissingForms')}}">
-            @csrf
             <div class="d-flex justify-content-between mb-2">
                 @if ($periodo->impedimentos->count() > 0)
                 <div>
@@ -78,10 +56,12 @@
                     @endif
 
                     @if ($periodo->impedimentos->count() > 0)
-                    <button type="submit" class="btn d-flex justify-content-center align-items-center">
-                        <i class="fa fa-envelope-o"></i>
-                    </button>
-
+                    <form method="post" action="{{route('mailMissingForms')}}" class="d-flex">
+                        @csrf
+                        <button type="submit" class="btn">
+                            <i class="fa fa-envelope-o"></i>
+                        </button>
+                    </form>
                     <a href="{{route('download')}}" class="btn d-flex justify-content-center align-items-center" download="output_restricoes.xlsx">
                         <i class="fa-solid fa-download"></i>
                     </a>
@@ -145,7 +125,6 @@
                 </tbody>
             </table>
             @endif
-            </form>
         </section>
 
         <section id="history" class="tab-pane p-3">

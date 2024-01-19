@@ -24,6 +24,8 @@
     </div>
 
     <section class="my-3 title-separator pt-2">
+        @include('partials._alerts')
+        
         <div class="d-flex align-items-center p-2">
             <div class="col-md-2">Área Científica</div>
             <div class="col-md-10"><p>{{ $uc->acn->nome }}</p></div>

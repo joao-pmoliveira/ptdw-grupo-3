@@ -27,7 +27,7 @@ logoutBtn?.addEventListener('click', () => {
 
 
 //Alerts
-const secondsPerAlert = 3;
+const secondsPerAlert = 5;
 document.querySelectorAll('#alerts > div').forEach(a => {
     setTimeout(() => {
         a.querySelector('.btn-close').click()

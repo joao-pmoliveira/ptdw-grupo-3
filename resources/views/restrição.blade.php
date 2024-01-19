@@ -17,24 +17,7 @@
     @include('partials._pageTitle', ['title' => 'Restrições de '. $uc->nome. ' - '.$ano_inicial.'/'. ($ano_inicial+1).' - '.$semestre.'º Semestre'])
 
     <section class="mt-3 title-separator">
-        <div id="alerts" class="mt-2">
-            @if (session('alerta'))
-                <div class="alert alert-dismissible fade show bg-alert" role="alert">
-                    <p><i class="fa-solid fa-check"></i>{{session('alerta')}}</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        <i class="fa-solid fa-x"></i>
-                    </button> 
-                </div>
-            @endif
-            @if (session('sucesso'))
-                <div class="alert alert-dismissible fade show bg-accent" role="alert">
-                    <p><i class="fa-solid fa-check"></i>{{session('sucesso')}}</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        <i class="fa-solid fa-x"></i>
-                    </button> 
-                </div>
-            @endif
-        </div>
+        @include('partials._alerts')
 
         <form action="{{route('restricoes.update', ['id' => $uc->id])}}"  method="POST" id="restricao-form" class="mt-4">
             @csrf

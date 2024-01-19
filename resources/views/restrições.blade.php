@@ -12,24 +12,7 @@
 
     @include('partials._pageTitle', ['title' => 'Preencher restrições'])
 
-    <section id="alerts">
-        @if (session('alerta'))
-            <div class="alert alert-dismissible fade show bg-alert" role="alert">
-                <p><i class="fa-solid fa-check">{{session('alerta')}}</i></p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    <i class="fa-solid fa-x"></i>
-                </button> 
-            </div>
-        @endif
-        @if (session('sucesso'))
-            <div class="alert alert-dismissible fade show bg-accent" role="alert">
-                <p><i class="fa-solid fa-check">{{session('sucesso')}}</i></p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    <i class="fa-solid fa-x"></i>
-                </button> 
-            </div>
-        @endif
-    </section>
+    @include('partials._alerts')
 
     <section class="mt-3">
         <ul class="nav nav-tabs" role="tablist">

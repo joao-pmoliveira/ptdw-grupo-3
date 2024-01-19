@@ -20,6 +20,7 @@
                         <div class="card border border-light-subtle rounded-3 shadow-sm custom-width" style="width: 110%;">
                             <div class="card-body p-3 p-md-4 p-xl-5">
                                 <h1 class="page-title justify-content-center">Associar Conta</h1><br>
+                                @include('partials._alerts')
                                 <form action="{{route('registo.action')}}" method="POST" id="registo-form">
                                     @csrf
                                     <div class="row gy-3 overflow-hidden">

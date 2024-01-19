@@ -12,6 +12,7 @@
     @include('partials._pageTitle', ['title' => 'Suporte à Criação de Horários'])
 
     <section class="mt-3">
+        @include('partials._alerts')
         <h2 class="m-2 text-terciary">Geral</h2>
         <div class="d-flex flex-wrap gap-4">
             @if ($user->docente)
