@@ -133,7 +133,6 @@ class UploadController extends Controller
             foreach ($data as $d) {
                 //Assume que se o ACN não está na BD, é um ACN errado
                 $acn_docente = ACN::where('sigla', 'ilike', $d['acn_docente'])->first();
-                dd($d['acn_docente']);
                 if (is_null($acn_docente)) {
                     //todo @joao: adicionar o nome ou linha em que acontece
                     throw new Exception('Área Científica do Docente: não reconhecida!');
