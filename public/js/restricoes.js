@@ -7,7 +7,7 @@ impedimentoForm.addEventListener('submit', (e) => {
 
     const unchecked = document.querySelectorAll('#schedule-grid input[type="checkbox"]:not(:checked)');
     const checked = document.querySelectorAll('#schedule-grid input[type="checkbox"]:checked');
-    const justification = document.getElementById('justificao-input');
+    const justification = document.getElementById('justificacao-input');
 
     const minFreeBlocks = unchecked.length >= 2
     const justificationNeeded = checked.length > 0 && justification.value.trim() == ''
@@ -50,23 +50,15 @@ tableHistRestricoes.querySelectorAll('tbody tr').forEach(row => {
 })
 
 // Preender impedimentos anteriores
-const checkboxImpedimento = document.querySelector('#ultimoImpedimento');
-checkboxImpedimento.addEventListener("click", () => {
-    const daysOfWeek = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
-    const dayPeriods = ['manha', 'tarde', 'noite'];
+const btnPreencheUltimoForm = document.querySelector('#preenche-dados-antigos');
+btnPreencheUltimoForm?.addEventListener('click', () => {
+    const checkboxes = document.querySelectorAll('#schedule-grid input');
+    const textarea = document.querySelector('#justificacao-input');
 
-    if (checkboxImpedimento.checked) {
-        daysOfWeek.forEach(day => {
-            dayPeriods.forEach(period => {
-                const checkbox = document.querySelector(`#${day}-${period}-input`);
-                checkbox.checked = parseInt(checkbox.getAttribute("data-history"));
-            });
-        });
+    checkboxes.forEach((c) => {
+        c.checked = c.getAttribute('data-history') == 1;
+    });
 
-        const justificacaoInput = document.querySelector('#justificao-input');
-        justificacaoInput.value = justificacaoInput.getAttribute("data-history");
-    } else {
-        const formImpedimentos = document.querySelector('#impedimento-form');
-        formImpedimentos.reset();
-    }
-});
+    textarea.value = textarea.getAttribute('data-history') == null ? textarea.getAttribute('data-history') : '';
+
+})

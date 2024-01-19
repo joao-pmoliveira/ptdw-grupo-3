@@ -55,7 +55,7 @@ class RestricoesViewController extends Controller
             'periodo' => $periodo,
             'ucs' => $ucs,
             'impedimento' => $impedimento,
-            'historico_impedimentos' => $historico_impedimentos,
+            'historico_impedimentos' => $historico_impedimentos ?? null,
             'historico_ucs' => $historico_ucs,
             'user' => $user,
         ]);
@@ -63,7 +63,6 @@ class RestricoesViewController extends Controller
 
     public function restricoesUC(UnidadeCurricular $uc, $ano_inicial, $semestre)
     {
-
         if (Gate::denies('access-uc-restricoes', $uc)) {
             return redirect()->back();
         }
