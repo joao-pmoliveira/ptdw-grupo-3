@@ -49,7 +49,7 @@ class RegistoController extends Controller
 
             // todo @joao: verificar se este user já não tem os dados
             // se já tiver os dados, é porque já foi associado
-            if (!empty($user->email) || !empty($user->password)) {
+            if (!empty($user->email)) {
                 return redirect(route('registo.view'))->with('alerta', 'O Número de Funcionário já se encontra atribuído!');
             }
             $user->update([
