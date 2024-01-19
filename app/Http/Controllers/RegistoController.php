@@ -55,6 +55,7 @@ class RegistoController extends Controller
             $user->update([
                 'email' => $validatedData['email'],
                 'password' => bcrypt($validatedData['password']),
+                'email_verificado_a'=>now()
             ]);
 
             DB::commit();
