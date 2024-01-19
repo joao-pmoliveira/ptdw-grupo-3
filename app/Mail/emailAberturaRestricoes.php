@@ -32,7 +32,7 @@ class emailAberturaRestricoes extends Mailable
     public function __construct($docente,$periodo,$ucsResp,$ucs,$dataFim,$dataInicio)
     {
         //
-        $this->docente=$docente->nome;
+        $this->docente=$docente->user->nome;
         $this->ano=$periodo->ano;
         $this->anoProximo = is_numeric($periodo->ano) ? (int)$periodo->ano + 1 : null;
         $this->semestre=$periodo->semestre;

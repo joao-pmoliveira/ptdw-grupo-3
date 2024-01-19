@@ -13,7 +13,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\TestMail;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -94,7 +93,6 @@ class DocenteController extends Controller
             $docente->user()->save($user);
 
             // todo @joao:
-            Mail::to('miguelmvieira@ua.pt')->send(new TestMail());
 
             DB::commit();
             return redirect(route('admin.gerir.view'))->with('sucesso', 'Adicionado docente com sucesso!');
