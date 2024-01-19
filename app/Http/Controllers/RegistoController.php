@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class RegistoController extends Controller
 {
@@ -55,7 +56,7 @@ class RegistoController extends Controller
             $user->update([
                 'email' => $validatedData['email'],
                 'password' => bcrypt($validatedData['password']),
-                'email_verificado_a'=>now()
+                'email_verificado_a'=>Carbon::now()
             ]);
 
             DB::commit();
