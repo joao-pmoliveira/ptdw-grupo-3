@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class UploadController extends Controller
@@ -256,6 +257,7 @@ class UploadController extends Controller
         try {
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setTitle('Por Docente');
 
             $colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
 
@@ -284,6 +286,7 @@ class UploadController extends Controller
             $rowIndex = 2;
 
             //First Worksheet - Por Docente
+            $finalData = [];
             foreach (Docente::all() as $docente) {
                 foreach ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get() as $uc) {
                     $row = [
@@ -306,20 +309,93 @@ class UploadController extends Controller
                         'subT' => $uc->pivot->percentagem_semanal * $uc->horas_semanais
                     ];
 
-                    $colIndex = 0;
-                    foreach ($row as $key => $cell) {
-                        if ($key === 'telefone_docente') {
-                            $sheet->setCellValueExplicit($colunas[$colIndex++] . '' . $rowIndex, $cell, DataType::TYPE_STRING);
-                        } else {
-                            $sheet->setCellValue($colunas[$colIndex++] . '' . $rowIndex, $cell);
-                        }
-                    }
-                    $rowIndex++;
+                    array_push($finalData, $row);
                 }
             }
 
-            //todo @joao: Second Worksheet - Por UC
-            //todo @joao: Third Worksheet - Por Curso
+            usort($finalData, function ($a, $b) {
+                return $a['num_func'] - $b['num_func'];
+            });
+
+            foreach ($finalData as $row) {
+                $colIndex = 0;
+                foreach ($row as $key => $cell) {
+                    if ($key === 'telefone_docente') {
+                        $sheet->setCellValueExplicit($colunas[$colIndex++] . '' . $rowIndex, $cell, DataType::TYPE_STRING);
+                    } else {
+                        $sheet->setCellValue($colunas[$colIndex++] . '' . $rowIndex, $cell);
+                    }
+                }
+                $rowIndex++;
+            }
+
+            //Second Worksheet - Por UC
+            $ucSheet = new Worksheet($spreadsheet, 'Por UC');
+            $spreadsheet->addSheet($ucSheet);
+
+            $spreadsheet->setActiveSheetIndex(1);
+            $sheet = $spreadsheet->getActiveSheet();
+
+            usort($finalData, function ($a, $b) {
+                return $a['codigo_uc'] - $b['codigo_uc'];
+            });
+
+            foreach ($cabecalho as $index => $value) {
+                $sheet->setCellValue($colunas[$index - 1] . '' . (1), $value);
+            }
+            $rowIndex = 2;
+
+            foreach ($finalData as $row) {
+                $colIndex = 0;
+                foreach ($row as $key => $cell) {
+                    if ($key === 'telefone_docente') {
+                        $sheet->setCellValueExplicit($colunas[$colIndex++] . '' . $rowIndex, $cell, DataType::TYPE_STRING);
+                    } else {
+                        $sheet->setCellValue($colunas[$colIndex++] . '' . $rowIndex, $cell);
+                    }
+                }
+                $rowIndex++;
+            }
+
+            //Third Worksheet - Por Curso
+            $cursoSheet = new Worksheet($spreadsheet, 'Por Curso');
+            $spreadsheet->addSheet($cursoSheet);
+
+            $spreadsheet->setActiveSheetIndex(2);
+            $sheet = $spreadsheet->getActiveSheet();
+
+            usort($finalData, function ($a, $b) {
+                $cursoA = $a['curso'] ?? '';
+                $cursoB = $b['curso'] ?? '';
+
+                if (empty($cursoA) && empty($cursoB)) {
+                    return 0;
+                } elseif (empty($cursoA)) {
+                    return -1;
+                } elseif (empty($cursoB)) {
+                    return 1;
+                }
+
+                return strcasecmp($cursoA, $cursoB);
+            });
+
+
+            foreach ($cabecalho as $index => $value) {
+                $sheet->setCellValue($colunas[$index - 1] . '' . (1), $value);
+            }
+            $rowIndex = 2;
+
+            foreach ($finalData as $row) {
+                $colIndex = 0;
+                foreach ($row as $key => $cell) {
+                    if ($key === 'telefone_docente') {
+                        $sheet->setCellValueExplicit($colunas[$colIndex++] . '' . $rowIndex, $cell, DataType::TYPE_STRING);
+                    } else {
+                        $sheet->setCellValue($colunas[$colIndex++] . '' . $rowIndex, $cell);
+                    }
+                }
+                $rowIndex++;
+            }
 
             $writer = new Xlsx($spreadsheet, 'Xlsx');
             $writer->setPreCalculateFormulas(false);
