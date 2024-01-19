@@ -95,7 +95,6 @@ class RestricoesViewController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('admin-access')) {
-            //todo @joao: adicionar alertas na página inicial
             return redirect(route('inicio.view'));
         }
 

@@ -118,7 +118,6 @@ class DocenteController extends Controller
                 'nome' => ['required', 'string'],
                 'acn' => ['required', 'integer', 'exists:acns,id'],
                 'email' => ['required', 'email'],
-                //todo @joao: o telefone vale a pena ser obrigatório?
                 'telefone' => ['nullable'],
                 'numero_funcionario' => ['required', 'integer', 'min:1'],
             ];

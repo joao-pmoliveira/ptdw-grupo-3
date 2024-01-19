@@ -23,7 +23,6 @@ class AdminViewController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('admin-access')) {
-            // todo @joao: adicionar alertas na view
             return redirect(route('inicio.view'));
         }
 

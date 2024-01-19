@@ -3,7 +3,6 @@
 //#region Tabela de Unidades Curriculares
 const tableEditUCs = document.querySelector('#table-edit-ucs');
 
-// todo @joao: alterar para incluir links nas linhas da tabela
 tableEditUCs.querySelectorAll('tbody tr:not(:is([id="edit-ucs-no-match-row"]))').forEach(row => {
     row.addEventListener('click', () => {
         window.location.href = row.getAttribute('data-link');

@@ -55,7 +55,6 @@ Route::group(['prefix' => 'ucs'], function () {
 
 Route::group(['prefix' => 'docentes'], function () {
 
-    // todo - página para visualizar informações do docente
     // Route::get('/{docente}', []);
 
     Route::get('/{docente}/editar', [DocenteViewController::class, 'editarDocente'])->name('docentes.editar.view');
