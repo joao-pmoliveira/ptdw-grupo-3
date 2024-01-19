@@ -105,8 +105,8 @@ function filterTableEditUCs() {
 
 const tableEditDocentes = document.querySelector('#table-edit-teachers');
 tableEditDocentes.querySelectorAll('tbody tr:not(:is([id="edit-teachers-no-match-row"]))').forEach(row => {
-    const docenteID = row.getAttribute('data-id');
-    row.addEventListener('click', () => window.location.href = `/docentes/${docenteID}/editar`);
+    //const docenteID = row.getAttribute('data-id');
+    row.addEventListener('click', () => window.location.href = `${row.getAttribute('data-link')}/editar`);
 })
 
 const searchDocenteTextInput = document.querySelector('#teacher-identifier');
