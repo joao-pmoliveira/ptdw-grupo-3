@@ -195,7 +195,7 @@ class UploadController extends Controller
                         'acn_id' => $acn_docente->id,
                         'docente_responsavel_id' => NULL,
                         'horas_semanais' => $d['horas'],
-                        'ects' => '0',
+                        'ects' => '6',
                         'restricoes_submetidas' => false,
                         'sala_laboratorio' => false,
                         'exame_final_laboratorio' => false,

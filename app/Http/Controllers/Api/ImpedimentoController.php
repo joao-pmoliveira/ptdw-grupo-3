@@ -205,6 +205,9 @@ class ImpedimentoController extends Controller
                 $filteredUcs = $docente->unidadesCurriculares->filter(function ($unidadesCurriculares) use ($periodo) {
                     return $unidadesCurriculares->periodo == $periodo;
                 });
+                if(empty($docente->user->email)){
+                    continue;
+                }
                 Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $filteredUcsResp, $filteredUcs, $validatedData['data_final'], $validatedData['data_inicial']));
             }
             return redirect()->back()->with('sucesso', 'Formulários gerados com sucesso!');
