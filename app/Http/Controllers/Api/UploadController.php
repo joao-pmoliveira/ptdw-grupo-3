@@ -289,7 +289,7 @@ class UploadController extends Controller
             foreach (Docente::all() as $docente) {
                 foreach ($docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get() as $uc) {
                     $row = [
-                        'num_func' => $docente->numero_funcionario,
+                        'num_func' => $docente->user->numero_funcionario,
                         'nome_docente' => $docente->user->nome,
                         'codigo_uc' => $uc->codigo,
                         'acn_uc' => $uc->acn->sigla,

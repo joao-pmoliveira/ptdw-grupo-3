@@ -11,7 +11,7 @@
         ]
     ])
 
-    @include('partials._pageTitle', ['title' => $docente->numero_funcionario . ' - ' . $docente->user->nome])
+    @include('partials._pageTitle', ['title' => $docente->user->numero_funcionario . ' - ' . $docente->user->nome])
 
     <section class="mt-3 title-separator pt-2">
         @include('partials._alerts')
