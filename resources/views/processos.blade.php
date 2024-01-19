@@ -42,7 +42,7 @@
             $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
             })->count();
             @endphp
-            <form method="post" action="{{route('mailMissingForms')}}" class="d-flex">
+            <form method="post" action="{{route('mailMissingForms')}}">
                 @csrf
                 <div class="d-flex justify-content-between mb-2">
                     @if ($periodo->impedimentos->count() > 0)
