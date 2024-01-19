@@ -302,7 +302,7 @@ class UploadController extends Controller
                             '-',
                         'software' => $uc->software,
                         'email_docente' => $docente->user->email,
-                        'telefone_docente' => $docente->numero_telefone,
+                        'telefone_docente' => $docente->user->numero_telefone,
                         'horas_semanais_uc' => $uc->horas_semanais,
                         'percentagem_docente_uc' => $uc->pivot->percentagem_semanal,
                         'subT' => $uc->pivot->percentagem_semanal * $uc->horas_semanais
