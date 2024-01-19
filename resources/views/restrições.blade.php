@@ -202,7 +202,8 @@
                 <thead class="bg-light">
                     <tr>
                         <th scope="col"></th>
-                        <th scope="col-1">Nome</th>
+                        <th scope="col-3">Nome</th>
+                        <th scope="col-1" class="text-center">Responsável?</th>
                         <th scope="col-1">Estado</th>
                         <th scope="col-1">Data Limite</th>
                     </tr>
@@ -213,7 +214,12 @@
                         <tr class="border border-light" 
                         data-link="{{route('restricoes.uc.view', ['uc'=>$uc->id, 'ano_inicial'=>$periodo->ano, 'semestre'=>$periodo->semestre])}}">
                             <th scope='row'></th>
-                            <td>{{$uc->nome}}</td>
+                            <td >{{$uc->nome}}</td>
+                            <td class="text-center">
+                                @if ($uc->docenteResponsavel && $uc->docenteResponsavel->id == $user->docente->id)
+                                    <i class="fa fa-check"></i>
+                                @endif
+                            </td>
                             <td>
                                 @if ($uc->restricoes_submetidas)
                                     <i class="fa fa-check"></i>
