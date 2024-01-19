@@ -199,8 +199,8 @@ class ImpedimentoController extends Controller
 
             // todo @joao: passar para dentro do ciclo anterior
             foreach ($docentes as $docente) {
-                dd($periodo,$docente);
-                dd($docente->ucsResponsavel);
+                //dd($periodo,$docente);
+                //dd($docente->ucsResponsavel);
                 $filteredUcsResp = $docente->ucsResponsavel()->filter(function ($ucsResponsavel) use ($periodo) {
                     return $ucsResponsavel->periodo == $periodo;
                 });
