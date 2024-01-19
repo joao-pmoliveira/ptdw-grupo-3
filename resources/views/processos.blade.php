@@ -42,39 +42,32 @@
             $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
             })->count();
             @endphp
+            @if ($periodo->impedimentos->count() > 0)
             <form method="post" action="{{route('mailMissingForms')}}">
                 @csrf
                 <div class="d-flex justify-content-between mb-2">
-                    @if ($periodo->impedimentos->count() > 0)
                     <div>
                         <h2>Formulário aberto: {{$periodo->ano . '/' . ($periodo->ano+1) . ' ' . $periodo->semestre . 'º
                             Semestre'}}</h2>
                         <p>Data Limite: {{$periodo->data_final}}</p>
                     </div>
-                    @else
-                    <div>
-                        <p>Nenhum formulário ativo de momento.</p>
-                    </div>
-                    @endif
                     <div class="d-flex gap-2">
                         @if ($docentesSemForm)
                         <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-process">
                             Gerar Formulários {{$countDocentesSemForm}}
                         </button>
                         @endif
-
-                        @if ($periodo->impedimentos->count() > 0)
                         <button type="submit" class="btn">
                             <i class="fa fa-envelope-o"></i>
                         </button>
 
-                        <a href="{{route('download', ['periodo' => $periodo->id])}}" class="btn d-flex justify-content-center align-items-center" download="output_restricoes_{{$periodo->ano}}_{{$periodo->semestre}}.xlsx">
+                        <a href="{{route('download', ['periodo' => $periodo->id])}}"
+                            class="btn d-flex justify-content-center align-items-center"
+                            download="output_restricoes_{{$periodo->ano}}_{{$periodo->semestre}}.xlsx">
                             <i class="fa-solid fa-download"></i>
                         </a>
-                        @endif
                     </div>
                 </div>
-                @if ($periodo->impedimentos->count() > 0)
                 <table class="table-ua w-100" id="table">
                     <thead class="bg-light">
                         <tr>
@@ -144,8 +137,21 @@
                         @endforeach
                     </tbody>
                 </table>
-                @endif
             </form>
+            @else
+            <div class="d-flex justify-content-between mb-2">
+                <div>
+                    <p>Nenhum formulário ativo de momento.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    @if ($docentesSemForm)
+                    <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-process">
+                        Gerar Formulários {{$countDocentesSemForm}}
+                    </button>
+                    @endif
+                </div>
+            </div>
+            @endif
         </section>
 
         <section id="history" class="tab-pane p-3">
@@ -185,10 +191,11 @@
                             {{$periodoH->impedimentos->count()}}
                         </td>
 
-                        
-                        <td><a href="{{route('download', ['periodo' => $periodoH->id])}}" download="output_restricoes_{{$periodoH->ano}}_{{$periodoH->semestre}}.xlsx">
-                            <i class="fa-solid fa-download"></i>
-                        </a></td>
+
+                        <td><a href="{{route('download', ['periodo' => $periodoH->id])}}"
+                                download="output_restricoes_{{$periodoH->ano}}_{{$periodoH->semestre}}.xlsx">
+                                <i class="fa-solid fa-download"></i>
+                            </a></td>
                     </tr>
                     @foreach ($docentes as $docente)
                     @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->exists())
