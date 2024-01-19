@@ -148,7 +148,7 @@
                 <div>
                     <label class="col-md-2" for="file-start-year">Começo de Ano Letivo</label>
                     <input class="col-md-1 px-1" type="number" name="file-start-year" id="file-start-year-input"
-                         placeholder="Ano" min="2023" required>
+                         placeholder="Ano" min="{{date('Y')}}" required>
                 </div>
                 <div>
                     <label class="col-md-2" for="file-semestre">Semestre</label>

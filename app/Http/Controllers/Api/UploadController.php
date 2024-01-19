@@ -156,8 +156,8 @@ class UploadController extends Controller
                         //todo @joao: remover geração automática do email
                         //'email' => strtolower(str_replace(' ', '.', Str::ascii($d['nome_docente']))) . $faker->unique()->randomNumber(5, true) . '@estga.pt',
                         //'password' => bcrypt('password'),
-                        'email' => null,
-                        'password' => null,
+                        'email' => '',
+                        'password' => '',
                         'admin' => false,
                         'numero_funcionario' => $d['numero_docente'],
                         'numero_telefone' => null,
