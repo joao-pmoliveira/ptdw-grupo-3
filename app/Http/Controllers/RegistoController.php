@@ -23,7 +23,7 @@ class RegistoController extends Controller
         try {
             $rules = [
                 'email' => ['required', 'email'],
-                'numero_funcionario' => ['required', 'exists:docentes,numero_funcionario'],
+                'numero_funcionario' => ['required', 'exists:users,numero_funcionario'],
                 'password' => ['required'],
             ];
 
