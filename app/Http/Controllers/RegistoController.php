@@ -56,7 +56,7 @@ class RegistoController extends Controller
             $user->update([
                 'email' => $validatedData['email'],
                 'password' => bcrypt($validatedData['password']),
-                'email_verificado_a'=>Carbon::now(),
+                'email_verificado_a'=>Carbon::now()->toDateTimeString(),
             ]);
 
             DB::commit();
