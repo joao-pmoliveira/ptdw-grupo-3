@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as FakerFactory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -24,7 +25,7 @@ class UserFactory extends Factory
 
         return [
             'nome' => $nome,
-            'email' => strtolower(str_replace(' ', '.', $nome)) . $faker->unique()->randomNumber(5, true) . "@estga.pt",
+            'email' => strtolower(str_replace(' ', '.', Str::ascii($nome))) . $faker->unique()->randomNumber(5, true) . "@estga.pt",
             'email_verficado_a' => now(),
             'password' => bcrypt('password'),
             'remember_token' => $faker->regexify('[a-zA-Z]{100}')

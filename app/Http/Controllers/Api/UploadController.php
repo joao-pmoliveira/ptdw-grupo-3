@@ -26,6 +26,7 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Str;
 
 class UploadController extends Controller
 {
@@ -153,8 +154,10 @@ class UploadController extends Controller
                     $user = User::create([
                         'nome' => $d['nome_docente'],
                         //todo @joao: remover geração automática do email
-                        'email' => strtolower(str_replace(' ', '.', $d['nome_docente'])) . $faker->unique()->randomNumber(5, true) . '@estga.pt',
-                        'password' => bcrypt('password'),
+                        //'email' => strtolower(str_replace(' ', '.', Str::ascii($d['nome_docente']))) . $faker->unique()->randomNumber(5, true) . '@estga.pt',
+                        //'password' => bcrypt('password'),
+                        'email' => null,
+                        'password' => null,
                         'admin' => false,
                         'numero_funcionario' => $d['numero_docente'],
                         'numero_telefone' => null,
