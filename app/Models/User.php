@@ -26,6 +26,7 @@ class User extends Model implements Authenticatable
         'admin',
         'numero_telefone',
         'numero_funcionario',
+        'email_verificado_a',
     ];
 
     protected $hidden = [
