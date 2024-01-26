@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('periodo_id')->nullable(false);
             $table->unsignedBigInteger('docente_id')->nullable(false);
             $table->string('impedimentos')->default('0,0,0;0,0,0;0,0,0;0,0,0;0,0,0;0,0,0;');
-            $table->text('justificacao');
+            $table->text('justificacao')->nullable();
             $table->boolean('submetido')->nullable(false);
 
             $table->foreign('periodo_id')->references('id')->on('periodos');
