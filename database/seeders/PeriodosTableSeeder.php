@@ -10,26 +10,30 @@ class PeriodosTableSeeder extends Seeder
 {
     public function run(): void
     {
-        $ano_inicial = 2023;
-        $anos = 3;
 
-        for ($i = 0; $i < $anos; $i++) {
-            $ano = $ano_inicial - $i;
+        $periodos = [
+            [2021, 1],
+            [2021, 2],
+            [2022, 1],
+            [2022, 2],
+            [2023, 1],
+        ];
 
-            for ($semestre = 1; $semestre < 3; $semestre++) {
+        foreach ($periodos as $index => $periodo) {
+            $ano = $periodo[0];
+            $semestre = $periodo[1];
 
-                $datas = PeriodoFactory::gerarDatasPeriodo($ano, $semestre);
+            $datas = PeriodoFactory::gerarDatasPeriodo($ano, $semestre);
 
-                $data_inicial = $datas['data_inicial'];
-                $data_final = $datas['data_final'];
+            $data_inicial = $datas['data_inicial'];
+            $data_final = $datas['data_final'];
 
-                Periodo::factory()->create([
-                    'ano' => $ano,
-                    'semestre' => $semestre,
-                    'data_inicial' => $data_inicial,
-                    'data_final' => $data_final
-                ]);
-            }
+            Periodo::factory()->create([
+                'ano' => $ano,
+                'semestre' => $semestre,
+                'data_inicial' => $data_inicial,
+                'data_final' => $data_final,
+            ]);
         }
     }
 }
