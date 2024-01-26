@@ -13,36 +13,41 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         $faker = FakerFactory::create('pt_PT');
-        $docentes = Docente::all();
 
-        foreach ($docentes as $docente) {
-            $nome = $faker->unique()->name();
+        $users = [
+            # só admins - 3
+            ["nome" => "Lara Sá", "admin" => true],
+            ["nome" => "André Ferreira", "admin" => true],
+            ["nome" => "Miguel Vieira", "admin" => true, "email" => "miguelnamarinha@sapo.pt"],
+            # docentes_admins - 3
+            ["nome" => "Filipe Loureiro", "admin" => true, "docente" => true],
+            ["nome" => "Mauro Antunes", "admin" => true, "docente" => true],
+            ["nome" => "Miguel Vieira", "admin" => true, "docente" => true, "email" => "miguelnamarinha@gmail.com"],
+            # restantes docentes
+            ["nome" => "Isaac Alves", "docente" => true],
+            ["nome" => "Adriana Ribeiro", "docente" => true],
+            ["nome" => "Álvaro Pinto", "docente" => true],
+            ["nome" => "Mónica Matos", "docente" => true],
+            ["nome" => "Gonçalo Coelho", "docente" => true],
+            ["nome" => "Miguel Vieira", "docente" => true, "email" => "miguelmvieira@ua.pt"],
+        ];
+
+        foreach ($users as $user) {
+            $docenteId = null;
+            if (isset($user["docente"])) {
+                $docenteId = Docente::factory(1)->create()->first()->id;
+            }
+
             User::create([
-                'nome' => $nome,
-                // todo @joao: remover geração do automatica do email
-                'email' => $this->getEmailFromName($nome),
-                'password' => bcrypt('password'),
-                'admin' => rand(0, 9) < 3 ? true : false,
-                'numero_funcionario' => $faker->unique()->randomNumber(4, true),
-                'numero_telefone' => $faker->phoneNumber(),
-                'docente_id' => $docente->id
+                "nome" => $user["nome"],
+                "email" => $user["email"] ?? $this->getEmailFromName($user["nome"]),
+                "password" => bcrypt("password"),
+                "admin" => $user["admin"] ?? false,
+                "numero_funcionario" => $faker->unique()->randomNumber(5, true),
+                "numero_telefone" => $faker->phoneNumber(),
+                "docente_id" => $docenteId,
             ]);
         }
-
-        $percentagem_admin = 0.10;
-        for ($i = 0; $i < ceil(count($docentes) * $percentagem_admin); $i++) {
-            $nome = $faker->unique()->name();
-            User::create([
-                'nome' => $nome,
-                // todo @joao: remover geração do automatica do email
-                'email' => $this->getEmailFromName($nome),
-                'password' => bcrypt('password'),
-                'admin' => true,
-                'numero_funcionario' => $faker->unique()->randomNumber(4, true),
-                'numero_telefone' => $faker->phoneNumber(),
-            ]);
-        }
-        $this->developerAccounts();
     }
 
     public static function getEmailFromName($name)
@@ -50,65 +55,5 @@ class UserTableSeeder extends Seeder
         return strtolower(str_replace(' ', '_', iconv('UTF-8', 'ASCII//TRANSLIT', $name))) .
             fake()->randomNumber(5, false) .
             '@estga.pt';
-    }
-
-    public static function developerAccounts()
-    {
-        Docente::create([
-            'acn_id' => 1,
-        ]);
-        User::create([
-            'nome' => 'Miguel Marques Vieira',
-            'email' => 'miguelnamarinha@gmail.com',
-            'password' => bcrypt('password'),
-            'admin' => true,
-            'docente_id' => 12,
-            'numero_telefone' => '960444644',
-            'numero_funcionario' => 85095,
-        ]);
-
-        Docente::create([
-            'acn_id' => 1,
-        ]);
-        User::create([
-            'nome' => 'Miguel Marques Vieira Docente',
-            'email' => 'miguelmvieira@ua.pt',
-            'password' => bcrypt('password'),
-            'admin' => false,
-            'docente_id' => 13,
-            'numero_funcionario' => 85096,
-            'numero_telefone' => '',
-        ]);
-
-        User::create([
-            'nome' => 'Miguel Marques Vieira Admin',
-            'email' => 'miguelnamarinha@sapo.pt',
-            'password' => bcrypt('password'),
-            'admin' => true,
-            'numero_funcionario' => 85097,
-            'numero_telefone' => '',
-        ]);
-
-        Docente::create([
-            'acn_id' => 1,
-        ]);
-        User::create([
-            'nome' => 'Docente Exemplo',
-            'email' => 'docente.exemplo@ua.pt',
-            'password' => bcrypt('password'),
-            'admin' => false,
-            'docente_id' => 14,
-            'numero_funcionario' => 85195,
-            'numero_telefone' => '',
-        ]);
-
-        User::create([
-            'nome' => 'Comissão de Horário Exemplo',
-            'email' => 'admin.exemplo@ua.pt',
-            'password' => bcrypt('password'),
-            'admin' => true,
-            'numero_funcionario' => 85196,
-            'numero_telefone' => '',
-        ]);
     }
 }
