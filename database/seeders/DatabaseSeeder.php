@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(ImpedimentosTableSeeder::class);
 
-        // $this->call(UnidadesCurricularesTableSeeder::class);
+        $this->call(UnidadesCurricularesTableSeeder::class);
     }
 }
