@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class DocenteController extends Controller
@@ -69,9 +70,6 @@ class DocenteController extends Controller
 
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
 
-            $numero = $validatedData['numero'];
-            $telemovel = $validatedData['telemovel'];
-
             DB::beginTransaction();
 
             $docente = Docente::create([
@@ -109,23 +107,25 @@ class DocenteController extends Controller
 
             $rules = [
                 'nome' => ['required', 'string'],
+                'email' => ['nullable', 'email', Rule::unique('users', 'email')->ignore($docente->user->id)],
+                'numero' => ['required', 'integer', 'min:1', Rule::unique('users', 'numero_funcionario')->ignore($docente->user->id)],
+                'telemovel' => ['nullable', 'string'],
                 'acn' => ['required', 'integer', 'exists:acns,id'],
-                'email' => ['required', 'email'],
-                'telefone' => ['nullable'],
-                'numero_funcionario' => ['required', 'integer', 'min:1'],
             ];
 
             $messages = [
                 'nome.required' => 'Preencha o nome do docente!',
                 'nome.string' => 'Nome do docente inválido!',
+                'email.email' => 'Email do docente inválido!',
+                'email.unique' => 'Email já está atribuído a outro utilizador!',
+                'numero.required' => 'Preencha o número de funcionário!',
+                'numero.integer' => 'Número de funcionário inválido!',
+                'numero.min' => 'Número de funcionário tem de ser superior a 1!',
+                'numero.unique' => 'Número de funcionário já está em uso!',
+                'telemovel.string' => 'Número de telefone do Docente inválido!',
                 'acn.required' => 'Selecione a Área Científica Nuclear do docente!',
                 'acn.integer' => 'Área Científica Nuclear inválida!',
                 'acn.exists' => 'Área Científica Nuclear inválida!',
-                'email.required' => 'Preencha o email do docente!',
-                'email.email' => 'Email inválido',
-                'numero_funcionario.required' => 'Preencha o número de funcionário!',
-                'numero_funcionario.integer' => 'Número de funcionário tem de ser número inteiro!',
-                'numero_funcionario.min' => 'Número de funcionário tem de ser superior a 1!',
             ];
 
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
@@ -137,15 +137,15 @@ class DocenteController extends Controller
             $docente->user->update([
                 'nome' => $validatedData['nome'],
                 'email' => $validatedData['email'],
-                'numero_funcionario' => $validatedData['numero_funcionario'],
-                'numero_telefone' => $validatedData['telefone'],
+                'numero_funcionario' => $validatedData['numero'],
+                'numero_telefone' => $validatedData['telemovel'],
             ]);
 
             DB::commit();
             return redirect()->back()->with('sucesso', 'Docente editado com sucesso!');
         } catch (AuthorizationException $e) {
             DB::rollBack();
-            return redirect()->back()->with('alerta', 'Sem permissões para editar Docente!');
+            return redirect()->back()->with('alerta', 'Não tem permissões para editar docentes!');
         } catch (ModelNotFoundException $e) {
             DB::rollBack();
             return redirect()->back()->with('alerta', 'Erro ao submeter edições!');

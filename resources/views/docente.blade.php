@@ -21,7 +21,7 @@
             @method('PUT')
             <div class="d-flex align-items-center p-2">
                 <label for="docente-numero" class="col-md-2">Número</label>
-                <input type="number" name="numero_funcionario" id="docente-numero-input" class="col-md-1 px-1" value="{{ $docente->user->numero_funcionario}}" required>
+                <input type="number" name="numero" id="docente-numero-input" class="col-md-1 px-1" value="{{ $docente->user->numero_funcionario}}" required>
             </div>
 
             <hr class="m-0 bg-secondary">
@@ -35,14 +35,14 @@
             
             <div class="d-flex align-items-center p-2">
                 <label for="docente-email" class="col-md-2 ">Email</label>
-                <input type="email" name="email" id="docente-email-input" class="col-md-4 px-1" value="{{$docente->user->email}}" required>
+                <input type="email" name="email" id="docente-email-input" class="col-md-4 px-1" value="{{$docente->user->email}}">
             </div>
 
             <hr class="m-0 bg-secondary">
 
             <div class="d-flex align-items-center p-2">
                 <label for="docente-telefone" class="col-md-2 ">Telefone</label>
-                <input type="tel" name="telefone" id="docente-telefone" class="col-md-2 px-1" value="{{$docente->user->numero_telefone}}">
+                <input type="tel" name="telemovel" id="docente-telefone" class="col-md-2 px-1" value="{{$docente->user->numero_telefone}}">
             </div>
 
             <hr class="m-0 bg-secondary">
