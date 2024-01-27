@@ -46,59 +46,54 @@ class DocenteController extends Controller
 
             $rules = [
                 'nome' => ['required', 'string'],
-                'acn' => ['required', 'integer', 'exists:acns,id'],
-                'email' => ['required', 'email'],
-                'telemovel' => ['nullable', 'string'],
+                'email' => ['nullable', 'email', 'unique:users,email'],
                 'numero' => ['required', 'integer', 'min:1', 'unique:users,numero_funcionario'],
+                'telemovel' => ['nullable', 'string'],
+                'acn' => ['required', 'integer', 'exists:acns,id'],
             ];
 
             $messages = [
                 'nome.required' => 'Preencha o nome do Docente!',
                 'nome.string' => 'Nome do docente inválido!',
-                'acn.required' => 'Selecione a Área Científica Nuclear do Docente!',
-                'acn.integer' => 'Área Científica Nuclear do Docente inválida!',
-                'acn.exists' => 'Área Científica Nuclear do Docente inválida!',
-                'email.required' => 'Preencha o email do Docente!',
                 'email.email' => 'Email do docente inválido!',
-                'telemovel.string' => 'Número de telefone do Docente inválido!',
+                'email.unique' => 'Email já está atribuído a outro utilizador!',
                 'numero.required' => 'Preencha o número de funcionário!',
                 'numero.integer' => 'Número de funcionário inválido!',
                 'numero.min' => 'Número de funcionário tem de ser superior a 1!',
                 'numero.unique' => 'Número de funcionário já está em uso!',
+                'telemovel.string' => 'Número de telefone do Docente inválido!',
+                'acn.required' => 'Selecione a Área Científica Nuclear do Docente!',
+                'acn.integer' => 'Área Científica Nuclear do Docente inválida!',
+                'acn.exists' => 'Área Científica Nuclear do Docente inválida!',
             ];
 
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
 
-            $nome = $validatedData['nome'];
             $numero = $validatedData['numero'];
-            $email = $validatedData['email'];
             $telemovel = $validatedData['telemovel'];
-            $acn = $validatedData['acn'];
 
             DB::beginTransaction();
 
             $docente = Docente::create([
-                'acn_id' => $acn,
+                'acn_id' => $validatedData['acn'],
             ]);
             $docente->save();
 
             $user = User::create([
-                'nome' => $nome,
-                'email' => $email,
+                'nome' => $validatedData['nome'],
+                'email' => $validatedData['email'],
                 'password' => bcrypt('password'),
                 'admin' => false,
-                'numero_funcionario' => $numero,
-                'numero_telefone' => $telemovel,
+                'numero_funcionario' => $validatedData['numero'],
+                'numero_telefone' => $validatedData['telemovel'],
             ]);
             $docente->user()->save($user);
 
-            // todo @joao:
-
             DB::commit();
-            return redirect(route('admin.gerir.view'))->with('sucesso', 'Adicionado docente com sucesso!');
+            return redirect(route('admin.gerir.view'))->with('sucesso', 'Docente adicionado com sucesso!');
         } catch (AuthorizationException $e) {
             DB::rollBack();
-            return redirect()->back()->with('alerta', 'Sem permissões para adicionar Docente!');
+            return redirect()->back()->with('alerta', 'Não tem as permissões necessárias para adicionar docentes!');
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->back()->with('alerta', $e->getMessage());
