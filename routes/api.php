@@ -61,11 +61,7 @@ Route::group(['prefix' => 'impedimentos'], function () {
 
     Route::get('/{impedimento}', [ImpedimentoController::class, 'show'])->name('impedimentos.show');
 
-    Route::post('/', [ImpedimentoController::class, 'store'])->name('impedimentos.store');
-
     Route::put('/{id}', [ImpedimentoController::class, 'update'])->middleware(['web', 'auth'])->name('impedimentos.update');
-
-    Route::delete('/{id}', [ImpedimentoController::class, 'delete'])->middleware(['web', 'auth'])->name('impedimentos.delete');
 
     Route::post('/periodo', [ImpedimentoController::class, 'gerarPorPeriodo'])->middleware(['web', 'auth'])->name('impedimentos.periodo');
 });
