@@ -204,7 +204,7 @@
                         <th scope="col"></th>
                         <th scope="col-3">Nome</th>
                         <th scope="col-1" class="text-center">Responsável</th>
-                        <th scope="col-1">Estado</th>
+                        <th scope="col-1" class="text-center">Submetido</th>
                         <th scope="col-1">Data Limite</th>
                     </tr>
                 </thead>
@@ -220,7 +220,7 @@
                                     <i class="fa fa-check"></i>
                                 @endif
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @if ($uc->restricoes_submetidas)
                                     <i class="fa fa-check"></i>
                                 @else
