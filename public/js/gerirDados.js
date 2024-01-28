@@ -28,7 +28,6 @@ periodoSelect.addEventListener('change', async () => {
         const link = uc['link']
         const nomeDocenteResponsavel = uc['docente_responsavel']['user']['nome'];
 
-        // todo @joao: adicionar atributos que faltam
         const row = document.createElement('tr');
         row.classList.add('border', 'border-light');
         row.setAttribute('data-id', id);
@@ -105,7 +104,6 @@ function filterTableEditUCs() {
 
 const tableEditDocentes = document.querySelector('#table-edit-teachers');
 tableEditDocentes.querySelectorAll('tbody tr:not(:is([id="edit-teachers-no-match-row"]))').forEach(row => {
-    //const docenteID = row.getAttribute('data-id');
     row.addEventListener('click', () => window.location.href = `${row.getAttribute('data-link')}`);
 })
 
