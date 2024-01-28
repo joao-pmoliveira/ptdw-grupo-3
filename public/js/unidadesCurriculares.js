@@ -26,7 +26,6 @@ periodoSelect?.addEventListener('change', async () => {
     const tableBody = document.querySelector('#table-ucs tbody');
 
     tableBody.querySelectorAll('tr:not([id="ucs-no-match-row"])').forEach(row => row.remove());
-    // tableBody.innerHTML = '';
 
     data.forEach(uc => {
         console.log(uc);
@@ -46,7 +45,7 @@ periodoSelect?.addEventListener('change', async () => {
 
         row.setAttribute('data-link', link);
 
-        const userUC = Array.from(uc['docentes']).map(d => d['id']).filter(id => id == authUser.id);
+        const userUC = Array.from(uc['docentes']).map(d => d['id']).filter(id => id == userId);
         row.setAttribute('data-my-uc', userUC.length !== 0 ? 'Y' : 'N');
 
         const th = document.createElement('th');
