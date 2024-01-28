@@ -32,42 +32,45 @@
     <div class="tab-content">
         <section id="manage-forms" class="tab-pane active p-3">
             @php
-            $docentesSemForm = $docentes->contains(function ($docente) use ($periodo) {
-            return $docente->impedimentos()->where('periodo_id', $periodo->id)->doesntExist() &&
-            $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
-            });
-
-            $countDocentesSemForm = $docentes->filter(function ($docente) use ($periodo) {
-            return $docente->impedimentos()->where('periodo_id', $periodo->id)->doesntExist() &&
-            $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
-            })->count();
+                $docSemForm = $docentes->filter( function ($docente) use ($periodo) {
+                    return $docente->impedimentos()->where('periodo_id', $periodo->id)->doesntExist() && 
+                    $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->exists();
+                });
             @endphp
-            @if ($periodo->impedimentos->count() > 0)
-            <form method="post" action="{{route('mailMissingForms')}}">
-                @csrf
-                <div class="d-flex justify-content-between mb-2">
-                    <div>
-                        <h2>Formulário aberto: {{$periodo->ano . '/' . ($periodo->ano+1) . ' ' . $periodo->semestre . 'º
-                            Semestre'}}</h2>
-                        <p>Data Limite: {{$periodo->data_final}}</p>
-                    </div>
-                    <div class="d-flex gap-2">
-                        @if ($docentesSemForm)
-                        <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-process">
-                            Gerar Formulários {{$countDocentesSemForm}}
-                        </button>
-                        @endif
-                        <button type="submit" class="btn">
-                            <i class="fa fa-envelope-o"></i>
-                        </button>
 
-                        <a href="{{route('download', ['periodo' => $periodo->id])}}"
-                            class="btn d-flex justify-content-center align-items-center"
-                            download="output_restricoes_{{$periodo->ano}}_{{$periodo->semestre}}.xlsx">
+            <div class="d-flex justify-content-between mb-2">
+                @if ($periodo->impedimentos->count() > 0)
+                <div>
+                    <h2>Formulário aberto: {{substr($periodo->ano, 2, 2)}}/{{substr($periodo->ano+1, 2, 2)}} {{$periodo->semestre}}º Semestre</h2>
+                    <p>Data Limite: {{$periodo->data_final}}</p>
+                </div>
+                @else
+                <div>
+                    <p>Nenhum formulário ativo de momento.</p>
+                </div>
+                @endif
+
+                <div class="d-flex gap-2">
+                    @if ($docSemForm->count() > 0)
+                    <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-process">
+                        Gerar Formulários {{$docSemForm->count()}}
+                    </button>
+                    @endif
+
+                    @if ($periodo->impedimentos->count() > 0)
+                        <form class="d-flex" action="{{route('mailMissingForms')}}" method="post" id="send-emails-form">
+                            @csrf
+                            <button type="submit" class="btn" id="send-emails-btn" disabled>
+                                <i class="fa fa-envelope-o"></i>
+                            </button>
+                        </form>
+                        <a href="{{route('download', ['periodo' => $periodo->id])}}" class="btn d-flex justify-content-center align-items-center" download="output_restricoes_{{$periodo->ano}}_{{$periodo->semestre}}.xlsx">
                             <i class="fa-solid fa-download"></i>
                         </a>
-                    </div>
+                    @endif
                 </div>
+            </div>
+            @if ($periodo->impedimentos->count() > 0)
                 <table class="table-ua w-100" id="table">
                     <thead class="bg-light">
                         <tr>
@@ -75,82 +78,57 @@
                             <th scope="col-1"></th>
                             <th scope="col-1">Nome</th>
                             <th scope="col-1" class="text-center">
-                                Restrições de UCs
+                                Restrições de UCs 
                                 ({{$periodo->unidadesCurriculares()->where('restricoes_submetidas',true)->count()}}/{{$periodo->unidadesCurriculares()->count()}})
                             </th>
                             <th scope="col-1" class="text-center">
-                                Impedimento de Horário
-                                ({{$periodo->impedimentos()->where('submetido',
-                                true)->count()}}/{{$periodo->impedimentos->count()}})
+                                Impedimento de Horário 
+                                ({{$periodo->impedimentos()->where('submetido', true)->count()}}/{{$periodo->impedimentos->count()}})
                             </th>
                             <th scope="col-1" class="text-center">
                                 Emails
+                                <input type="checkbox">
                             </th>
                         </tr>
                     </thead>
                     <tbody class="title-separator">
                         @php
-                        $impedimentosOrd = $periodo->impedimentos->sortByDesc(function ($imp){
-                        return $imp->docente->user->numero_funcionario;
-                        });
+                            $impedimentosOrd = $periodo->impedimentos->sortByDesc(function ($imp){
+                                return $imp->docente->user->numero_funcionario;
+                            });
                         @endphp
-
+    
                         @foreach ($impedimentosOrd as $impedimento)
+                        @php
+                            $ucsResponsavel = $impedimento->docente->ucsResponsavel()->where('periodo_id', $periodo->id)->get();
+                        @endphp
                         <tr class="border border-light pe-none">
                             <th scope="row"></th>
                             <td colspan="1">{{$impedimento->docente->user->numero_funcionario}}</td>
                             <td colspan="1">{{$impedimento->docente->user->nome}}</td>
                             <td colspan="1" class="text-center">
-                                @if ($impedimento->docente->ucsResponsavel()->where('periodo_id', $periodo->id)->count()
-                                > 0)
-                                {{$impedimento->docente->ucsResponsavel()->where('periodo_id',
-                                $periodo->id)->where('restricoes_submetidas', true)->count() .
-                                '/' .
-                                $impedimento->docente->ucsResponsavel()->where('periodo_id', $periodo->id)->count()
-                                }}
+                                @if ($ucsResponsavel->count() > 0)
+                                    {{$ucsResponsavel->where('restricoes_submetidas', true)->count()}}/{{$ucsResponsavel->count()}}
                                 @else
-                                ---
+                                    ---
                                 @endif
                             </td>
                             <td colspan="1" class="text-center">
                                 @if ($impedimento->submetido)
-                                <i class="fa-solid fa-check"></i>
+                                    <i class="fa-solid fa-check"></i>
                                 @else
-                                Pendente
+                                    Pendente
                                 @endif
                             </td>
-                            <td>
-                                @if ($impedimento->submetido==false)
-                                <input class="pe-auto" type="checkbox" name="impedimento_selecionados[]"
-                                    id="impedimento_{{$impedimento->id}}" value="{{$impedimento->id}}">
-                                @else
-                                @if ($impedimento->docente->ucsResponsavel()->where('periodo_id',
-                                $periodo->id)->where('restricoes_submetidas',
-                                true)->count()<$impedimento->docente->ucsResponsavel()->where('periodo_id',
-                                    $periodo->id)->count())
-                                    <input class="pe-auto" type="checkbox" name="impedimento_selecionados[]"
-                                        id="impedimento_{{$impedimento->id}}" value="{{$impedimento->id}}">
-                                    @endif
-                                    @endif
+                            <td class="text-center">
+                                @if (!$impedimento->submetido || $ucsResponsavel->where('restricoes_submetidas', true)->count() < $ucsResponsavel->count())
+                                    <input class="pe-auto" type="checkbox" data-id="{{$impedimento->docente->id}}" data-id="{{$impedimento->id}}">
+                                @endif
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-            </form>
-            @else
-            <div class="d-flex justify-content-between mb-2">
-                <div>
-                    <p>Nenhum formulário ativo de momento.</p>
-                </div>
-                <div class="d-flex gap-2">
-                    @if ($docentesSemForm)
-                    <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-process">
-                        Gerar Formulários {{$countDocentesSemForm}}
-                    </button>
-                    @endif
-                </div>
-            </div>
             @endif
         </section>
 
@@ -165,65 +143,54 @@
                         <th scope="col"></th>
                         <th scope="col-1"></th>
                         <th scope="col-4">Nome</th>
-                        <th scope="col-1" style="text-align:center;">Restrições UC</th>
-                        <th scope="col-1" style="text-align:center;">Impedimentos horários</th>
+                        <th scope="col-1" class="text-center">Restrições UC</th>
+                        <th scope="col-1" class="text-center">Impedimentos horários</th>
                         <th scope="col-1"></th>
                     </tr>
                 </thead>
                 <tbody class="title-separator">
                     @if ($periodosH->count() > 0)
-                    @foreach ($periodosH as $index => $periodoH)
-                    <tr data-bs-toggle="collapse" data-bs-target="{{'#rh'.$index}}">
-                        <th scope="row"></th>
-                        <td><i class="fa-solid fa-chevron-right"></i></td>
-                        <td>Formulários {{$periodoH->ano . '/' . ($periodoH->ano+1)}} - {{$periodoH->semestre}}º
-                            semestre</td>
-                        <td class="text-center">
-                            Submetidos:
-                            {{$periodoH->unidadesCurriculares()->where('restricoes_submetidas', true)->count()}}
-                            /
-                            {{$periodoH->unidadesCurriculares()->count()}}
-                        </td>
-                        <td class="text-center">
-                            Submetidos:
-                            {{$periodoH->impedimentos->where('submetido', true)->count()}}
-                            /
-                            {{$periodoH->impedimentos->count()}}
-                        </td>
-
-
-                        <td><a href="{{route('download', ['periodo' => $periodoH->id])}}"
-                                download="output_restricoes_{{$periodoH->ano}}_{{$periodoH->semestre}}.xlsx">
-                                <i class="fa-solid fa-download"></i>
-                            </a></td>
-                    </tr>
-                    @foreach ($docentes as $docente)
-                    @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->exists())
-                    <tr class="collapse accordion-collapse bg-terciary pe-none" id="{{'rh'.$index}}">
-                        <th scope="row"></th>
-                        <td colspan="1">{{$docente->user->numero_funcionario}}</td>
-                        <td colspan="1">{{$docente->user->nome}}</td>
-                        <td colspan="1" class="text-center">
-                            @if ($docente->ucsResponsavel)
-                            {{$docente->ucsResponsavel()->where('periodo_id',
-                            $periodoH->id)->where('restricoes_submetidas', true)->count()}}
-                            /
-                            {{$docente->ucsResponsavel()->where('periodo_id', $periodoH->id)->count()}}
-                            @else ---
+                        @foreach ($periodosH as $index => $periodoH)
+                        <tr data-bs-toggle="collapse" data-bs-target="{{'#rh'.$index}}">
+                            <th scope="row"></th>
+                            <td><i class="fa-solid fa-chevron-right"></i></td>
+                            <td>Formulários {{substr($periodoH->ano, 2, 2)}}/{{substr($periodoH->ano+1, 2, 2)}} - {{$periodoH->semestre}}º Semestre</td>
+                            <td class="text-center">
+                                Submetidos: {{$periodoH->unidadesCurriculares()->where('restricoes_submetidas', true)->count()}}/{{$periodoH->unidadesCurriculares()->count()}}
+                            </td>
+                            <td class="text-center">
+                                Submetidos: {{$periodoH->impedimentos->where('submetido', true)->count()}}/{{$periodoH->impedimentos->count()}}
+                            </td>
+                            <td>
+                                <a href="{{route('download', ['periodo' => $periodoH->id])}}" download="output_restricoes_{{$periodoH->ano}}_{{$periodoH->semestre}}.xlsx">
+                                    <i class="fa-solid fa-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                            @foreach ($docentes as $docente)
+                            @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->exists())
+                            <tr class="collapse accordion-collapse bg-terciary pe-none" id="{{'rh'.$index}}">
+                                <th scope="row"></th>
+                                <td colspan="1">{{$docente->user->numero_funcionario}}</td>
+                                <td colspan="1">{{$docente->user->nome}}</td>
+                                <td colspan="1" class="text-center">
+                                    @if ($docente->ucsResponsavel)
+                                    {{$docente->ucsResponsavel()->where('periodo_id', $periodoH->id)->where('restricoes_submetidas', true)->count()}}/{{$docente->ucsResponsavel()->where('periodo_id', $periodoH->id)->count()}}
+                                    @else ---
+                                    @endif
+                                </td>
+                                <td colspan="1" class="text-center">
+                                    @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->first()->submetido)
+                                    <i class="fa fa-check"></i>
+                                    @else
+                                    Não submetido
+                                    @endif
+                                </td>
+                                <td></td>
+                            </tr>
                             @endif
-                        </td>
-                        <td colspan="1" class="text-center">
-                            @if ($docente->impedimentos()->where('periodo_id', $periodoH->id)->first()->submetido)
-                            <i class="fa fa-check"></i>
-                            @else
-                            Não submetido
-                            @endif
-                        </td>
-                        <td></td>
-                    </tr>
-                    @endif
-                    @endforeach
-                    @endforeach
+                            @endforeach
+                        @endforeach
                     @else
                     <tr class="border border-light pe-none">
                         <th scope="row"></th>
@@ -259,14 +226,10 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 
 </main>
-<script>
-    var baseUrl = "{{ config('app.url') }}";
-</script>
 <script src="{{asset('js/processos.js')}}" defer></script>
 
 @endsection
