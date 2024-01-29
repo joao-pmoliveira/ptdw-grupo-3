@@ -45,7 +45,7 @@ periodoSelect?.addEventListener('change', async () => {
 
         row.setAttribute('data-link', link);
 
-        const userUC = Array.from(uc['docentes']).map(d => d['id']).filter(id => id == userId);
+        const userUC = Array.from(uc['docentes']).map(d => d['id']).filter(id => id == userDocenteId);
         row.setAttribute('data-my-uc', userUC.length !== 0 ? 'Y' : 'N');
 
         const th = document.createElement('th');

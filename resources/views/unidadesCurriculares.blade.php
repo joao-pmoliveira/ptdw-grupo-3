@@ -85,7 +85,7 @@
 </main>
 
 <script>
-    const userId = {{$user->id}};
+    const userDocenteId = {{$user->docente ? $user->docente->id : 0}};
 </script>
 
 <script src="{{asset('js/unidadesCurriculares.js')}}" defer></script>
