@@ -1,7 +1,7 @@
 'use strict'
 // Preender restricao anterior
 const checkboxRestricao = document.querySelector('#ultimaRestricao');
-checkboxRestricao.addEventListener("click", () => {
+checkboxRestricao?.addEventListener("click", () => {
     if (checkboxRestricao.checked) {
 
         const checkboxAulaLaboratorio = document.querySelector("#aula-laboratorio-input");

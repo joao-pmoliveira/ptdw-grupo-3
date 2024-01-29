@@ -2,7 +2,7 @@
 
 // Formulário de Impedimentos
 const impedimentoForm = document.querySelector('#impedimento-form');
-impedimentoForm.addEventListener('submit', (e) => {
+impedimentoForm?.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const unchecked = document.querySelectorAll('#schedule-grid input[type="checkbox"]:not(:checked)');
@@ -22,7 +22,7 @@ impedimentoForm.addEventListener('submit', (e) => {
 
 // Tabela com restrições para o próximo semestre
 const tableRestricoes = document.querySelector('#table-restricoes-pendentes');
-tableRestricoes.querySelectorAll('tbody tr').forEach(row => {
+tableRestricoes?.querySelectorAll('tbody tr').forEach(row => {
     const url = row.getAttribute('data-link');
     if (!url) return;
 
@@ -33,7 +33,7 @@ tableRestricoes.querySelectorAll('tbody tr').forEach(row => {
 
 // Tabela Histórico de Impedimentos
 const tableHistImpedimentos = document.querySelector('#table-impedimentos-historico');
-tableHistImpedimentos.querySelectorAll('tbody tr').forEach(row => {
+tableHistImpedimentos?.querySelectorAll('tbody tr').forEach(row => {
     const url = row.getAttribute('data-link');
     if (!url) return;
 
@@ -42,7 +42,7 @@ tableHistImpedimentos.querySelectorAll('tbody tr').forEach(row => {
 
 //Tabela Histórico de Restrições
 const tableHistRestricoes = document.querySelector('#table-restricoes-historico');
-tableHistRestricoes.querySelectorAll('tbody tr').forEach(row => {
+tableHistRestricoes?.querySelectorAll('tbody tr').forEach(row => {
     const url = row.getAttribute('data-link');
     if (!url) return;
 
