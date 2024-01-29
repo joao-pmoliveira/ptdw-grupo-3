@@ -200,7 +200,8 @@ class ImpedimentoController extends Controller
             // todo @joao: passar para dentro do ciclo anterior
             foreach ($docentes as $docente) {
                 $filteredUcsResp = $docente->ucsResponsavel()->where('periodo_id', $periodo->id)->get();
-                $filteredUcs = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->whereNotIn('id', $filteredUcsResp->pluck('id'))->get();
+                $filteredUcs = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get();
+                //$filteredUcs = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->whereNotIn('id', $filteredUcsResp->pluck('id'))->get();
                 if(empty($docente->user->email)){
                     continue;
                 }
