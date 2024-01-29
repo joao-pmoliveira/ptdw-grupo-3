@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('docente_id')->nullable(false);
             $table->unsignedBigInteger('unidade_curricular_id')->nullable(false);
-            $table->decimal('percentagem_semanal', 5, 4);
+            $table->string('percentagem_semanal')->nullable();
 
             $table->foreign('docente_id')->references('id')->on('docentes');
             $table->foreign('unidade_curricular_id')->references('id')->on('unidades_curriculares');

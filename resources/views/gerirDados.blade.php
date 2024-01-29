@@ -39,18 +39,18 @@
                 <div class="d-flex flex-wrap">
                     <div class="d-flex gap-4 align-items-stretch my-2 flex-grow-1 flex-wrap">
                         <select class="px-2" name="school_year_semester" id="school-year-semester" 
-                        data-link="{{route('ucs.index')}}"
-                        aria-label="Filtre por ano e semestre">
+                            data-link="{{route('ucs.index')}}"
+                            aria-label="Filtre por ano e semestre">
                             @foreach ($periodos as $periodo)
-                                <option value="{{$periodo->ano . "_" . ($periodo->ano+1) . "_" . $periodo->semestre}}">
-                                    {{$periodo->ano . "/" . substr($periodo->ano+1, 2,2) . " " . $periodo->semestre . "º Semestre"}}
+                                <option value="{{$periodo->ano}}_{{$periodo->ano+1}}_{{$periodo->semestre}}">
+                                    {{$periodo->ano}}/{{substr($periodo->ano+1, 2, 2)}} {{$periodo->semestre}}º Semestre
                                 </option>
                             @endforeach
                         </select>
                         <select class="px-2" name="school_course" id="school-year-school_course" aria-label="Filtre por curso">
                             <option value="" selected>Filtre Por Curso</option>
                             @foreach ($cursos as $curso)
-                            <option value="{{$curso->id}}">{{$curso->sigla}}</option>
+                                <option value="{{$curso->id}}">{{$curso->sigla}}</option>
                             @endforeach
                         </select>
                         <div class="paco-searchbox">
@@ -85,10 +85,8 @@
                                 <th scope="row"></th>
                                 <td>{{$uc->codigo}}</td>
                                 <td>{{$uc->nome}}</td>
-                                @if($uc->docenteResponsavel)
-                                <td>{{$uc->docenteResponsavel->user->nome}}</td>
-                                @else
-                                <td>---</td>
+                                @if($uc->docenteResponsavel) <td>{{$uc->docenteResponsavel->user->nome}}</td>
+                                @else <td>---</td>
                                 @endif
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
@@ -148,7 +146,7 @@
                 <div>
                     <label class="col-md-2" for="file-start-year">Começo de Ano Letivo</label>
                     <input class="col-md-1 px-1" type="number" name="file-start-year" id="file-start-year-input"
-                         placeholder="Ano" min="{{date('Y')}}" required>
+                         placeholder="Ano" min="{{date('Y')-1}}" required>
                 </div>
                 <div>
                     <label class="col-md-2" for="file-semestre">Semestre</label>

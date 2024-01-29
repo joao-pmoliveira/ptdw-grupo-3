@@ -79,9 +79,9 @@ class UnidadeCurricularController extends Controller
             $rules = [
                 'codigo' => ['required', 'integer', 'min:1'],
                 'nome' => ['required', 'string'],
+                'acn' => ['required', 'integer', 'exists:acns,id'],
                 'horas' => ['nullable', 'integer', 'min:1'],
                 'ects' => ['nullable', 'integer', 'min:0'],
-                'acn' => ['required', 'integer', 'exists:acns,id'],
                 'docente_responsavel_id' => ['nullable', 'integer', 'exists:docentes,id'],
                 'docentes_id' => ['array'],
             ];
@@ -92,13 +92,13 @@ class UnidadeCurricularController extends Controller
                 'codigo.min' => 'Código da UC tem de ser superior a 1!',
                 'nome.required' => 'Preencha o nome da UC!',
                 'nome.string' => 'Nome da UC inválido!',
+                'acn.required' => 'Seleciona a Área Científica Nuclear da UC!',
+                'acn.integer' => 'Área Científica Nuclear selecionada inválida!',
+                'acn.exists' => 'Área Científica Nuclear selecionada inválida!',
                 'horas.integer' => 'Horas semanais têm de ser número inteiro!',
                 'horas.min' => 'Horas semanais têm de ser superiores a 1!',
                 'ects.integer' => 'ECTs têm de ser número inteiro!',
                 'ects.min' => 'ECTs têm de ser superiores a 0!',
-                'acn.required' => 'Seleciona a Área Científica Nuclear da UC!',
-                'acn.integer' => 'Área Científica Nuclear selecionada inválida!',
-                'acn.exists' => 'Área Científica Nuclear selecionada inválida!',
                 'docente_responsavel_id.integer' => 'Docente responsável selecionado inválido!',
                 'docente_responsavel_id.exists' => 'Docente responsável selecionado inválido!',
                 'docentes_id.array' => 'Erro de formato na seleção de docentes!',
@@ -153,9 +153,14 @@ class UnidadeCurricularController extends Controller
 
             $docenteResponsavel = Docente::find($docenteResponsavelId) ?? null;
 
+            //Docentes de uma UC = Docente Responsável + Número de Restante Docentes
+            $docentesUc = ($docenteResponsavel ? 1 : 0) + array_reduce($docentesId, fn ($c, $i) => is_null($i) ? $c : $c + 1, 0);
+
             if ($docenteResponsavel) {
-                //todo @joao: calcular % semanal do docente
-                $uc->docentes()->attach($docenteResponsavel, ['percentagem_semanal' => 1]);
+                $uc->docentes()->attach(
+                    $docenteResponsavel,
+                    ['percentagem_semanal' => is_null($horas) ? 'N/A' : round($horas / $docentesUc / $horas, 2)]
+                );
                 $uc->refresh();
             }
 
@@ -165,8 +170,10 @@ class UnidadeCurricularController extends Controller
                 }
 
                 $docente = Docente::findOrFail($docenteId);
-                // todo @joao: calcular %semanal
-                $uc->docentes()->attach($docente, ['percentagem_semanal' => 1]);
+                $uc->docentes()->attach(
+                    $docente,
+                    ['percentagem_semanal' => is_null($horas) ? 'N/A' : round($horas / $docentesUc / $horas, 2)]
+                );
             }
             $uc->refresh();
 
@@ -183,7 +190,6 @@ class UnidadeCurricularController extends Controller
                     Mail::to($docenteResponsavel->user->email)->send(new emailMudancaRestricoes($docenteResponsavel, $uc->periodo, $uc, $uc->periodo->data_final));
                 }
             }
-
 
             // todo @joao: mais informação? inserir nome da UC e/ou periodo
             return redirect(route('admin.gerir.view'))->with('sucesso', 'Unidade Curricular adicionada com sucesso!');
@@ -212,9 +218,9 @@ class UnidadeCurricularController extends Controller
             $rules = [
                 'codigo' => ['required', 'integer', 'min:1'],
                 'nome' => ['required', 'string'],
+                'acn' => ['required', 'integer', 'exists:acns,id'],
                 'horas' => ['nullable', 'integer', 'min:1'],
                 'ects' => ['nullable', 'integer', 'min:1'],
-                'acn' => ['required', 'integer', 'exists:acns,id'],
                 'docente_responsavel_id' => ['nullable', 'integer', 'exists:docentes,id'],
                 'docentes_id' => ['array'],
             ];
@@ -224,15 +230,16 @@ class UnidadeCurricularController extends Controller
                 'codigo.min' => 'Código tem que ser superior a 1!',
                 'nome.required' => 'Preencha o nome da UC!',
                 'nome.string' => 'Introduza um nome válido!',
+                'acn.required' => 'Selecione a Área Científica Nuclear da UC!',
+                'acn.integer' => 'Área Científica Nuclear inválida!',
+                'acn.exists' => 'Área Científica Nuclear inválida!',
                 'horas.integer' => 'Horas semanais têm que ser um número inteiro',
                 'horas.min' => 'Horas semanais têm que ser superiores a 1!',
                 'ects.integer' => 'ECTs têm que ser número inteiro!',
                 'ects.min' => 'ECTS têm que ser superiores a 1!',
-                'acn.required' => 'Selecione a Área Científica Nuclear da UC!',
-                'acn.integer' => 'Área Científica Nuclear inválida!',
-                'acn.exists' => 'Área Científica Nuclear inválida!',
                 'docente_responsavel_id.integer' => 'Docente Responsável inválido!',
                 'docente_responsavel_id.exists' => 'Docente Responsável inválido!',
+                'docentes_id.array' => 'Erro de formato na seleção de docentes!',
             ];
 
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
@@ -245,6 +252,8 @@ class UnidadeCurricularController extends Controller
             $codigo = $validatedData['codigo'];
             $nome = $validatedData['nome'];
             $periodo = $uc->periodo;
+            $horas = $validatedData['horas'];
+            $ects = $validatedData['ects'];
 
 
             $ucsComMesmoCodigo = UnidadeCurricular::where('codigo', $codigo)->get();
@@ -261,20 +270,23 @@ class UnidadeCurricularController extends Controller
             }
 
             $uc->update([
-                'codigo' => $validatedData['codigo'],
-                'nome' => $validatedData['nome'],
+                'codigo' => $codigo,
+                'nome' => $nome,
                 'acn_id' => $validatedData['acn'],
                 'docente_responsavel_id' => $validatedData['docente_responsavel_id'],
-                'horas_semanais' => $validatedData['horas'],
-                'ects' => $validatedData['ects'],
+                'horas_semanais' => $horas,
+                'ects' => $ects,
             ]);
 
             $uc->docentes()->detach();
 
             $atualDocenteResponsavel = Docente::find($validatedData['docente_responsavel_id']) ?? null;
+            $docentesUc = ($atualDocenteResponsavel ? 1 : 0) + array_reduce($docentesId, fn ($c, $i) => is_null($i) ? $c : $c + 1, 0);
             if ($atualDocenteResponsavel) {
-                //todo @joao: definir percentagem semanal
-                $uc->docentes()->attach($atualDocenteResponsavel, ['percentagem_semanal' => 1]);
+                $uc->docentes()->attach(
+                    $atualDocenteResponsavel,
+                    ['percentagem_semanal' => is_null($horas) ? 'N/A' : round($horas / $docentesUc / $horas, 2)]
+                );
             }
 
             foreach ($docentesId as $docenteId) {
@@ -283,8 +295,10 @@ class UnidadeCurricularController extends Controller
                 }
 
                 $docente = Docente::findOrFail($docenteId);
-                //todo @joao: definir percentagem semanal
-                $uc->docentes()->attach($docente, ['percentagem_semanal' => 1]);
+                $uc->docentes()->attach(
+                    $docente,
+                    ['percentagem_semanal' => is_null($horas) ? 'N/A' : round($horas / $docentesUc / $horas, 2)]
+                );
             }
 
             DB::commit();

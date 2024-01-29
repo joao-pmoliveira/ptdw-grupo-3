@@ -175,6 +175,8 @@ class ImpedimentoController extends Controller
 
             $docentes = Docente::all();
 
+            $docentesANotificar = [];
+
             foreach ($docentes as $docente) {
                 $semUCsAssociadas = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->doesntExist();
                 if ($semUCsAssociadas) {
@@ -193,16 +195,25 @@ class ImpedimentoController extends Controller
                     'submetido' => false,
                 ]);
                 $impedimento->save();
+
+                $docentesANotificar[] = $docente;
             }
 
             DB::commit();
 
             // todo @joao: passar para dentro do ciclo anterior
-            foreach ($docentes as $docente) {
-                $filteredUcsResp = $docente->ucsResponsavel()->where('periodo_id', $periodo->id)->get();
-                $filteredUcs = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->get();
-                //$filteredUcs = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->whereNotIn('id', $filteredUcsResp->pluck('id'))->get();
-                if(empty($docente->user->email)){
+            foreach ($docentesANotificar as $docente) {
+                $filteredUcsResp = $docente->ucsResponsavel->filter(function ($uc) use ($periodo) {
+                    return $uc->periodo == $periodo;
+                });
+
+                $filteredUcs = $docente->unidadesCurriculares->filter(function ($uc) use ($periodo, $filteredUcsResp) {
+                    $filteredUcsRespIds = $filteredUcsResp->pluck('id')->toArray();
+
+                    return $uc->periodo == $periodo && !in_array($uc->id, $filteredUcsRespIds);
+                });
+
+                if (empty($docente->user->email)) {
                     continue;
                 }
                 Mail::to($docente->user->email)->send(new emailAberturaRestricoes($docente, $periodo, $filteredUcsResp, $filteredUcs, $validatedData['data_final'], $validatedData['data_inicial']));
@@ -218,20 +229,40 @@ class ImpedimentoController extends Controller
     public function mailMissingForms(Request $request)
     {
         try {
-            $impedimentoIds = $request->input('impedimento_selecionados');
-            foreach ($impedimentoIds as $impedimentoId) {
-                $impedimento = Impedimento::find($impedimentoId);
-                $periodo = $impedimento->periodo;
-                $filteredUcsResp = $impedimento->docente->ucsResponsavel->filter(function ($ucsResponsavel) use ($periodo) {
-                    return $ucsResponsavel->periodo == $periodo;
-                });
-                $dataLimite = $impedimento->periodo->data_final;
-                $horaEmFalta = $impedimento->submetido;
-                Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin($impedimento->docente, $impedimento->periodo, $filteredUcsResp, $dataLimite, $horaEmFalta));
-                return redirect(route('restricoes.recolha.view'))->with('sucesso', 'Emails enviados com sucesso!');
+            $this->authorize('admin-access');
+
+            $rules = [
+                'impedimentos_id' => ['array'],
+            ];
+
+            $messages = [
+                'impedimentos_id' => 'Erro ao tentar enviar emails!',
+            ];
+
+            $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
+
+            foreach ($validatedData['impedimentos_id'] as $impedimentoId) {
+                $impedimento = Impedimento::findOrFail($impedimentoId);
+                // todo @joao: simplificar processo de enviar emails.
+                Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin(
+                    $impedimento->docente,
+                    $impedimento->periodo,
+                    $impedimento->docente->ucsResponsavel->filter(function ($uc) use ($impedimento) {
+                        return $uc->periodo->id = $impedimento->periodo->id;
+                    }),
+                    $impedimento->periodo->data_final,
+                    $impedimento->submetido,
+                ));
             }
-        } catch (Exception $e) {
-            return redirect()->back()->with('alerta', $e->getMessage());
+
+            return redirect()->back()->with('sucesso', 'Emails enviados com sucesso!');
+        } catch (AuthorizationException $e) {
+            return redirect()->back()->with('alerta', 'Não tem permissões necessárias!');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('alerta', 'Erro ao tentar enviar emails!');
         }
+
+
+        return response()->json(['message' => $request->input('docentes')]);
     }
 }

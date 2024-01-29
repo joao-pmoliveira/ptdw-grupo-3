@@ -35,14 +35,14 @@
 
             <div class="d-flex align-items-center p-2">
                 <label for="email" class="col-md-2">Email</label>
-                <input type="email" name="email" id="docente-email-input" class="col-md-4 px-1" required>
+                <input type="email" name="email" id="docente-email-input" class="col-md-4 px-1">
             </div>
 
             <hr class="m-0 bg-secondary">
 
             <div class="d-flex align-items-center p-2">
                 <label for="telemovel" class="col-md-2">Telemóvel</label>
-                <input type="tel" name="telemovel" id="docente-telemovel" class="col-md-4 px-1" required>
+                <input type="tel" name="telemovel" id="docente-telemovel" class="col-md-4 px-1">
             </div>
 
             <hr class="m-0 bg-secondary">
@@ -65,5 +65,4 @@
 
 </main>
 
-<script src="{{asset('js/addDocente.js')}}" defer></script>
 @endsection

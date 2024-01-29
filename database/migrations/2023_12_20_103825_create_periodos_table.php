@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->year('ano')->nullable(false);
             $table->integer('semestre')->nullable(false);
-            $table->date('data_inicial');
-            $table->date('data_final');
+            $table->date('data_inicial')->nullable();
+            $table->date('data_final')->nullable();
 
             $table->unique(['ano', 'semestre']);
         });
