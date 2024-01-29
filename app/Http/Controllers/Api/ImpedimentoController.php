@@ -175,7 +175,7 @@ class ImpedimentoController extends Controller
 
             $docentes = Docente::all();
 
-            $docentesANotificar = array();
+            $docentesANotificar = [];
 
             foreach ($docentes as $docente) {
                 $semUCsAssociadas = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->doesntExist();
@@ -196,7 +196,7 @@ class ImpedimentoController extends Controller
                 ]);
                 $impedimento->save();
 
-                $docentesANotificar = array_push($docentesANotificar);
+                $docentesANotificar[] = $docente;
             }
 
             DB::commit();
