@@ -6,7 +6,8 @@
     @include('partials._breadcrumbs', [
         'crumbs' => [
             ['página inicial', route('inicio.view')],
-            ['gerir dados', route('admin.gerir.view')]
+            ['gerir dados', route('admin.gerir.view')],
+            [strtolower($uc->nome), route('ucs.editar.view', ['uc' => $uc->id]) ]
         ]
     ])
 

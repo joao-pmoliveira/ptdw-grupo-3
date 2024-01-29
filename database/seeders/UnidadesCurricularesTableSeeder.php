@@ -29,66 +29,59 @@ class UnidadesCurricularesTableSeeder extends Seeder
             ['Métodos Numéricos e Estatísticos', 'MNE']
 
         ];
+        $periodos = Periodo::all();
 
-        $docentes = Docente::all()
-            ->pluck('id')
-            ->toArray();
-        $numeroDocentes = count($docentes);
-        $index = 0;
+        $docentes = Docente::all()->shuffle();
 
         foreach ($ucs as $uc) {
-            $codigo = $faker->randomNumber(5);
             $nome = $uc[0];
             $sigla = $uc[1];
-            $horas_semanais = $faker->randomElement([2, 4, 6]);
-            $acn_id = ACN::pluck('id')->random();
+            $codigo = $faker->randomNumber(5, true);
+            $horasSemanais = $faker->randomElement([2, 4, 6]);
+            $acnId = ACN::pluck('id')->random();
             $ects = $faker->randomElement([4, 6]);
-            $docente_responsavel_id = $docentes[$index];
-            $restricoes_submetidas = $faker->boolean();
-            $sala_laboratorio = $faker->boolean();
-            $exame_final_laboratorio = $faker->boolean();
-            $exame_recurso_laboratorio = $faker->boolean();
-            $observacoes_laboratorios = $faker->text();
+
+            $salaLaboratorio = $faker->boolean();
+            $exameFinalLaboratorio = $salaLaboratorio ? $faker->boolean() : false;
+            $exameRecursoLaboratorio = $exameFinalLaboratorio;
+            $observacoesLaboratorios = $faker->text();
             $software = $faker->text();
 
-            $numeroDocentesAssociados = $faker->randomElement([2, 3]);
-
-            $docentesAssociados = [];
-            for ($j = 0; $j < $numeroDocentesAssociados; $j++) {
-                array_push($docentesAssociados, $docentes[($index + $j) % $numeroDocentes]);
-            }
-
-            $periodos_ids = Periodo::pluck('id')->all();
             $cursos = Curso::pluck('id')->random(1, 2);
-            foreach ($periodos_ids as $periodo_id) {
-                $ucPeriodo = UnidadeCurricular::factory()->create([
-                    'codigo' => $codigo,
-                    'sigla' => $sigla,
-                    'periodo_id' => $periodo_id,
-                    'nome' => $nome,
-                    'acn_id' => $acn_id,
-                    'horas_semanais' => $horas_semanais,
-                    'ects' => $ects,
-                    'docente_responsavel_id' => $docente_responsavel_id,
-                    'restricoes_submetidas' => $restricoes_submetidas,
-                    'sala_laboratorio' => $sala_laboratorio,
-                    'exame_final_laboratorio' => $exame_final_laboratorio,
-                    'exame_recurso_laboratorio' => $exame_recurso_laboratorio,
-                    'observacoes_laboratorios' => $observacoes_laboratorios,
-                    'software' => $software,
+
+            foreach ($periodos as $periodo) {
+                $ucRecord = UnidadeCurricular::create([
+                    "codigo" => $codigo,
+                    "sigla" => $sigla,
+                    "nome" => $nome,
+                    "periodo_id" => $periodo->id,
+                    "acn_id" => $acnId,
+                    "horas_semanais" => $horasSemanais,
+                    "ects" => $ects,
+                    // "docente_responsavel_id" => NULL,
+                    "restricoes_submetidas" => true,
+                    "sala_laboratorio" => $salaLaboratorio,
+                    "exame_final_laboratorio" => $exameFinalLaboratorio,
+                    "exame_recurso_laboratorio" => $exameRecursoLaboratorio,
+                    "observacoes_laboratorios" => $observacoesLaboratorios,
+                    "software" => $software,
                 ]);
 
+                $responsavel = $docentes->pop();
+                $responsavel->ucsResponsavel()->save($ucRecord);
 
-                $ucPeriodo->docentes()->attach(
-                    $docentesAssociados,
-                    ['percentagem_semanal' => $ucPeriodo->horas_semanais / count($docentes)]
-                );
+                $docentesAdicionais = $faker->numberBetween(1, 2);
+                // todo @joao: possível que o cálculo tenha que ser repensado
+                $percentagem = round($ucRecord->horas_semanais / ($docentesAdicionais + 1) / $ucRecord->horas_semanais, 2);
+                foreach ($docentes->random($docentesAdicionais) as $doc) {
+                    $doc->unidadesCurriculares()->attach($ucRecord->id, ["percentagem_semanal" => $percentagem]);
+                }
+                $responsavel->unidadesCurriculares()->attach($ucRecord->id, ["percentagem_semanal" => $percentagem]);
 
-                $ucPeriodo->cursos()->attach(
-                    $cursos
-                );
+                $docentes->prepend($responsavel);
+
+                $ucRecord->cursos()->attach($cursos);
             }
-            $index++;
         }
     }
 }

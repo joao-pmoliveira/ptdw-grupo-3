@@ -95,10 +95,7 @@ class UploadController extends Controller
 
                 foreach ($cellIterator as $index => $cell) {
                     $val = $cell->getValue();
-
-                    if (array_key_exists($index, $columnsMap)) {
-                        $lineData[$columnsMap[$index]] = $val;
-                    }
+                    $lineData[$columnsMap[$index]] = $val;
                 }
 
                 array_push($data, $lineData);
@@ -134,12 +131,10 @@ class UploadController extends Controller
                 //Assume que se o ACN não está na BD, é um ACN errado
                 $acn_docente = ACN::where('sigla', $d['acn_docente'])->first();
                 if (is_null($acn_docente)) {
-                    //todo @joao: adicionar o nome ou linha em que acontece
-                    throw new Exception('Área Científica do Docente: não reconhecida!');
+                    throw new Exception("Área Científica do Docente: não reconhecida! Docente: {$d['nome_docente']}, ACN: {$d['acn_docente']}");
                 }
 
                 // Assume que se o docente não está na BD, este é um docente novo
-
                 $docente = Docente::all()->filter(function ($docente) use ($d) {
                     return $docente->user->numero_funcionario == $d['numero_docente'];
                 })->first();
@@ -155,8 +150,6 @@ class UploadController extends Controller
                 if (is_null($user)) {
                     $user = User::create([
                         'nome' => $d['nome_docente'],
-                        //todo @joao: remover geração automática do email
-                        //'email' => strtolower(str_replace(' ', '.', Str::ascii($d['nome_docente']))) . $faker->unique()->randomNumber(5, true) . '@estga.pt',
                         'email' => null,
                         'password' => bcrypt('password'),
                         'admin' => false,
@@ -169,17 +162,17 @@ class UploadController extends Controller
 
                 $docente->refresh();
                 if ($docente->user->nome !== $d['nome_docente']) {
-                    //todo @joao: adicionar mais informação onde o erro ocorre
-                    throw new Exception('Nome docente: diferenças entre nome no ficheiro e nome na base de dados!');
+                    throw new Exception("Nome docente: diferenças entre nome no ficheiro e nome na base de dados!
+                        No ficheiro: {$d['numero_docente']}-{$d['nome_docente']} != No Sistema: {$docente->user->numero_funcionario}-{$docente->user->nome}");
                 }
                 if ($docente->acn->sigla !== $d['acn_docente']) {
-                    //todo @joao: adicionar mais informação onde o erro ocorre
-                    throw new Exception('ACN do Docente: mais do que uma ACN para o mesmo docente!');
+                    throw new Exception("ACN do Docente: mais do que uma ACN para o mesmo docente!
+                        A tentar adicionar a {$docente->user->nome} a ACN: {$d['acn_docente']}, docente tem ACN:{$docente->acn->sigla}");
                 }
                 $acn_uc = ACN::where('sigla', $d['acn_uc'])->first();
                 if (is_null($acn_uc)) {
-                    //todo @joao: adicionar mais informação onde o erro ocorre
-                    throw new Exception('ACN da UC: não reconhecida!');
+                    throw new Exception("ACN da UC: não reconhecida!
+                        Ao tentar associar {$d['nome_uc']} com ACN: {$d['acn_uc']}");
                 }
 
                 //Compara apenas o período indicado pelo o ficheiro
@@ -197,7 +190,7 @@ class UploadController extends Controller
                         'acn_id' => $acn_docente->id,
                         'docente_responsavel_id' => NULL,
                         'horas_semanais' => $d['horas'],
-                        'ects' => '6',
+                        'ects' => NULL,
                         'restricoes_submetidas' => false,
                         'sala_laboratorio' => false,
                         'exame_final_laboratorio' => false,
@@ -225,12 +218,14 @@ class UploadController extends Controller
                 //Assume que se o Curso não está na BD é porque é erro
                 $curso = Curso::where('sigla', $d['curso'])->first();
                 if (is_null($curso)) {
-                    throw new Exception('Curso da UC: sigla não reconhecida');
+                    throw new Exception("Curso da UC: sigla não reconhecida\
+                        Ao tentar associar {$d['nome_uc']} a curso: {$d['curso']}");
                 }
                 if (!$uc->cursos->contains($curso)) {
                     $uc->cursos()->attach($curso);
                 }
                 if ($uc->docentes->contains($docente)) {
+                    // todo @joao: melhor solução seria apenas atualizar os dados da relação
                     throw new Exception('Docente e UC: este docente já estava associado à UC');
                 }
                 $uc->docentes()->attach($docente, ['percentagem_semanal' => $d['percentagem']]);
@@ -252,10 +247,10 @@ class UploadController extends Controller
 
     public function download($periodo_id)
     {
-        try{
-        $periodo = Periodo::find($periodo_id);
+        try {
+            $periodo = Periodo::find($periodo_id);
 
-        $filename = 'output_restricoes_' . $periodo->ano . '_' . $periodo->semestre . '.xlsx';
+            $filename = 'output_restricoes_' . $periodo->ano . '_' . $periodo->semestre . '.xlsx';
 
 
             $spreadsheet = new Spreadsheet();

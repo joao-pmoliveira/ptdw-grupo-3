@@ -15,8 +15,6 @@ class DocenteFactory extends Factory
     {
         $acns_ids = ACN::pluck('id')->toArray();
 
-        $faker = FakerFactory::create('pt_PT');
-
         return [
             'acn_id' => fake()->randomElement($acns_ids),
         ];
