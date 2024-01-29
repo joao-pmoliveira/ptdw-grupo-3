@@ -26,7 +26,11 @@ periodoSelect.addEventListener('change', async () => {
         const nome = uc['nome'];
         const codigo = uc['codigo'];
         const link = uc['link']
-        const nomeDocenteResponsavel = uc['docente_responsavel']['user']['nome'];
+        const nomeDocenteResponsavel = uc['docente_responsavel'] &&
+            uc['docente_responsavel']['user'] &&
+            uc['docente_responsavel']['user']['nome'] ?
+            uc['docente_responsavel']['user']['nome'] :
+            null
 
         const row = document.createElement('tr');
         row.classList.add('border', 'border-light');
@@ -41,7 +45,7 @@ periodoSelect.addEventListener('change', async () => {
         const nomeCel = document.createElement('td');
         nomeCel.textContent = nome;
         const docenteResCel = document.createElement('td');
-        docenteResCel.textContent = nomeDocenteResponsavel;
+        docenteResCel.textContent = nomeDocenteResponsavel ?? "---";
         const iconCel = document.createElement('td');
         const icon = document.createElement('i');
         icon.classList.add('fa-solid', 'fa-pen');
