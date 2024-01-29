@@ -241,8 +241,16 @@ class ImpedimentoController extends Controller
 
             $validatedData = Validator::make($request->all(), $rules, $messages)->validate();
 
+            $docentesSemEmail = [];
+
             foreach ($validatedData['impedimentos_id'] as $impedimentoId) {
                 $impedimento = Impedimento::findOrFail($impedimentoId);
+
+                if (!$impedimento->docente->user->email) {
+                    array_push($docentesSemEmail, $impedimento->docente->user->nome);
+                    continue;
+                }
+
                 // todo @joao: simplificar processo de enviar emails.
                 Mail::to($impedimento->docente->user->email)->send(new emailRestricoesEmFaltaAPedidoDoAdmin(
                     $impedimento->docente,
@@ -253,6 +261,11 @@ class ImpedimentoController extends Controller
                     $impedimento->periodo->data_final,
                     $impedimento->submetido,
                 ));
+            }
+
+            if (count($docentesSemEmail) > 0) {
+                $nomes = implode('; ', $docentesSemEmail);
+                return redirect()->back()->with('sucesso', "Emails enviados com sucesso, excepto para os seguintes docentes sem email associado: {$nomes}");
             }
 
             return redirect()->back()->with('sucesso', 'Emails enviados com sucesso!');
