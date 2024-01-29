@@ -195,7 +195,11 @@
         <section id="manage-uc-restrictions" class="tab-pane p-3">
             
             <h3 class="mb-2">
-                Restrições de UCs {{$periodo->ano}}/{{$periodo->ano+1}} - {{$periodo->semestre}} º semestre
+                @if ($periodo)
+                    Restrições de UCs {{$periodo->ano}}/{{$periodo->ano+1}} - {{$periodo->semestre}}º semestre
+                @else
+                    Restrições de UCs
+                @endif
             </h3>
 
             <table class="w-100 shadow" id="table-restricoes-pendentes">
@@ -209,7 +213,7 @@
                     </tr>
                 </thead>
                 <tbody class="title-separator">
-                    @if ($ucs->count() > 0)
+                    @if ($ucs && $ucs->count() > 0)
                     @foreach($ucs as $uc)
                         <tr class="border border-light" 
                         data-link="{{route('restricoes.uc.view', ['uc'=>$uc->id, 'ano_inicial'=>$periodo->ano, 'semestre'=>$periodo->semestre])}}">

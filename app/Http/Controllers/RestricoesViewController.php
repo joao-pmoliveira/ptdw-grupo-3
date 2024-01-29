@@ -26,29 +26,42 @@ class RestricoesViewController extends Controller
             return redirect()->route('inicio.view');
         }
 
+        $hoje = Carbon::now();
+
         $periodo = Periodo::orderBy('ano', 'desc')
             ->orderBy('semestre', 'desc')
+            ->get()
+            ->filter(function ($p) use ($hoje) {
+                return $hoje->lte($p->data_final);
+            })
             ->first();
 
-        $ucs = $user->docente->unidadesCurriculares()
+        $ucs = $periodo ?
+            $user->docente->unidadesCurriculares()
             ->where('periodo_id', $periodo->id)
-            ->get();
+            ->get() :
+            null;
 
-        $impedimento = $user->docente->impedimentos()->where('periodo_id', $periodo->id)->first();
+        $impedimento = $periodo ?
+            $user->docente->impedimentos()->where('periodo_id', $periodo->id)->first() :
+            null;
 
-        $historico_ucs = $user->docente->unidadesCurriculares()
+        $historico_ucs = $periodo ?
+            $user->docente->unidadesCurriculares()
             ->where('periodo_id', '!=', $periodo->id)
             ->get()
             ->sortByDesc(function ($item) {
                 return $item->periodo->ano * 10 + $item->periodo->semestre;
-            });
+            }) :
+            $user->docente->unidadesCurriculares()->get();
 
-        $historico_impedimentos = $user->docente->impedimentos()
+        $historico_impedimentos = $periodo ? $user->docente->impedimentos()
             ->where('periodo_id', '!=', $periodo->id)
             ->get()
             ->sortByDesc(function ($item) {
                 return $item->periodo->ano * 10 + $item->periodo->semestre;
-            });
+            }) :
+            $user->docente->impedimentos()->get();
 
         return view('restrições', [
             'page_title' => 'Restrições',
