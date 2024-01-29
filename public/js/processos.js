@@ -5,7 +5,7 @@ const sendEmailsForm = document.getElementById('send-emails-form');
 
 const toggleAllChecks = document.querySelector('#table input[type="checkbox"]');
 const emailChecks = Array.from(document.querySelectorAll('#table tbody input[type="checkbox"]'));
-toggleAllChecks.addEventListener('change', () => {
+toggleAllChecks?.addEventListener('change', () => {
     emailChecks.forEach(check => {
         check.checked = toggleAllChecks.checked;
     })
@@ -18,13 +18,13 @@ function toggleSendEmailsBtn() {
     sendEmailsBtn.disabled = !res;
 }
 
-emailChecks.forEach(c => {
+emailChecks?.forEach(c => {
     c.addEventListener('change', () => {
         toggleSendEmailsBtn()
     })
 });
 
-sendEmailsForm.addEventListener('submit', async (e) => {
+sendEmailsForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     emailChecks.filter(c => c.checked)
