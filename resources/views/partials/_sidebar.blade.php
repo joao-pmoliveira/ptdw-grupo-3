@@ -39,9 +39,6 @@
             <a class="{{request()->route()->named('admin.gerir.view') ? 'active' : ''}}" href="{{route('admin.gerir.view')}}">Gerir Dados</a>
         </li>
         @endif
-        <li>
-            <a class="">Ajuda</a>
-        </li>
     </ul>
 </aside>
 
