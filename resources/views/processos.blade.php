@@ -122,7 +122,7 @@
                             </td>
                             <td class="text-center">
                                 @if (!$impedimento->submetido || $ucsResponsavel->where('restricoes_submetidas', true)->count() < $ucsResponsavel->count())
-                                    <input class="pe-auto" type="checkbox" data-id="{{$impedimento->docente->id}}" data-id="{{$impedimento->id}}">
+                                    <input class="pe-auto" type="checkbox" data-id="{{$impedimento->id}}">
                                 @endif
                             </td>
                         </tr>
