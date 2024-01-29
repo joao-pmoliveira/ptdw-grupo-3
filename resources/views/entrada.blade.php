@@ -2,7 +2,7 @@
 
 @section('body')
     
-<main class="mw-100">
+<main class="mw-100 p-0">
     <nav class="navbar navbar-main navbar-expand-lg px-3 shadow-none ">
         <div class="container-fluid d-flex justify-content-end">
             <a href="{{route('inicio.view')}}" class="sm m-0 px-2 py-1 text-terciary bg-primary border-0
