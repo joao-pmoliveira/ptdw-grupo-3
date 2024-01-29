@@ -57,7 +57,7 @@
 
                 <fieldset>
                     <legend>Software necessário</legend>
-                    <label class="d-block" for="software-necessario-input">Identifique nome, fabricante, versão e sistem operativo</label>
+                    <label class="d-block" for="software-necessario-input">Identifique nome, fabricante, versão e sistema operativo</label>
                     <textarea class="px-2 py-1" name="software" id="software-necessario-input" cols="90" rows="8"
                         @disabled(!$aberto || !$permissao_editar)>{{$uc->software}}</textarea>
                 </fieldset>
