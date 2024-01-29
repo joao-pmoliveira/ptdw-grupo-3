@@ -175,6 +175,8 @@ class ImpedimentoController extends Controller
 
             $docentes = Docente::all();
 
+            $docentesANotificar = array();
+
             foreach ($docentes as $docente) {
                 $semUCsAssociadas = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->doesntExist();
                 if ($semUCsAssociadas) {
@@ -193,14 +195,24 @@ class ImpedimentoController extends Controller
                     'submetido' => false,
                 ]);
                 $impedimento->save();
+
+                $docentesANotificar = array_push($docentesANotificar);
             }
 
             DB::commit();
 
             // todo @joao: passar para dentro do ciclo anterior
-            foreach ($docentes as $docente) {
-                $filteredUcsResp = $docente->ucsResponsavel()->where('periodo_id', $periodo->id)->get();
-                $filteredUcs = $docente->unidadesCurriculares()->where('periodo_id', $periodo->id)->whereNotIn('id', $filteredUcsResp->pluck('id'))->get();
+            foreach ($docentesANotificar as $docente) {
+                $filteredUcsResp = $docente->ucsResponsavel->filter(function ($uc) use ($periodo) {
+                    return $uc->periodo == $periodo;
+                });
+
+                $filteredUcs = $docente->unidadesCurriculares->filter(function ($uc) use ($periodo, $filteredUcsResp) {
+                    $filteredUcsRespIds = $filteredUcsResp->pluck('id')->toArray();
+
+                    return $uc->periodo == $periodo && !in_array($uc->id, $filteredUcsRespIds);
+                });
+
                 if (empty($docente->user->email)) {
                     continue;
                 }
