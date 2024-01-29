@@ -1,7 +1,7 @@
 @extends('layouts.baseContent')
 
 @section('main')
-<main class="w-100 px-5">
+<main class="w-100">
     @include('partials._breadcrumbs', [
         'crumbs' => [
             ['página inicial', route('inicio.view')],
