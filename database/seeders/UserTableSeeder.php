@@ -19,6 +19,7 @@ class UserTableSeeder extends Seeder
             ["nome" => "Lara Sá", "admin" => true],
             ["nome" => "André Ferreira", "admin" => true],
             ["nome" => "Miguel Vieira", "admin" => true, "email" => "miguelnamarinha@sapo.pt"],
+            ["nome" => "Admin Ex", "admin" => true, "email" => "adminexemplo@ua.pt"],
             # docentes_admins - 3
             ["nome" => "Filipe Loureiro", "admin" => true, "docente" => true],
             ["nome" => "Mauro Antunes", "admin" => true, "docente" => true],
@@ -30,6 +31,7 @@ class UserTableSeeder extends Seeder
             ["nome" => "Mónica Matos", "docente" => true],
             ["nome" => "Gonçalo Coelho", "docente" => true],
             ["nome" => "Miguel Vieira", "docente" => true, "email" => "miguelmvieira@ua.pt"],
+            ["nome" => "Docente Ex", "docente" => true, "email" => "docenteexemplo@ua.pt"],
         ];
 
         foreach ($users as $user) {
@@ -53,7 +55,6 @@ class UserTableSeeder extends Seeder
     public static function getEmailFromName($name)
     {
         return strtolower(str_replace(' ', '_', iconv('UTF-8', 'ASCII//TRANSLIT', $name))) .
-            fake()->randomNumber(5, false) .
             '@estga.pt';
     }
 }
